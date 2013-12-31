@@ -92,6 +92,7 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -179,6 +180,7 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
