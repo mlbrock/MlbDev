@@ -1,0 +1,137 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	ODBC Wrapper Library Module
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Implementation of the class 'OdbcDiagRec'.
+
+	Revision History	:	2001-10-01 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2001 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <OdbcWrapper/OdbcWrapper.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace OdbcWrapper {
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcDiagRec::OdbcDiagRec()
+	:handle_type_(0)
+	,handle_value_(0)
+	,record_number_(0)
+	,sql_state_()
+	,native_error_(0)
+	,message_text_()
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcDiagRec::OdbcDiagRec(SQLSMALLINT handle_type, SQLHANDLE handle_value,
+	SQLSMALLINT record_number)
+	:handle_type_(handle_type)
+	,handle_value_(handle_value)
+	,record_number_(record_number)
+	,sql_state_()
+	,native_error_()
+	,message_text_()
+{
+	SQLRETURN   return_code;
+	std::string sql_state;
+	SQLINTEGER  native_error;
+	std::string message_text;
+
+	return_code = GetDiagRec(handle_type, handle_value, record_number,
+		sql_state, &native_error, message_text);
+
+	if (return_code == SQL_NO_DATA)
+		OdbcDiagRec().swap(*this);
+
+	handle_type_    = handle_type;
+	handle_value_   = handle_value;
+	record_number_  = record_number;
+	native_error_   = native_error;
+
+	sql_state_.swap(sql_state);
+	message_text_.swap(message_text);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcDiagRec::OdbcDiagRec(const OdbcDiagRec &other)
+	:handle_type_(other.handle_type_)
+	,handle_value_(other.handle_value_)
+	,record_number_(other.record_number_)
+	,sql_state_(other.sql_state_)
+	,native_error_(other.native_error_)
+	,message_text_(other.message_text_)
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcDiagRec::~OdbcDiagRec()
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcDiagRec & OdbcDiagRec::operator = (const OdbcDiagRec &other)
+{
+	OdbcDiagRec tmp_datum(other);
+
+	swap(tmp_datum);
+
+	return(*this);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void OdbcDiagRec::swap(OdbcDiagRec &other)
+{
+	std::swap(handle_type_, other.handle_type_);
+	std::swap(handle_value_, other.handle_value_);
+	std::swap(record_number_, other.record_number_);
+	sql_state_.swap(other.sql_state_);
+	std::swap(native_error_, other.native_error_);
+	message_text_.swap(other.message_text_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool OdbcDiagRec::LoadDiagnosticRecord(SQLSMALLINT handle_type,
+	SQLHANDLE handle_value, SQLSMALLINT record_number)
+{
+	OdbcDiagRec(handle_type, handle_value, record_number).swap(*this);
+
+	return(record_number_ > 0);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace OdbcWrapper
+
+} // namespace MLB
+

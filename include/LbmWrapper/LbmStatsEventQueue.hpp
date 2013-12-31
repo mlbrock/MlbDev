@@ -1,0 +1,64 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	29 West LBM API Wrapper Library Include File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Definition of the LbmStatsEventQueue class.
+
+	Revision History	:	2008-08-05 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2008 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+#ifndef HH__MLB__LbmWrapper__LbmStatsEventQueue_hpp__HH
+
+#define HH__MLB__LbmWrapper__LbmStatsEventQueue_hpp__HH	1
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <LbmWrapper/LbmWrapper.hpp>
+
+//	////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace LbmWrapper {
+
+//	////////////////////////////////////////////////////////////////////////////
+class LbmStatsEventQueue : public LbmStatsBase<LbmEventQueue> {
+	void Initialize();
+
+public:
+	explicit LbmStatsEventQueue(MyDatumType &datum);
+	explicit LbmStatsEventQueue(MyLbmApiType *datum);
+
+	std::string ToString(unsigned int text_width = MaxStatsTextWidth,
+		bool fixup_min = true) const;
+
+	static const unsigned int MaxStatsTextWidth = 57;
+};
+//	////////////////////////////////////////////////////////////////////////////
+
+} // namespace LbmWrapper
+
+} // namespace MLB
+
+#endif // #ifndef HH__MLB__LbmWrapper__LbmStatsEventQueue_hpp__HH
+

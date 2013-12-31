@@ -1,0 +1,125 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	ODBC Wrapper Library Module
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Implementation of the OdbcTransBlock class.
+
+	Revision History	:	2001-10-01 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2001 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <OdbcWrapper/OdbcWrapper.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace OdbcWrapper {
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcTransBlock::OdbcTransBlock(SQLSMALLINT handle_type, SQLHANDLE handle_value)
+	:handle_type_(handle_type)
+	,handle_value_(handle_value)
+	,trans_is_open_(true)
+{
+	if ((handle_type != SQL_HANDLE_ENV) && (handle_type != SQL_HANDLE_DBC))
+		MLB::Utility::ThrowRuntimeError("Constructor for "
+			"'OdbcTransBlock' received handle type " +
+			MLB::Utility::AnyToString(handle_type_) + " --- expected either "
+			"'SQL_HANDLE_ENV' (" + MLB::Utility::AnyToString(SQL_HANDLE_ENV) +
+			") or 'SQL_HANDLE_DBC' (" +
+			MLB::Utility::AnyToString(SQL_HANDLE_DBC) + ").");
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+OdbcTransBlock::~OdbcTransBlock()
+{
+	if (IsTransactionOpen()) {
+		try {
+			TransactionRollback();
+		}
+		catch (const std::exception &) {
+		}
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool OdbcTransBlock::IsTransactionOpen() const
+{
+	return(trans_is_open_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool OdbcTransBlock::CheckIsTransactionOpen() const
+{
+	if (!IsTransactionOpen())
+		MLB::Utility::ThrowRuntimeError("No ODBC transaction is at present "
+			"open on handle type " + MLB::Utility::AnyToString(handle_type_) +
+			", handle value " + MLB::Utility::AnyToString(handle_value_) + ".");
+
+	return(true);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void OdbcTransBlock::TransactionCommit()
+{
+	CheckIsTransactionOpen();
+
+	try {
+		EndTranCommit(handle_type_, handle_value_);
+	}
+	catch (const std::exception &) {
+		trans_is_open_ = false;
+		throw;
+	}
+
+	trans_is_open_ = false;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void OdbcTransBlock::TransactionRollback()
+{
+	CheckIsTransactionOpen();
+
+	try {
+		EndTranRollback(handle_type_, handle_value_);
+	}
+	catch (const std::exception &) {
+		trans_is_open_ = false;
+		throw;
+	}
+
+	trans_is_open_ = false;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace OdbcWrapper
+
+} // namespace MLB
+

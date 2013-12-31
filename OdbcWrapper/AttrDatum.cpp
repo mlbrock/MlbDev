@@ -1,0 +1,78 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	ODBC Wrapper Library Module
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Implementation of the AttrDatum class.
+
+	Revision History	:	2001-10-01 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2001 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <OdbcWrapper/OdbcWrapper.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace OdbcWrapper {
+
+// ////////////////////////////////////////////////////////////////////////////
+AttrDatum::AttrDatum(const char *attr_string)
+	:attr_name_()
+	,attr_value_()
+{
+	if (attr_string != NULL) {
+		const char *sep_position = strchr(attr_string, '=');
+		if (sep_position == NULL)
+			MLB::Utility::ThrowInvalidArgument("The attribute string '" +
+				std::string(attr_string) + "' does not contain an equals sign.");
+		else if (sep_position == attr_string)
+			MLB::Utility::ThrowInvalidArgument("The attribute string '" +
+				std::string(attr_string) +  "' does not contain an attribute name "
+				"(that is, the equals sign is the first character of the string).");
+		std::string(attr_string, sep_position - attr_string).swap(attr_name_);
+		std::string(sep_position + 1).swap(attr_value_);
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+AttrDatum::AttrDatum(bool /* disambiguation */, const char *attr_name)
+	:attr_name_(attr_name)
+	,attr_value_()
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool AttrDatum::operator < (const AttrDatum &other) const
+{
+	return(attr_name_ < other.attr_name_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace OdbcWrapper
+
+} // namespace MLB
+

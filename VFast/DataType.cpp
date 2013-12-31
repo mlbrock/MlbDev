@@ -1,0 +1,259 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	VFast Library Module File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Support for the DataType enumeration.
+
+	Revision History	:	2008-11-15 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2008 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <VFast/DataType.hpp>
+#include <VFast/VFastException.hpp>
+
+#include <Utility/C_StringSupport.hpp>
+#include <Utility/ValueToStringRadix.hpp>
+#include <Utility/ToHexString.hpp>
+
+#include <memory.h>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace VFast {
+
+namespace {
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	\todo Add support for new types Type_{U|S}Int{8|16}.
+*/
+const char *DataTypeNameList[DataType_Count] = {
+	"Ascii",
+	"Unicode",
+	"ByteVector",
+	"SInt32",
+	"UInt32",
+	"SInt64",
+	"UInt64",
+	"Decimal",
+	"Sequence",
+	"Group",
+	"Template",
+	"TemplateRefSta",
+	"TemplateRefDyn"
+};
+// ////////////////////////////////////////////////////////////////////////////
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeInt(DataType data_type)
+{
+	return(IsTypeSInt(data_type) || IsTypeUInt(data_type));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeSInt(DataType data_type)
+{
+	return((data_type == DataType_SInt32) || (data_type == DataType_SInt64));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeUInt(DataType data_type)
+{
+	return((data_type == DataType_UInt32) || (data_type == DataType_UInt64));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeInt32(DataType data_type)
+{
+	return((data_type == DataType_SInt32) || (data_type == DataType_UInt32));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeInt64(DataType data_type)
+{
+	return((data_type == DataType_SInt64) || (data_type == DataType_UInt64));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeNumeric(DataType data_type)
+{
+	return(IsTypeInt(data_type) || (data_type == DataType_Decimal));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeCharArray(DataType data_type)
+{
+	return((data_type == DataType_Ascii) ||
+		(data_type == DataType_Unicode) ||
+		(data_type == DataType_ByteVector));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypePrimitive(DataType data_type)
+{
+	return(IsTypeNumeric(data_type) || IsTypeCharArray(data_type));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsTypeComposite(DataType data_type)
+{
+	return((data_type == DataType_Decimal) ||
+		(data_type == DataType_Sequence) || (data_type == DataType_Group) ||
+		(data_type == DataType_Template));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool DataTypeIsValid(DataType data_type)
+{
+	return((data_type >= DataType_Min) && (data_type <= DataType_Max));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+DataType CheckDataType(DataType data_type)
+{
+	if (!DataTypeIsValid(data_type))
+		MLB::Utility::ThrowInvalidArgument("Invalid data type (" +
+			DataTypeToString(data_type) + ").");
+		
+	return(data_type);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsDataTypeString(const std::string &in_data_type, DataType &out_data_type)
+{
+	unsigned int count_1;
+
+	for (count_1 = 0; count_1 < DataType_Count; ++count_1) {
+		if (!MLB::Utility::Utility_stricmp(in_data_type.c_str(),
+			DataTypeNameList[count_1])) {
+			out_data_type = static_cast<DataType>(count_1);
+			return(true);
+		}
+	}
+
+	return(false);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsDataTypeString(const std::string &in_data_type)
+{
+	DataType out_data_type;
+
+	return(IsDataTypeString(in_data_type, out_data_type));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string DataTypeToString(DataType data_type)
+{
+	return((DataTypeIsValid(data_type)) ? DataTypeNameList[data_type] :
+		MLB::Utility::ValueToStringHex(data_type));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+DataType StringToDataType(const std::string &data_type)
+{
+	DataType out_data_type = DataType_Invalid;
+
+	if (!IsDataTypeString(data_type, out_data_type))
+		MLB::Utility::ThrowInvalidArgument("Invalid data type string ('" +
+			data_type + "').");
+
+	return(out_data_type);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string DatumToString(DataType data_type, unsigned int datum_length,
+	const void *datum_ptr)
+{
+	if (data_type == DataType_ByteVector)
+		return(MLB::Utility::ToHexString(datum_length, datum_ptr));
+	else if ((data_type != DataType_Ascii) && (data_type != DataType_Unicode) &&
+		(data_type != DataType_ByteVector)) {
+		std::stringstream o_str;
+		switch (data_type) {
+			case DataType_SInt32					:
+				o_str << *reinterpret_cast<const Type_SInt32 *>(datum_ptr);
+				break;
+			case DataType_UInt32					:
+				o_str << *reinterpret_cast<const Type_UInt32 *>(datum_ptr);
+				break;
+			case DataType_SInt64					:
+				o_str << *reinterpret_cast<const Type_SInt64 *>(datum_ptr);
+				break;
+			case DataType_UInt64					:
+				o_str << *reinterpret_cast<const Type_UInt64 *>(datum_ptr);
+				break;
+			case DataType_Decimal				:
+				o_str << *reinterpret_cast<const Type_Decimal *>(datum_ptr);
+				break;
+			case DataType_Ascii					:
+			case DataType_Unicode				:
+			case DataType_ByteVector			:
+			case DataType_Invalid				:
+			case DataType_Sequence				:
+			case DataType_Group					:
+			case DataType_Template				:
+			case DataType_TemplateRefStatic	:
+			case DataType_TemplateRefDynamic	:
+			case DataType_Count					:
+			default									:
+				return("*NON-PRIMITIVE-TYPE*");
+		}
+		return(o_str.str());
+	}
+
+	return(std::string(static_cast<const char *>(datum_ptr), datum_length));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const DataType &datum)
+{
+	o_str << DataTypeToString(datum);
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace VFast
+
+} // namespace MLB
+

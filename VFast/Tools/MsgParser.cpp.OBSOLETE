@@ -1,0 +1,521 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	VFast Tools Module File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Message parser tool.
+
+	Revision History	:	2008-12-27 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2008 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <VFast/ExcContext.hpp>
+#include <VFast/PacketMsgFile.hpp>
+#include <VFast/VFastUtility.hpp>
+
+#include <Utility/InlineContainer.hpp>
+#include <Utility/HRTimer.hpp>
+#include <Utility/ParseCmdLineArg.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+using namespace MLB::VFast;
+
+// ////////////////////////////////////////////////////////////////////////////
+class MsgParser {
+public:
+	MsgParser(int argc, char **argv);
+
+private:
+	enum DecodeType {
+		DecodeType_None = 0,
+		DecodeType_CME  = 1,
+		DecodeType_ISE  = 2,
+		DecodeType_CEF  = 3
+	};
+
+	enum PacketFormatType {
+		PacketFormatType_Raw       = 0,
+		PacketFormatType_NetUInt16 = 1,
+		PacketFormatType_IPSource  = 2
+	};
+
+	void ParseCmdLine(int argc, char **argv);
+
+	std::string      xml_file_name_;
+	std::string      packet_file_name_;
+	DecodeType       content_type_;
+	PacketFormatType packet_format_;
+	unsigned int     first_packet_index_;
+	unsigned int     max_message_count_;
+	unsigned int     iteration_count_;
+	bool             raw_data_flag_;
+	bool             debug_flag_;
+	bool             timer_flag_;
+};
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+MsgParser::MsgParser(int argc, char **argv)
+	:xml_file_name_()
+	,packet_file_name_()
+	,content_type_(DecodeType_None)
+	,packet_format_(PacketFormatType_NetUInt16)
+	,first_packet_index_(0)
+	,max_message_count_(0)
+	,iteration_count_(1)
+	,raw_data_flag_(false)
+	,debug_flag_(false)
+	,timer_flag_(true)
+{
+	ParseCmdLine(argc, argv);
+
+	InsContext ins_context(xml_file_name_);
+	ExcContext exc_context(ins_context);
+
+	std::cerr << "Loading message packet file '" << packet_file_name_ <<
+		"'..." << std::flush;
+
+	MLB::SockLibX::PacketMsgFile msg_packet_file(packet_file_name_, true);
+
+	unsigned int total_packet_count = msg_packet_file.GetPacketCount();
+
+	std::cerr << " done (" << total_packet_count << " packets found)." <<
+		std::endl;
+
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+	std::cout << "First packet index: " << first_packet_index_ << std::endl;
+	std::cout << "Total iterations  : " << iteration_count_ << std::endl;
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+
+	MLB::SockLibX::PacketMsg this_msg;
+
+	unsigned int          count_1;
+	unsigned int          processed_count = 0;
+	unsigned int          failure_count   = 0;
+	MLB::Utility::HRTimer hr_timer;
+
+	hr_timer.Start();
+
+	for (count_1 = 0; count_1 < iteration_count_; ++count_1) {
+		if (packet_format_ == PacketFormatType_Raw)
+			msg_packet_file.SeekToOffset(0);
+		else if (packet_format_ == PacketFormatType_NetUInt16)
+			msg_packet_file.SeekToPacket(first_packet_index_);
+		unsigned int this_packet_count = 0;
+		bool         more_data         = false;
+		do {
+			if (packet_format_ == PacketFormatType_Raw)
+				more_data = false;
+			else if (packet_format_ == PacketFormatType_NetUInt16)
+				more_data = msg_packet_file.GetPacket(this_msg).HasMorePackets();
+			bool               use_previous_id = false;
+			unsigned int       template_id     = 0;
+			unsigned int       message_index   = 0;
+			const StreamDatum *begin_ptr       = NULL;
+			const StreamDatum *end_ptr         = NULL;
+			if (packet_format_ == PacketFormatType_Raw) {
+				begin_ptr = msg_packet_file.GetBeginPtr();
+				end_ptr   = msg_packet_file.GetEndPtr();
+			}
+			else if (packet_format_ == PacketFormatType_NetUInt16) {
+				begin_ptr = this_msg.GetBeginPtr();
+				end_ptr   = this_msg.GetEndPtr();
+			}
+			while (begin_ptr < end_ptr) {
+				try {
+					if (debug_flag_)
+						std::cout << "********** PACKET [" <<
+							std::setw(10) << this_packet_count << "][" <<
+							std::setw(10) << message_index << "]" << std::endl;
+					const StreamDatum *new_begin_ptr;
+/*
+					if (use_previous_id)
+						new_begin_ptr = exc_context.FieldDecode(begin_ptr, end_ptr,
+							template_id);
+					else
+						new_begin_ptr = exc_context.FieldDecode(begin_ptr, end_ptr);
+*/
+					new_begin_ptr = exc_context.FieldDecode(begin_ptr, end_ptr);
+					template_id = exc_context.GetLastTemplateId();
+					if (debug_flag_) {
+						std::cout << "PMap Byte Count = " <<
+							exc_context.GetLastPMapLength() << std::endl;
+						std::cout << "Template Id     = " << template_id <<
+							std::endl;
+						std::size_t     entry_count = exc_context.GetEntryCount();
+						const ExcEntry *entry_list  = exc_context.GetEntryList();
+						ExcEntry::EmitListDebug(entry_count, entry_list,
+							exc_context.GetInsItemList());
+						std::cout << "Value items = " <<
+							static_cast<unsigned int>(entry_count) << std::endl;
+						ExcEntry::EmitList(entry_count, entry_list,
+							exc_context.GetInsItemList());
+						std::cout << "********** PACKET [" <<
+							std::setw(10) << this_packet_count << "][" <<
+							std::setw(10) << message_index << "][SIZE = " <<
+							std::setw(10) << exc_context.GetLastSrcDataLength() <<
+							"][" << ToHexString(begin_ptr, new_begin_ptr) << "]" <<
+							std::endl;
+					}
+					if (content_type_ == DecodeType_CME)
+						exc_context.ResetLastTemplateDictionary();
+					else if (content_type_ == DecodeType_ISE) {
+						if (template_id == 120) {
+							exc_context.ResetDictionaries();
+							use_previous_id = false;
+						}
+						else
+							use_previous_id = true;
+					}
+					else if (content_type_ == DecodeType_CEF) {
+						if (template_id == 120)
+							exc_context.ResetDictionaries();
+					}
+					begin_ptr = new_begin_ptr;
+				}
+				catch (const std::exception &except) {
+					template_id = exc_context.GetLastTemplateId();
+					std::cout << "PMap Byte Count = " <<
+						exc_context.GetLastPMapLength() << std::endl;
+					std::cout << "Template Id     = " << template_id <<
+						std::endl;
+					ExcEntry::EmitListDebug(exc_context.GetEntryCount() - 1,
+						exc_context.GetEntryList() + 1, exc_context.GetInsItemList());
+					std::cout << "***** ERROR: " << except.what() << std::endl;
+					++failure_count;
+				}
+				if (debug_flag_)
+					std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+				++this_packet_count;
+				++processed_count;
+				if (max_message_count_ && (this_packet_count >= max_message_count_))
+					break;
+			}
+			if (max_message_count_ && (this_packet_count >= max_message_count_))
+				break;
+		} while (more_data);
+	}
+
+	hr_timer.End();
+
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+	std::cout << "First Packet Index     : " << std::setw(10) <<
+		first_packet_index_ << std::endl;
+	std::cout << "Total Packets Parsed   : " << std::setw(10) <<
+		processed_count << std::endl;
+	std::cout << "Number of Failed Parses: " << std::setw(10) <<
+		failure_count<< std::endl;
+	if (timer_flag_) {
+		std::cout << "Elapsed time           : " << std::setprecision(16) <<
+			hr_timer.GetTickDiffInSeconds() << std::endl;
+		std::cout << "Time per packet        : " <<
+			(hr_timer.GetTickDiffInSeconds() /
+			static_cast<double>(processed_count)) << std::endl;
+	}
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+	std::cout << MLB::Utility::PadLeft("", 79, '*') << std::endl;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void MsgParser::ParseCmdLine(int argc, char **argv)
+{
+	using namespace MLB::Utility;
+
+	if (ParseCmdLineArg::HasCmdLineHelp(argc, argv, 1)) {
+		std::cout << "USAGE: " << std::endl <<
+			"   " << argv[0] << " " <<
+			"-xml_template_file <XML-template-file> " <<
+			"-packet_file <packet-file> " <<
+			"[ -decode_type { NONE | { EUREX | CEF | EBS } | CME | ISE } ] " <<
+			"[ -packet_storage { RAW | LENGTH | IPSOURCE } ] " <<
+			"[ -first_packet_index <first-packet-index> ] " <<
+			"[ -max_packet_count <maximum-number-of-packets> ] " <<
+			"[ -iteration_count <number-of-times-to-iterate> ] " <<
+			"[ -debug <boolean> ] " <<
+			"[ -elapsed_timer <boolean> ]\n\n" <<
+"\
+   -help\n\
+      Produces this output.\n\n\
+   -xml_template_file <XML-template-file>\n\
+      Specifies the name of the XML template file to be used for decoding\n\
+      packets.\n\n\
+   -packet_file <packet-file>\n\
+      Specifies the name of the packet file which contains the packets to be\n\
+      decoded.\n\n\
+   -decode_type { NONE | { EUREX | CEF | EBS } | CME | ISE }\n\
+      Optional parameter which specifies the exchange-specific semantics to\n\
+      be used when decoding the packets.\n\n\
+      If not specified, this parameter defaults to 'NONE'.\n\n\
+   -packet_format { RAW | NETUINT16 | IPSOURCE }\n\
+      Optional parameter which specifies the format in which packets are\n\
+      stored in the packet file:\n\n\
+         o RAW      - Each packet immediately follows its predecessor\n\
+                      without preamble.\n\n\
+         o LENGTH   - Each packet is preceded by its 16-bit packet length in\n\
+                      network byte order.\n\n\
+         o IPSOURCE - Each packet is preceded by it 16-bit packet length\n\
+                      followed by the 32-bit IP address of the packet source\n\
+                      and the 16-bit port of the packet source in network\n\
+                      byte order.\n\n\
+      If not specified, this parameter defaults to 'LENGTH'.\n\n"
+<<
+"\
+   -first_packet_index <first-packet-index>\n\
+      Optional parameter which specifies the index of the first packet to be\n\
+      decoded.\n\n\
+      Numbering for packet indices begins at '0'.\n\n\
+      If not specified, this parameter defaults to 0 (the first packet).\n\n\
+   -max_packet_count <maximum-number-of-packets>\n\
+      Optional parameter which specifies the maximum number of packets to\n\
+      decode.\n\n\
+      If not specified, all packets will be decoded.\n\n\
+   -iteration_count <number-of-times-to-iterate>\n\
+      Optional parameter which specifies the number of times to iterate over\n\
+      the packets in the file.\n\n\
+      If not specified, this parameter defaults to '1'.\n\n\
+   -debug <boolean>\n\
+      If true, specifies that decoded packet contents will be written to\n\
+      stdout.\n\n\
+      If not specified, this parameter defaults to 'false'.\n\n\
+   -elapsed_timer <boolean>\n\
+      If true, specifies that the elapsed time is to be emitted to stdout\n\
+      after packet decoding is complete.\n\n\
+      If not specified, this parameter defaults to 'true'." <<
+			std::endl << std::endl;
+		exit(EXIT_SUCCESS);
+	}
+
+	unsigned int count_1;
+	std::string  tmp_string;
+
+	for (count_1 = 1; count_1 < static_cast<unsigned int>(argc); ++count_1) {
+		if (ParseCmdLineArg::ParseCmdLineFollowingSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+				("-XML_TEMPLATE_FILE_NAME")
+				("-XML_TEMPLATE_FILENAME")
+				("-XML_TEMPLATEFILE_NAME")
+				("-XMLTEMPLATE_FILE_NAME")
+				("-XML_TEMPLATEFILENAME")
+				("-XMLTEMPLATE_FILENAME")
+				("-XMLTEMPLATEFILE_NAME")
+				("-XMLTEMPLATEFILENAME")
+				("-XML_TEMPLATE_FILE")
+				("-XML_TEMPLATEFILE")
+				("-XMLTEMPLATE_FILE")
+				("-XMLTEMPLATEFILE")
+				("-TEMPLATE_FILE_NAME")
+				("-TEMPLATE_FILENAME")
+				("-TEMPLATEFILE_NAME")
+				("-TEMPLATEFILENAME")
+				("-TEMPLATE_FILE")
+				("-TEMPLATEFILE")
+				("-XML_FILE_NAME")
+				("-XML_FILENAME")
+				("-XMLFILE_NAME")
+				("-XMLFILENAME")
+				("-XML_FILE")
+				("-XMLFILE"), count_1, argc, argv, xml_file_name_))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineFollowingSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+				("-PACKET_FILE_NAME")
+				("-PACKET_FILENAME")
+				("-PACKETFILE_NAME")
+				("-PACKETFILENAME")
+				("-PACKET_FILE")
+				("-PACKETFILE"), count_1, argc, argv, packet_file_name_))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineFollowingSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+				("-DECODE_TYPE")
+				("-DECODETYPE")
+				("-DECODE")
+				("-CONTENT_TYPE")
+				("-CONTENTTYPE")
+				("-CONTENT"), count_1, argc, argv, tmp_string)) {
+			tmp_string = MLB::Utility::UpperCase(tmp_string);
+			if (tmp_string == "NONE")
+				content_type_ = DecodeType_None;
+			else if (tmp_string == "CME")
+				content_type_ = DecodeType_CME;
+			else if (tmp_string == "ISE")
+				content_type_ = DecodeType_ISE;
+			else if ((tmp_string == "EUREX") || (tmp_string == "CEF") ||
+				(tmp_string == "EBS"))
+				content_type_ = DecodeType_CEF;
+			else
+				MLB::Utility::ThrowInvalidArgument("Invalid '" +
+					std::string(argv[count_1]) + "' parameter specified: "
+					"expected 'NONE', 'CME', 'ISE', or 'CEF'.");
+		}
+		else if (ParseCmdLineArg::ParseCmdLineFollowingSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+				("-PACKET_FORMAT")
+				("-PACKETFORMAT")
+				("-FORMAT"), count_1, argc, argv, tmp_string)) {
+			tmp_string = MLB::Utility::UpperCase(tmp_string);
+			if ((tmp_string == "NONE") || (tmp_string == "RAW"))
+				packet_format_ = PacketFormatType_Raw;
+			else if ((tmp_string == "NETUINT16") || (tmp_string == "LENGTH"))
+				packet_format_ = PacketFormatType_NetUInt16;
+			else if ((tmp_string == "IPSOURCE") || (tmp_string == "SOURCE"))
+{
+	MLB::Utility::ThrowInvalidArgument("The " + tmp_string + " packet format "
+		"is not yet supported.");
+				packet_format_ = PacketFormatType_IPSource;
+}
+			else
+				MLB::Utility::ThrowInvalidArgument("Invalid '" +
+					std::string(argv[count_1]) + "' parameter specified: "
+					"expected 'NONE', 'RAW', 'LENGTH', or 'IPSOURCE'.");
+		}
+		else if (ParseCmdLineArg::ParseCmdLineNumeric(
+			MLB::Utility::MakeInlineVector<std::string>
+			("-FIRST_PACKET_INDEX")
+			("-FIRST_PACKETINDEX")
+			("-FIRSTPACKET_INDEX")
+			("-FIRSTPACKETINDEX")
+			("-FIRST_PACKET")
+			("-FIRSTPACKET")
+			("-PACKET_INDEX")
+			("-PACKETINDEX")
+			("-FIRST_INDEX")
+			("-FIRSTINDEX"),
+			count_1, argc, argv, first_packet_index_))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineNumeric(
+			MLB::Utility::MakeInlineVector<std::string>
+			("-MAXIMUM_MESSAGES_COUNT")
+			("-MAXIMUM_MESSAGESCOUNT")
+			("-MAXIMUMMESSAGES_COUNT")
+			("-MAXIMUMMESSAGESCOUNT")
+			("-MAXIMUM_MESSAGE_COUNT")
+			("-MAXIMUM_MESSAGECOUNT")
+			("-MAXIMUMMESSAGE_COUNT")
+			("-MAXIMUMMESSAGECOUNT")
+			("-MAXIMUM_MESSAGES")
+			("-MAXIMUMMESSAGES")
+			("-MAXIMUM_MESSAGE")
+			("-MAXIMUMMESSAGE")
+			("-MAXIMUM_MSGS_COUNT")
+			("-MAXIMUM_MSGSCOUNT")
+			("-MAXIMUMMSGS_COUNT")
+			("-MAXIMUMMSGSCOUNT")
+			("-MAXIMUM_MSG_COUNT")
+			("-MAXIMUM_MSGCOUNT")
+			("-MAXIMUMMSG_COUNT")
+			("-MAXIMUMMSGCOUNT")
+			("-MAXIMUM_MSGS")
+			("-MAXIMUMMSGS")
+			("-MAXIMUM_MSG")
+			("-MAXIMUMMSG")
+			("-MAX_MESSAGES_COUNT")
+			("-MAX_MESSAGESCOUNT")
+			("-MAXMESSAGES_COUNT")
+			("-MAXMESSAGESCOUNT")
+			("-MAX_MESSAGE_COUNT")
+			("-MAX_MESSAGECOUNT")
+			("-MAXMESSAGE_COUNT")
+			("-MAXMESSAGECOUNT")
+			("-MAX_MESSAGES")
+			("-MAXMESSAGES")
+			("-MAX_MESSAGE")
+			("-MAXMESSAGE")
+			("-MAX_MSGS_COUNT")
+			("-MAX_MSGSCOUNT")
+			("-MAXMSGS_COUNT")
+			("-MAXMSGSCOUNT")
+			("-MAX_MSG_COUNT")
+			("-MAX_MSGCOUNT")
+			("-MAXMSG_COUNT")
+			("-MAXMSGCOUNT")
+			("-MAX_MSGS")
+			("-MAXMSGS")
+			("-MAX_MSG")
+			("-MAXMSG"),
+			count_1, argc, argv, max_message_count_))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineNumeric
+			<std::vector<std::string>, unsigned int>(
+			MLB::Utility::MakeInlineVector<std::string>
+			("-ITERATION_COUNT")
+			("-ITERATIONCOUNT")
+			("-CYCLE_COUNT")
+			("-CYCLECOUNT")
+			("-COUNT"),
+			count_1, argc, argv, iteration_count_, 1))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineDatumSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+			("-DEBUGGING_FLAG")
+			("-DEBUGGINGFLAG")
+			("-DEBUG_FLAG")
+			("-DEBUGFLAG")
+			("-DEBUGGING")
+			("-DEBUG"),
+			count_1, argc, argv, debug_flag_))
+			;
+		else if (ParseCmdLineArg::ParseCmdLineDatumSpec(
+			MLB::Utility::MakeInlineVector<std::string>
+			("-ELAPSED_TIMER")
+			("-ELAPSEDTIMER")
+			("-ELAPSED_TIME")
+			("-ELAPSEDTIME")
+			("-TIMER"),
+			count_1, argc, argv, timer_flag_))
+			;
+		else
+			ParseCmdLineArg::InvalidArgument(argv[count_1]);
+	}
+
+	if (xml_file_name_.empty())
+		MLB::Utility::ThrowInvalidArgument("The XML template file name was "
+			"not specified.");
+
+	if (packet_file_name_.empty())
+		MLB::Utility::ThrowInvalidArgument("The message packet file name was "
+			"not specified.");
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+int main(int argc, char **argv)
+{
+	int return_code = EXIT_SUCCESS;
+
+	try {
+		MsgParser compat_check(argc, argv);
+	}
+	catch (const std::exception &except) {
+		std::cerr << std::endl << "ERROR: " << except.what() << std::endl;
+		return_code = EXIT_FAILURE;
+	}
+
+	return(return_code);
+}
+// ////////////////////////////////////////////////////////////////////////////
+

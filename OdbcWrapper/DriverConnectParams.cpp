@@ -1,0 +1,93 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	ODBC Wrapper Library Module
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Implementation of the class DriverConnectParams.
+
+	Revision History	:	2001-10-01 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2001 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <OdbcWrapper/OdbcParseCmdLineArg.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace OdbcWrapper {
+
+// ////////////////////////////////////////////////////////////////////////////
+DriverConnectParams::DriverConnectParams(const std::string &in_uid,
+	const std::string &in_pwd, const std::string &in_database,
+	const std::string &in_server, const std::string &in_driver)
+	:uid_(in_uid)
+	,pwd_(in_pwd)
+	,database_(in_database)
+	,server_(in_server)
+	,driver_(in_driver)
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string &DriverConnectParams::GetConnectionString(
+	std::string &out_string) const
+{
+	std::string("Database=" + database_ + ";Driver=" + driver_ + ";Uid=" +
+		uid_ + ";Server=" + server_ + ";Pwd=" + pwd_).swap(out_string);
+
+	return(out_string);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string DriverConnectParams::GetConnectionString() const
+{
+	std::string out_string;
+
+	return(GetConnectionString(out_string));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+unsigned int DriverConnectParams::ParseDriverParams(unsigned int start_index,
+	int argc, char **argv, bool throw_if_not_matched_flag)
+{
+	for (; start_index < static_cast<unsigned int>(argc); ++start_index) {
+		if (!OdbcParseCmdLineArg::ParseCmdLineDriverParams(start_index, argc,
+			argv, *this)) {
+			if (throw_if_not_matched_flag)
+				OdbcParseCmdLineArg::InvalidArgument(argv[start_index]);
+			break;
+		}
+	}
+
+	return(start_index);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace OdbcWrapper
+
+} // namespace MLB
+

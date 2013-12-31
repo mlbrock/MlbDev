@@ -1,0 +1,98 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	29 West LBM API Wrapper Library Module File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Logic supporting interaction with the LBM logger.
+
+	Revision History	:	2008-08-16 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2008 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <LbmWrapper/LbmLogSupport.hpp>
+
+#include <Utility/LogManager.hpp>
+
+#include <string.h>
+
+//	////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace LbmWrapper {
+
+namespace {
+//	////////////////////////////////////////////////////////////////////////////
+const int LbmLogLevel_Minimum        = LBM_LOG_EMERG;
+const int LbmLogLevel_Maximum        = LBM_LOG_DEBUG;
+const unsigned int LbmLogLevel_Count =
+	(LbmLogLevel_Maximum - LbmLogLevel_Minimum) + 1;
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const MLB::Utility::LogLevel LbmToMlbLogLevelMap[LbmLogLevel_Count] = {
+	MLB::Utility::LogLevel_Emergency,
+	MLB::Utility::LogLevel_Alert,
+	MLB::Utility::LogLevel_Critical,
+	MLB::Utility::LogLevel_Error,
+	MLB::Utility::LogLevel_Warning,
+	MLB::Utility::LogLevel_Notice,
+	MLB::Utility::LogLevel_Info,
+	MLB::Utility::LogLevel_Debug
+};
+//	////////////////////////////////////////////////////////////////////////////
+} // Anonymous namespace
+
+//	////////////////////////////////////////////////////////////////////////////
+MLB::Utility::LogLevel MapLbmLogLevel(int lbm_log_level)
+{
+	return(((lbm_log_level >= LbmLogLevel_Minimum) &&
+		(lbm_log_level <= LbmLogLevel_Maximum)) ?
+		LbmToMlbLogLevelMap[lbm_log_level - LbmLogLevel_Minimum] :
+		MLB::Utility::LogLevel_Emergency);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+void LbmLog(lbm_log_cb_proc call_back, void *user_data_ptr)
+{
+	WRAP29_LBM_THROW_IF_NE_ZERO(
+		::lbm_log,
+		(call_back, user_data_ptr));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+int LbmLoggerOStream::LbmLogCallBackImpl(int level, const char *message)
+{
+	ostream_ref_ <<
+		MLB::Utility::ConvertLogLevelToTextRaw(MapLbmLogLevel(level)) <<
+		": " << std::setw(3) << level << ": " << message << std::endl;
+
+	return(0);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+} // namespace LbmWrapper
+
+} // namespace MLB
+

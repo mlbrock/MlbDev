@@ -1,0 +1,182 @@
+//	////////////////////////////////////////////////////////////////////////////
+//	////////////////////////////////////////////////////////////////////////////
+//	SockLibX Portable Socket Library Source Module
+//	////////////////////////////////////////////////////////////////////////////
+/*
+	File Name  			:	%M%
+
+	File Version      :	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Implementation file for class SocketSpec.
+
+	Revision History	:	2002-01-26 --- Creation
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2002 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+//	////////////////////////////////////////////////////////////////////////////
+//	Include necessary header files . . .
+//	////////////////////////////////////////////////////////////////////////////
+
+#include <SockLibX/SocketSpec.hpp>
+
+#include <Utility/StringSupport.hpp>
+
+//	////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace SockLibX {
+
+// ////////////////////////////////////////////////////////////////////////////
+SocketSpec::SocketSpec(const std::string &ip_address,
+	const std::string &ip_port, const std::string &local_interface)
+	:ip_address_()
+	,local_interface_()
+	,ip_address_string_(ip_address)
+	,local_interface_string_(local_interface)
+{
+	if ((!ip_address.empty()) && (!ip_port.empty())) {
+		INetToAddr(ip_address);
+		EndPointIP(AddressIP(ip_address, true), ip_port).swap(ip_address_);
+	}
+
+	if (!local_interface.empty())
+		local_interface_.SetAddress(local_interface, true);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+SocketSpec::~SocketSpec()
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool SocketSpec::operator < (const SocketSpec &other) const
+{
+	return(ip_address_ < other.ip_address_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void SocketSpec::swap(SocketSpec &other)
+{
+	ip_address_.swap(other.ip_address_);
+	local_interface_.swap(other.local_interface_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool SocketSpec::IPAddressIsEmpty() const
+{
+	return(ip_address_.address_ == MLB::SockLibX::AddressIP());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool SocketSpec::LocalInterfaceIsEmpty() const
+{
+	return(local_interface_ == MLB::SockLibX::AddressIP());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string SocketSpec::ToString(char sep_char) const
+{
+	std::ostringstream o_str;
+
+	o_str << ip_address_.address_.ToString() << sep_char << ip_address_.port_;
+
+	if (local_interface_ != MLB::SockLibX::AddressIP())
+		o_str << sep_char << local_interface_;
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string SocketSpec::ToStringFormatted(char sep_char) const
+{
+	std::ostringstream o_str;
+
+	o_str << std::setw(3 + 1 + 3 + 1 + 3 + 1 + 3) <<
+		ip_address_.address_.ToString() << sep_char <<
+		std::setw(5) << ip_address_.port_;
+
+	if (local_interface_ != MLB::SockLibX::AddressIP())
+		o_str << sep_char << std::setw(3 + 1 + 3 + 1 + 3 + 1 + 3) <<
+			local_interface_;
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+SocketSpec &SocketSpec::FromString(const std::string &src_string,
+	char sep_char)
+{
+	std::vector<std::string> tmp_datum;
+
+	MLB::Utility::SplitString(src_string, std::string(1, sep_char),
+		tmp_datum, 0, false);
+
+	tmp_datum[0] = MLB::Utility::Trim(tmp_datum[0]);
+	tmp_datum[1] = MLB::Utility::Trim(tmp_datum[1]);
+
+	if (tmp_datum.size() > 2)
+		tmp_datum[2] = MLB::Utility::Trim(tmp_datum[2]);
+
+	if (tmp_datum.empty() || (tmp_datum.size() < 2) || (tmp_datum.size() > 3))
+		MLB::Utility::ThrowInvalidArgument("Expected a IP socket "
+			"specification string in the format <ip-address>" +
+			std::string(1, sep_char) + "<ip-port>[" + std::string(1, sep_char) +
+			"<host-interface>]");
+
+	SocketSpec(tmp_datum[0], tmp_datum[1],
+		(tmp_datum.size() > 3) ? tmp_datum[2] : "").swap(*this);
+
+	return(*this);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool SocketSpec::IsMulticastIPAddress() const
+{
+	return(MLB::SockLibX::IsMulticastIP(ip_address_.address_.ip_address));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const SocketSpec &SocketSpec::CheckMulticastIPAddress() const
+{
+	CheckIsMulticastIP(ip_address_.address_.ip_address);
+
+	return(*this);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const SocketSpec &datum)
+{
+	o_str << datum.ToString();
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace SockLibX
+
+} // namespace MLB
+

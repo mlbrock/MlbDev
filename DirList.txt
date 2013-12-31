@@ -1,0 +1,13 @@
+include
+BoostX		# Requires Boost headers
+LbmWrapper	# Requires Boost and 29 West LBM headers
+LSFWrapper	# Requires Boost and Platform/LSF headers
+OdbcWrapper	# Requires Boost and SQL Server
+OSSupport
+RvUtilX		# Requires Boost and TibCo/Rendezvous headers
+SocketIo	# Requires Boost headers
+SockLibX
+Utility		# Requires Boost headers
+VFast		# Requires Boost headers
+XercesUtils	# Requires Boost and Xerces headers
+

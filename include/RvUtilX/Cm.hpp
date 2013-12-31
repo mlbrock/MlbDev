@@ -1,0 +1,68 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	TibCo/Rendezvous Support Library Include File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Include file for RvUtilX certified messaging functions.
+
+	Revision History	:	2007-02-02 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2007 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+#ifndef HH__MLB__RvUtilX_Cm_hpp__HH
+
+#define HH__MLB__RvUtilX_Cm_hpp__HH	1
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <RvUtilX.hpp>
+
+#include <tibrv/cmcpp.h>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace RvUtilX {
+
+//	////////////////////////////////////////////////////////////////////////////
+//	Functions in RvTransportCm.cpp...
+API_RVUTILX TibrvCmTransport &CreateTransport(TibrvCmTransport &cm_transport,
+	TibrvNetTransport &net_transport);
+API_RVUTILX TibrvCmTransport &CreateTransport(TibrvCmTransport &cm_transport,
+	TibrvNetTransport &net_transport, const std::string &cm_name,
+	bool request_old, const std::string &ledger_name = "",
+	bool sync_ledger = false, const std::string &relay_agent = "");
+API_RVUTILX TibrvNetTransport *GetTransport(
+	const TibrvCmTransport &cm_transport);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+//	Functions in RvTransportCmQueue.cpp...
+TibrvNetTransport *GetTransport(const TibrvCmQueueTransport &dq_transport);
+//	////////////////////////////////////////////////////////////////////////////
+
+} // namespace RvUtilx
+
+} // namespace MLB
+
+#endif // #ifndef HH__MLB__RvUtilX_Cm_hpp__HH
+

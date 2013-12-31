@@ -1,0 +1,61 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	VFast Include File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name			:	%M%
+
+	File Version		:	%I%
+
+	Last Extracted		:	%D%	%T%
+
+	Last Updated		:	%E%	%U%
+
+	File Description	:	Include file for the VFast utility functions.
+
+	Revision History	:	2008-11-14 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2008 - 2014.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+#ifndef HH__MLB__VFast__VFastUtility_hpp__HH
+
+#define HH__MLB__VFast__VFastUtility_hpp__HH	1
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <VFast/VFast.hpp>
+
+#include <string>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace VFast {
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string ToHexString(const StreamDatum *begin_ptr,
+	const StreamDatum *end_ptr);
+std::string ToHexStringDebug(const StreamDatum *begin_ptr,
+	const StreamDatum *end_ptr);
+std::string ToHexString(std::size_t data_length, const StreamDatum *data_ptr);
+std::string ToHexStringDebug(std::size_t data_length,
+	const StreamDatum *data_ptr);
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace VFast
+
+} // namespace MLB
+
+#endif // #ifndef HH__MLB__VFast__VFastUtility_hpp__HH
+
