@@ -13,13 +13,13 @@
 
 	File Description	:	The SocketIo ParseCmdLineArg class include file.
 
-	Revision History	:	2002-01-26 --- Creation
+	Revision History	:	2002-01-26 --- A modification of the logic within the
+													SockLibX/SockLibXParseCmdLineArg class.
 									Michael L. Brock
-								1996-04-10 --- Based upon the portable Network
-													Programming Suppoprt Library (NPSL).
+								2008-01-26 --- Adapted for use with Boost::Asio.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1996 - 2014.
+		Copyright Michael L. Brock 2002 - 2014.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)

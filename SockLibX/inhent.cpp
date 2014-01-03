@@ -69,7 +69,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEnt
@@ -132,7 +132,7 @@ void NPSL_InitHostEnt(NPSL_HOSTENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEntList

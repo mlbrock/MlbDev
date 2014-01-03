@@ -13,10 +13,10 @@
 
 	File Description	:	Include file for SocketIo support.
 
-	Revision History	:	2002-01-26 --- Creation
-									Michael L. Brock
-								1996-04-10 --- Based upon the portable Network
+	Revision History	:	1996-04-10 --- Based upon the portable Network
 													Programming Suppoprt Library (NPSL).
+									Michael L. Brock
+								2008-01-26 --- Adapted for use with Boost::Asio.
 									Michael L. Brock
 
 		Copyright Michael L. Brock 1996 - 2014.

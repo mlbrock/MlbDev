@@ -13,10 +13,12 @@
 
 	File Description	:	Include file for the RsrcUsage class.
 
-	Revision History	:	1998-04-08 --- Creation
+	Revision History	:	1992-10-11 --- Initial genfuncs C library logic.
+									Michael L. Brock
+								1998-04-08 --- Modified for C++.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1998 - 2014.
+		Copyright Michael L. Brock 1992 - 2014.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -157,7 +159,7 @@ const RsrcUsageValue RsrcUsageValueMax =
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1992 - 2005 Michael L. Brock
+	COPYRIGHT	:	Copyright 1992 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	RsrcUsage
 						Usage Description Structures:RsrcUsage

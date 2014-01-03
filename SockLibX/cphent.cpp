@@ -112,7 +112,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyHostEntFlat
 						Copy Functions:Network Programming Support Functions:NPSL_CopyHostEntFlat
@@ -222,7 +222,7 @@ int NPSL_CopyHostEntFlat(const NPSL_HOSTENT *in_host_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyHostEntFlatBasic
 						Copy Functions:Network Programming Support Functions:NPSL_CopyHostEntFlatBasic
@@ -409,7 +409,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyHostEnt
 						Copy Functions:Network Programming Support Functions:NPSL_CopyHostEnt
@@ -584,7 +584,7 @@ int NPSL_CopyHostEnt(const NPSL_HOSTENT *in_host_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyHostEntList
 						Copy Functions:Network Programming Support Functions:NPSL_CopyHostEntList

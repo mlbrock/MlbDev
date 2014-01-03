@@ -69,7 +69,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitServEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitServEnt
@@ -131,7 +131,7 @@ void NPSL_InitServEnt(NPSL_SERVENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitServEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitServEntList

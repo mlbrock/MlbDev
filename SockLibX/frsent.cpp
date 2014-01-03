@@ -68,7 +68,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeServEnt
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeServEnt
@@ -140,7 +140,7 @@ void NPSL_FreeServEnt(NPSL_SERVENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeServEntList
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeServEntList

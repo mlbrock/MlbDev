@@ -85,7 +85,7 @@
 
    AUTHOR      :  Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  NPSL_TRUE
 						NPSL_FALSE
@@ -241,7 +241,7 @@ EOH */
 
    AUTHOR      :  Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  NPSL_SUCCESS
 						NPSL_FAILURE
@@ -495,7 +495,7 @@ EOH */
 
    AUTHOR      :  Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  NPSL_MAX_ERROR_TEXT
 						NPSL Manifest Constants:NPSL_MAX_ERROR_TEXT

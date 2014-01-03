@@ -86,7 +86,7 @@ namespace Utility {
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2011 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  ltrim
 						String Justification Functions:ltrim
@@ -166,7 +166,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2011 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  rtrim
 						String Justification Functions:rtrim
@@ -242,7 +242,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2011 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  trim
 						String Justification Functions:trim

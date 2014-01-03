@@ -13,7 +13,8 @@
 
 	File Description	:	Implementation file for class SocketIoParseCmdLineArg.
 
-	Revision History	:	2002-01-26 --- Creation
+	Revision History	:	2002-01-26 --- A modification of the logic within the
+													SockLibX/SockLibXParseCmdLineArg class.
 									Michael L. Brock
 
 		Copyright Michael L. Brock 2002 - 2014.

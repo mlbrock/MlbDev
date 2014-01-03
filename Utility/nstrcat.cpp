@@ -106,7 +106,7 @@ namespace Utility {
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2003 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2014 Michael L. Brock
 
    OUTPUT INDEX:  nstrcat
 						Miscellaneous Functions:nstrcat

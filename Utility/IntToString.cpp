@@ -146,7 +146,7 @@ const char   *IntToString_RadixCharList  =
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	IntToStringBasic
 						Miscellaneous Functions:IntToStringBasic

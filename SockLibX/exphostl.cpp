@@ -127,7 +127,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_ExpandHostNameList
 						Host Name Functions:NPSL_ExpandHostNameList

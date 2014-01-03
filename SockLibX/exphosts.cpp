@@ -108,7 +108,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_ExpandHostNameString
 						Host Name Functions:NPSL_ExpandHostNameString

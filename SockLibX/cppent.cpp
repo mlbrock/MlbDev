@@ -111,7 +111,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntFlat
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntFlat
@@ -221,7 +221,7 @@ int NPSL_CopyProtoEntFlat(const NPSL_PROTOENT *in_proto_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntFlatBasic
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntFlatBasic
@@ -380,7 +380,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEnt
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEnt
@@ -516,7 +516,7 @@ int NPSL_CopyProtoEnt(const NPSL_PROTOENT *in_proto_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntList
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntList

@@ -70,7 +70,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_MAP_TRUTH_STR
 						NPSL_MAP_TRUTH_GEN
@@ -130,7 +130,7 @@ EOH */
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1993 - 2003 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_MAP_ERROR_STR
 						NPSL_MAP_ERROR_GEN

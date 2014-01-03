@@ -68,7 +68,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeHostEnt
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeHostEnt
@@ -146,7 +146,7 @@ void NPSL_FreeHostEnt(NPSL_HOSTENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeHostEntList
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeHostEntList

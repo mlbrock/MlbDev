@@ -69,7 +69,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitProtoEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitProtoEnt
@@ -130,7 +130,7 @@ void NPSL_InitProtoEnt(NPSL_PROTOENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2003 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2014 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitProtoEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitProtoEntList
