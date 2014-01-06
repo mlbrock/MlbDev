@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="VFastMsgParser"
-	ProjectGUID="{75D86EBE-F0B3-4361-813F-51998CCD1E4E}"
-	RootNamespace="VFastMsgParser"
+	Name="SocketZPlug"
+	ProjectGUID="{0F952556-FD19-4181-AA45-36C67B1E64AC}"
+	RootNamespace="SocketZPlug"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -195,7 +195,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\VFast\Tools\VFastMsgParser.cpp"
+				RelativePath="..\..\..\..\MlbUtilities\SocketZPlug.cpp"
 				>
 			</File>
 		</Filter>

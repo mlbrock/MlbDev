@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="VFastMsgParser"
-	ProjectGUID="{75D86EBE-F0B3-4361-813F-51998CCD1E4E}"
-	RootNamespace="VFastMsgParser"
+	Name="LibPCapFileConverter"
+	ProjectGUID="{80AAA9A7-1C21-4730-8C68-8405A58D92B0}"
+	RootNamespace="LibPCapFileConverter"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -195,7 +195,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\VFast\Tools\VFastMsgParser.cpp"
+				RelativePath="..\..\..\..\MlbUtilities\LibPCapFileConverter.cpp"
 				>
 			</File>
 		</Filter>

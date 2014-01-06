@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="VFastMsgParser"
-	ProjectGUID="{75D86EBE-F0B3-4361-813F-51998CCD1E4E}"
-	RootNamespace="VFastMsgParser"
+	Name="XRvListen"
+	ProjectGUID="{9188CF60-4753-451D-B951-B34DFF60138C}"
+	RootNamespace="XRvListen"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Include"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;XML_LIBRARY;XERCES_STATIC_LIBRARY;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -65,10 +65,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_static_3D.lib wpcap.lib packet.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib libtibrv.lib libtibrvcm.lib libtibrvcmq.lib libtibrvft.lib RvUtilX.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;\Vendor\tibco\Rendezvous\Rv6_9\lib;$(NOINHERIT)"
 				IgnoreDefaultLibraryNames="libcmt.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
@@ -127,7 +127,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Include"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;XML_LIBRARY;XERCES_STATIC_LIBRARY;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
@@ -148,10 +148,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_static_3.lib wpcap.lib packet.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib libtibrv.lib libtibrvcm.lib libtibrvcmq.lib libtibrvft.lib RvUtilX.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;\Vendor\tibco\Rendezvous\Rv6_9\lib;$(NOINHERIT)"
 				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
@@ -195,7 +195,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\VFast\Tools\VFastMsgParser.cpp"
+				RelativePath="..\..\..\..\MlbUtilities\XRvListen.cpp"
 				>
 			</File>
 		</Filter>

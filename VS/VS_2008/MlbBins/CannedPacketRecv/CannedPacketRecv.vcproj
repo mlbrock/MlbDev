@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="VFastMsgParser"
-	ProjectGUID="{75D86EBE-F0B3-4361-813F-51998CCD1E4E}"
-	RootNamespace="VFastMsgParser"
+	Name="CannedPacketRecv"
+	ProjectGUID="{773297DE-E156-4509-B241-D572D5644384}"
+	RootNamespace="CannedPacketRecv"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -195,7 +195,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\VFast\Tools\VFastMsgParser.cpp"
+				RelativePath="..\..\..\..\MlbUtilities\CannedPacketRecv.cpp"
 				>
 			</File>
 		</Filter>
