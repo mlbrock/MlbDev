@@ -36,8 +36,6 @@
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/StringSupport.hpp>
 
-#include <SockLibX.hpp>
-
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
@@ -374,6 +372,24 @@ bool StringToRvAdvMsgFlagsAppend(const std::string &in_string,
 	}
 
 	return(false);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+/*
+	Copied from MLB::SockLibX::AddressIP::GetHostIPAddress() so that the
+	SockLibX DLL doesn't become a dependency when building RvUtilX as a
+	DLL (as is necessary when producing RvUtilX Python).
+*/
+std::string MLB_SockLibX_AddressIP_IPAddressToString(tibrv_ipaddr32 ip_address)
+{
+	using namespace MLB::Utility;
+
+	return(
+		AnyToString(reinterpret_cast<unsigned char *>(&ip_address)[0]) + "." +
+		AnyToString(reinterpret_cast<unsigned char *>(&ip_address)[1]) + "." +
+		AnyToString(reinterpret_cast<unsigned char *>(&ip_address)[2]) + "." +
+		AnyToString(reinterpret_cast<unsigned char *>(&ip_address)[3]));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -2451,8 +2467,7 @@ std::string &RvAdvMsg::DatalossToString2(const TibrvMsg &msg,
 			"data-loss was detected for a "
 		<< ((contents.dataloss_ptp_) ? "point-to-point" : "broadcast")
 		<< " protocol in communication with host "
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.dataloss_host_))
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.dataloss_host_)
 		<< " and a resulting loss of " << contents.dataloss_lost_ << " messages";
 
 	return(out_string.assign(o_str.str()));
@@ -2592,8 +2607,7 @@ std::string &RvAdvMsg::HostStartToString2(const TibrvMsg &msg,
 
 	o_str
 		<< "Tib/Rv host stop message received for host "
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.hostaddr_))
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.hostaddr_)
 		<< ", serial number ";
 
 	if (contents.sn_flag_)
@@ -2611,8 +2625,7 @@ std::string &RvAdvMsg::HostStartToString2(const TibrvMsg &msg,
 		<< ((contents.up_flag_) ?
 			MLB::Utility::TimeT(contents.up_).ToStringInterval() : "N/A")
 		<< " with HTTP access at http://"
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.httpaddr_)) << ":"
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.httpaddr_) << ":"
 		<< contents.httpport_;
 
 	return(out_string.assign(o_str.str()));
@@ -2631,8 +2644,7 @@ std::string &RvAdvMsg::HostStopToString2(const TibrvMsg &msg,
 
 	o_str
 		<< "Tib/Rv host stop message received for host "
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.hostaddr_));
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.hostaddr_);
 
 	return(out_string.assign(o_str.str()));
 }
@@ -2651,8 +2663,7 @@ std::string &RvAdvMsg::HostStatusToString2(const TibrvMsg &msg,
 //	CODE NOTE: Indicate whether 7.5.X fields were in the message.
 	o_str
 		<< "Tib/Rv host status message received for host "
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.hostaddr_))
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.hostaddr_)
 		<< ", serial number ";
 
 	if (contents.sn_flag_)
@@ -2670,8 +2681,7 @@ std::string &RvAdvMsg::HostStatusToString2(const TibrvMsg &msg,
 		<< ((contents.up_flag_) ?
 			MLB::Utility::TimeT(contents.up_).ToStringInterval() : "N/A")
 		<< " with HTTP access at http://"
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.httpaddr_)) << ":"
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.httpaddr_) << ":"
 		<< contents.httpport_ << ":"
 		<< " Messages sent="           << contents.ms_
 		<< " Bytes sent="              << contents.bs_
@@ -2722,15 +2732,13 @@ std::string &RvAdvMsg::RetransmissionToString2(const TibrvMsg &msg,
 		o_str
 			<< "Advisory message indicates that an out-bound retransmission has "
 				"been sent to correspondent host "
-			<< MLB::SockLibX::AddressIP(
-				static_cast<unsigned long>(contents.dataloss_host_))
+			<< MLB_SockLibX_AddressIP_IPAddressToString(contents.dataloss_host_)
 			<< " due to " << contents.dataloss_lost_ << " packets";
 	else
 		o_str
 			<< "Advisory message indicates that an in-bound retransmission is "
 				"expected from correspondent host "
-			<< MLB::SockLibX::AddressIP(
-				static_cast<unsigned long>(contents.dataloss_host_))
+			<< MLB_SockLibX_AddressIP_IPAddressToString(contents.dataloss_host_)
 			<< " due to " << contents.dataloss_lost_ << " packets";
 
 	return(out_string.assign(o_str.str()));
@@ -2749,8 +2757,7 @@ std::string &RvAdvMsg::DaemonRestartedToString2(const TibrvMsg &msg,
 
 	o_str
 		<< "Tib/Rv daemon on host "
-		<< MLB::SockLibX::AddressIP(
-			static_cast<unsigned long>(contents.dataloss_host_))
+		<< MLB_SockLibX_AddressIP_IPAddressToString(contents.dataloss_host_)
 		<< " has been restarted";
 
 	return(out_string.assign(o_str.str()));

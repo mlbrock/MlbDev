@@ -65,7 +65,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib SockLibX_DLL.lib Utility_DLL.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib Utility_DLL.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"
@@ -151,7 +151,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib SockLibX_DLL.lib Utility_DLL.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib Utility_DLL.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_37\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"

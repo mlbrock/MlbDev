@@ -58,9 +58,6 @@
 #include <Utility/LogManager.hpp>
 #include <Utility/ValueToStringRadix.hpp>
 
-// CODE NOTE: Needed only within the cpp... To be removed.
-#include <SockLibX.hpp>
-
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
