@@ -35,6 +35,10 @@
 
 #include <algorithm>
 
+#if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+# include <unistd.h>
+#endif // #if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {

@@ -72,11 +72,8 @@ void *C_calloc(size_t number_of_elements, size_t size_of_element,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-void C_free(void *mem_ptr, const char *name_string)
+void C_free(void *mem_ptr, const char * /* name_string */)
 {
-	// Parameter included for orthogonality.
-	name_string = NULL;
-
 	if (mem_ptr != NULL)
 		::free(mem_ptr);
 }

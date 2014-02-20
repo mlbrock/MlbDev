@@ -34,7 +34,8 @@
 #ifdef __MSDOS__
 #elif _Windows
 #elif defined(linux)
-# include </usr/include/sys/syscall.h>
+# include <unistd.h>
+# include <sys/syscall.h>
 #elif MBCOMPAT_THREAD_MODEL_UI
 # include <thread.h>
 #else

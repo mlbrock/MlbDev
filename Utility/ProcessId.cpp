@@ -31,6 +31,10 @@
 
 #include <Utility.hpp>
 
+#if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+# include <unistd.h>
+#endif // #if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
@@ -46,8 +50,6 @@ ProcessId CurrentProcessId()
 #elif _Windows
 	return(static_cast<ProcessId>(::GetCurrentProcessId()));
 #else
-# include <unistd.h>
-
 	return(static_cast<ProcessId>(::getpid()));
 #endif // #ifdef __MSDOS__
 }

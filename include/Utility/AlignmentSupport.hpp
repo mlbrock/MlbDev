@@ -45,6 +45,10 @@
 
 #include <Utility.hpp>
 
+#if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+# include <stddef.h>
+#endif // #if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {

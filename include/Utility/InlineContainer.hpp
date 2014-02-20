@@ -89,7 +89,7 @@ template <class DataType, class ContainerType = std::vector<DataType> >
 		//	Function-call operator . . .
 		//	////////////////////////////////////////////////////////////////
 		InlineContainer & operator () (const DataType &the_data) {
-			push_back(the_data);
+			this->push_back(the_data);
 			return(*this);
 		}
 		//	////////////////////////////////////////////////////////////////
