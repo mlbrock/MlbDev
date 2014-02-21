@@ -1127,103 +1127,102 @@ void TruncateFileSize(FileHandleNative file_handle,
 
 using namespace MLB::Utility;
 
-#if _Windows
+namespace {
+
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_SomeOtherStuff()
+void EmitSep(char sep_char)
 {
-	std::string my_path("C:\\MLB\\PmqTest\\Some\\Thing\\Else");
-
-	std::cout << "Test Path : " << my_path << std::endl;
-	std::cout << "Root Path 1: " << GetPathRootPath(my_path) << std::endl;
-	std::cout << "Root Path 2: " <<
-		GetPathRootPath("c:\\MLB\\PmqTest\\Some\\Thing\\Else") << std::endl;
-
-	StringVector element_list;
-	GetPathElementList(my_path, element_list);
-	std::cout << "Elements 1: ";
-	std::copy(element_list.begin(), element_list.end(),
-		std::ostream_iterator<StringVector::value_type>(std::cout, "\n"));
-	std::cout << std::setfill('-') << std::setw(79) << "" <<
-		std::setfill(' ') << std::endl;
-
-	GetPathElementList("\\\\ukowk618\\c$\\MLB\\PmqTest", element_list);
-	std::cout << "Elements 2: ";
-	std::copy(element_list.begin(), element_list.end(),
-		std::ostream_iterator<StringVector::value_type>(std::cout, "\n"));
-	std::cout << std::setfill('-') << std::setw(79) << "" <<
-		std::setfill(' ') << std::endl;
-
-	std::cout << "TRY 1: Test Path: '" << my_path << "' exists: " <<
-		AnyToString(CreatePathDirExtended(my_path, true)) << std::endl;
-	std::cout << "TRY 2: Test Path: '" << my_path << "' exists: " <<
-		AnyToString(CreatePathDirExtended(my_path, true)) << std::endl;
-	std::cout << "TRY 3: Test Path: '" << my_path << "' exists: " <<
-		AnyToString(ResolveDirectoryPath(my_path, "", true)) << std::endl;
-	std::cout << std::setfill('-') << std::setw(79) << "" <<
-		std::setfill(' ') << std::endl;
-
-	//	Test directory path removal...
-	std::cout << std::setfill('=') << std::setw(79) << "" <<
-		std::setfill(' ') << std::endl;
-	std::cout << "Test File and Directory Path Removal:" << std::endl;
-	std::cout << std::setfill('-') << std::setw(79) << "" <<
-		std::setfill(' ') << std::endl;
-
-	//	Create vector of incremental directories...
-	std::string              base_name("./PathName_TEST_REMOVAL_BASE_DIR");
-	ResolveDirectoryPath(base_name, "", false);
-	std::vector<std::string> path_list(1, base_name);
-	path_list.push_back(path_list.back() + "/" + UniqueId().ToString());
-	path_list.push_back(path_list.back() + "/" + UniqueId().ToString());
-	path_list.push_back(path_list.back() + "/" + UniqueId().ToString());
-
-	std::cout << "Creating new directory: " << path_list.back() << std::endl;
-
-	//	Note that it's an error if the path already exists!
-	CreatePathDirExtended(path_list.back(), false);
-
-	while (!path_list.empty()) {
-		std::cout << "Removing directory    : " << path_list.back() << std::endl;
-		RemoveDirectory(path_list.back());
-		path_list.pop_back();
-	}
-
-	std::cout << std::setfill('=') << std::setw(79) << "" <<
+	std::cout << std::setfill(sep_char) << std::setw(79) << "" <<
 		std::setfill(' ') << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_SomeOtherStuff()
+{
+#if _Windows
+	// //////////////////////////////////////////////////////////////////////
+	//	Test path element breakdowns...
+	{
+		std::vector<std::string> path_list;
+		path_list.push_back("c:\\MLB\\MyDir\\Some\\Thing\\Else");
+		path_list.push_back("\\\\" + GetHostName() +
+			"\\c$\\MLB\\MyDir\\Some\\Thing\\Else");
+		for (std::size_t count_1 = 0; count_1 < path_list.size(); ++count_1) {
+			EmitSep('=');
+			std::cout << "Path Breakdown Test of Path: " << path_list[count_1] <<
+				std::endl;
+			EmitSep('-');
+			std::cout << "Path Root    : " <<
+				GetPathRootPath(path_list[count_1]) << std::endl;
+			StringVector element_list;
+			GetPathElementList(path_list[count_1], element_list);
+			std::cout << "Path Elements: " <<
+				JoinString(element_list, "\n             : ") << std::endl;
+			EmitSep('=');
+			std::cout << std::endl;
+		}
+	}
+	// //////////////////////////////////////////////////////////////////////
 #endif // #ifdef _WIndows
 
-// ////////////////////////////////////////////////////////////////////////////
-#ifdef _MSC_VER
-const char TEST_MoveFileTestSrcDir[] = "C:\\MLB\\OtherTests";
-const char TEST_MoveFileTestDstDir[] = "C:\\MLB\\OtherTests\\MoveFileTestDestinationDir";
-#else
-const char TEST_MoveFileTestSrcDir[] = "~/OtherTests";
-const char TEST_MoveFileTestDstDir[] = "~/OtherTests/MoveFileTestDestinationDir";
-#endif // #ifdef _MSC_VER
+	// //////////////////////////////////////////////////////////////////////
+	//	Test extended directory path creation and removal...
+	{
+		EmitSep('=');
+		std::cout << "Test File and Directory Path Removal:" << std::endl;
+		EmitSep('-');
+		//	Create vector of incremental directories...
+		std::string base_name("./TEST_UTIL_PathName_Create_" +
+			UniqueId().ToStringRadix64());
+		ResolveDirectoryPath(base_name, "", false);
+		std::vector<std::string> path_list(1, base_name);
+		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
+		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
+		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
+		std::cout << "Creating new directory: " << path_list.back() << std::endl;
+		//	Note that it's an error if the path already exists!
+		CreatePathDirExtended(path_list.back(), false);
+		while (!path_list.empty()) {
+			std::cout << "Removing directory    : " << path_list.back() <<
+				std::endl;
+			RemoveDirectory(path_list.back());
+			path_list.pop_back();
+		}
+		EmitSep('=');
+		std::cout << std::endl;
+	}
+	// //////////////////////////////////////////////////////////////////////
+}
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-VOID TEST_MoveFileLogic(int &return_code)
+void TEST_MoveFileLogic(int &return_code)
 {
+	std::vector<std::string> remove_list;
+
+	EmitSep('=');
+	std::cout << "Testing RenamePath():" << std::endl;
+	EmitSep('-');
+
 	try {
-		//	Ensure test directories exists...
-		CreatePathDirExtended(TEST_MoveFileTestDstDir, true);
-		CreatePathDirExtended(TEST_MoveFileTestSrcDir, true);
-		std::string time_string(MLB::Utility::TimeT().ToString());
-		time_string[10]  = '.';
-		time_string[13]  = '.';
-		time_string[16]  = '.';
-		std::string name_base("TEST_MLB_Utility_RenamePath." + time_string +
-			MLB::Utility::GetHostNameCanonical() + "." +
-			MLB::Utility::ZeroFill(MLB::Utility::CurrentProcessId(), 10) + "." +
-			MLB::Utility::ZeroFill(MLB::Utility::CurrentThreadId(), 10) + ".");
-		std::string src_name(std::string(TEST_MoveFileTestSrcDir) +
-			PathNameSeparatorCanonical_String + name_base + "SRC.txt");
-		std::string dst_name(std::string(TEST_MoveFileTestDstDir) +
-			PathNameSeparatorCanonical_String + name_base + "DST.txt");
-		std::cout << "Testing RenamePath():" << std::endl;
+		std::string base_dir("./TEST_UTIL_PathName_Move_" +
+			UniqueId().ToStringRadix64());
+		ResolveDirectoryPath(base_dir, "", false);
+		remove_list.push_back(base_dir);
+		std::string src_dir(base_dir + "/SrcDir");
+		std::string dst_dir(base_dir + "/DstDir");
+		//	Create test directories...
+		CreatePathDirExtended(src_dir, true);
+		remove_list.push_back(src_dir);
+		CreatePathDirExtended(dst_dir, true);
+		remove_list.push_back(dst_dir);
+		std::string src_name(src_dir +
+			"/TEST_MLB_Utility_RenamePath.SRC.IGNORE_ME");
+		std::string dst_name(dst_dir +
+			"/TEST_MLB_Utility_RenamePath.DST.IGNORE_ME");
+		remove_list.push_back(src_name);
+		remove_list.push_back(dst_name);
 		{
 			std::ofstream src_file(src_name.c_str());
 			if (src_file.fail())
@@ -1239,7 +1238,7 @@ VOID TEST_MoveFileLogic(int &return_code)
 		if (ResolveFilePath(src_name, "", false))
 			ThrowErrno("Source file '" + src_name + "' exists after the "
 				"file rename/move attempt.");
-		if (!ResolveFilePath(src_name, "", false))
+		if (!ResolveFilePath(dst_name, "", false))
 			ThrowErrno("Destination file '" + dst_name + "' does not exist after "
 				"the file rename/move attempt.");
 	}
@@ -1248,8 +1247,26 @@ VOID TEST_MoveFileLogic(int &return_code)
 			"function 'RenamePath()' failed: " << except.what() << std::endl;
 		return_code = EXIT_FAILURE;
 	}
+
+	//	Clean up...
+	while (!remove_list.empty()) {
+		try {
+			std::string tmp_name(remove_list.back());
+			remove_list.pop_back();
+			RemovePath(tmp_name);
+		}
+		catch (const std::exception &) {
+			;
+		}
+	}
+
+	EmitSep('=');
+
+	std::cout << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
@@ -1257,12 +1274,12 @@ int main(int argc, char **argv)
 	int return_code = EXIT_SUCCESS;
 
 	try {
-#if _Windows
-	TEST_SomeOtherStuff();
-#endif // #ifdef _WIndows
+		EmitSep('=');
 		std::cout << "Testing GetCurrentPath(): " << GetCurrentPath() <<
 			std::endl;
+		EmitSep('=');
 		std::cout << std::endl;
+		TEST_SomeOtherStuff();
 		TEST_MoveFileLogic(return_code);
 	}
 	catch (const std::exception &except) {
@@ -1271,17 +1288,25 @@ int main(int argc, char **argv)
 		return_code = EXIT_FAILURE;
 	}
 
-	unsigned int count_1;
-	for (count_1 = 1; count_1 < static_cast<unsigned int>(argc); ++count_1) {
-		try {
-			std::cout << "[" << argv[count_1] << "] ---> " << std::flush;
-			std::string full_path = ExpandToFullPathName(argv[count_1]);
-			std::cout << "[" << full_path << "]" << std::endl;
+	if (argc > 1) {
+		EmitSep('=');
+		std::cout << "Test Expansion of Path Names:" << std::endl;
+		unsigned int count_1;
+		for (count_1 = 1; count_1 < static_cast<unsigned int>(argc); ++count_1) {
+			EmitSep('-');
+			try {
+				std::cout << "From: [" << argv[count_1] << "]" << std::endl;
+				std::string full_path(ExpandToFullPathName(argv[count_1]));
+				std::cout << "To  : [" << full_path << "]" << std::endl;
+			}
+			catch (const std::exception &except) {
+				std::cout << "Regression test error: " << except.what() <<
+					std::endl;
+				return_code = EXIT_FAILURE;
+			}
 		}
-		catch (const std::exception &except) {
-			std::cout << "Regression test error: " << except.what() << std::endl;
-			return_code = EXIT_FAILURE;
-		}
+		EmitSep('=');
+		std::cout << std::endl;
 	}
 
 	return(return_code);
