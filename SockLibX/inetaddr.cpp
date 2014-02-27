@@ -29,6 +29,7 @@
 /*    Include necessary header files . . .                                 */
 /* *********************************************************************** */
  
+#include <stdio.h>
 #include <string.h>
 
 #include "npsli.h"
