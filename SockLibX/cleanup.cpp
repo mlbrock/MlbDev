@@ -36,11 +36,12 @@
 
 /* *********************************************************************** */
 
-#ifdef _MSC_VER
-# pragma warning(disable:4100)
-#endif /* # ifdef _MSC_VER */
 /* *********************************************************************** */
-int NPSL_SocketLibCleanUp(void *user_data_ptr, char *error_text)
+#ifdef _MSC_VER
+int NPSL_SocketLibCleanUp(void * /* user_data_ptr */, char *error_text)
+#else
+int NPSL_SocketLibCleanUp(void * /* user_data_ptr */, char * /* error_text */)
+#endif /* #ifdef _MSC_VER */
 {
 	int return_code = NPSL_SUCCESS;
 
@@ -58,7 +59,4 @@ int NPSL_SocketLibCleanUp(void *user_data_ptr, char *error_text)
 	return(return_code);
 }
 /* *********************************************************************** */
-#ifdef _MSC_VER
-# pragma warning(default:4100)
-#endif /* # ifdef _MSC_VER */
 
