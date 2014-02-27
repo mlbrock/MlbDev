@@ -186,6 +186,8 @@ EOH */
 /*	***********************************************************************	*/
 #ifdef _Windows
 typedef int NPSL_SEND_RECV_LEN_T;
+#elif defined(__linux__)
+typedef ssize_t NPSL_SEND_RECV_LEN_T;
 #else
 typedef size_t NPSL_SEND_RECV_LEN_T;
 #endif /* #ifdef _Windows */
