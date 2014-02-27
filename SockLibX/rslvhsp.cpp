@@ -76,7 +76,7 @@ int NPSL_ResolveHostServProtoStringBasic(int phs_flag, const char *in_string,
 	else if (MLB::NPSLI_Internal::chrcnt(in_string, ':') > 2) {
 		sprintf(tmp_error_text, "%s (%u) --- the maximum is 3.",
 			"Too many components encountered in specification string",
-			MLB::NPSLI_Internal::chrcnt(in_string, ':') + 1);
+			((unsigned int) MLB::NPSLI_Internal::chrcnt(in_string, ':') + 1));
 		return_code = NPSL_FAILURE;
 	}
 	else if (MLB::NPSLI_Internal::sepwordx_keep(in_string, ":", &tmp_count,

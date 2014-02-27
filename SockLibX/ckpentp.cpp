@@ -59,7 +59,7 @@ int NPSL_CheckProtoEntParams(const NPSL_PROTOENT *proto_ent_ptr,
 		if (error_text != NULL)
 			sprintf(error_text, "%s (%u) is less than the minimum (%u).",
 				"The 'NPSL_PROTOENT' buffer length", proto_ent_buffer_length,
-				sizeof(NPSL_PROTOENT));
+				((unsigned int) sizeof(NPSL_PROTOENT)));
 		return_code = NPSL_FAILURE;
 	}
 

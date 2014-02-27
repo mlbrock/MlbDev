@@ -59,7 +59,7 @@ int NPSL_CheckHostEntParams(const NPSL_HOSTENT *host_ent_ptr,
 		if (error_text != NULL)
 			sprintf(error_text, "%s (%u) is less than the minimum (%u).",
 				"The 'NPSL_HOSTENT' buffer length", host_ent_buffer_length,
-				sizeof(NPSL_HOSTENT));
+				((unsigned int) sizeof(NPSL_HOSTENT)));
 		return_code = NPSL_FAILURE;
 	}
 

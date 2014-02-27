@@ -60,7 +60,7 @@ int NPSL_CheckServEntParams(const NPSL_SERVENT *serv_ent_ptr,
 		if (error_text != NULL)
 			sprintf(error_text, "%s (%u) is less than the minimum (%u).",
 				"The 'NPSL_SERVENT' buffer length", serv_ent_buffer_length,
-				sizeof(NPSL_SERVENT));
+				((unsigned int) sizeof(NPSL_SERVENT)));
 		return_code = NPSL_FAILURE;
 	}
 

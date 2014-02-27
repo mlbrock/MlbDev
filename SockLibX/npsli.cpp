@@ -2483,9 +2483,11 @@ va_list       arg_list;
 	vsprintf(buffer, in_format, arg_list);
 	sprintf(buffer + strlen(buffer),
 		" --- (%u %s * %u %s) + %u %s = %u + %u = %u bytes required.",
-		element_count, "pointer elements", sizeof(void *), "(sizeof(void *))",
-		total_size, "memory pointed to", element_count * sizeof(void *),
-		total_size, (element_count * sizeof(void *)) + total_size);
+		element_count, "pointer elements", ((unsigned int) sizeof(void *)),
+		"(sizeof(void *))", total_size, "memory pointed to",
+		((unsigned int) (element_count * sizeof(void *))),
+		total_size,
+		((unsigned int) ((element_count * sizeof(void *)) + total_size)));
 
 	return(buffer);
 }
