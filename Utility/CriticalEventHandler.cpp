@@ -116,7 +116,7 @@ static void CriticalEventSignalHandler(int /* signal_id */)
 # ifdef __SVR4
 static void CriticalEventSignalHandler(int signal_id, siginfo_t *siginfo_ptr,
 	void *signal_address)
-# elif __GNUC__
+# elif defined(__GNUC__)
 static void CriticalEventSignalHandler(int /* signal_id */)
 # else
 static void CriticalEventSignalHandler(int signal_id, int signal_code,
