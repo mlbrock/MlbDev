@@ -45,8 +45,8 @@
 /*		The list of error descriptions for various operating systems . . .	*/
 /* *********************************************************************** */
 
-#ifdef _Windows
 static const NPSL_SocketErrorSpec NPSL_ErrorList[] = {
+#ifdef _Windows
 	{	WSAEACCES,	"WSAEACCES",
 		"Permission denied",
 		"An attempt was made to access a socket in a way forbidden by its \
@@ -419,12 +419,1204 @@ party has initiated a graceful shutdown sequence."
 socket, or the execution of the SIO_FLUSH command in WSAIoctl."
 	}
 # endif /* #ifdef WSA_OPERATION_ABORTED */
+	// ********** End of '#ifdef _Windows' **********
+#elif __SVR4
+const ErrnoSpec_Internal ErrnoList[] = {
+	{  0,						"00000",
+		"Error 0 / No error detected",
+		"No error encountered."
+	},
+	{
+		EPERM,	"EPERM",
+		"Not super-user",
+		"Typically this error indicates an attempt to modify a file in some \
+way forbidden except to its owner or the super-user. It is also returned for \
+attempts by ordinary users to do things allowed only to the super-user."
+	},
+	{
+		ENOENT,	"ENOENT",
+		"No such file or directory",
+		"A file name is specified and the file should exist but doesn't, or \
+one of the directories in a path name does not exist."
+	},
+	{
+		ESRCH,	"ESRCH",
+		"No such process, LWP, or thread",
+		"No process can be found in the system that corresponds to the \
+specified PID, LWPID_t, or thread_t."
+	},
+	{
+		EINTR,	"EINTR",
+		"Interrupted system call",
+		"An asynchronous signal (such as interrupt or quit), which the user \
+has elected to catch, occurred during a system service routine. If execution \
+is resumed after processing the signal, it will appear as if the interrupted \
+routine call returned this error condition."
+	},
+	{
+		EIO,	"EIO",
+		"I/O error",
+		"Some physical I/O error has occurred. This error may in some cases \
+occur on a call following the one to which it actually applies."
+	},
+	{
+		ENXIO,	"ENXIO",
+		"No such device or address",
+		"I/O on a special file refers to a subdevice which does not exist, or \
+exists beyond the limit of the device. It may also occur when, for example, \
+a tape drive is not on-line or no disk pack is loaded on a drive."
+	},
+	{
+		E2BIG,	"E2BIG",
+		"Arg list too long",
+		"An argument list longer than ARG_MAX bytes is presented to a member \
+of the exec family of routines. The argument list limit is the sum of the \
+size of the argument list plus the size of the environment's exported shell \
+variables."
+	},
+	{
+		ENOEXEC,	"ENOEXEC",
+		"Exec format error",
+		"A request is made to execute a file which, although it has the \
+appropriate permissions, does not start with a valid format (see a.out(4))."
+	},
+	{
+		EBADF,	"EBADF",
+		"Bad file number",
+		"Either a file descriptor refers to no open file, or a read \
+(respectively, write) request is made to a file that is open only for \
+writing (respectively, reading)."
+	},
+	{
+		ECHILD,	"ECHILD",
+		"No child processes",
+		"A wait routine was executed by a process that had no existing or \
+unwaited-for child processes."
+	},
+	{
+		EAGAIN,	"EAGAIN",
+		"No more processes, or no more LWPs",
+		"For example, the fork routine failed because the system's process \
+table is full or the user is not allowed to create any more processes, or a \
+system call failed because of insufficient memory or swap space."
+	},
+	{
+		ENOMEM,	"ENOMEM",
+		"Not enough space",
+		"During execution of an exec, brk, or sbrk routine, a program asks for \
+more space than the system is able to supply. This is not a temporary \
+condition; the maximum size is a system parameter. On some architectures, \
+the error may also occur if the arrangement of text, data, and stack \
+segments requires too many segmentation registers, or if there is not enough \
+swap space during the fork routine. If this error occurs on a resource \
+associated with Remote File Sharing (RFS), it indicates a memory depletion \
+which may be temporary, dependent on system activity at the time the call \
+was invoked."
+	},
+	{
+		EACCES,	"EACCES",
+		"Permission denied",
+		"An attempt was made to access a file in a way forbidden by the \
+protection system."
+	},
+	{
+		EFAULT,	"EFAULT",
+		"Bad address",
+		"The system encountered a hardware fault in attempting to use an \
+argument of a routine. For example, errno potentially may be set to EFAULT \
+any time a routine that takes a pointer argument is passed an invalid \
+address, if the system can detect the condition. Because systems will differ \
+in their ability to reliably detect a bad address, on some implementations \
+passing a bad address to a routine will result in undefined behavior."
+	},
+	{
+		ENOTBLK,	"ENOTBLK",
+		"Block device required",
+		"A non-block device or file was mentioned where a block device was \
+required (for example, in a call to the mount routine)."
+	},
+	{
+		EBUSY,	"EBUSY",
+		"Device busy",
+		"An attempt was made to mount a device that was already mounted or an \
+attempt was made to unmount a device on which there is an active file \
+(open file, current directory, mounted-on file, active text segment). It \
+will also occur if an attempt is made to enable accounting when it is \
+already enabled. The device or resource is currently unavailable. EBUSY is \
+also used by mutexs, semaphores, condition variables, and r/w locks, to \
+indicate that a lock is held. And, EBUSY is also used by the processor \
+control function P_ONLINE."
+	},
+	{
+		EEXIST,	"EEXIST",
+		"File exists",
+		"An existing file was mentioned in an inappropriate context (for \
+example, call to the link routine)."
+	},
+	{
+		EXDEV,	"EXDEV",
+		"Cross-device link",
+		"A hard link to a file on another device was attempted."
+	},
+	{
+		ENODEV,	"ENODEV",
+		"No such device",
+		"An attempt was made to apply an inappropriate operation to a device \
+(for example, read a write-only device)."
+	},
+	{
+		ENOTDIR,	"ENOTDIR",
+		"Not a directory",
+		"A non-directory was specified where a directory is required (for \
+example, in a path prefix or as an argument to the chdir routine)."
+	},
+	{
+		EISDIR,	"EISDIR",
+		"Is a directory",
+		"An attempt was made to write on a directory."
+	},
+	{
+		EINVAL,	"EINVAL",
+		"Invalid argument",
+		"An invalid argument was specified (for example, unmounting a \
+non-mounted device), mentioning an undefined signal in a call to the signal \
+or kill routine."
+	},
+	{
+		ENFILE,	"ENFILE",
+		"File table overflow",
+		"The system file table is full (that is, SYS_OPEN files are open, and \
+temporarily no more files can be opened)."
+	},
+	{
+		EMFILE,	"EMFILE",
+		"Too many open files",
+		"No process may have more than OPEN_MAX file descriptors open at a \
+time."
+	},
+	{
+		ENOTTY,	"ENOTTY",
+		"Inappropriate ioctl for device",
+		"A call was made to the ioctl routine specifying a file that is not a \
+special character device."
+	},
+	{
+		ETXTBSY,	"ETXTBSY",
+		"Text file busy (obsolete)",
+		"An attempt was made to execute a pure-procedure program that is \
+currently open for writing. Also an attempt to open for writing or to remove \
+a pure-procedure program that is being executed. (This message is obsolete.)"
+	},
+	{
+		EFBIG,	"EFBIG",
+		"File too large",
+		"The size of the file exceeded the limit specified by resource \
+RLIMIT_FSIZE; or, the file size exceeds the maximum supported by the file \
+system."
+	},
+	{
+		ENOSPC,	"ENOSPC",
+		"No space left on device",
+		"While writing an ordinary file or creating a directory entry, there \
+is no free space left on the device. In the fcntl routine, the setting or \
+removing of record locks on a file cannot be accomplished because there are \
+no more record entries left on the system."
+	},
+	{
+		ESPIPE,	"ESPIPE",
+		"Illegal seek",
+		"A call to the lseek routine was issued to a pipe."
+	},
+	{
+		EROFS,	"EROFS",
+		"Read-only file system",
+		"An attempt to modify a file or directory was made on a device mounted \
+read-only."
+	},
+	{
+		EMLINK,	"EMLINK",
+		"Too many links",
+		"An attempt to make more than the maximum number of links, LINK_MAX, \
+to a file."
+	},
+	{
+		EPIPE,	"EPIPE",
+		"Broken pipe",
+		"A write on a pipe for which there is no process to read the data. \
+This condition normally generates a signal; the error is returned if the \
+signal is ignored."
+	},
+	{
+		EDOM,	"EDOM",
+		"Math argument out of domain of func",
+		"The argument of a function in the math package (3M) is out of the \
+domain of the function."
+	},
+	{
+		ERANGE,	"ERANGE",
+		"Math result not representable",
+		"The value of a function in the math package (3M) is not representable \
+within machine precision."
+	},
+	{
+		ENOMSG,	"ENOMSG",
+		"No message of desired type",
+		"An attempt was made to receive a message of a type that does not \
+exist on the specified message queue (see msgop(2))."
+	},
+	{
+		EIDRM,	"EIDRM",
+		"Identifier removed",
+		"This error is returned to processes that resume execution due to the \
+removal of an identifier from the file system's name space (see msgctl(2), \
+semctl(2), and shmctl(2))."
+	},
+	{
+		ECHRNG,	"ECHRNG",
+		"Channel number out of range",
+		"Channel number out of range."
+	},
+	{
+		EL2NSYNC,	"EL2NSYNC",
+		"Level 2 not synchronized",
+		"Level 2 not synchronized."
+	},
+	{
+		EL3HLT,	"EL3HLT",
+		"Level 3 halted",
+		"Level 3 halted."
+	},
+	{
+		EL3RST,	"EL3RST",
+		"Level 3 reset",
+		"Level 3 reset."
+	},
+	{
+		ELNRNG,	"ELNRNG",
+		"Link number out of range",
+		"Link number out of range."
+	},
+	{
+		EUNATCH,	"EUNATCH",
+		"Protocol driver not attached",
+		"Protocol driver not attached."
+	},
+	{
+		ENOCSI,	"ENOCSI",
+		"No CSI structure available",
+		"No CSI structure available."
+	},
+	{
+		EL2HLT,	"EL2HLT",
+		"Level 2 halted",
+		"Level 2 halted."
+	},
+	{
+		EDEADLK,	"EDEADLK",
+		"Deadlock condition",
+		"A deadlock situation was detected and avoided. This error pertains to \
+file and record locking, and also applies to mutexs, semaphores, condition \
+variables, and r/w locks."
+	},
+	{
+		ENOLCK,	"ENOLCK",
+		"No record locks available",
+		"There are no more locks available. The system lock table is full (see \
+fcntl(2))."
+	},
+	{
+		ECANCELED,	"ECANCELED",
+		"Operation canceled",
+		"The associated asynchronous operation was canceled before completion."
+	},
+	{
+		ENOTSUP,	"ENOTSUP",
+		"Not supported",
+		"This version of the system does not support this feature. Future \
+versions of the system may provide support."
+	},
+	{
+		49,	"Error 49",
+		"Reserved",
+		"Reserved."
+	},
+	{
+		58,	"Error 58",
+		"Reserved",
+		"Reserved."
+	},
+	{
+		59,	"Error 59",
+		"Reserved",
+		"Reserved."
+	},
+	{
+		ENOSTR,	"ENOSTR",
+		"Device not a stream",
+		"A putmsg or getmsg system call was attempted on a file descriptor \
+that is not a STREAMS device."
+	},
+	{
+		ENODATA,	"ENODATA",
+		"No data available",
+		"No data available."
+	},
+	{
+		ETIME,	"ETIME",
+		"Timer expired",
+		"The timer set for a STREAMS ioctl call has expired. The cause of this \
+error is device specific and could indicate either a hardware or software \
+failure, or perhaps a timeout value that is too short for the specific \
+operation. The status of the ioctl operation is indeterminate. This is also \
+returned in the case of _lwp_cond_timedwait() or cond_timedwait()."
+	},
+	{
+		ENOSR,	"ENOSR",
+		"Out of stream resources",
+		"During a STREAMS open, either no STREAMS queues or no STREAMS head \
+data structures were available. This is a temporary condition; one may \
+recover from it if other processes release resources."
+	},
+	{
+		ENONET,	"ENONET",
+		"Machine is not on the network",
+		"This error is Remote File Sharing (RFS) specific. It occurs when \
+users try to advertise, unadvertise, mount, or unmount remote resources \
+while the machine has not done the proper startup to connect to the network."
+	},
+	{
+		ENOPKG,	"ENOPKG",
+		"Package not installed",
+		"This error occurs when users attempt to use a system call from a \
+package which has not been installed."
+	},
+	{
+		EREMOTE,	"EREMOTE",
+		"Object is remote",
+		"This error is RFS specific. It occurs when users try to advertise a \
+resource which is not on the local machine, or try to mount/unmount a device \
+(or pathname) that is on a remote machine."
+	},
+	{
+		ENOLINK,	"ENOLINK",
+		"Link has been severed",
+		"This error is RFS specific. It occurs when the link (virtual circuit) \
+connecting to a remote machine is gone."
+	},
+	{
+		EADV,	"EADV",
+		"Advertise error",
+		"This error is RFS specific. It occurs when users try to advertise a \
+resource which has been advertised already, or try to stop RFS while there \
+are resources still advertised, or try to force unmount a resource when it \
+is still advertised."
+	},
+	{
+		ESRMNT,	"ESRMNT",
+		"Srmount error",
+		"This error is RFS specific. It occurs when an attempt is made to stop \
+RFS while resources are still mounted by remote machines, or when a resource \
+is readvertised with a client list that does not include a remote machine \
+that currently has the resource mounted."
+	},
+	{
+		ECOMM,	"ECOMM",
+		"Communication error on send",
+		"This error is RFS specific. It occurs when the current process is \
+waiting for a message from a remote machine, and the virtual circuit fails."
+	},
+	{
+		EPROTO,	"EPROTO",
+		"Protocol error",
+		"Some protocol error occurred. This error is device specific, but is \
+generally not related to a hardware failure."
+	},
+	{
+		EMULTIHOP,	"EMULTIHOP",
+		"Multihop attempted",
+		"This error is RFS specific. It occurs when users try to access remote \
+resources which are not directly accessible."
+	},
+# ifdef EDOTDOT
+	//	***** Unable to locate manifest constant 'EDOTDOT' Solaris 2.4 *****
+	{
+		EDOTDOT,	"EDOTDOT",
+		"Error 76",
+		"This error is RFS specific. A way for the server to tell the client \
+that a process has transferred back from mount point."
+	},
+# endif // # ifdef EDOTDOT
+	{
+		EBADMSG,	"EBADMSG",
+		"Not a data message",
+		"During a read, getmsg, or ioctl I_RECVFD system call to a STREAMS \
+device, something has come to the head of the queue that can't be processed. \
+That something depends on the system call --- read: control information or \
+passed file descriptor --- getmsg: passed file descriptor --- ioctl: control \
+or data information."
+	},
+	{
+		ENAMETOOLONG,	"ENAMETOOLONG",
+		"File name too long",
+		"The length of the path argument exceeds PATH_MAX, or the length of a \
+path component exceeds NAME_MAX while _POSIX_NO_TRUNC is in effect; see \
+limits(4)."
+	},
+	{
+		EOVERFLOW,	"EOVERFLOW",
+		"Value too large for defined data type",
+		"Value too large for defined data type."
+	},
+	{
+		ENOTUNIQ,	"ENOTUNIQ",
+		"Name not unique on network",
+		"Given log name not unique."
+	},
+	{
+		EBADFD,	"EBADFD",
+		"File descriptor in bad state",
+		"Either a file descriptor refers to no open file or a read request was \
+made to a file that is open only for writing."
+	},
+	{
+		EREMCHG,	"EREMCHG",
+		"Remote address changed",
+		"Remote address changed."
+	},
+	{
+		ELIBACC,	"ELIBACC",
+		"Cannot access a needed shared library",
+		"Trying to exec an a.out that requires a static shared library and the \
+static shared library doesn't exist or the user doesn't have permission to \
+use it."
+	},
+	{
+		ELIBBAD,	"ELIBBAD",
+		"Accessing a corrupted shared library",
+		"Trying to exec an a.out that requires a static shared library (to be \
+linked in) and exec could not load the static shared library. The static \
+shared library is probably corrupted."
+	},
+	{
+		ELIBSCN,	"ELIBSCN",
+		"lib section in a.out corrupted",
+		"Trying to exec an a.out that requires a static shared library (to be \
+linked in) and there was erroneous data in the .lib section of the a.out. \
+The .lib section tells exec what static shared libraries are needed. The \
+a.out is probably corrupted."
+	},
+	{
+		ELIBMAX,	"ELIBMAX",
+		"Attempting to link in more shared libraries than system limit",
+		"Trying to exec an a.out that requires more static shared libraries \
+than is allowed on the current configuration of the system. See NFS \
+Administration Guide."
+	},
+	{
+		ELIBEXEC,	"ELIBEXEC",
+		"Cannot exec a shared library directly",
+		"Attempting to exec a shared library directly."
+	},
+	{
+		EILSEQ,	"EILSEQ",
+		"Wide character encoding error",
+		"Illegal byte sequence. Cannot handle multiple characters as a single \
+character."
+	},
+	{
+		ENOSYS,	"ENOSYS",
+		"Operation not applicable",
+		"Operation not applicable."
+	},
+	{
+		ELOOP,	"ELOOP",
+		"Too many levels of symbolic links",
+		"Number of symbolic links encountered during path name traversal \
+exceeds MAXSYMLINKS"
+	},
+# ifdef ESTART
+	//	***** Unable to locate manifest constant 'ESTART' Solaris 2.4 ******
+	{
+		ESTART,	"ESTART",
+		"Restartable system call",
+		"Interrupted system call should be restarted."
+	},
+# endif // # ifdef ESTART
+	{
+		ESTRPIPE,	"ESTRPIPE",
+		"If pipe/FIFO, don't sleep in stream head",
+		"Streams pipe error (not externally visible)."
+	},
+	{
+		ENOTEMPTY,	"ENOTEMPTY",
+		"Directory not empty",
+		"Directory not empty."
+	},
+	{
+		EUSERS,	"EUSERS",
+		"Too many users",
+		"Too many users."
+	},
+	{
+		ENOTSOCK,	"ENOTSOCK",
+		"Socket operation on non-socket",
+		"Socket operation on non-socket."
+	},
+	{
+		EDESTADDRREQ,	"EDESTADDRREQ",
+		"Destination address required",
+		"A required address was omitted from an operation on a transport \
+endpoint. Destination address required."
+	},
+	{
+		EMSGSIZE,	"EMSGSIZE",
+		"Message too long",
+		"A message sent on a transport provider was larger than the internal \
+message buffer or some other network limit."
+	},
+	{
+		EPROTOTYPE,	"EPROTOTYPE",
+		"Protocol wrong type for socket",
+		"A protocol was specified that does not support the semantics of the \
+socket type requested."
+	},
+	{
+		ENOPROTOOPT,	"ENOPROTOOPT",
+		"Protocol not available",
+		"A bad option or level was specified when getting or setting options \
+for a protocol."
+	},
+	{
+		EPROTONOSUPPORT,	"EPROTONOSUPPORT",
+		"Protocol not supported",
+		"The protocol has not been configured into the system or no \
+implementation for it exists."
+	},
+	{
+		ESOCKTNOSUPPORT,	"ESOCKTNOSUPPORT",
+		"Socket type not supported",
+		"The support for the socket type has not been configured into the \
+system or no implementation for it exists."
+	},
+	{
+		EOPNOTSUPP,	"EOPNOTSUPP",
+		"Operation not supported on transport endpoint",
+		"For example, trying to accept a connection on a datagram transport \
+endpoint."
+	},
+	{
+		EPFNOSUPPORT,	"EPFNOSUPPORT",
+		"Protocol family not supported",
+		"The protocol family has not been configured into the system or no \
+implementation for it exists. Used for the Internet protocols."
+	},
+	{
+		EAFNOSUPPORT,	"EAFNOSUPPORT",
+		"Address family not supported by protocol family",
+		"An address incompatible with the requested protocol was used."
+	},
+	{
+		EADDRINUSE,	"EADDRINUSE",
+		"Address already in use",
+		"User attempted to use an address already in use, and the protocol \
+does not allow this."
+	},
+	{
+		EADDRNOTAVAIL,	"EADDRNOTAVAIL",
+		"Cannot assign requested address",
+		"Results from an attempt to create a transport endpoint with an \
+address not on the current machine."
+	},
+	{
+		ENETDOWN,	"ENETDOWN",
+		"Network is down",
+		"Operation encountered a dead network."
+	},
+	{
+		ENETUNREACH,	"ENETUNREACH",
+		"Network is unreachable",
+		"Operation was attempted to an unreachable network."
+	},
+	{
+		ENETRESET,	"ENETRESET",
+		"Network dropped connection because of reset",
+		"The host you were connected to crashed and rebooted."
+	},
+	{
+		ECONNABORTED,	"ECONNABORTED",
+		"Software caused connection abort",
+		"A connection abort was caused internal to your host machine."
+	},
+	{
+		ECONNRESET,	"ECONNRESET",
+		"Connection reset by peer",
+		"A connection was forcibly closed by a peer. This normally results \
+from a loss of the connection on the remote host due to a timeout or a \
+reboot."
+	},
+	{
+		ENOBUFS,	"ENOBUFS",
+		"No buffer space available",
+		"An operation on a transport endpoint or pipe was not performed \
+because the system lacked sufficient buffer space or because a queue was \
+full."
+	},
+	{
+		EISCONN,	"EISCONN",
+		"Transport endpoint is already connected",
+		"A connect request was made on an already connected transport \
+endpoint; or, a sendto or sendmsg request on a connected transport endpoint \
+specified a destination when already connected."
+	},
+	{
+		ENOTCONN,	"ENOTCONN",
+		"Transport endpoint is not connected",
+		"A request to send or receive data was disallowed because the \
+transport endpoint is not connected and (when sending a datagram) no address \
+was supplied."
+	},
+	{
+		ESHUTDOWN,	"ESHUTDOWN",
+		"Cannot send after transport endpoint shutdown",
+		"A request to send data was disallowed because the transport endpoint \
+has already been shut down."
+	},
+	{
+		ETOOMANYREFS,	"ETOOMANYREFS",
+		"Too many references: cannot splice",
+		"Too many references: cannot splice."
+	},
+	{
+		ETIMEDOUT,	"ETIMEDOUT",
+		"Connection timed out",
+		"A connect or send request failed because the connected party did not \
+properly respond after a period of time. (The timeout period is dependent on \
+the communication protocol.)"
+	},
+	{
+		ECONNREFUSED,	"ECONNREFUSED",
+		"Connection refused",
+		"No connection could be made because the target machine actively \
+refused it. This usually results from trying to connect to a service that is \
+inactive on the remote host."
+	},
+	{
+		EHOSTDOWN,	"EHOSTDOWN",
+		"Host is down",
+		"A transport provider operation failed because the destination host \
+was down."
+	},
+	{
+		EHOSTUNREACH,	"EHOSTUNREACH",
+		"No route to host",
+		"A transport provider operation was attempted to an unreachable host."
+	},
+	{
+		EALREADY,	"EALREADY",
+		"Operation already in progress",
+		"An operation was attempted on a non-blocking object that already had \
+an operation in progress."
+	},
+	{
+		EINPROGRESS,	"EINPROGRESS",
+		"Operation now in progress",
+		"An operation that takes a long time to complete (such as a connect) \
+was attempted on a non-blocking object."
+	},
+	{
+		ESTALE,	"ESTALE",
+		"Stale NFS file handle",
+		"Stale NFS file handle."
+	}
+};
+	// ********** End of '#elif __SVR4' **********
+#else
+	{  0,						"00000",
+		"Error 0 / No error detected",
+		"No error encountered."
+	},
+	{  EPERM,				"EPERM",
+		"Not owner",
+		"Typically this error indicates an attempt to modify a file in some \
+way forbidden except to its owner or super-user. It is also returned for \
+attempts by ordinary users to do things allowed only to the super-user."
+	},
+	{  ENOENT,				"ENOENT",
+		"No such file or directory",
+		"This error occurs when a file name is specified and the file should \
+exist but does not, or when one of the directories in a path name does not \
+exist."
+	},
+	{  ESRCH,				"ESRCH",
+		"No such process",
+		"The process or process group whose number was given does not exist, \
+or any such process is already dead."
+	},
+	{  EINTR,				"EINTR",
+		"Interrupted system call",
+		"An asynchronous signal (such as interrupt or quit) that the process \
+has elected to catch occurred during a system call. If execution is resumed \
+after processing the signal, and the system call is not restarted, it will \
+appear as if the interrupted system call returned this error condition."
+	},
+	{  EIO,					"EIO",
+		"I/O error",
+		"Some physical I/O error occurred. This error may in some cases occur \
+on a call following the one to which it actually applies."
+	},
+	{  ENXIO,				"ENXIO",
+		"No such device or address",
+		"I/O on a special file refers to a subdevice that does not exist, or \
+beyond the limits of the device. It may also occur when, for example, a tape \
+drive is not on-line or no disk pack is loaded on a drive."
+	},
+	{  E2BIG,				"E2BIG",
+		"Arg list too long",
+		"An argument list longer than the maximum number of bytes was presented \
+to execve() or a routine that called execve()."
+	},
+	{  ENOEXEC,				"ENOEXEC",
+		"Exec format error",
+		"A request is made to execute a file which, although it has the \
+appropriate permissions, does not start with a valid magic number \
+(see 'man 5 a.out')."
+	},
+	{  EBADF,				"EBADF",
+		"Bad file number",
+		"Either a file descriptor refers to no open file, or a read \
+(respectively, write) request is made to a file that is open only for \
+writing (respectively, reading)."
+	},
+	{	ECHILD,				"ECHILD",
+		"No children",
+		"A wait() was executed by a process that had no existing or \
+unwaited-for child processes."
+	},
+	{	EAGAIN,				"EAGAIN",
+		"No more processes",
+		"A fork() failed because the system's process table is full or the \
+user is not allowed to create any more processes, or a system call failed \
+because of insufficient resources."
+	},
+	{	ENOMEM,				"ENOMEM",
+		"Not enough memory",
+		"During an execve(), sbrk(), or brk(), a program asks for more address \
+space or swap space than the system is able to supply, or a process size \
+limit would be exceeded. A lack of swap space is normally a temporary \
+condition; however, a lack of address space is not a temporary condition. \
+The maximum size of the text, data, and stack segments is a system \
+parameter.  Soft limits may be increased to their corresponding hard limits."
+	},
+	{	EACCES,				"EACCES",
+		"Permission denied",
+		"An attempt was made to access a file in a way forbidden by the \
+protection system."
+	},
+	{	EFAULT,				"EFAULT",
+		"Bad address",
+		"The system encountered a hardware fault in attempting to access the \
+arguments of a system call."
+	},
+	{	ENOTBLK,				"ENOTBLK",
+		"Block device required",
+		"A file that is not a block device was mentioned where a block device \
+was required, for example, in mount()."
+	},
+	{	EBUSY,				"EBUSY",
+		"Device busy",
+		"An attempt was made to mount a file system that was already mounted \
+or an attempt was made to dismount a file system on which there is an \
+active file (open file, mapped file, current directory, or mounted-on \
+directory)."
+	},
+	{	EEXIST,				"EEXIST",
+		"File exists",
+		"An existing file was mentioned in an inappropriate context, for \
+example, link()."
+	},
+	{	EXDEV,				"EXDEV",
+		"Cross-device link",
+		"A hard link to a file on another file system was attempted."
+	},
+	{	ENODEV,				"ENODEV",
+		"No such device",
+		"An attempt was made to apply an inappropriate system call to a device \
+(for example, an attempt to read a write-only device) or an attempt was made \
+to use a device not configured by the system."
+	},
+	{	ENOTDIR,				"ENOTDIR",
+		"Not a directory",
+		"A non-directory was specified where a directory is required, for \
+example, in a path prefix or as an argument to chdir()."
+	},
+	{	EISDIR,				"EISDIR",
+		"Is a directory",
+		"An attempt was made to write on a directory."
+	},
+	{	EINVAL,				"EINVAL",
+		"Invalid argument",
+		"A system call was made with an invalid argument; for example, \
+dismounting a non-mounted file system, mentioning an unknown signal in \
+sigvec() or kill(), reading or writing a file for which lseek() has \
+generated a negative pointer, or some other argument inappropriate for the \
+call. Also set by math functions, see 'man 3 intro'."
+	},
+	{	ENFILE,				"ENFILE",
+		"File table overflow",
+		"The system's table of open files is full, and temporarily no more \
+open() calls can be accepted."
+	},
+	{	EMFILE,				"EMFILE",
+		"Too many open files",
+		"A process tried to have more open files than the system allows a \
+process to have. The customary configuration limit is 64 per process."
+	},
+	{	ENOTTY,				"ENOTTY",
+		"Inappropriate ioctl for device",
+		"The code used in an ioctl() call is not supported by the object that \
+the file descriptor in the call refers to."
+	},
+	{	ETXTBSY,				"ETXTBSY",
+		"Text file busy",
+		"An attempt was made to execute a pure-procedure program that is \
+currently open for writing, or an attempt was made to open for writing a \
+pure-procedure program that is being executed."
+	},
+	{	EFBIG,				"EFBIG",
+		"File too large",
+		"The size of a file exceeded the maximum file size (1,082,201,088 \
+bytes)."
+	},
+	{	ENOSPC,				"ENOSPC",
+		"No space left on device",
+		"A write() to an ordinary file, the creation of a directory or \
+symbolic link, or the creation of a directory entry failed because no more \
+disk blocks are available on the file system, or the allocation of an inode \
+for a newly created file failed because no more inodes are available on the \
+file system."
+	},
+	{	ESPIPE,				"ESPIPE",
+		"Illegal seek",
+		"An lseek() was issued to a socket or pipe. This error may also be \
+issued for other non-seekable devices."
+	},
+	{	EROFS,				"EROFS",
+		"Read-only file system",
+		"An attempt to modify a file or directory was made on a file system \
+mounted read-only."
+	},
+	{	EMLINK,				"EMLINK",
+		"Too many links",
+		"An attempt was made to make more than 32767 hard links to a file."
+	},
+	{	EPIPE,				"EPIPE",
+		"Broken pipe",
+		"An attempt was made to write on a pipe or socket for which there is \
+no process to read the data. This condition normally generates a signal; the \
+error is returned if the signal is caught or ignored."
+	},
+	{	EDOM,					"EDOM",
+		"Argument too large",
+		"The argument of a function in the math library (as described in \
+section 3M) is out of the domain of the function."
+	},
+	{	ERANGE,				"ERANGE",
+		"Result too large",
+		"The value of a function in the math library (as described in section \
+3M) is unrepresentable within machine precision."
+	},
+	{	EWOULDBLOCK,		"EWOULDBLOCK",
+		"Operation would block",
+		"An operation that would cause a process to block was attempted on an \
+object in non-blocking mode (see ioctl())."
+	},
+	{	EINPROGRESS,		"EINPROGRESS",
+		"Operation now in progress",
+		"An operation that takes a long time to complete (such as a connect()) \
+was attempted on a non-blocking object (see ioctl())."
+	},
+	{	EALREADY,			"EALREADY",
+		"Operation already in progress",
+		"An operation was attempted on a non-blocking object that already had \
+an operation in progress."
+	},
+	{	ENOTSOCK,			"ENOTSOCK",
+		"Socket operation on non-socket",
+		"Self-explanatory."
+	},
+	{	EDESTADDRREQ,		"EDESTADDRREQ",
+		"Destination address required",
+		"A required address was omitted from an operation on a socket."
+	},
+	{	EMSGSIZE,			"EMSGSIZE",
+		"Message too long",
+		"A message sent on a socket was larger than the internal message \
+buffer."
+	},
+	{	EPROTOTYPE,			"EPROTOTYPE",
+		"Protocol wrong type for socket",
+		"A protocol was specified that does not support the semantics of the \
+socket type requested. For example, you cannot use the ARPA Internet UDP \
+protocol with type SOCK_STREAM."
+	},
+	{	ENOPROTOOPT,		"ENOPROTOOPT",
+		"Option not supported by protocol",
+		"A bad option was specified in a setsockopt() or getsockopt() call."
+	},
+	{	EPROTONOSUPPORT,	"EPROTONOSUPPORT",
+		"Protocol not supported",
+		"The protocol has not been configured into the system or no \
+implementation for it exists."
+	},
+	{	ESOCKTNOSUPPORT,	"ESOCKTNOSUPPORT",
+		"Socket type not supported",
+		"The support for the socket type has not been configured into the \
+system or no implementation for it exists."
+	},
+	{	EOPNOTSUPP,			"EOPNOTSUPP",
+		"Operation not supported on socket",
+		"For example, trying to accept a connection on a datagram socket."
+	},
+	{	EPFNOSUPPORT,		"EPFNOSUPPORT",
+		"Protocol family not supported",
+		"The protocol family has not been configured into the system or no \
+implementation for it exists."
+	},
+	{	EAFNOSUPPORT,		"EAFNOSUPPORT",
+		"Address family not supported by protocol family",
+		"An address incompatible with the requested protocol was used. For \
+example, you should not necessarily expect to be able to use PUP Internet \
+addresses with ARPA Internet protocols."
+	},
+	{	EADDRINUSE,			"EADDRINUSE",
+		"Address already in use",
+		"Only one usage of each address is normally permitted."
+	},
+	{	EADDRNOTAVAIL,		"EADDRNOTAVAIL",
+		"Can't assign requested address",
+		"Normally results from an attempt to create a socket with an address \
+not on this machine."
+	},
+	{	ENETDOWN,			"ENETDOWN",
+		"Network is down",
+		"A socket operation encountered a dead network."
+	},
+	{	ENETUNREACH,		"ENETUNREACH",
+		"Network is unreachable",
+		"A socket operation was attempted to an unreachable network."
+	},
+	{	ENETRESET,			"ENETRESET",
+		"Network dropped connection on reset",
+		"The host you were connected to crashed and rebooted."
+	},
+	{	ECONNABORTED,		"ECONNABORTED",
+		"Software caused connection abort",
+		"A connection abort was caused internal to your host machine."
+	},
+	{	ECONNRESET,			"ECONNRESET",
+		"Connection reset by peer",
+		"A connection was forcibly closed by a peer. This normally results \
+from the peer executing a shutdown() call."
+	},
+	{	ENOBUFS,				"ENOBUFS",
+		"No buffer space available",
+		"An operation on a socket or pipe was not performed because the system \
+lacked sufficient buffer space."
+	},
+	{	EISCONN,				"EISCONN",
+		"Socket is already connected",
+		"A connect() request was made on an already connected socket; or, a \
+sendto() or sendmsg() request on a connected socket specified a destination \
+other than the connected party."
+	},
+	{	ENOTCONN,			"ENOTCONN",
+		"Socket is not connected",
+		"An request to send or receive data was disallowed because the socket \
+is not connected."
+	},
+	{	ESHUTDOWN,			"ESHUTDOWN",
+		"Can't send after socket shutdown",
+		"A request to send data was disallowed because the socket had already \
+been shut down with a previous shutdown call."
+	},
+	{	ETOOMANYREFS,		"ETOOMANYREFS",
+		"Too many references: can't splice",
+		""
+	},
+	{	ETIMEDOUT,			"ETIMEDOUT",
+		"Connection timed out",
+		"A connect request or an NFS request failed because the party to which \
+the request was made did not properly respond after a period of time. The \
+timeout period is dependent on the communication protocol"
+	},
+	{	ECONNREFUSED,		"ECONNNREFUSED",
+		"Connection refused",
+		"No connection could be made because the target machine actively \
+refused it. This usually results from trying to connect to a service that \
+is inactive on the foreign host."
+	},
+	{	ELOOP,				"ELOOP",
+		"Too many levels of symbolic links",
+		"A path name lookup involved more than 20 symbolic links."
+	},
+	{	ENAMETOOLONG,		"ENAMETOOLONG",
+		"File name too long",
+		"A component of a path name exceeded 255 characters, or an entire path \
+name exceeded 1024 characters."
+	},
+	{	EHOSTDOWN,			"EHOSTDOWN",
+		"Host is down",
+		"A socket operation failed because the destination host was down."
+	},
+	{	EHOSTUNREACH,		"EHOSTUNREACH",
+		"Host is unreachable",
+		"A socket operation was attempted to an unreachable host."
+	},
+	{	ENOTEMPTY,			"ENOTEMPTY",
+		"Directory not empty",
+		"An attempt was made to remove a directory with entries other than \
+'&.' and '&.|.' by performing a rmdir() system call or a rename() system \
+call with that directory specified as the target directory."
+	},
+#ifdef EPROCLIM
+	{	EPROCLIM,			"EPROCLIM",
+		"Too many processes",
+		""
+	},
+#endif // #ifdef EPROCLIM
+	{	EUSERS,				"EUSERS",
+		"Too many users",
+		"An operation to read disk quota information for the user failed \
+because the system quota table was full."
+	},
+	{	EDQUOT,				"EDQUOT",
+		"Disc quota exceeded",
+		"A write() to an ordinary file, the creation of a directory or \
+symbolic link, or the creation of a directory entry failed because the \
+user's quota of disk blocks was exhausted, or the allocation of an inode \
+for a newly created file failed because the user's quota of inodes was \
+exhausted."
+	},
+	{	ESTALE,				"ESTALE",
+		"Stale NFS file handle",
+		"An NFS client referenced a file that it had opened but that had since \
+been deleted."
+	},
+	{	EREMOTE,				"EREMOTE",
+		"Too many levels of remote in path",
+		"An attempt was made to remotely mount a file system into a path that \
+already has a remotely mounted component."
+	},
+	{	ENOSTR,				"ENOSTR",
+		"Not a stream device",
+		"A putmsg() or getmsg() system call was attempted on a file descriptor \
+that is not a STREAMS device."
+	},
+	{	ETIME,				"ETIME",
+		"Timer expired",
+		"The timer set for a STREAMS ioctl() call has expired. The cause of \
+this error is device specific and could indicate either a hardware or \
+software failure, or perhaps a timeout value that is too short for the \
+specific operation. The status of the ioctl() operation is indeterminate."
+	},
+	{	ENOSR,				"ENOSR",
+		"Out of stream resources",
+		"During a STREAMS open(), either no STREAMS queues or no STREAMS head \
+data structures were available."
+	},
+	{	ENOMSG,				"ENOMSG",
+		"No message of desired type",
+		"An attempt was made to receive a message of a type that does not \
+exist on the specified message queue; see msgop()."
+	},
+	{	EBADMSG,				"EBADMSG",
+		"Not a data message",
+		"During a read(), getmsg(), or ioctl() I_RECVFD system call to a \
+STREAMS device, something has come to the head of the queue that cannot be \
+processed.  That something depends on the system call: read() control \
+information or a passed file descriptor. getmsg() passed file descriptor. \
+ioctl() control or data information."
+	},
+	{	EIDRM,				"EIDRM",
+		"Identifier removed",
+		"This error is returned to processes that resume execution due to the \
+removal of an identifier from the QUERY"
+	},
+	{	EDEADLK,				"EDEADLK",
+		"Deadlock situation detected/avoided",
+		"An attempt was made to lock a system resource that would have \
+resulted in a deadlock situation."
+	},
+	{	ENOLCK,				"ENOLCK",
+		"No record locks available",
+		"A system-imposed limit on the number of simultaneous file and record \
+locks was reached and no more were available at that time."
+	},
+	{	ENONET,				"ENONET",
+		"Machine is not on the network",
+		"A attempt was made to advertise, unadvertise, mount, or unmount \
+remote resources while the machine has not done the proper startup to \
+connect to the network.  This error is Remote File Sharing (RFS) specific."
+	},
+#ifdef ERREMOTE
+	{	ERREMOTE,			"ERREMOTE",
+		"Object is remote",
+		"An attempt was made to advertise a resource which is not on the local \
+machine, or to mount/unmount a device (or pathname) that is on a remote \
+machine. This error is RFS specific."
+	},
+#endif // #ifdef ERREMOTE
+	{	ENOLINK,				"ENOLINK",
+		"Link has been severed",
+		"The link (virtual circuit) connecting to a remote machine is gone. \
+This error is RFS specific."
+	},
+	{	EADV,					"EADV",
+		"Advertise error ",
+		"An attempt was made to advertise a resource which has been advertised \
+already, or to stop the RFS while there ENOSYS are resources still \
+advertised, or to force unmount a resource when it is still advertised. \
+This error is RFS specific."
+	},
+	{	ESRMNT,				"ESRMNT",
+		"Srmount error ",
+		"An attempt was made to stop RFS while there are resources still \
+mounted by remote machines. This error is RFS specific."
+	},
+	{	ECOMM,				"ECOMM",
+		"Communication error on send",
+		"An attempt was made to send messages to a remote machine when no \
+virtual circuit could be found. This error is RFS specific."
+	},
+	{	EPROTO,				"EPROTO",
+		"Protocol error",
+		"Some protocol error occurred.  This error is device specific, but is \
+generally not related to a hardware failure."
+	},
+	{	EMULTIHOP,			"EMULTIHOP",
+		"Multihop attempted",
+		"An attempt was made to access remote resources which are not directly \
+accessible.  This error is RFS specific."
+	},
+	{	EDOTDOT,				"EDOTDOT",
+		"EDOTDOT Should never occur",
+		""
+	},
+	{	EREMCHG,				"EREMCHG",
+		"Remote address changed",
+		""
+	},
+	{	ENOSYS,				"ENOSYS",
+		"Function not implemented",
+		"An attempt was made to use a function that is not available in this \
+implementation."
+	}
+	// ********** End of '#else' **********
+#endif /* #ifdef _Windows */
 };
 
 static const unsigned int NPSL_ErrorCount =
 	(sizeof(NPSL_ErrorList) / sizeof(NPSL_ErrorList[0]));
-
-#endif /* #ifdef _Windows */
 
 /* *********************************************************************** */
 
@@ -432,12 +1624,8 @@ static const unsigned int NPSL_ErrorCount =
 void NPSL_GetErrorList(unsigned int *out_count,
 	const NPSL_SocketErrorSpec **out_list)
 {
-#ifdef _Windows
 	*out_count = NPSL_ErrorCount;
 	*out_list  = NPSL_ErrorList;
-#else
-	GEN_GetErrorList(out_count, out_list);
-#endif /* #ifdef _Windows */
 }
 /*	***********************************************************************	*/
 
@@ -627,7 +1815,7 @@ char *NPSL_AppendLastErrorString(int long_flag, unsigned int max_text,
 	return(NPSL_AppendErrorString(WSAGetLastError(), long_flag, max_text,
 		error_text));
 #else
-	return(GEN_AppendErrorString(errno, long_flag, max_text, error_text));
+	return(NPSL_AppendErrorString(errno, long_flag, max_text, error_text));
 #endif /* #ifdef _Windows */
 }
 /* *********************************************************************** */
@@ -721,7 +1909,6 @@ EOH */
 char *NPSL_GetErrorString(int errno_code, int long_flag, unsigned int max_text,
 	char *error_text)
 {
-#ifdef _Windows
 	const NPSL_SocketErrorSpec *errno_ptr;
 	char                        buffer[4196];
 	char                        number_buffer[IntToString_MaxLen + 1];
@@ -748,9 +1935,6 @@ char *NPSL_GetErrorString(int errno_code, int long_flag, unsigned int max_text,
 			max_text);
 
 	return(error_text);
-#else
-	return(GEN_GetErrorString(errno_code, long_flag, max_text, error_text));
-#endif /* #ifdef _Windows */
 }
 /* *********************************************************************** */
 
@@ -840,7 +2024,7 @@ char *NPSL_GetLastErrorString(int long_flag, unsigned int max_text,
 	return(NPSL_GetErrorString(WSAGetLastError(), long_flag, max_text,
 		error_text));
 #else
-	return(GEN_GetErrorString(errno, long_flag, max_text, error_text));
+	return(NPSL_GetErrorString(errno, long_flag, max_text, error_text));
 #endif /* #ifdef _Windows */
 }
 /* *********************************************************************** */
@@ -904,7 +2088,6 @@ EOH */
 /*	***********************************************************************	*/
 const NPSL_SocketErrorSpec *NPSL_GetErrorPtr(int errno_code)
 {
-#ifdef _Windows
 	unsigned int                count_1;
 	const NPSL_SocketErrorSpec *errno_ptr = NULL;
 
@@ -916,9 +2099,6 @@ const NPSL_SocketErrorSpec *NPSL_GetErrorPtr(int errno_code)
 	}
 
 	return(errno_ptr);
-#else
-	return(GEN_GetErrorPtr(errno_code));
-#endif /* #ifdef _Windows */
 }
 /* *********************************************************************** */
 
@@ -977,7 +2157,7 @@ const NPSL_SocketErrorSpec *NPSL_GetLastErrorPtr()
 #ifdef _Windows
 	return(NPSL_GetErrorPtr(WSAGetLastError()));
 #else
-	return(GEN_GetErrorPtr(errno));
+	return(NPSL_GetErrorPtr(errno));
 #endif /* #ifdef _Windows */
 }
 /* *********************************************************************** */
