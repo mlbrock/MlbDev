@@ -571,6 +571,8 @@ typedef int NPSL_SOCKET_HANDLE;
 /*	***********************************************************************	*/
 #ifdef _Windows
 # define NPSL_INADDR_NONE					INADDR_NONE
+#elif __linux__
+# define NPSL_INADDR_NONE					INADDR_NONE
 #else
 # define NPSL_INADDR_NONE					(-1)
 #endif /* #ifdef _Windows */
