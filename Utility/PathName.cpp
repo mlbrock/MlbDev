@@ -1138,6 +1138,42 @@ void EmitSep(char sep_char)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+void TEST_EmitBoostFilesystemInfo()
+{
+	EmitSep('=');
+	std::cout << "Boost Filesystem Version Info:" << std::endl;
+	EmitSep('-');
+
+	std::cout << "BOOST_VERSION           : " << BOOST_VERSION << " = "
+		<<  (BOOST_VERSION / 100000)      << "."
+		<< ((BOOST_VERSION / 100) % 1000) << "."
+		<<  (BOOST_VERSION        %  100) << std::endl;
+		
+	std::cout << "BOOST_FILESYSTEM_VERSION: "
+#ifdef BOOST_FILESYSTEM_VERSION
+		<< BOOST_FILESYSTEM_VERSION << std::endl;
+#else
+		<< "*** UNSPECIFIED ***" << std::endl;
+#endif // #ifdef BOOST_FILESYSTEM_VERSION
+
+	EmitSep('=');
+	std::cout << std::endl;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_GetCurrentPath()
+{
+	EmitSep('=');
+
+	std::cout << "Testing GetCurrentPath(): " << GetCurrentPath() << std::endl;
+
+	EmitSep('=');
+	std::cout << std::endl;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 void TEST_SomeOtherStuff()
 {
 #if _Windows
@@ -1268,17 +1304,100 @@ void TEST_MoveFileLogic(int &return_code)
 
 } // Anonymous namespace
 
+namespace MLB {
+
+namespace Utility {
+
+// ////////////////////////////////////////////////////////////////////////////
+//	To be moved into FilesystemSupport.cpp.
+std::string GetFilesystemNativePath(const boost::filesystem::path &src_path)
+{
+#if (BOOST_FILESYSTEM_VERSION < 3)
+	return(src_path.native_file_string());
+#else
+	return(src_path.native());
+#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace Utility
+
+} // namespace MLB
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+const char   *NativeFileStringTestList[] = {
+#ifdef _Windows
+	"C:\\Program Files",
+	"C:\\Windows\\System32"
+#else
+	//	Assuming A Unix here. So this test will need work for other OSes...
+	"/usr/bin",
+	"/usr/include/sys"
+#endif // #ifdef _Windows
+};
+unsigned int  NativeFileStringTestCount  =
+	sizeof(NativeFileStringTestList) / sizeof(NativeFileStringTestList[0]);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_CheckNativeFileString(int &return_code)
+{
+	using namespace boost::filesystem;
+
+	for (unsigned int count_1 = 0; count_1 < NativeFileStringTestCount;
+		++count_1) {
+		std::string native_string;
+		bool        native_done = false;
+		try {
+/*
+#if (BOOST_FILESYSTEM_VERSION < 3)
+			path dir_path(NativeFileStringTestList[count_1], native);
+			native_string = dir_path.native_file_string();
+#else
+			path dir_path(NativeFileStringTestList[count_1])
+			native_string = dir_path.string();
+#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
+*/
+#if (BOOST_FILESYSTEM_VERSION < 3)
+			path dir_path(NativeFileStringTestList[count_1], native);
+#else
+			path dir_path(NativeFileStringTestList[count_1])
+#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
+			native_string = GetFilesystemNativePath(dir_path);
+			native_done   = true;
+			if (native_string != NativeFileStringTestList[count_1]) {
+				std::ostringstream o_str;
+				o_str << "The resulting native path ('" << native_string <<
+					"') is not identical.";
+				MLB::Utility::ThrowLogicError(o_str.str());
+			}
+		}
+		catch (const std::exception &except) {
+			std::ostringstream o_str;
+			o_str << "Attempt to determine the boost::filesystem native "
+				"equivalent of path '" << NativeFileStringTestList[count_1] <<
+				"' failed: " << ((native_done) ? "" : "Unable to complete "
+				"boost::filesystem::path class operations: ") << except.what();
+			MLB::Utility::Rethrow(except, o_str.str());
+			return_code = EXIT_FAILURE;
+		}
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
 // ////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv)
 {
 	int return_code = EXIT_SUCCESS;
 
 	try {
-		EmitSep('=');
-		std::cout << "Testing GetCurrentPath(): " << GetCurrentPath() <<
-			std::endl;
-		EmitSep('=');
-		std::cout << std::endl;
+		TEST_EmitBoostFilesystemInfo();
+		TEST_GetCurrentPath();
+		TEST_CheckNativeFileString(return_code);
 		TEST_SomeOtherStuff();
 		TEST_MoveFileLogic(return_code);
 	}
