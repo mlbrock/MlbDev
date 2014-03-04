@@ -592,26 +592,6 @@ unsigned int this_msg_count = 0;
 
 			pfi_state.pkt_begin_ptr_ = begin_ptr;
 			pfi_state.pkt_end_ptr_   = end_ptr;
-/*
-XdpPacketHeader *xdp_packet_header_ptr =
-	reinterpret_cast<XdpPacketHeader *>(const_cast<StreamDatum *>(begin_ptr));
-xdp_packet_header_ptr->NetToHostOrder();
-
-			if (content_type_ == MLB::VFast::PacketDecodeRegime_CME_2) {
-				pfi_state.pkt_header_ptr_     = begin_ptr;
-				pfi_state.pkt_header_length_  = 5;
-				begin_ptr                    += 5;
-			}
-			else if (content_type_ == MLB::VFast::PacketDecodeRegime_XDP) {
-				pfi_state.pkt_header_ptr_     = begin_ptr;
-				pfi_state.pkt_header_length_  = 16;
-				begin_ptr                    += 16;
-			}
-			else {
-				pfi_state.pkt_header_ptr_    = begin_ptr;
-				pfi_state.pkt_header_length_ = 0;
-			}
-*/
 			bool process_packet =
 				msg_handler_func.PreDecodePkt(*this, pfi_state, begin_ptr, end_ptr);
 			if ((!process_packet) || (begin_ptr == end_ptr)) {
@@ -696,23 +676,12 @@ xdp_packet_header_ptr->NetToHostOrder();
 					if (!msg_handler_func.PreDecodeMsgDebug(*this, pfi_state))
 						break;
 					debug_header_done = true;
-/*
-					if (source_flag_)
-						std::cout << "********** SOURCE: [OFFSET = " <<
-							std::setw(22) << packet_offset << "][IP = " <<
-							std::setw(3 + 1 + 3 + 1 + 3 + 1 + 3) <<
-							boost::asio::ip::address_v4(pfi_state.ip_address_) <<
-							"/" << std::setw(5) << pfi_state.ip_port_ << "]" <<
-							std::endl;
-*/
 					const StreamDatum *new_begin_ptr =
 						pfi_state.exc_context_.FieldDecode(begin_ptr, end_ptr,
 						exc_results);
 					core_parse_done        = true;
 					pfi_state.msg_end_ptr_ = new_begin_ptr;
 					template_id = pfi_state.exc_context_.GetLastTemplateId();
-//	CODE NOTE: Test code. Remove me!
-//if (template_id == 89) {
 					if (source_flag_)
 						std::cout << "********** SOURCE: [OFFSET = " <<
 							std::setw(22) << packet_offset << "][IP = " <<
@@ -729,10 +698,7 @@ xdp_packet_header_ptr->NetToHostOrder();
 					if (!msg_handler_func.PostDecodeMsgChecksum(*this, pfi_state,
 						exc_results))
 						break;
-//}
 					++pfi_state.all_index_;
-//	CODE NOTE: Test code. Remove me!
-//if (template_id == 89) {
 					if (xml_flag_) {
 						std::cout << MLB::Utility::PadLeft("", 79, '-') << std::endl;
 						exc_results.EmitXml();
@@ -750,7 +716,6 @@ xdp_packet_header_ptr->NetToHostOrder();
 						exc_results.EmitFix();
 						std::cout << std::endl;
 					}
-//}
 					if ((content_type_ == PacketDecodeRegime_CME) ||
 						 (content_type_ == PacketDecodeRegime_CME_2))
 						pfi_state.exc_context_.ResetLastTemplateDictionary();
