@@ -256,6 +256,7 @@ public:
 	bool                        xml_flag_;
 	bool                        fix_flag_;
 	bool                        debug_flag_;
+	bool                        output_compatible_flag_;
 	bool                        source_flag_;
 	bool                        checksum_flag_;
 	bool                        packet_header_flag_;

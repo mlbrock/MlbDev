@@ -289,14 +289,17 @@ bool BaseMsgHandlerFunc::PreDecodePkt(PacketFileInterface &reader,
 bool BaseMsgHandlerFunc::PreDecodeMsgDebug(PacketFileInterface &reader,
 	const PacketFileInterfaceState &pfi_state)
 {
-	if (reader.debug_flag_)
+	if (reader.debug_flag_) {
 		std::cout
-		<< "********** PACKET ["
-		<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-		<< "]["
-		<< std::setw(10) << pfi_state.all_index_ << "]["
-		<< std::setw(10) << pfi_state.pkt_index_ << "]["
-		<< std::setw(10) << pfi_state.msg_index_ << "]" << std::endl;
+			 << "********** PACKET [";
+		if (!reader.output_compatible_flag_)
+			std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+				pfi_state.time_nsecs_) << "][";
+		std::cout
+			<< std::setw(10) << pfi_state.all_index_ << "]["
+			<< std::setw(10) << pfi_state.pkt_index_ << "]["
+			<< std::setw(10) << pfi_state.msg_index_ << "]" << std::endl;
+	}
 
 	return(true);
 }
@@ -329,9 +332,12 @@ bool BaseMsgHandlerFunc::PostDecodeMsgDebug(PacketFileInterface &reader,
 
 	exc_results.EmitList();
 
-	std::cout << "********** PACKET ["
-		<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-		<< "]["
+	std::cout << "********** PACKET [";
+	if (!reader.output_compatible_flag_)
+		std::cout
+			<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
+			<< "][";
+	std::cout
 		<< std::setw(10) << pfi_state.all_index_ << "]["
 		<< std::setw(10) << pfi_state.pkt_index_ << "]["
 		<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
@@ -358,9 +364,10 @@ bool BaseMsgHandlerFunc::PostDecodeMsgChecksum(PacketFileInterface &reader,
 
 	tmp_crc32.process_bytes(o_str.str().c_str(), o_str.str().size());
 
-	std::cout << "********** CHECKSUMMED PACKET ["
-		<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-		<< "]["
+	std::cout << "********** CHECKSUMMED PACKET [";
+	std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+		pfi_state.time_nsecs_) << "][";
+	std::cout
 		<< std::setw(10) << pfi_state.all_index_ << "]["
 		<< std::setw(10) << pfi_state.pkt_index_ << "]["
 		<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
@@ -452,6 +459,7 @@ PacketFileInterface::PacketFileInterface()
 	,xml_flag_(false)
 	,fix_flag_(false)
 	,debug_flag_(false)
+	,output_compatible_flag_(false)
 	,source_flag_(false)
 	,checksum_flag_(false)
 	,packet_header_flag_(false)
@@ -609,18 +617,22 @@ unsigned int this_msg_count = 0;
 					std::cout << "PMap Byte Count = N/A" << std::endl;
 					std::cout << "Template Id     = N/A" << std::endl;
 					std::cout << "Value items = " << 0 << std::endl;
-					std::cout << "********** PACKET ["
-						<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-						<< "]["
+					std::cout << "********** PACKET [";
+					if (output_compatible_flag_)
+						std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+							pfi_state.time_nsecs_) << "][";
+					std::cout
 						<< std::setw(10) << pfi_state.all_index_ << "]["
 						<< std::setw(10) << pfi_state.pkt_index_ << "]["
 						<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
 						<< std::setw(10) << 0 << "][]" << std::endl;
 				}
 				if (checksum_flag_) {
-					std::cout << "********** CHECKSUMMED PACKET ["
-						<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-						<< "]["
+					std::cout << "********** CHECKSUMMED PACKET [";
+					if (output_compatible_flag_)
+						std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+							pfi_state.time_nsecs_) << "][";
+					std::cout
 						<< std::setw(10) << pfi_state.all_index_ << "]["
 						<< std::setw(10) << pfi_state.pkt_index_ << "]["
 						<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
@@ -636,9 +648,11 @@ unsigned int this_msg_count = 0;
 				}
 				if (fix_flag_) {
 					std::cout << MLB::Utility::PadLeft("", 79, '-') << std::endl;
-					std::cout << "********** PACKET ["
-						<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-						<< "]["
+					std::cout << "********** PACKET [";
+					if (output_compatible_flag_)
+						std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+							pfi_state.time_nsecs_) << "][";
+					std::cout
 						<< std::setw(10) << pfi_state.all_index_ << "]["
 						<< std::setw(10) << pfi_state.pkt_index_ << "]["
 						<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
@@ -706,9 +720,10 @@ unsigned int this_msg_count = 0;
 					}
 					if (fix_flag_) {
 						std::cout << MLB::Utility::PadLeft("", 79, '-') << std::endl;
-						std::cout << "********** PACKET ["
-							<< MLB::Utility::TimeSpec(pfi_state.time_secs_, pfi_state.time_nsecs_)
-							<< "]["
+						std::cout << "********** PACKET [";
+						std::cout << MLB::Utility::TimeSpec(pfi_state.time_secs_,
+							pfi_state.time_nsecs_) << "][";
+						std::cout
 							<< std::setw(10) << pfi_state.all_index_ << "]["
 							<< std::setw(10) << pfi_state.pkt_index_ << "]["
 							<< std::setw(10) << pfi_state.msg_index_ << "][SIZE = "
@@ -877,6 +892,20 @@ bool PacketFileInterface::ParseCmdSingle(unsigned int &current_index, int argc,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+//	Defined for use only within method PacketFileInterface::ParseCmdSingle().
+#ifdef INTERNAL_VFAST_PFI_CHECK_CONFLICT
+# error "Unexpected definition of preprocessor macro 'INTERNAL_VFAST_PFI_CHECK_CONFLICT' encountered."
+#endif // #ifdef INTERNAL_VFAST_PFI_CHECK_CONFLICT
+
+#define INTERNAL_VFAST_PFI_CHECK_CONFLICT(f_name, f_val, good_val)			\
+	if (f_val != good_val)	{																\
+		std::ostringstream o_str;															\
+		o_str << "'-" << f_name << "' flag (" << AnyToString(f_val) << ").";	\
+		MLB::Utility::ThrowInvalidArgument(o_str.str());							\
+	}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 bool PacketFileInterface::ParseCmdSingle(BaseMsgHandlerFunc &msg_handler_func,
 	unsigned int &current_index, int argc, char **argv)
 {
@@ -953,6 +982,12 @@ bool PacketFileInterface::ParseCmdSingle(BaseMsgHandlerFunc &msg_handler_func,
 	else if (VFastParseCmdLineArg::ParseCmdLineDebugFlag(current_index,
 		argc, argv, debug_flag_))
 		;
+	else if (ParseCmdLineArg::ParseCmdLineDatum(
+		RegexParamNameAdaptor(
+		"^\\-\\-*(DEBUG_*)*OUTPUT_*COMPAT((IBLE)|(IBILITY))*$",
+		current_index, argc, argv),
+		current_index, argc, argv, output_compatible_flag_))
+		;
 	else if (ParseCmdLineArg::ParseCmdLineDatumSpec(
 		MLB::Utility::MakeInlineVector<std::string>
 		("-SOURCES_FLAG")
@@ -983,14 +1018,50 @@ bool PacketFileInterface::ParseCmdSingle(BaseMsgHandlerFunc &msg_handler_func,
 		current_index, argc, argv),
 		current_index, argc, argv, packet_header_flag_))
 		;
+	else if (ParseCmdLineArg::ParseCmdLineDatum(
+		RegexParamNameAdaptor(
+		"^\\-(((EMIT)|(OUTPUT))_*)*HEAD(ER)*S*$",
+		current_index, argc, argv),
+		current_index, argc, argv, output_header_flag_))
+		;
+	else if (ParseCmdLineArg::ParseCmdLineDatum(
+		RegexParamNameAdaptor(
+		"^\\-(((EMIT)|(OUTPUT))_*)*TRAIL(ER)*S*$",
+		current_index, argc, argv),
+		current_index, argc, argv, output_trailer_flag_))
+		;
 	else if (VFastParseCmdLineArg::ParseCmdLineElapsedTimer(current_index,
 		argc, argv, timer_flag_))
 		;
 	else
 		return(false);
 
+	if (output_compatible_flag_) {
+		try {
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("debug",           debug_flag_,          true);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("sources",         source_flag_,         false);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("checksum",        checksum_flag_,       false);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("packet_headers",  packet_header_flag_,  false);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("output_headers",  output_header_flag_,  true);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("output_trailers", output_trailer_flag_, true);
+			INTERNAL_VFAST_PFI_CHECK_CONFLICT("elapsed_timer_",  timer_flag_,          true);
+		}
+		catch (const std::exception &except) {
+			std::ostringstream o_str;
+			o_str << "The '-output_compatibility' flag was specified as true, "
+				"but that setting is in conflict with the value of the " <<
+				except.what();
+			Rethrow(except, o_str.str());
+		}
+	}
+
 	return(true);
 }
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	End-of-life.
+#undef INTERNAL_VFAST_PFI_CHECK_CONFLICT
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -1016,9 +1087,12 @@ std::string PacketFileInterface::GetHelpStringShort(bool all_params_optional)
 		"[ -xml <boolean> ] " <<
 		"[ -fix <boolean> ] " <<
 		"[ -debug <boolean> ] " <<
+		"[ -output_compatible <boolean> ] " <<
 		"[ -sources <boolean> ] " <<
 		"[ -checksum <boolean> ] " <<
 		"[ -packet_headers <boolean> ] " <<
+		"[ -output_header <boolean> ] " <<
+		"[ -output_trailer <boolean> ] " <<
 		"[ -elapsed_timer <boolean> ]";
 
 	return(o_str.str());
@@ -1105,6 +1179,21 @@ std::string PacketFileInterface::GetHelpStringLong() const
       stdout.\n\n\
       If not specified, this parameter defaults to '" <<
 		MLB::Utility::AnyToString(debug_flag_) << "'.\n\n\
+   -output_compatible <boolean>\n\
+      If true, specifies that the output written will be compatible with\n\
+      the original version of this program.\n\n\
+      If this parameter is specified as true, the value of several other\n\
+      parameters are checked to ensure they do not conflict. The flags, and\n\
+      their non-conflicting values, are:\n\n\
+         -debug          true\n\
+         -sources        false\n\
+         -checksum       false\n\
+         -packet_headers false\n\
+         -output_header  true\n\
+         -output_trailer true\n\
+         -elapsed_timer  true\n\n\
+      If not specified, this parameter defaults to '" <<
+		MLB::Utility::AnyToString(output_compatible_flag_) << "'.\n\n\
    -sources <boolean>\n\
       If true, specifies that the source of the packet will be written to\n\
       stdout. The source includes the following data:\n\n\
@@ -1125,6 +1214,17 @@ std::string PacketFileInterface::GetHelpStringLong() const
 		MLB::Utility::AnyToString(packet_header_flag_) << "'.\n\n\
       As of this writing, the only decode types which use packet headers are\n\
       'CME2' and 'XDP'.\n\n\
+   -output_header <boolean>\n\
+      Specifies that output of that packet data is preceeded by a header\n\
+      which briefly describes some basic parameters of the output to be\n\
+      performed.\n\n\
+      If not specified, this parameter defaults to '" <<
+		MLB::Utility::AnyToString(output_header_flag_) << "'.\n\n\
+   -output_trailer <boolean>\n\
+      Specifies that output of that packet data is followed by a trailer\n\
+      which briefly describes the output performed.\n\n\
+      If not specified, this parameter defaults to '" <<
+		MLB::Utility::AnyToString(output_trailer_flag_) << "'.\n\n\
    -elapsed_timer <boolean>\n\
       If true, specifies that the elapsed time is to be emitted to stdout\n\
       after packet decoding is complete.\n\n\
