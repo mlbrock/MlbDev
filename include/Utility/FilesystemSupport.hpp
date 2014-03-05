@@ -109,10 +109,27 @@ struct PathTraversalBase {
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-std::string GetFilesystemStem(const boost::filesystem::path &src_path);
-
-bool TraverseDirectory(const std::string &orig_dir_name,
+API_UTILITY std::string GetFilesystemStem(
+	const boost::filesystem::path &src_path);
+API_UTILITY bool        TraverseDirectory(const std::string &orig_dir_name,
 	PathTraversalBase &traversal_control);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+API_UTILITY std::string              BoostFs_GetPathLeafString(
+	const boost::filesystem::path &src_path);
+API_UTILITY std::string              BoostFs_GetPathStemString(
+	const boost::filesystem::path &src_path);
+API_UTILITY std::string              BoostFs_GetNativeFileString(
+	const boost::filesystem::path &src_path);
+API_UTILITY boost::filesystem::path &BoostFs_ConstructNativePath(
+	const char *src_path, boost::filesystem::path &dst_path);
+API_UTILITY boost::filesystem::path &BoostFs_ConstructNativePath(
+	const std::string &src_path, boost::filesystem::path &dst_path);
+API_UTILITY boost::filesystem::path  BoostFs_ConstructNativePath(
+	const char *src_path);
+API_UTILITY boost::filesystem::path  BoostFs_ConstructNativePath(
+	const std::string &src_path);
 // ////////////////////////////////////////////////////////////////////////////
 
 } // namespace Utility

@@ -35,6 +35,7 @@
 
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/PathName.hpp>
+#include <Utility/FilesystemSupport.hpp>
 
 #if defined(_Windows) && !defined(__MINGW32__)
 # pragma warning(push)
@@ -204,20 +205,47 @@ void LogHandlerFileBase::OpenFile(const char *base_name, const char *dir_name,
 	file_name         += tmp_date_time + "." + GetHostNameCanonical() + "." +
 		AnyToString(CurrentProcessId()) + ".log";
 
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 	boost::filesystem::path tmp_file(file_name, boost::filesystem::native);
+*/
+	boost::filesystem::path tmp_file(BoostFs_ConstructNativePath(file_name));
 
 	if ((dir_name != NULL) && *dir_name) {
 		std::string tmp_dir_name;
 		ResolveFilePathGeneral(dir_name, tmp_dir_name, "", true, true, false);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(tmp_dir_name, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(
+			BoostFs_ConstructNativePath(tmp_dir_name));
 		boost::filesystem::path this_file;
 		this_file        = tmp_path / tmp_file;
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 		file_name        = this_file.native_file_string();
+*/
+		file_name        = BoostFs_GetNativeFileString(this_file);
 	}
 	else {
 		if (!tmp_file.has_root_path())
 			tmp_file = boost::filesystem::system_complete(tmp_file);
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 		file_name = tmp_file.native_file_string();
+*/
+		file_name = BoostFs_GetNativeFileString(tmp_file);
 	}
 
 	OpenFile(file_name);

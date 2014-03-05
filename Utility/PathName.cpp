@@ -34,6 +34,7 @@
 #include <Utility/PathName.hpp>
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/Utility_Exception.hpp>
+#include <Utility/FilesystemSupport.hpp>
 
 #ifdef __MSDOS__
 # include <direct.h>
@@ -615,7 +616,14 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 
 	try {
 		//	Path name must meet 'native' OS requirements. 
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(in_path, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path));
 		//	If the path isn't absolute, prepend a directory. If 'base path'
 		//	isn't empty we use that, otherwise it's the current dir...
 		if (!tmp_path.has_root_path()) {
@@ -626,8 +634,16 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 					std::string tmp_base_path;
 					ResolveFilePathGeneral(base_path, tmp_base_path, "",
 						false, true, false);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 					boost::filesystem::path tmp_base(tmp_base_path,
 						boost::filesystem::native);
+*/
+					boost::filesystem::path tmp_base(
+						BoostFs_ConstructNativePath(tmp_base_path));
 					tmp_path = boost::filesystem::complete(tmp_path, tmp_base);
 				}
 				catch (const std::exception &except) {
@@ -653,7 +669,13 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 				MLB::Utility::ThrowException("Path is not a file.");
 			exists_flag = true;
 		}
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore to
+		be removed.
 		out_path = tmp_path.native_file_string();
+*/
+		out_path = BoostFs_GetNativeFileString(tmp_path);
 	}
 	catch (const std::exception &except) {
 		Rethrow(except, "Unable to resolve path name '" + in_path +
@@ -732,7 +754,15 @@ bool CreatePathDir(const std::string &path_name, bool pre_exists_is_ok)
 					"' already exists.");
 			return(true);
 		}
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(path_name_1, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(
+			BoostFs_ConstructNativePath(path_name_1));
 		boost::filesystem::create_directory(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -760,10 +790,25 @@ bool CreatePathDirExtended(const std::string &path_name, bool pre_exists_is_ok)
 
 	GetPathElementList(path_name_1, path_element_list);
 
-	std::string             build_path;
+	std::string build_path;
+
 	while (!path_element_list.empty()) {
+#ifdef __unix__
+		if (path_element_list.back() == ".") {
+			path_element_list.pop_back();
+			continue;
+		}
+		build_path += PathNameSeparatorCanonical_String;
+#elif defined(_Windows)
+		if (path_element_list.back() == ".") {
+			path_element_list.pop_back();
+			continue;
+		}
 		if (!build_path.empty())
-			build_path += "\\";
+			build_path += PathNameSeparatorCanonical_String;
+#else
+		//	Account for some other OS here...
+#endif // #ifdef __unix__
 		build_path += path_element_list.back();
 		path_element_list.pop_back();
 		CreatePathDir(build_path, true);
@@ -779,7 +824,13 @@ unsigned long long GetFileSize(const char *file_name)
 	unsigned long long file_size = 0;
 
 	try {
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(file_name, boost::filesystem::native);
+*/		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(file_name));
 		file_size = boost::filesystem::file_size(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -803,8 +854,16 @@ void CopyFile(const std::string &src_path, const std::string &dst_path)
 {
 	try {
 		CheckFilePathGeneral(src_path, "", true, false, false);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_src(src_path, boost::filesystem::native);
 		boost::filesystem::path tmp_dst(dst_path, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_src(BoostFs_ConstructNativePath(src_path));
+		boost::filesystem::path tmp_dst(BoostFs_ConstructNativePath(dst_path));
 		boost::filesystem::copy_file(tmp_src, tmp_dst);
 	}
 	catch (const std::exception &except) {
@@ -819,8 +878,16 @@ void RenamePath(const std::string &src_path, const std::string &dst_path)
 {
 	try {
 		CheckFilePathGeneral(src_path, "", true, false, false);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_src(src_path, boost::filesystem::native);
 		boost::filesystem::path tmp_dst(dst_path, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_src(BoostFs_ConstructNativePath(src_path));
+		boost::filesystem::path tmp_dst(BoostFs_ConstructNativePath(dst_path));
 		boost::filesystem::rename(tmp_src, tmp_dst);
 	}
 	catch (const std::exception &except) {
@@ -835,7 +902,14 @@ void RemoveFile(const std::string &file_name, bool require_existence)
 {
 	try {
 		CheckFilePath(file_name, "", require_existence);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_file(file_name, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_file(BoostFs_ConstructNativePath(file_name));
 		boost::filesystem::remove(tmp_file);
 	}
 	catch (const std::exception &except) {
@@ -850,7 +924,14 @@ void RemoveDirectory(const std::string &path_name, bool require_existence)
 {
 	try {
 		CheckDirectoryPath(path_name, "", require_existence);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(path_name, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(path_name));
 		boost::filesystem::remove(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -865,7 +946,14 @@ void RemovePath(const std::string &in_path, bool require_existence)
 {
 	try {
 		CheckFilePathGeneral(in_path, "", require_existence, false, false);
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(in_path, boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path));
 		boost::filesystem::remove(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -886,13 +974,40 @@ void GetPathElementList(const std::string &in_path_name,
 	StringVector tmp_element_list;
 
 	for ( ; ; ) {
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path tmp_path(tmp_path_name,
-		boost::filesystem::native);
+			boost::filesystem::native);
+*/
+		boost::filesystem::path tmp_path(
+			BoostFs_ConstructNativePath(tmp_path_name));
 		if (!tmp_path.has_leaf())
 			break;
+/*
+	CODE NOTE: The method boost::filesystem::path::leaf() method has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 		std::string last_leaf(tmp_path.leaf());
+*/
+		std::string             last_leaf(BoostFs_GetPathLeafString(tmp_path));
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 		boost::filesystem::path leaf_path(last_leaf, boost::filesystem::native);
+*/
+		boost::filesystem::path leaf_path(BoostFs_ConstructNativePath(last_leaf));
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 		tmp_element_list.push_back(leaf_path.native_file_string());
+*/
+		tmp_element_list.push_back(BoostFs_GetNativeFileString(leaf_path));
 		if (last_leaf.size() >= tmp_path_name.size())
 			break;
 		tmp_path_name.resize(tmp_path_name.size() - (last_leaf.size() + 1));
@@ -906,9 +1021,23 @@ void GetPathElementList(const std::string &in_path_name,
 std::string &GetPathRootPath(const std::string &in_path_name,
 	std::string &out_root_name)
 {
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 	boost::filesystem::path tmp_path(in_path_name, boost::filesystem::native);
+*/
+	boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path_name));
 
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 	return(out_root_name.assign(tmp_path.root_path().native_file_string()));
+*/
+	return(out_root_name.assign(
+		BoostFs_GetNativeFileString(tmp_path.root_path())));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -925,10 +1054,24 @@ std::string GetPathRootPath(const std::string &in_path_name)
 std::string &GetCanonicalNativePath(const std::string &in_path_name,
 	std::string &out_path_name)
 {
+/*
+	CODE NOTE: The boost::filesystem::path constructor which accepted a
+		second parameter to specify the native format of the path (usually
+		boost::filesystem::native()) has been obsoleted by Boost Filesystem
+		version 3. This code is therefore to be removed.
 	boost::filesystem::path tmp_path(in_path_name, boost::filesystem::native);
+*/
+	boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path_name));
 
+/*
+	CODE NOTE: The method boost::filesystem::path::native_file_string() has
+		been obsoleted by Boost Filesystem version 3. This code is therefore
+		to be removed.
 	return(out_path_name.assign(CanonicalizePathNameSlashes(
 		tmp_path.native_file_string())));
+*/
+	return(out_path_name.assign(CanonicalizePathNameSlashes(
+		BoostFs_GetNativeFileString(tmp_path))));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -1125,14 +1268,31 @@ void TruncateFileSize(FileHandleNative file_handle,
 #include <fstream>
 #include <iostream>
 
+#include <boost/version.hpp>
+
 using namespace MLB::Utility;
 
 namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
-void EmitSep(char sep_char)
+const char   *TEST_NativePathList[] = {
+#ifdef _Windows
+	"C:\\Program Files",
+	"C:\\Windows\\System32"
+#else
+	//	Assuming a Unix here. So this test will need work for other OSes...
+	"/usr/bin",
+	"/usr/include/sys"
+#endif // #ifdef _Windows
+};
+unsigned int  TEST_NativePathCount  =
+	sizeof(TEST_NativePathList) / sizeof(TEST_NativePathList[0]);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void EmitSep(char sep_char, std::streamsize sep_width = 79)
 {
-	std::cout << std::setfill(sep_char) << std::setw(79) << "" <<
+	std::cout << std::setfill(sep_char) << std::setw(sep_width) << "" <<
 		std::setfill(' ') << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -1162,45 +1322,130 @@ void TEST_EmitBoostFilesystemInfo()
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_GetCurrentPath()
+void TEST_GetCurrentPath(int &return_code)
 {
 	EmitSep('=');
 
-	std::cout << "Testing GetCurrentPath(): " << GetCurrentPath() << std::endl;
+	std::string cwd(GetCurrentPath());
+
+	std::cout << "Testing GetCurrentPath(): " <<
+		((!cwd.empty()) ? "OK" : "GetCurrentPath() returned an empty string!") <<
+		std::endl;
 
 	EmitSep('=');
 	std::cout << std::endl;
+
+	if (cwd.empty())
+		return_code = EXIT_FAILURE;
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_SomeOtherStuff()
+void TEST_SomeOtherStuff(int &return_code, bool emit_detail = false)
 {
-#if _Windows
 	// //////////////////////////////////////////////////////////////////////
-	//	Test path element breakdowns...
+	//	Test some Windows path slash stuff...
 	{
+		EmitSep('=');
+		std::cout << "Windows Slash Tests:" << std::endl;
+		EmitSep('-');
+#if _Windows
 		std::vector<std::string> path_list;
 		path_list.push_back("c:\\MLB\\MyDir\\Some\\Thing\\Else");
 		path_list.push_back("\\\\" + GetHostName() +
 			"\\c$\\MLB\\MyDir\\Some\\Thing\\Else");
 		for (std::size_t count_1 = 0; count_1 < path_list.size(); ++count_1) {
-			EmitSep('=');
-			std::cout << "Path Breakdown Test of Path: " << path_list[count_1] <<
-				std::endl;
-			EmitSep('-');
-			std::cout << "Path Root    : " <<
-				GetPathRootPath(path_list[count_1]) << std::endl;
-			StringVector element_list;
-			GetPathElementList(path_list[count_1], element_list);
-			std::cout << "Path Elements: " <<
-				JoinString(element_list, "\n             : ") << std::endl;
-			EmitSep('=');
-			std::cout << std::endl;
+			try {
+				std::string            slash_path(path_list[count_1]);
+				std::string::size_type slash_pos;
+				while ((slash_pos = slash_path.find('\\')) != std::string::npos)
+					slash_path[slash_pos] = '/';
+				if (emit_detail) {
+					std::cout << "Backslash Path: " << path_list[count_1] <<
+						std::endl;
+					std::cout << "Slash Path    : " << slash_path << std::endl;
+					EmitSep('-');
+				}
+				std::string path_root_1(GetPathRootPath(path_list[count_1]));
+				std::string path_root_2(GetPathRootPath(slash_path));
+				if (emit_detail)
+					std::cout
+						<< "Backslash Path Root: " << path_root_1 << std::endl
+						<< "Slash  Path Root   : " << path_root_2 << std::endl;
+				StringVector element_list_1;
+				StringVector element_list_2;
+				GetPathElementList(path_list[count_1], element_list_1);
+				GetPathElementList(slash_path, element_list_2);
+				if (emit_detail) {
+					std::cout << "Path Elements      : " <<
+						JoinString(element_list_1, "\n                   : ") <<
+						std::endl;
+					EmitSep('-');
+				}
+				if (path_root_1 != path_root_2) {
+					std::ostringstream o_str;
+					o_str << "GetPathRootPath() returned different root elements "
+						"for the backslash-delimited path (" << path_root_1 <<
+						"') and the slash-delimited path ('" << path_root_2 << "').";
+					ThrowLogicError(o_str.str());
+				}
+				if (element_list_1 != element_list_2) {
+					std::ostringstream o_str;
+					o_str << "GetPathElementList() returned different path element "
+						"lists for the backslash-delimited path ([" <<
+						JoinString(element_list_1, "][") << "]) and the slash-"
+						"delimited path ([" <<
+						JoinString(element_list_2, "][") << "]).";
+					ThrowLogicError(o_str.str());
+				}
+			}
+			catch (const std::exception &except) {
+				std::cerr << "Path breakdown test of '" << path_list[count_1] <<
+					"' failed: " << except.what() << std::endl;
+				return_code = EXIT_FAILURE;
+			}
 		}
+#endif // #ifdef _WIndows
+		std::cout << "Tests passed." << std::endl;
+		EmitSep('=');
+		std::cout << std::endl;
 	}
 	// //////////////////////////////////////////////////////////////////////
-#endif // #ifdef _WIndows
+
+	// //////////////////////////////////////////////////////////////////////
+	//	Test path element breakdowns...
+	{
+		EmitSep('=');
+		std::cout << "Path Element Tests:" << std::endl;
+		EmitSep('-');
+		for (unsigned int count_1 = 0; count_1 < TEST_NativePathCount;
+			++count_1) {
+			const std::string this_path(TEST_NativePathList[count_1]);
+			try {
+				if (emit_detail) {
+					std::cout << "Path Breakdown Test of Path: " << this_path <<
+						std::endl;
+					EmitSep('-');
+				}
+				StringVector element_list;
+				GetPathElementList(this_path, element_list);
+				if (emit_detail)
+					std::cout << "Path Elements: " <<
+						JoinString(element_list, "\n             : ") << std::endl;
+				if (emit_detail)
+					EmitSep('-');
+			}
+			catch (const std::exception &except) {
+				std::cerr << "Path breakdown test of '" << this_path <<
+					"' failed: " << except.what() << std::endl;
+				return_code = EXIT_FAILURE;
+			}
+		}
+		std::cout << "Tests passed." << std::endl;
+		EmitSep('=');
+		std::cout << std::endl;
+	}
+	// //////////////////////////////////////////////////////////////////////
 
 	// //////////////////////////////////////////////////////////////////////
 	//	Test extended directory path creation and removal...
@@ -1216,15 +1461,28 @@ void TEST_SomeOtherStuff()
 		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
 		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
 		path_list.push_back(path_list.back() + "/" + UniqueId().ToStringRadix64());
-		std::cout << "Creating new directory: " << path_list.back() << std::endl;
+		if (emit_detail)
+			std::cout << "Creating new directory: " << path_list.back() <<
+				std::endl;
 		//	Note that it's an error if the path already exists!
 		CreatePathDirExtended(path_list.back(), false);
+		if (emit_detail)
+			std::cout << "Created directory : " << path_list.back() << std::endl;
 		while (!path_list.empty()) {
-			std::cout << "Removing directory    : " << path_list.back() <<
-				std::endl;
-			RemoveDirectory(path_list.back());
+			if (emit_detail)
+				std::cout << "Removing directory: " << path_list.back() <<
+					std::endl;
+			try {
+				RemoveDirectory(path_list.back());
+			}
+			catch (const std::exception &except) {
+				std::cerr << "WARNING: Attempt to remove temporary test "
+					"directory '" << path_list.back() << "' failed: " <<
+					except.what() << std::endl;
+			}
 			path_list.pop_back();
 		}
+		std::cout << "Tests passed." << std::endl;
 		EmitSep('=');
 		std::cout << std::endl;
 	}
@@ -1233,8 +1491,9 @@ void TEST_SomeOtherStuff()
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_MoveFileLogic(int &return_code)
+void TEST_MoveFileLogic(int &return_code, bool emit_detail = false)
 {
+	int                      tmp_return_code = EXIT_SUCCESS;
 	std::vector<std::string> remove_list;
 
 	EmitSep('=');
@@ -1266,10 +1525,12 @@ void TEST_MoveFileLogic(int &return_code)
 			src_file << "Line of text written to file '" << src_name << "'." <<
 				std::endl;
 		}
-		std::cout << "   Wrote source test file '" << src_name << "'." <<
-			std::endl;
-		std::cout << "   Will move file from: " << src_name << std::endl;
-		std::cout << "                    to: " << dst_name << std::endl;
+		if (emit_detail) {
+			std::cout << "   Wrote source test file '" << src_name << "'." <<
+				std::endl;
+			std::cout << "   Will move file from: " << src_name << std::endl;
+			std::cout << "                    to: " << dst_name << std::endl;
+		}
 		RenamePath(src_name, dst_name);
 		if (ResolveFilePath(src_name, "", false))
 			ThrowErrno("Source file '" + src_name + "' exists after the "
@@ -1281,64 +1542,32 @@ void TEST_MoveFileLogic(int &return_code)
 	catch (const std::exception &except) {
 		std::cout << "Regression test error: Move file attempt using the "
 			"function 'RenamePath()' failed: " << except.what() << std::endl;
-		return_code = EXIT_FAILURE;
+		tmp_return_code = EXIT_FAILURE;
 	}
 
 	//	Clean up...
 	while (!remove_list.empty()) {
+		std::string tmp_name;
 		try {
-			std::string tmp_name(remove_list.back());
+			tmp_name.swap(remove_list.back());
 			remove_list.pop_back();
 			RemovePath(tmp_name);
 		}
-		catch (const std::exception &) {
-			;
+		catch (const std::exception &except) {
+			std::cerr << "WARNING: Attempt to remove temporary test path "
+				"name '" << tmp_name << "' failed: " <<  except.what() <<
+				std::endl;
 		}
 	}
 
-	EmitSep('=');
+	if (tmp_return_code != EXIT_SUCCESS)
+		return_code = EXIT_FAILURE;
+	else
+		std::cout << "Tests passed." << std::endl;
 
+	EmitSep('=');
 	std::cout << std::endl;
 }
-// ////////////////////////////////////////////////////////////////////////////
-
-} // Anonymous namespace
-
-namespace MLB {
-
-namespace Utility {
-
-// ////////////////////////////////////////////////////////////////////////////
-//	To be moved into FilesystemSupport.cpp.
-std::string GetFilesystemNativePath(const boost::filesystem::path &src_path)
-{
-#if (BOOST_FILESYSTEM_VERSION < 3)
-	return(src_path.native_file_string());
-#else
-	return(src_path.native());
-#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-} // namespace Utility
-
-} // namespace MLB
-
-namespace {
-
-// ////////////////////////////////////////////////////////////////////////////
-const char   *NativeFileStringTestList[] = {
-#ifdef _Windows
-	"C:\\Program Files",
-	"C:\\Windows\\System32"
-#else
-	//	Assuming A Unix here. So this test will need work for other OSes...
-	"/usr/bin",
-	"/usr/include/sys"
-#endif // #ifdef _Windows
-};
-unsigned int  NativeFileStringTestCount  =
-	sizeof(NativeFileStringTestList) / sizeof(NativeFileStringTestList[0]);
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -1346,28 +1575,15 @@ void TEST_CheckNativeFileString(int &return_code)
 {
 	using namespace boost::filesystem;
 
-	for (unsigned int count_1 = 0; count_1 < NativeFileStringTestCount;
-		++count_1) {
+	for (unsigned int count_1 = 0; count_1 < TEST_NativePathCount; ++count_1) {
 		std::string native_string;
 		bool        native_done = false;
 		try {
-/*
-#if (BOOST_FILESYSTEM_VERSION < 3)
-			path dir_path(NativeFileStringTestList[count_1], native);
-			native_string = dir_path.native_file_string();
-#else
-			path dir_path(NativeFileStringTestList[count_1])
-			native_string = dir_path.string();
-#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
-*/
-#if (BOOST_FILESYSTEM_VERSION < 3)
-			path dir_path(NativeFileStringTestList[count_1], native);
-#else
-			path dir_path(NativeFileStringTestList[count_1])
-#endif // #if (BOOST_FILESYSTEM_VERSION < 3)
-			native_string = GetFilesystemNativePath(dir_path);
+			path dir_path(
+				BoostFs_ConstructNativePath(TEST_NativePathList[count_1]));
+			native_string = BoostFs_GetNativeFileString(dir_path);
 			native_done   = true;
-			if (native_string != NativeFileStringTestList[count_1]) {
+			if (native_string != TEST_NativePathList[count_1]) {
 				std::ostringstream o_str;
 				o_str << "The resulting native path ('" << native_string <<
 					"') is not identical.";
@@ -1377,7 +1593,7 @@ void TEST_CheckNativeFileString(int &return_code)
 		catch (const std::exception &except) {
 			std::ostringstream o_str;
 			o_str << "Attempt to determine the boost::filesystem native "
-				"equivalent of path '" << NativeFileStringTestList[count_1] <<
+				"equivalent of path '" << TEST_NativePathList[count_1] <<
 				"' failed: " << ((native_done) ? "" : "Unable to complete "
 				"boost::filesystem::path class operations: ") << except.what();
 			MLB::Utility::Rethrow(except, o_str.str());
@@ -1396,9 +1612,9 @@ int main(int argc, char **argv)
 
 	try {
 		TEST_EmitBoostFilesystemInfo();
-		TEST_GetCurrentPath();
+		TEST_GetCurrentPath(return_code);
 		TEST_CheckNativeFileString(return_code);
-		TEST_SomeOtherStuff();
+		TEST_SomeOtherStuff(return_code);
 		TEST_MoveFileLogic(return_code);
 	}
 	catch (const std::exception &except) {
