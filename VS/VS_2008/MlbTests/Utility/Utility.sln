@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_PathName", "ZZZ_UT
 		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_LogManager", "ZZZ_UTIL_LogManager\ZZZ_UTIL_LogManager.vcproj", "{D543AC48-83C6-417C-970D-E6631FB47246}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -28,6 +33,10 @@ Global
 		{F683FF22-C259-46E0-8D74-F3748F129A2C}.Debug|Win32.Build.0 = Debug|Win32
 		{F683FF22-C259-46E0-8D74-F3748F129A2C}.Release|Win32.ActiveCfg = Release|Win32
 		{F683FF22-C259-46E0-8D74-F3748F129A2C}.Release|Win32.Build.0 = Release|Win32
+		{D543AC48-83C6-417C-970D-E6631FB47246}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D543AC48-83C6-417C-970D-E6631FB47246}.Debug|Win32.Build.0 = Debug|Win32
+		{D543AC48-83C6-417C-970D-E6631FB47246}.Release|Win32.ActiveCfg = Release|Win32
+		{D543AC48-83C6-417C-970D-E6631FB47246}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
