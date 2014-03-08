@@ -39,9 +39,9 @@
 # include <string.h>
 #endif // #ifdef __GNUC__
 
-#if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+#if defined(__unix__)
 # include <unistd.h>
-#endif // #if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+#endif // #if defined(__unix__)
 
 // ////////////////////////////////////////////////////////////////////////////
 

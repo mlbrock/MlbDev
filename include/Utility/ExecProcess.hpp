@@ -46,10 +46,10 @@
 
 #include <Utility/GetEnvironment.hpp>
 
-#ifdef __GNUC__
+#if defined(__unix__) && defined(__GNUC__)
 # include <sys/types.h>
 # include <sys/wait.h>
-#endif // #ifdef __GNUC__
+#endif // #if defined(__unix__) && defined(__GNUC__)
 
 // ////////////////////////////////////////////////////////////////////////////
 

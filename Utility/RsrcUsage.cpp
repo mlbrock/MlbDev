@@ -43,9 +43,9 @@
 #  include <psapi.h>
 # endif // #if _MSC_VER >= 1300
 #else
-# if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+# if defined(__unix__) && defined(__GNUC__)
 #  include <stddef.h>
-# endif // # if defined(__GNUC__) && (__GNUC__ >= 4) && (__GNUC_MINOR__ >= 7)
+# endif // # if defined(__unix__) && defined(__GNUC__)
 # ifdef __SVR4
 #  define __EXTENSIONS__
 #  include <sys/types.h>
