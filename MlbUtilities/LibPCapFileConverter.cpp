@@ -38,9 +38,9 @@
 
 #include <fstream>
 
-#if defined(linux)
+#if defined(__linux__)
 # include <sys/types.h>
-#endif // #if defined(linux)
+#endif // #if defined(__linux__)
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -54,7 +54,7 @@ typedef signed __int16   LibPCapType_SInt16;
 typedef unsigned __int16 LibPCapType_UInt16;
 typedef signed __int32   LibPCapType_SInt32;
 typedef unsigned __int32 LibPCapType_UInt32;
-#elif defined(linux)
+#elif defined(__linux__)
 typedef int16_t          LibPCapType_SInt16;
 typedef u_int16_t        LibPCapType_UInt16;
 typedef int32_t          LibPCapType_SInt32;

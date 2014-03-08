@@ -46,7 +46,7 @@ namespace SocketIo {
 typedef unsigned __int16 MsgLengthType;
 typedef unsigned __int32 MsgTimeSecsType;
 typedef unsigned __int32 MsgTimeNSecsType;
-#elif defined(linux)
+#elif defined(__linux__)
 # include <sys/types.h>
 typedef u_int16_t        MsgLengthType;
 typedef u_int32_t        MsgTimeSecsType;

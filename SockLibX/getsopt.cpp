@@ -50,7 +50,7 @@ int NPSL_GetSockOpt(NPSL_SOCKET_HANDLE socket_handle, int opt_level,
 {
 	int return_code;
 
-#ifdef linux
+#ifdef __linux__
 	if (getsockopt(socket_handle, opt_level, opt_name,
 		((NPSL_NATIVE_SocketOptionValueType) opt_value),
 		reinterpret_cast<socklen_t *>(opt_length)) != NPSL_SOCKET_OK) {
@@ -58,7 +58,7 @@ int NPSL_GetSockOpt(NPSL_SOCKET_HANDLE socket_handle, int opt_level,
 	if (getsockopt(socket_handle, opt_level, opt_name,
 		((NPSL_NATIVE_SocketOptionValueType) opt_value), opt_length) !=
 		NPSL_SOCKET_OK) {
-#endif // #ifdef linux
+#endif // #ifdef __linux__
 		if (error_text != NULL)
 			NPSL_AppendLastErrorString(0, NPSL_MAX_ERROR_TEXT,
 				strcpy(error_text,

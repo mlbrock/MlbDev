@@ -33,9 +33,9 @@
 /*	Required include files...																*/
 /*	***********************************************************************	*/
 
-#if defined(linux)
+#if defined(__linux__)
 # include <sys/types.h>
-#endif // #if defined(linux)
+#endif // #if defined(__linux__)
 
 /*	***********************************************************************	*/
 
@@ -67,7 +67,7 @@ typedef signed __int64     Native_SInt64;	/**< 64-bit signed integer			*/
 typedef unsigned __int64   Native_UInt64;	/**< 64-bit unsigned integer		*/
 typedef float              Native_Float32;/**< 32-bit IEEE floating point	*/
 typedef double             Native_Float64;/**< 64-bit IEEE floating point	*/
-#elif defined(linux)
+#elif defined(__linux__)
 typedef int16_t            Native_SInt16;	/**< 16-bit signed integer			*/
 typedef u_int16_t          Native_UInt16;	/**< 16-bit unsigned integer		*/
 typedef int32_t            Native_SInt32;	/**< 32-bit signed integer			*/

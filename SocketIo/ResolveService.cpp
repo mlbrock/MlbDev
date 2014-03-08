@@ -47,7 +47,7 @@ namespace SocketIo {
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS__getservbyname_r
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS__getservbyport_r
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS_REENTRANT_FUNCTION
-#elif linux
+#elif __linux__
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS__getservbyname_r
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS__getservbyport_r
 # define MLB_SOCKET_IO_RESOLVE_SERV_CPP_HAS_REENTRANT_FUNCTION
@@ -115,7 +115,7 @@ ServiceEntry ServiceNameToEntry(const char *service, const char *protocol)
 				MLB::Utility::ThrowSystemError("Call to 'getservbyname_r()' "
 					"failed with 'ERANGE' and the maximum provisional buffer size "
 					"was reached");
-# elif linux
+# elif __linux__
 			if (::getservbyname_r(service, protocol, &service_entry,
 				buffer_sptr.get(), static_cast<int>(buffer_length),
 				&service_entry_ptr) == 0) {
@@ -188,7 +188,7 @@ ServiceEntry ServicePortToEntry(int service, const char *protocol)
 				MLB::Utility::ThrowSystemError("Call to 'getservbyport_r()' "
 					"failed with 'ERANGE' and the maximum provisional buffer size "
 					"was reached");
-# elif linux
+# elif __linux__
 			if (::getservbyport_r(service, protocol, &service_entry,
 				buffer_sptr.get(), static_cast<int>(buffer_length),
 				&service_entry_ptr) == 0) {

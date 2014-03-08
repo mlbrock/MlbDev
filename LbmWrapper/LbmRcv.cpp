@@ -32,9 +32,9 @@
 
 #include <ctime>
 
-#ifdef linux
+#ifdef __linux__
 # include <memory.h>
-#endif // #ifdef linux
+#endif // #ifdef __linux__
 
 //	////////////////////////////////////////////////////////////////////////////
 

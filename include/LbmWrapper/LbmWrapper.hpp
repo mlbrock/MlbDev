@@ -45,9 +45,9 @@
 #include <unistd.h>
 #endif
 
-#if defined(linux)
+#if defined(__linux__)
 # include <sys/types.h>
-#endif // #if defined(linux)
+#endif // #if defined(__linux__)
 
 #include <lbm/lbm.h>
 

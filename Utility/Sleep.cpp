@@ -112,7 +112,7 @@ void SleepNanoSecs(unsigned long long nanoseconds)
 	::Sleep(((DWORD) (nanoseconds / static_cast<unsigned long long>(1000000))));
 #elif _MSC_VER
 	::Sleep(((DWORD) (nanoseconds / static_cast<unsigned long long>(1000000))));
-#elif defined(linux)
+#elif defined(__linux__)
 	struct timespec tmp_timespec;
 
 	tmp_timespec.tv_sec  =
@@ -145,7 +145,7 @@ TimeSpec NanoSleep(const TimeSpec &request)
 #ifdef __SVR4
 	if (::nanosleep(&request, &remainder))
 		ThrowErrno("Invocation of 'nanosleep()' failed");
-#elif defined(linux)
+#elif defined(__linux__)
 	if (::nanosleep(&request, &remainder))
 		ThrowErrno("Invocation of 'nanosleep()' failed");
 #else

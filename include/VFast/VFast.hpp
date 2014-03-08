@@ -46,9 +46,9 @@
 
 #include <mbcompat.h>
 
-#if defined(linux)
+#if defined(__linux__)
 # include <sys/types.h>
-#endif // #if defined(linux)
+#endif // #if defined(__linux__)
 
 //	CODE NOTE: Fix me!!!
 #define API_VFAST
@@ -81,7 +81,7 @@ typedef signed __int64     Type_SInt64;	///< 64-bit signed integer value
 typedef unsigned __int64   Type_UInt64;	///< 64-bit unsigned integer value
 typedef double             Type_Decimal;	///< 64-bit IEEE floating-point value
 typedef char               Type_String;	///< Strings (ASCII and Unicode)
-#elif defined(linux)
+#elif defined(__linux__)
 typedef int16_t            Type_SInt16;	///< 16-bit signed integer value
 typedef u_int16_t          Type_UInt16;	///< 16-bit unsigned integer value
 typedef int32_t            Type_SInt32;	///< 32-bit signed integer value

@@ -31,9 +31,9 @@
 
 #include <SockLibX.hpp>
 
-#ifdef linux
+#ifdef __linux__
 # include <memory.h>
-#endif // #ifdef linux
+#endif // #ifdef __linux__
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -323,11 +323,11 @@ EndPointIP &EndPointIP::SetAddress(const AddressIP &in_address)
 //	////////////////////////////////////////////////////////////////////////////
 EndPointIP &EndPointIP::SetAddress(const struct in_addr &in_addr_in)
 {
-#ifdef linux
+#ifdef __linux__
 	SetAddress(reinterpret_cast<const unsigned char *>(&in_addr_in));
 #else
 	SetAddress(&in_addr_in.S_un.S_un_b.s_b1);
-#endif // #ifdef linux
+#endif // #ifdef __linux__
 
 	return(*this);
 }

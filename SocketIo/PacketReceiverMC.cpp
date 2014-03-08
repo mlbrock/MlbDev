@@ -270,7 +270,7 @@ void PacketReceiverMC::FixUpConstruction()
 		action_name = "set socket open for address reuse";
 		socket_.set_option(boost::asio::ip::udp::socket::reuse_address(true));
 		action_name = "bind the socket to the local endpoint";
-#if linux
+#if __linux__
 		socket_.bind(boost::asio::ip::udp::endpoint(my_address_,
 			endpoint_.port()));
 #else
@@ -281,7 +281,7 @@ void PacketReceiverMC::FixUpConstruction()
 		boost::asio::ip::udp::socket::endpoint_type
 			bind_endpoint(host_interface_, endpoint_.port());
 		socket_.bind(bind_endpoint);
-#endif // #if linux
+#endif // #if __linux__
 /*
 		CODE NOTE: Original code. To be removed.
 		action_name = "join the multicast group";

@@ -33,7 +33,7 @@
 
 #ifdef __MSDOS__
 #elif _Windows
-#elif defined(linux)
+#elif defined(__linux__)
 # include <unistd.h>
 # include <sys/syscall.h>
 #elif MBCOMPAT_THREAD_MODEL_UI
@@ -55,7 +55,7 @@ ThreadId CurrentThreadId()
 	return(static_cast<ThreadId>(1));
 #elif _Windows
 	return(static_cast<ThreadId>(::GetCurrentThreadId()));
-#elif defined(linux)
+#elif defined(__linux__)
 	return(static_cast<ThreadId>(::syscall(SYS_gettid)));
 #elif MBCOMPAT_THREAD_MODEL_UI
 	return(static_cast<ThreadId>(::thr_self()));

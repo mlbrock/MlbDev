@@ -123,12 +123,12 @@ void PacketSocket::FixUpConstruction()
 			socket_.set_option(boost::asio::ip::udp::socket::reuse_address(true));
 */
 			action_name = "bind the socket to the local endpoint";
-#if linux
+#if __linux__
 			socket_.bind(boost::asio::ip::udp::endpoint(my_address_,
 				recv_endpoint_.port()));
 #else
 			socket_.bind(recv_endpoint_);
-#endif // #if linux
+#endif // #if __linux__
 			action_name = "join the multicast group";
 			socket_.set_option(boost::asio::ip::multicast::join_group(
 				my_address_.to_v4(), recv_endpoint_.address().to_v4()));

@@ -597,7 +597,7 @@ typedef int NPSL_SOCKET_HANDLE;
 /*	***********************************************************************	*/
 #ifdef _Windows
 typedef int NPSL_SOCKLEN_T;
-#elif defined(linux)
+#elif defined(__linux__)
 typedef socklen_t NPSL_SOCKLEN_T;
 #else
 typedef int NPSL_SOCKLEN_T;

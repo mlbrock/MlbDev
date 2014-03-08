@@ -50,7 +50,7 @@ namespace SocketIo {
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS__gethostbyname_r
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS__gethostbyaddr_r
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS_REENTRANT_FUNCTION
-#elif linux
+#elif __linux__
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS__gethostbyname_r
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS__gethostbyaddr_r
 # define MLB_SOCKET_IO_RESOLVE_HOST_CPP_HAS_REENTRANT_FUNCTION
@@ -101,7 +101,7 @@ HostEntry HostNameToEntry(const char *host_name)
 				MLB::Utility::ThrowSystemError(local_errno,
 					"Call to 'gethostbyname_r()' failed with 'ERANGE' and the "
 					"maximum provisional buffer size was reached");
-# elif linux
+# elif __linux__
 			if (::gethostbyname_r(host_name, &host_entry, buffer_sptr.get(),
 				static_cast<int>(buffer_length), &host_entry_ptr,
 				&local_errno) == 0) {
@@ -183,7 +183,7 @@ HostEntry HostAddressToEntry(const void *host_address,
 				MLB::Utility::ThrowSystemError(local_errno,
 					"Call to 'gethostbyaddr_r()' failed with 'ERANGE' and the "
 					"maximum provisional buffer size was reached");
-# elif linux
+# elif __linux__
 			if (::gethostbyaddr_r(host_address, host_address_length,
 				host_address_type, &host_entry, buffer_sptr.get(),
 				static_cast<int>(buffer_length), &host_entry_ptr,

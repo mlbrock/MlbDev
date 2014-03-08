@@ -31,9 +31,9 @@
 
 #include <LbmWrapper/LbmAttrSupport.hpp>
 
-#ifdef linux
+#ifdef __linux__
 # include <string.h>
-#endif // #ifdef linux
+#endif // #ifdef __linux__
 
 //	////////////////////////////////////////////////////////////////////////////
 

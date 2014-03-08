@@ -51,7 +51,7 @@ namespace {
 class CannedPacketSendBase {
 #ifdef _MSC_VER
 	typedef volatile unsigned __int32   MyVolatileValue;
-#elif defined(linux)
+#elif defined(__linux__)
 	typedef volatile u_int32_t          MyVolatileValue;
 #else
 	typedef volatile unsigned int       MyVolatileValue;

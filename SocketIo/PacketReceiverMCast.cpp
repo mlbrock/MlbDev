@@ -86,13 +86,13 @@ void PacketReceiverMCast::FixUpConstruction()
 		CheckIsMulticastIP(my_address_);
 		action_name = "bind the socket to the local endpoint";
 		{
-#if linux
+#if __linux__
 			socket_.bind(boost::asio::ip::udp::endpoint(endpoint_.address(),
 				endpoint_.port()));
 #else
 			EndpointType bind_endpoint(my_host_interface_, endpoint_.port());
 			socket_.bind(bind_endpoint);
-#endif // #if linux
+#endif // #if __linux__
 		}
 		action_name = "join the multicast group";
       socket_.set_option(boost::asio::ip::multicast::join_group(

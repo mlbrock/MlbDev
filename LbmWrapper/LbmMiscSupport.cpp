@@ -179,7 +179,7 @@ const char *GetOptimalLbmFdManagementType()
 		((win_ver.dwMajorVersion == 5) && (win_ver.dwMinorVersion >= 1))) ?
 		"wincompport" : "wsaeventselect");
 
-#elif defined(linux)
+#elif defined(__linux__)
 	return("epoll");			//	Linux 2.6 and later only.
 #elif defined (__SVR4) && defined (__sun)
 	return("devpoll");		//	/dev/poll driver. Solaris 8 and later only.

@@ -45,9 +45,9 @@
 
 #include <Utility/C_StringSupport.hpp>
 
-#if defined(linux)
+#if defined(__linux__)
 # include <string.h>
-#endif // #if defined(linux)
+#endif // #if defined(__linux__)
 
 // ////////////////////////////////////////////////////////////////////////////
 

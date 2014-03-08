@@ -65,7 +65,7 @@ namespace Utility {
 	 | ((static_cast<unsigned long long>(x) & 0x0000000000ff0000ull) << 24)	\
 	 | ((static_cast<unsigned long long>(x) & 0x000000000000ff00ull) << 40)	\
 	 | ((static_cast<unsigned long long>(x) & 0x00000000000000ffull) << 56))
-#elif defined(linux)
+#elif defined(__linux__)
 # include <byteswap.h>
 # define HackedByteSwapConstant_64(x) __bswap_64(x)
 #else

@@ -282,7 +282,7 @@ void CannedPacketRecv::RunInternal()
 				new MyRecvMCType(RecvMCFwd(*this), 65536, io_service_, *iter_b)));
 			tmp_recv_handler_list.back()->SetRecvBufferSize(10000000);
 			tmp_recv_handler_list.back()->Run();
-#if linux
+#if __linux__
 		std::cout << "Environment variable 'MLB_BIND_INTERFACE_NAME' ";
 		char *interface_name = ::getenv("MLB_BIND_INTERFACE_NAME");
 		if (interface_name == NULL)
@@ -296,7 +296,7 @@ void CannedPacketRecv::RunInternal()
 				MLB::Utility::ThrowSystemError("setsockopt(SO_BINDTODEVICE) "
 					"failed");
 		}
-#endif // #if linux
+#endif // #if __linux__
 		}
 		recv_handler_list_.swap(tmp_recv_handler_list);
 	}

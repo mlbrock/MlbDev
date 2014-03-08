@@ -38,7 +38,7 @@
 # include <nb30.h>
 #elif __MSDOS__
 # include <memory.h>
-#elif defined(linux)
+#elif defined(__linux__)
 # include <memory.h>
 # include <netinet/ether.h>
 #else
