@@ -62,8 +62,17 @@
 # pragma warning(disable:4217 4275 4668 4625 4626)
 #endif // #ifdef _Windows
 
-# include <boost/thread/recursive_mutex.hpp>
-# include <boost/thread/xtime.hpp>
+#include <boost/thread/recursive_mutex.hpp>
+#include <boost/thread/xtime.hpp>
+#include <boost/version.hpp>
+
+#if BOOST_VERSION < 105000
+namespace boost {
+	enum xtime_compat {
+		TIME_UTC_ = TIME_UTC
+	};
+}
+#endif // #if BOOST_VERSION < 105000
 
 #ifdef _Windows
 # pragma warning(default:4217 4275 4668 4625 4626)
@@ -298,7 +307,7 @@ inline boost::xtime NanosecondsToXTimeCurrent(unsigned int in_nanoseconds)
 
 	boost::xtime out_datum;
 
-	if (boost::xtime_get(&out_datum, boost::TIME_UTC) != boost::TIME_UTC)
+	if (boost::xtime_get(&out_datum, boost::TIME_UTC_) != boost::TIME_UTC_)
 		throw BoostException("Invocation of 'boost::xtime_get()' failed.");
 
 	unsigned long long total_nsecs =
