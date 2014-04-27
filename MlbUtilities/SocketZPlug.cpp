@@ -64,7 +64,6 @@
 # if defined(_MSC_VER) && (_MSC_VER >= 1300) && (_MSC_VER <= 1500)
 #  pragma warning(pop)
 # endif // # if defined(_MSC_VER) && (_MSC_VER >= 1300) && (_MSC_VER <= 1500)
-# pragma warning(pop)
 #endif // #ifdef _Windows
 
 //	////////////////////////////////////////////////////////////////////////////
