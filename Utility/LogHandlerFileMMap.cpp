@@ -275,7 +275,7 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 				unsigned int   tmp_map_size;
 				MyMappingValue tmp_map_offset;
 				if (file_size < chunk_alloc_size_) {
-					tmp_map_size   = file_size;
+					tmp_map_size   = static_cast<unsigned int>(file_size);
 					tmp_map_offset = 0;
 				}
 				else {
@@ -283,7 +283,8 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 					tmp_map_offset = file_size - chunk_alloc_size_;
 				}
 				file_mapping  tmp_mapping(tmp_file_name.c_str(), read_write);
-				mapped_region tmp_region(tmp_mapping, read_write, tmp_map_offset,
+				mapped_region tmp_region(tmp_mapping, read_write,
+					static_cast<boost::interprocess::offset_t>(tmp_map_offset),
 					tmp_map_size);
 				const char *start_ptr = 
 					static_cast<const char *>(tmp_region.get_address());
@@ -299,7 +300,8 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 					if (end_ptr > start_ptr) {
 						mapping_size   = tmp_map_size;
 						mapping_offset = tmp_map_offset;
-						write_offset   = end_ptr - start_ptr;
+						write_offset   =
+							static_cast<MyMappingValue>(end_ptr - start_ptr);
 					}
 					else {
 						mapping_size   = tmp_map_size;
@@ -315,7 +317,8 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 				unsigned int   tmp_map_size   = chunk_alloc_size_;
 				MyMappingValue tmp_map_offset = file_size - chunk_alloc_size_;
 				file_mapping   tmp_mapping(tmp_file_name.c_str(), read_write);
-				mapped_region  tmp_region(tmp_mapping, read_write, tmp_map_offset,
+				mapped_region  tmp_region(tmp_mapping, read_write,
+					static_cast<boost::interprocess::offset_t>(tmp_map_offset),
 					tmp_map_size);
 				const char *start_ptr = 
 					static_cast<const char *>(tmp_region.get_address());
@@ -325,7 +328,8 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 				if (end_ptr > start_ptr) {
 					mapping_size   = tmp_map_size;
 					mapping_offset = tmp_map_offset;
-					write_offset   = end_ptr - start_ptr;
+					write_offset   =
+						static_cast<MyMappingValue>(end_ptr - start_ptr);
 				}
 				else {
 					mapping_size   = tmp_map_size;
@@ -354,7 +358,8 @@ void LogHandlerFileMMap::OpenFileImpl(const char *file_name)
 		MyFileMappingSPtr mapping_sptr(
 			new file_mapping(tmp_file_name.c_str(), read_write));
 		MyMappedRegionSPtr region_sptr(
-			new mapped_region(*mapping_sptr, read_write, mapping_offset,
+			new mapped_region(*mapping_sptr, read_write,
+			static_cast<boost::interprocess::offset_t>(mapping_offset),
 			mapping_size));
 		{
 			boost::mutex::scoped_lock my_lock(the_lock_);
@@ -451,13 +456,14 @@ void LogHandlerFileMMap::EnsureNeededSpace(std::size_t needed_length)
 	MyFileMappingSPtr        mapping_sptr(
 		new file_mapping(out_file_name_.c_str(), read_write));
 	MyMappedRegionSPtr        region_sptr(
-		new mapped_region(*mapping_sptr, read_write, mapping_offset,
-		mapping_size));
+		new mapped_region(*mapping_sptr, read_write,
+		static_cast<boost::interprocess::offset_t>(mapping_offset),
+		static_cast<std::size_t>(mapping_size)));
 
 	mapping_sptr_.swap(mapping_sptr);
 	region_sptr_.swap(region_sptr);
 
-	mapping_size_   = mapping_size;
+	mapping_size_   = static_cast<unsigned int>(mapping_size);
 	mapping_offset_ = mapping_offset;
 	write_offset_   = write_offset;
 }
