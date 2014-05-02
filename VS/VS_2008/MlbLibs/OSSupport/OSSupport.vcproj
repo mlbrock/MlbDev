@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;\Vendor\Microsoft\MsvcDbgHelp\v6.7.5.1\include"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\Microsoft\MsvcDbgHelp\v6.7.5.1\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -110,7 +110,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;\Vendor\Microsoft\MsvcDbgHelp\v6.7.5.1\include"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\Microsoft\MsvcDbgHelp\v6.7.5.1\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"

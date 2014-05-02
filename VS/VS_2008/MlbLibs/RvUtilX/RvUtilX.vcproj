@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -111,7 +111,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_37;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
