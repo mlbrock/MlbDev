@@ -3255,7 +3255,7 @@ RvAdvEventInfo *RvAdvMsg::LocateEventInfoInSet(const RvAdvFlagsMap *map_ptr,
 		RvAdvEventInfoSetIter iter_f(event_set.find(
 			RvAdvEventInfo(map_ptr->advisory_type_, map_ptr->advisory_flag_)));
 		if (iter_f != event_set.end())
-			return_ptr = &(*iter_f);
+			return_ptr = const_cast<RvAdvEventInfo *>(&(*iter_f));
 	}
 
 	if ((return_ptr == NULL) && throw_if_no_match)

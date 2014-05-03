@@ -337,9 +337,15 @@ struct RsrcUsageSpec {
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-#define RsrcUsageSpec_NULL_DEF(member_name)	\
-	member_set_.find(RsrcUsageElement(			\
-		offsetof(RsrcUsage, member_name)))->is_supported_flag_ = false
+//#define RsrcUsageSpec_NULL_DEF(member_name)	\
+//	member_set_.find(RsrcUsageElement(			\
+//		offsetof(RsrcUsage, member_name)))->is_supported_flag_ = false
+#define RsrcUsageSpec_NULL_DEF(member_name)												\
+	{																									\
+		RsrcUsageSpec::RsrcUsageElementSet::iterator iter_f(member_set_.find(RsrcUsageElement(	\
+			offsetof(RsrcUsage, member_name))));											\
+		const_cast<RsrcUsageElement *>(&(*iter_f))->is_supported_flag_ = false;		\
+	}
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////

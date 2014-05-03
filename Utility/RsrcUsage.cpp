@@ -123,7 +123,7 @@ struct RsrcUsageSpec {
 	{																									\
 		RsrcUsageSpec::RsrcUsageElementSet::iterator iter_f(member_set_.find(RsrcUsageElement(	\
 			offsetof(RsrcUsage, member_name))));											\
-		const_cast<RsrcUsageElement &>(*iter_f).is_supported_flag_ = false;		\
+		const_cast<RsrcUsageElement *>(&(*iter_f))->is_supported_flag_ = false;		\
 	}
 //	////////////////////////////////////////////////////////////////////////////
 

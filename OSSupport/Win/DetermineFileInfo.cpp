@@ -57,7 +57,8 @@ bool DetermineFileInfo(const std::string &file_name,
 		if (((!lang_code) || (lang_code == iter_b->lang_code_)) &&
 			((!code_page) || (code_page == iter_b->code_page_)) &&
 			(!stricmp(file_info_name.c_str(), iter_b->info_name_.c_str()))) {
-			file_info_value.swap(iter_b->info_value_);
+			file_info_value.swap(
+				const_cast<OS_VersionInfoKey *>(&(*iter_b))->info_value_);
 			return(true);
 		}
 	}

@@ -597,7 +597,8 @@ bool RvAdvisoryControl::AddListener(TibrvTransport *transport_ptr,
 		MyTransportInfo(transport_ptr)));
 
 	return((iter_f == transport_set_.end()) ? false :
-		iter_f->AddListener(queue_ptr_.get(), &callback_, *map_ptr));
+		const_cast<MyTransportInfo *>(&(*iter_f))->AddListener(
+		queue_ptr_.get(), &callback_, *map_ptr));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -639,7 +640,7 @@ bool RvAdvisoryControl::RemoveListener(TibrvTransport *transport_ptr,
 		MyTransportInfo(transport_ptr)));
 
 	return((iter_f == transport_set_.end()) ? false :
-		iter_f->RemoveListener(*map_ptr));
+		const_cast<MyTransportInfo *>(&(*iter_f))->RemoveListener(*map_ptr));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -691,7 +692,8 @@ void RvAdvisoryControl::ProcessEventOnMsg(TibrvMsgCallback * /* callback_ptr */,
 		msg_class_log   = MLB::Utility::LogLevel_Notice;
 	}
 
-	RvAdvMsg::UpdateEventInfoSet(msg_recv, transport_iter_f->event_set_,
+	RvAdvMsg::UpdateEventInfoSet(msg_recv,
+		const_cast<MyTransportInfo *>(&(*transport_iter_f))->event_set_,
 		MLB::Utility::TimeSpec(), false);
 
 	advisory_action_(listener_ptr, msg_recv, subject_ptr,
