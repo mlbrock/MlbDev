@@ -54,10 +54,10 @@ static unsigned int CheckWindowsMultipleWait(DWORD wait_return_code,
 	if (wait_return_code == WAIT_FAILED)
 		ThrowSystemError("'WaitForMultipleObjects()' returned 'WAIT_FAILED'");
 
-//	MSVC++ 7.x emite warning C4296: '<' : expression is always false on the 'if'...
-#if defined(_MSC_VER) && (_MSC_VER <= 1500)
+//	MSVC++ 7.x through 10.0 emit warning C4296: '<' : expression is always false on the 'if'...
+#if defined(_MSC_VER) && (_MSC_VER <= 1600)
 # pragma warning(disable:4296)
-#endif // #if defined(_MSC_VER) && (_MSC_VER <= 1310)
+#endif // #if defined(_MSC_VER) && (_MSC_VER <= 1600)
 
 	if ((wait_return_code < WAIT_OBJECT_0) ||
 		(wait_return_code >= (WAIT_OBJECT_0 + handle_count))) {
@@ -70,9 +70,9 @@ static unsigned int CheckWindowsMultipleWait(DWORD wait_return_code,
 		ThrowSystemError(error_text);
 	}
 
-#if defined(_MSC_VER) && (_MSC_VER <= 1500)
+#if defined(_MSC_VER) && (_MSC_VER <= 1600)
 # pragma warning(default:4296)
-#endif // #if defined(_MSC_VER) && (_MSC_VER <= 1310)
+#endif // #if defined(_MSC_VER) && (_MSC_VER <= 1600)
 
 	return(wait_return_code - WAIT_OBJECT_0);
 }
