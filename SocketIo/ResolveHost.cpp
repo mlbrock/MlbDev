@@ -325,13 +325,13 @@ boost::asio::ip::address HostToIpAddress(const HostEntry &h_entry)
 
 	if (h_entry.h_addrtype == AF_INET) {
 		boost::asio::ip::address_v4::bytes_type tmp_bytes;
-		::memcpy(tmp_bytes.elems, h_entry.h_addr_list_raw_.get(), 4);
+		::memcpy(&(tmp_bytes[0]), h_entry.h_addr_list_raw_.get(), 4);
 		return(boost::asio::ip::address_v4(tmp_bytes));
 	}
 
 	boost::asio::ip::address_v6::bytes_type tmp_bytes;
 
-	::memcpy(tmp_bytes.elems, h_entry.h_addr_list_raw_.get(), 16);
+	::memcpy(&(tmp_bytes[0]), h_entry.h_addr_list_raw_.get(), 16);
 
 	return(boost::asio::ip::address_v6(tmp_bytes));
 }
