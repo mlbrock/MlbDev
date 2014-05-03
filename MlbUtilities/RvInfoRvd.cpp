@@ -3152,7 +3152,7 @@ void RvdInspector::Run()
 				}
 			}
 			RvdInspectorHostSetIter recap_iter(recap_list.find(recap_key));
-			recap_iter->new_totals_.Clear();
+			const_cast<RvdInspectorHost *>(&(*recap_iter))->new_totals_.Clear();
 			RvInfoRvd_TotalsBoth    recap_totals;
 			unsigned int            total_hosts_count   = 0;
 			unsigned int            problem_hosts_count = 0;
@@ -3161,9 +3161,11 @@ void RvdInspector::Run()
 			while (iter_host_b != iter_host_e) {
 				if (iter_host_b->service_ == iter_b->rv_service_) {
 					try {
-						if (iter_host_b->UpdateValues()) {
+						if (const_cast<RvdInspectorHost *>(&(*iter_host_b))->UpdateValues()) {
 							++total_hosts_count;
-							if (iter_host_b->CheckValues(recap_iter->new_totals_))
+							if (const_cast<RvdInspectorHost *>(&(*iter_host_b))->
+								CheckValues(const_cast<RvdInspectorHost *>
+								(&(*recap_iter))->new_totals_))
 								++problem_hosts_count;
 						}
 						++iter_host_b;
@@ -3185,7 +3187,7 @@ void RvdInspector::Run()
 				"Hosts on service " << iter_b->rv_service_ <<
 				" with Tib/Rendezvous problems: " << problem_hosts_count <<
 				" of " << total_hosts_count << ":" << std::endl;
-			recap_iter->CheckValues();
+			const_cast<RvdInspectorHost *>(&(*recap_iter))->CheckValues();
 			if (csv_flag_)
 				WriteCsv(*recap_iter, total_hosts_count, problem_hosts_count);
 			++iter_b;
