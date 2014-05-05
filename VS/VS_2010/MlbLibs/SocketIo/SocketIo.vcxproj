@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AEB8BD24-17F0-4350-BC53-EFB26C026179}</ProjectGuid>
+    <RootNamespace>SocketIo</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\SocketIo\IpAddressGeneric.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\MulticastIP.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketFileReader.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketFileReaderTmp.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketFileWriter.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketFormat.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiver.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiverAsyncMC.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiverAsyncMCast.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiverMC.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiverMCast.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketReceiverUdp.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSender.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSenderMC.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSenderMCast.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSenderUdp.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSocket.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\PacketSocketAsync.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\ResolveHost.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\ResolveService.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\SocketIoParseCmdLineArg.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\SocketSpec.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\SocketSpecLocal.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\StreamAcceptor.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\StreamAcceptorAsync.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\StreamSocket.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\StreamSocketAsync.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\StringToIpAddress.cpp" />
+    <ClCompile Include="..\..\..\..\SocketIo\TimerHandler.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

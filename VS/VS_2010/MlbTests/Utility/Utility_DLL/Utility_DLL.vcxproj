@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{44028ECD-1806-4812-BCDA-9EF08598422C}</ProjectGuid>
+    <RootNamespace>Utility_DLL</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;UTILITY_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;UTILITY_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Utility\C_Memory.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\C_MemoryX.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\C_StdLib.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\C_String.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\CompiledAlignmentInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ConfigFileSupport.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\CriticalEventHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\EnvElement.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ExecProcess.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ExecProcessInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\FilesystemSupport.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\GetEnvironment.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\HostArchitectureInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\HostName.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\HostVirtualMemoryPageInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\HRTimer.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\HRTimeStamp.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\IntToString.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\Ita2ToAscii.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\LogFileSupport.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\LogHandlerFile.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\LogHandlerFileBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\LogHandlerFileMMap.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\LogManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\MACAddress.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\nstrcat.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\nstrcpy.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\OSFileSupport.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\OStreamMultiplexer.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\PageSize.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ParseCmdLineArg.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\PathName.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\PosixCRegex.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ProcessId.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ProcessMemLock.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ReadFile.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\RegexParamNameAdaptor.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ReplaceChars.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ResourceLimits.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\Rethrow.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\RsrcUsage.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\SignalHandler.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\SimpleMMapFile.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\Sleep.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\StringSupport.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\SystemError.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ThreadId.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ThrowError.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\Time.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\TimeSpec.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\TimeT.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\TimeTM.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\TimeVal.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\ToHexString.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\trim.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\TZSetInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\UniqueId.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\UserName.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\UtilityException.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\VersionNumber.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\WaitProcessInfo.cpp" />
+    <ClCompile Include="..\..\..\..\..\Utility\WideChar.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

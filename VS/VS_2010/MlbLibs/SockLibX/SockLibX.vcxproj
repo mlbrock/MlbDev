@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CCFD934D-379B-4BF3-A4D8-70F18E926BE0}</ProjectGuid>
+    <RootNamespace>SockLibX</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\SockLibX\accept.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\AddressIP.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\addrinet.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\bind.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\ckhentp.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\ckpentp.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cksentp.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cksock.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cleanup.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\close.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\connect.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cphent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cppent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\cpsent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\EndPointIP.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\errortxt.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\exphostl.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\exphosts.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\frhent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\frpent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\frsent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\gethent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\gethentb.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getmac.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getpent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getpentb.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getpname.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getsent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getsentb.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getsname.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\getsopt.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\hostname.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\inetaddr.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\inhent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\inpent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\insent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\lenshent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\lenspent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\lenssent.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\listen.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\npsli.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\recv.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\recvfrom.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\rslvhost.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\rslvhsp.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\rslvprot.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\rslvserv.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\select.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\send.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\sendto.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\ServerX.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\setbmode.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\setsopt.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\shutdown.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\socket.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SocketMC.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SocketSpec.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SocketX.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibX.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXConnectFailure.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXConnectRefused.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXConnectTimeOut.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXContext.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXException.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXExceptionError.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXParseCmdLineArg.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXPeerClosed.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\SockLibXTimeOut.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\startup.cpp" />
+    <ClCompile Include="..\..\..\..\SockLibX\support.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
