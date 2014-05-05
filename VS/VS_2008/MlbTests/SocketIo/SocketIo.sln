@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SocketIo", "SocketIo\SocketIo.vcproj", "{38989B30-E709-439C-8F05-C6B54511C6A2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_SOCKETIO_ResolveHost", "ZZZ_SOCKETIO_ResolveHost\ZZZ_SOCKETIO_ResolveHost.vcproj", "{38915E09-4C93-4F49-8CE9-442998C37B99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38989B30-E709-439C-8F05-C6B54511C6A2} = {38989B30-E709-439C-8F05-C6B54511C6A2}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|Win32.Build.0 = Debug|Win32
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|Win32.ActiveCfg = Release|Win32
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|Win32.Build.0 = Release|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|Win32.ActiveCfg = Debug|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|Win32.Build.0 = Debug|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|Win32.ActiveCfg = Release|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
