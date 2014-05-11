@@ -566,13 +566,15 @@ private:
 //	////////////////////////////////////////////////////////////////////////////
 class API_UTILITY ThreadStreamBuffer : public std::streambuf {
 public:
-	ThreadStreamBuffer(LogManager &manager_ref, LogLevel log_level) :
-		 std::streambuf()
+	ThreadStreamBuffer(LogManager &manager_ref, LogLevel log_level)
+		:std::streambuf()
 		,last_used_time_()
 		,manager_ref_(manager_ref)
 		,log_level_(log_level)
 		,line_start_time_()
-		,line_buffer_() {
+		,line_buffer_()
+		,sep_buffer_()
+	 {
 		setp(0, 0);
       setg(0, 0, 0);
 	}
@@ -598,6 +600,21 @@ public:
 		manager_ref_.EmitLiteral(log_level_, literal_length, literal_string);
 	}
 
+	void LogSeparator(char sep_char = '*', unsigned int sep_length = 80)
+	{
+		unsigned int total_sep_length = LogLineLeaderLength + sep_length;
+
+		if (sep_buffer_.empty() || (total_sep_length != sep_buffer_.size()) ||
+			(sep_buffer_[0] != sep_char)) {
+			sep_buffer_.assign(total_sep_length, sep_char);
+			sep_buffer_[Length_TimeSpec]                                          = ' ';
+			sep_buffer_[Length_TimeSpec + 1 + LogLevelTextMaxLength]              = ' ';
+			sep_buffer_[Length_TimeSpec + 1 + LogLevelTextMaxLength + 1 + 10 + 1] = ' ';
+		}
+
+		PutLiteral(total_sep_length, sep_buffer_.c_str());
+	}
+
 protected:
 	std::streambuf::int_type overflow(int c) {
       if (c != EOF)
@@ -620,6 +637,7 @@ private:
 	LogLevel     log_level_;
 	TimeSpec     line_start_time_;
 	std::string  line_buffer_;
+	std::string  sep_buffer_;
 
 	void put_char(int chr) {
 		if (line_buffer_.empty())

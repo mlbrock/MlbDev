@@ -712,17 +712,7 @@ LogStream::~LogStream()
 //	////////////////////////////////////////////////////////////////////////////
 void LogStream::LogSeparator(char sep_char, unsigned int text_length)
 {
-	unsigned int              sep_len = LogLineLeaderLength + text_length;
-	boost::shared_array<char> sep_ptr(new char[sep_len + 1]);
-
-	memset(sep_ptr.get(), sep_char, sep_len);
-
-	sep_ptr[Length_TimeSpec]                                          = ' ';
-	sep_ptr[Length_TimeSpec + 1 + LogLevelTextMaxLength]              = ' ';
-	sep_ptr[Length_TimeSpec + 1 + LogLevelTextMaxLength + 1 + 10 + 1] = ' ';
-	sep_ptr[sep_len]                                                  = '\0';
-
-	LogLiteral(sep_ptr.get());
+	GetThreadStream()->GetBufferPtrRef()->LogSeparator(sep_char, text_length);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
