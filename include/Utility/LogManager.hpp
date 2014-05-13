@@ -99,6 +99,8 @@ enum LogFlag {
 	None         = 0x0000,
 	LogLocalTime = 0x0001,
 	LogBothTimes = 0x0002,
+	LogZeroTime  = 0x0004,
+	LogZeroTid   = 0x0008,
 	Default      = 0x0000
 };
 //	////////////////////////////////////////////////////////////////////////////
@@ -155,7 +157,6 @@ struct API_UTILITY LogEmitControl {
 		,line_buffer_(line_buffer)
 		,this_line_offset_(0)
 	{
-		UpdateTime();
 		memcpy(line_leader_ + Length_TimeSpec + 1,
 			 ConvertLogLevelToTextRaw(log_level), LogLevelTextMaxLength);
 		line_leader_[Length_TimeSpec + 1 + LogLevelTextMaxLength] = ' ';
@@ -220,9 +221,17 @@ struct API_UTILITY LogEmitControl {
 	void               ResetLines() const {
 		this_line_offset_ = 0;
 	}
-	void               UpdateTime(const TimeSpec &time_datum = TimeSpec()) const {
-		time_datum.ToString(line_leader_);
-		line_leader_[Length_TimeSpec] = ' ';
+	void               UpdateTime() const {
+		if (log_flags_ & LogZeroTime)
+			::memcpy(line_leader_, "0000-00-00 00:00:00.000000000",
+				Length_TimeSpec);
+		else {
+			if (log_flags_ & LogLocalTime)
+				TimeSpec().ToStringLocal(line_leader_);
+			else
+				TimeSpec().ToString(line_leader_);
+			line_leader_[Length_TimeSpec] = ' ';
+		}
 	}
 
 	bool               ShouldLogScreen() const {
