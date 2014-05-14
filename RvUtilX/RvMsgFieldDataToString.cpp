@@ -31,6 +31,7 @@
 
 #include <RvUtilX.hpp>
 #include <Utility/ValueToStringRadix.hpp>
+#include <Utility/NumericSupport.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -61,7 +62,7 @@ template <typename DataType>
 			out_string
 				<< "[" << count_1 << "]=";
 		out_string
-			<< tmp_list[count_1];
+			<< MLB::Utility::GetPrintableType(tmp_list[count_1]);
 	}
 
 	out_string << "]";
@@ -216,25 +217,6 @@ std::string RvMsgFieldDataToString(const TibrvMsgField &datum,
 	RvMsgToStringFlags flags)
 {
 	std::ostringstream out_string;
-
-/*
-	CODE NOTE: Obsoleted. To be removed.
-	if ((flags & RvMsgToStringFlags_FieldTypeId) ||
-		 (flags & RvMsgToStringFlags_FieldTypeName)) {
-		out_string << "[";
-		if (flags & RvMsgToStringFlags_FieldTypeId) 
-			out_string << static_cast<unsigned int>(datum.getType()) <<
-				((flags & RvMsgToStringFlags_FieldTypeName) ? "=" : "");
-		if (flags & RvMsgToStringFlags_FieldTypeName) 
-			out_string << MsgFieldTypeToString(datum);
-		out_string << "]";
-	}
-
-	if (flags & RvMsgToStringFlags_FieldId)
-		out_string << datum.getName() << "(" << datum.getId() << ")=";
-	else
-		out_string << datum.getName() << "=";
-*/
 
 	RvMsgFieldHeader(datum, out_string, flags);
 
