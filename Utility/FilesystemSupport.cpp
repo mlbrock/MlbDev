@@ -97,14 +97,6 @@ bool TraverseDirectoryInternal(const std::string &orig_dir_name,
 		}
 	}
 	catch (const std::exception &except) {
-/*
-	CODE NOTE: The method boost::filesystem::path::native_file_string() has
-		been obsoleted by Boost Filesystem version 3. This code is therefore
-		to be removed.
-		MLB::Utility::Rethrow(except, "Error processing directory entry for '" +
-			system_complete(dir_path).native_file_string() + "': " +
-			std::string(except.what()));
-*/
 		MLB::Utility::Rethrow(except, "Error processing directory entry for '" +
 			BoostFs_GetNativeFileString(system_complete(dir_path)) + "': " +
 			std::string(except.what()));
@@ -124,13 +116,6 @@ bool TraverseDirectory(const std::string &orig_dir_name,
 	try {
 		std::string work_dir_name(orig_dir_name);
 		MLB::Utility::ResolveDirectoryPath(work_dir_name, "", true);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		path dir_path(work_dir_name, native);
-*/
 		path dir_path(BoostFs_ConstructNativePath(work_dir_name));
 		if (!TraverseDirectoryInternal(orig_dir_name, work_dir_name,
 			dir_path, traversal_control))

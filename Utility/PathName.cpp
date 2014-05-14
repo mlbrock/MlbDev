@@ -616,13 +616,6 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 
 	try {
 		//	Path name must meet 'native' OS requirements. 
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(in_path, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path));
 		//	If the path isn't absolute, prepend a directory. If 'base path'
 		//	isn't empty we use that, otherwise it's the current dir...
@@ -634,14 +627,6 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 					std::string tmp_base_path;
 					ResolveFilePathGeneral(base_path, tmp_base_path, "",
 						false, true, false);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-					boost::filesystem::path tmp_base(tmp_base_path,
-						boost::filesystem::native);
-*/
 					boost::filesystem::path tmp_base(
 						BoostFs_ConstructNativePath(tmp_base_path));
 					tmp_path = boost::filesystem::complete(tmp_path, tmp_base);
@@ -669,12 +654,6 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 				MLB::Utility::ThrowException("Path is not a file.");
 			exists_flag = true;
 		}
-/*
-	CODE NOTE: The method boost::filesystem::path::native_file_string() has
-		been obsoleted by Boost Filesystem version 3. This code is therefore to
-		be removed.
-		out_path = tmp_path.native_file_string();
-*/
 		out_path = BoostFs_GetNativeFileString(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -754,13 +733,6 @@ bool CreatePathDir(const std::string &path_name, bool pre_exists_is_ok)
 					"' already exists.");
 			return(true);
 		}
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(path_name_1, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_path(
 			BoostFs_ConstructNativePath(path_name_1));
 		boost::filesystem::create_directory(tmp_path);
@@ -824,13 +796,7 @@ unsigned long long GetFileSize(const char *file_name)
 	unsigned long long file_size = 0;
 
 	try {
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(file_name, boost::filesystem::native);
-*/		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(file_name));
+		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(file_name));
 		file_size = boost::filesystem::file_size(tmp_path);
 	}
 	catch (const std::exception &except) {
@@ -854,14 +820,6 @@ void CopyFile(const std::string &src_path, const std::string &dst_path)
 {
 	try {
 		CheckFilePathGeneral(src_path, "", true, false, false);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_src(src_path, boost::filesystem::native);
-		boost::filesystem::path tmp_dst(dst_path, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_src(BoostFs_ConstructNativePath(src_path));
 		boost::filesystem::path tmp_dst(BoostFs_ConstructNativePath(dst_path));
 		boost::filesystem::copy_file(tmp_src, tmp_dst);
@@ -878,14 +836,6 @@ void RenamePath(const std::string &src_path, const std::string &dst_path)
 {
 	try {
 		CheckFilePathGeneral(src_path, "", true, false, false);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_src(src_path, boost::filesystem::native);
-		boost::filesystem::path tmp_dst(dst_path, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_src(BoostFs_ConstructNativePath(src_path));
 		boost::filesystem::path tmp_dst(BoostFs_ConstructNativePath(dst_path));
 		boost::filesystem::rename(tmp_src, tmp_dst);
@@ -902,13 +852,6 @@ void RemoveFile(const std::string &file_name, bool require_existence)
 {
 	try {
 		CheckFilePath(file_name, "", require_existence);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_file(file_name, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_file(BoostFs_ConstructNativePath(file_name));
 		boost::filesystem::remove(tmp_file);
 	}
@@ -924,13 +867,6 @@ void RemoveDirectory(const std::string &path_name, bool require_existence)
 {
 	try {
 		CheckDirectoryPath(path_name, "", require_existence);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(path_name, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(path_name));
 		boost::filesystem::remove(tmp_path);
 	}
@@ -946,13 +882,6 @@ void RemovePath(const std::string &in_path, bool require_existence)
 {
 	try {
 		CheckFilePathGeneral(in_path, "", require_existence, false, false);
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(in_path, boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path));
 		boost::filesystem::remove(tmp_path);
 	}
@@ -974,39 +903,12 @@ void GetPathElementList(const std::string &in_path_name,
 	StringVector tmp_element_list;
 
 	for ( ; ; ) {
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path tmp_path(tmp_path_name,
-			boost::filesystem::native);
-*/
 		boost::filesystem::path tmp_path(
 			BoostFs_ConstructNativePath(tmp_path_name));
 		if (!tmp_path.has_leaf())
 			break;
-/*
-	CODE NOTE: The method boost::filesystem::path::leaf() method has
-		been obsoleted by Boost Filesystem version 3. This code is therefore
-		to be removed.
-		std::string last_leaf(tmp_path.leaf());
-*/
 		std::string             last_leaf(BoostFs_GetPathLeafString(tmp_path));
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-		boost::filesystem::path leaf_path(last_leaf, boost::filesystem::native);
-*/
 		boost::filesystem::path leaf_path(BoostFs_ConstructNativePath(last_leaf));
-/*
-	CODE NOTE: The method boost::filesystem::path::native_file_string() has
-		been obsoleted by Boost Filesystem version 3. This code is therefore
-		to be removed.
-		tmp_element_list.push_back(leaf_path.native_file_string());
-*/
 		tmp_element_list.push_back(BoostFs_GetNativeFileString(leaf_path));
 		if (last_leaf.size() >= tmp_path_name.size())
 			break;
@@ -1054,22 +956,8 @@ std::string GetPathRootPath(const std::string &in_path_name)
 std::string &GetCanonicalNativePath(const std::string &in_path_name,
 	std::string &out_path_name)
 {
-/*
-	CODE NOTE: The boost::filesystem::path constructor which accepted a
-		second parameter to specify the native format of the path (usually
-		boost::filesystem::native()) has been obsoleted by Boost Filesystem
-		version 3. This code is therefore to be removed.
-	boost::filesystem::path tmp_path(in_path_name, boost::filesystem::native);
-*/
 	boost::filesystem::path tmp_path(BoostFs_ConstructNativePath(in_path_name));
 
-/*
-	CODE NOTE: The method boost::filesystem::path::native_file_string() has
-		been obsoleted by Boost Filesystem version 3. This code is therefore
-		to be removed.
-	return(out_path_name.assign(CanonicalizePathNameSlashes(
-		tmp_path.native_file_string())));
-*/
 	return(out_path_name.assign(CanonicalizePathNameSlashes(
 		BoostFs_GetNativeFileString(tmp_path))));
 }
