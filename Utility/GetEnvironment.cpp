@@ -404,6 +404,8 @@ EnvpList MergeEnvironment(const EnvpList &base_env, const EnvpList &added_env,
 
 #ifdef TEST_MAIN
 
+#include <iterator>
+
 using namespace MLB::Utility;
 
 //	////////////////////////////////////////////////////////////////////////////

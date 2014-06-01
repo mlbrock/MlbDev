@@ -1360,6 +1360,8 @@ std::ostream & operator << (std::ostream &o_str, const RsrcUsage &datum)
 
 #include <Utility/ParseCmdLineArg.hpp>
 
+#include <iterator>
+
 using namespace MLB::Utility;
 
 #ifdef _Windows

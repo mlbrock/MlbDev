@@ -33,30 +33,10 @@
 //	Required include files . . .
 //	////////////////////////////////////////////////////////////////////////////
 
-/*
-#ifdef _Windows
-# pragma warning(disable:4710 4786)
-# if _MSC_VER >= 1300
-#  pragma warning(disable:4217 4251 4555)
-# endif // # if _MSC_VER >= 1300
-# pragma warning(disable:4018 4100 4146 4244 4245 4511 4512 4514 4663)
-# include <iomanip>
-# include <iostream>
-# include <iterator>
-# include <sstream>
-# if _MSC_VER >= 1300
-#  pragma warning(default:4217 4251 4555)
-# endif // # if _MSC_VER >= 1300
-# pragma warning(default:4018 4100 4146 4244 4245 4511 4512 4663)
-#else
-# include <iomanip>
-# include <iostream>
-# include <iterator>
-# include <sstream>
-#endif // #ifdef _Windows
-*/
-
 #include "Utility/InlineContainer.hpp"
+
+#include <iterator>
+
 
 //	////////////////////////////////////////////////////////////////////////////
 
