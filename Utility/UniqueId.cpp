@@ -435,7 +435,7 @@ using namespace MLB::Utility;
 void TEST_BoostUuid()
 {
 	try {
-		boost::uuids::uuid uuid_empty;
+		boost::uuids::uuid uuid_empty = boost::uuids::nil_uuid();
 		boost::uuids::uuid uuid_datum_1 = boost::uuids::random_generator()();
 		std::cout << "UUID Empty     : " << uuid_empty   << std::endl;
 		std::cout << "UUID Datum 1   : " << uuid_datum_1 << std::endl;
