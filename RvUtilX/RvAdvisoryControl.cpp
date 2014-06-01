@@ -766,6 +766,7 @@ RvAdvisoryControl &RvAdvisoryControl::GetThisRef()
 #include <RvUtilX/RvParseCmdLineArg.hpp>
 #include <Utility/PathName.hpp>
 #include <Utility/CriticalEventHandler.hpp>
+#include <RvUtilX\RvCallbackFt.hpp>
 
 using namespace MLB::RvUtilX;
 
