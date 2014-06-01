@@ -1271,6 +1271,8 @@ void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
 
 #include <Utility/StringSupport.hpp>
 
+#include <iterator>
+
 using namespace MLB::RvUtilX;
 
 // ////////////////////////////////////////////////////////////////////////////
