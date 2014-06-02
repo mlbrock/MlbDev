@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3D4BAF37-1645-4842-8664-C1B194F81786}</ProjectGuid>
+    <RootNamespace>RvUtilX_DLL</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\_lib\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\_lib\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv7_2\include;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;RVUTILX_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv7_2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv7_2\include;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;RVUTILX_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv7_2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).map</MapFileName>
+      <MapExports>true</MapExports>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\RvUtilX\AddRvField.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\CopyMsg.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\DetachMsg.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\FtSpec.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\GetRvField.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\GetSubject.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\ReplyInfoRv.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RequestApiRv.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvAdvFlags.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvAdvisoryControl.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvAdvMsg.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvDateTime.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvEnvironment.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvEventType.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvException.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvFieldType.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvFtAction.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvFtMember.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvFtMonitor.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvIOType.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvListener.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsg.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsgAdd.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsgDataType.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsgFieldDataToString.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsgSnapshot.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvMsgToString.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvParseCmdLineArg.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvParseCmdLineArgFtSpec.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvQueue.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvQueueGroup.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvQueueLimitPolicy.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvTransport.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvTransportCm.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvTransportCmQueue.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\RvTransportNet.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\SendRequestSpecificReply.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\SNDSpec.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\SubjectNameFlat.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\SubjectNameToMultiPartList.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\SubjectNameWork.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\ThrowRvException.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\UpdateRvField.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\WaitForMessage.cpp" />
+    <ClCompile Include="..\..\..\..\..\RvUtilX\XRvSendControl.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
