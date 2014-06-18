@@ -46,7 +46,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;MB_LIB_STATIC;TEST_MAIN"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
 				BrowseInformation="1"
@@ -64,11 +64,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Utility.lib libtibrvcpp.lib libtibrv.lib libtibrvcm.lib libtibrvcmq.lib libtibrvft.lib"
+				AdditionalDependencies="ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Utility.lib libtibrvcppmd.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"
-				IgnoreDefaultLibraryNames="msvcrt.lib"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
 				GenerateMapFile="true"
@@ -131,7 +131,7 @@
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv7_2\include;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;MB_LIB_STATIC;TEST_MAIN"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
@@ -149,7 +149,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Utility.lib libtibrvcpp.lib libtibrv.lib libtibrvcm.lib libtibrvcmq.lib libtibrvft.lib"
+				AdditionalDependencies="ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Utility.lib libtibrvcppmd.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"
