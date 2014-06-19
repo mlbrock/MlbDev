@@ -63,10 +63,10 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv7_2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcmt.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
@@ -97,10 +97,10 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv7_2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)..\_lib\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
       <GenerateMapFile>true</GenerateMapFile>
