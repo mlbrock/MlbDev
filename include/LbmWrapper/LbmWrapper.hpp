@@ -49,6 +49,10 @@
 # include <sys/types.h>
 #endif // #if defined(__linux__)
 
+#ifndef DONT_TYPEDEF_INT_T
+# define DONT_TYPEDEF_INT_T
+#endif // #ifndef DONT_TYPEDEF_INT_T
+
 #include <lbm/lbm.h>
 
 #include <Utility/Utility_Exception.hpp>
