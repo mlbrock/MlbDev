@@ -332,11 +332,18 @@ API_RVUTILX void ThrowTibrvTimeOutIf(TibrvStatus rv_status,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-// Should be invoked as:
-//		RvUtilX_THROW_TIBRV_STATUS_IF(Tibrv::open, ())
-//
-//		TibrvNetTransport my_transport;
-//		RvUtilX_THROW_TIBRV_STATUS_IF(my_transport.create, (serv, net, daemon));
+/*
+	For use with the Tib/Rv C++ API.
+
+	Should be invoked as:
+
+		RvUtilX_THROW_TIBRV_STATUS_IF(Tibrv::open, ())
+
+	or:
+
+		TibrvNetTransport my_transport;
+		RvUtilX_THROW_TIBRV_STATUS_IF(my_transport.create, (serv, net, daemon));
+*/
 #define RvUtilX_THROW_TIBRV_STATUS_IF(method_name, method_args)		\
 	{																						\
 		TibrvStatus INTERNAL_rv_status = method_name method_args ;		\
@@ -345,18 +352,23 @@ API_RVUTILX void ThrowTibrvTimeOutIf(TibrvStatus rv_status,
 			INTERNAL_error_text << "Invocation of '" << #method_name <<	\
 				"()' failed";															\
 			MLB::RvUtilX::ThrowTibrvStatus(INTERNAL_rv_status,				\
-				INTERNAL_error_text);												\
+				INTERNAL_error_text.str());												\
 		}																					\
 	}
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-// Should be invoked as (note that 'time_out' appears twice in the example ---
-//	once as a parameter to the Rendezvous function and once as a parameter to
-//	be used to report the error):
-//		TibrvNetTransport my_transport;
-//		RvUtilX_THROW_TIBRV_TIMEOUT_IF(my_transport.sendRequest,
-//			(send_msg, reply_msg, time_out), time_out);
+/*
+	For use with the Tib/Rv C++ API.
+
+	Should be invoked as (note that 'time_out' appears twice in the example ---
+	once as a parameter to the Rendezvous function and once as a parameter to
+	be used to report the error):
+
+		TibrvNetTransport my_transport;
+		RvUtilX_THROW_TIBRV_TIMEOUT_IF(my_transport.sendRequest,
+			(send_msg, reply_msg, time_out), time_out);
+*/
 #define RvUtilX_THROW_TIBRV_TIMEOUT_IF(method_name, method_args, time_out)	\
 	{																								\
 		TibrvStatus INTERNAL_rv_status = method_name method_args ;				\
@@ -368,8 +380,63 @@ API_RVUTILX void ThrowTibrvTimeOutIf(TibrvStatus rv_status,
 			INTERNAL_error_text << "Invocation of '" << #method_name <<			\
 				"()' failed";																	\
 			MLB::RvUtilX::ThrowTibrvStatus(INTERNAL_rv_status,						\
-				INTERNAL_error_text);														\
+				INTERNAL_error_text.str());														\
 		}																							\
+	}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+/*
+	For use with the Tib/Rv C API.
+
+	Should be invoked as:
+
+		RvUtilX_THROW_TIBRV_STATUS_C_IF(tibrv_open, ())
+
+	or:
+
+		tibrvTransport my_transport;
+		RvUtilX_THROW_TIBRV_STATUS_C_IF(tibrvTransport_Create,
+			(&my_transport, serv, net, daemon));
+*/
+#define RvUtilX_THROW_TIBRV_STATUS_C_IF(method_name, method_args)		\
+	{																						\
+		tibrv_status INTERNAL_rv_status = method_name method_args ;		\
+		if (INTERNAL_rv_status != TIBRV_OK) {									\
+			std::ostringstream INTERNAL_error_text;							\
+			INTERNAL_error_text << "Invocation of '" << #method_name <<	\
+				"()' failed";															\
+			MLB::RvUtilX::ThrowTibrvStatus(INTERNAL_rv_status,				\
+				INTERNAL_error_text.str());												\
+		}																					\
+	}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+/*
+	For use with the Tib/Rv C API.
+
+	Should be invoked as (note that 'time_out' appears twice in the example ---
+	once as a parameter to the Rendezvous function and once as a parameter to
+	be used to report the error):
+
+		tibrvTransport my_transport;
+		RvUtilX_THROW_TIBRV_TIMEOUT_C_IF(tibrvTransport_SendRequest,
+			(my_transport, send_msg, reply_msg, time_out), time_out);
+*/
+#define RvUtilX_THROW_TIBRV_TIMEOUT_C_IF(method_name, method_args, time_out)	\
+	{																									\
+		tibrv_status INTERNAL_rv_status = method_name method_args ;					\
+		if (INTERNAL_rv_status == TIBRV_TIMEOUT) {										\
+			MLB::RvUtilX::ThrowTibrvTimeOut(#method_name, time_out);					\
+		}																								\
+		else if (INTERNAL_rv_status != TIBRV_OK) {										\
+			std::ostringstream INTERNAL_error_text;										\
+			INTERNAL_error_text << "Invocation of '" << #method_name <<				\
+				"()' failed";																		\
+			MLB::RvUtilX::ThrowTibrvStatus(INTERNAL_rv_status,							\
+				INTERNAL_error_text.str());															\
+		}																								\
 	}
 //	////////////////////////////////////////////////////////////////////////////
 
