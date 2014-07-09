@@ -387,7 +387,7 @@ void TEST_DllLoaderSpec()
 
 	std::string original_path(getenv("PATH"));
 	std::string tmp_path("PATH=" + original_path +
-		";C:\\cats\\servers\\lib\\MsvcDbgHelp\\v6.7.5.0");
+		";C:\\SomeDir1\\SomeDir2\\lib\\MsvcDbgHelp\\v6.7.5.0");
 	putenv(tmp_path.c_str());
 	TEST_DllLoaderCycle("dbghelp", true, MLB::Utility::VersionNumber(6));
 	putenv(("PATH=" + original_path).c_str());

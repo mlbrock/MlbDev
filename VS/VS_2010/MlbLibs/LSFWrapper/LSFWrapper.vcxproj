@@ -46,7 +46,7 @@
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv;\DevEnv\Src\Vendor\Platform\LSF\5.1\include;C:\cats\servers\include\ptypes\v2.0.1\ptypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv;\DevEnv\Src\Vendor\Platform\LSF\5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -69,7 +69,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv;\DevEnv\Src\Vendor\Platform\LSF\5.1\include;C:\cats\servers\include\ptypes\v2.0.1\ptypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv6_9\include;\Vendor\tibco\Rendezvous\Rv6_9\include\tibrv;\DevEnv\Src\Vendor\Platform\LSF\5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
