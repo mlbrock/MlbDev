@@ -18,7 +18,7 @@
 								1998-04-08 --- Modified for use with C++.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1996 - 2014.
+		Copyright Michael L. Brock 1996 - 2015.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -231,7 +231,7 @@ void SetCurrentPath(const std::string &new_path)
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1996 - 2014 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2015 Michael L. Brock
 
 	OUTPUT INDEX:	ExpandToFullPathName
 						Directory Functions:ExpandToFullPathName
