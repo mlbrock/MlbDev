@@ -201,10 +201,16 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 		case xercesc::DOMNode::ATTRIBUTE_NODE					:
 			node_type_ = NodeType_Attribute;
 			break;
+*/
+/*
 		case xercesc::DOMNode::TEXT_NODE							:
 			node_type_ = NodeType_Text;
 			break;
 */
+		case rapidxml::node_data			:
+			//	EXPERIMENTAL: Xerces = xercesc::DOMNode::TEXT_NODE
+			node_type_ = NodeType_Text;
+			break;
 		case rapidxml::node_cdata			:
 			//	Xerces = xercesc::DOMNode::CDATA_SECTION_NODE
 			node_type_ = NodeType_CData;
@@ -241,7 +247,7 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 			node_type_ = NodeType_Notation;
 			break;
 */
-		case rapidxml::node_data			:
+//		case rapidxml::node_data			:
 		case rapidxml::node_declaration	:
 			{
 				std::ostringstream o_str;
@@ -257,6 +263,16 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 
 	element_name_ = MLB::RapidXmlUtils::XmlStringToString(
 		element_ptr->name());
+	if (node_type_ == NodeType_Text) {
+		if (!element_name_.empty()) {
+			std::ostringstream o_str;
+			o_str << "Node type is TEXT (" << node_type_ << "), but the node "
+				"name is not empty ('" << element_name_ << "').";
+			throw std::logic_error(o_str.str());
+		}
+		element_name_ = "#text";	//	Duplicate Xerces behavior.
+	}
+
 
 	//	Get the list of children...
 	rapidxml::xml_node<> *child_ptr = element_ptr->first_node();
@@ -281,11 +297,13 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 	}
 	else {
 /*
-	CODE NOTE: To be implemented.
 		const XMLCh *tmp_node_text = element_ptr->getTextContent();
 		if (tmp_node_text != NULL)
 			node_text_ = MLB::RapidXmlUtils::XmlStringToString(tmp_node_text);
 */
+		const char *tmp_node_text = element_ptr->value();
+		if (tmp_node_text != NULL)
+			node_text_ = MLB::RapidXmlUtils::XmlStringToString(tmp_node_text);
 	}
 
 	//	Get the list of attributes...
