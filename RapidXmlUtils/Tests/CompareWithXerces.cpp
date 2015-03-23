@@ -52,6 +52,43 @@ void EmitSep(char sep_char = '-')
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+void RunInternalStringTests(const char *xml_string)
+{
+	EmitSep('=');
+	std::cout << "Internal Test String:" << std::endl;
+	std::cout << "-------- ---- -------" << std::endl;
+	std::cout << xml_string << std::endl;
+	EmitSep('-');
+
+	MLB::XercesUtils::XmlDomElement   xerces_element(
+		MLB::XercesUtils::XmlDomElement::ParseXmlString(xml_string));
+	MLB::RapidXmlUtils::XmlDomElement rapidxml_element(
+		MLB::RapidXmlUtils::XmlDomElement::ParseXmlString(xml_string));
+
+	std::ostringstream o_str_xerces;
+	std::ostringstream o_str_rapidxml;
+
+	xerces_element.ConcatElementTree(o_str_xerces);
+	rapidxml_element.ConcatElementTree(o_str_rapidxml);
+
+	std::cout << "Xerces and RapidXml parses are ";
+	if (o_str_xerces.str() == o_str_rapidxml.str())
+		std::cout << "identical." << std::endl;
+	else {
+		std::cout << "NOT identical." << std::endl;
+		EmitSep('-');
+		std::cout << o_str_xerces.str();
+	}
+
+	EmitSep('-');
+	std::cout << o_str_rapidxml.str();
+
+	EmitSep('=');
+	std::cout << std::endl;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 {
 	using namespace MLB::Utility;
@@ -64,6 +101,28 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 			"   " << argv[0] << " <xml-file-name> [ <xml-file-name> ... ]" <<
 			std::endl << std::endl;
 		return;
+	}
+
+	//	Internal testing...
+	{
+		const char *xml_string = "<top><!-- Comment 1 -->"
+			"   <middle a=\"1\" b=\"2\" c=\"3\"></middle>"
+			"\t<!--\n\t\tComment 2\n\t-->\n</top>";
+		RunInternalStringTests(xml_string);
+	}
+	{
+		const char *xml_string = "<!-- Comment 1 --><top><!-- Comment 2 -->"
+			"   <middle a=\"1\" b=\"2\" c=\"3\"></middle>"
+			"\t<!--\n\t\tComment 3\n\t-->\n</top>";
+		RunInternalStringTests(xml_string);
+	}
+	{
+		const char *xml_string = "<!-- Comment 1 --><!-- Comment 2 -->"
+			"<top><!-- Comment 3 -->"
+			"   <middle a=\"1\" b=\"2\" c=\"3\"></middle>"
+			"\t<!--\n\t\tComment 4\n\t-->\n</top><!-- Comment 5 -->"
+			"<!-- Comment 6 -->";
+		RunInternalStringTests(xml_string);
 	}
 
 	if (argc < 2)
@@ -87,6 +146,8 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 			std::cout << "Attempt to parse file '" << argv[count_1] <<
 				"' using the MLB::" << parse_type << " library failed: " <<
 				except.what() << std::endl;
+			EmitSep('=');
+			std::cout << std::endl;
 			continue;
 		}
 		std::ostringstream o_str_xerces;
@@ -96,6 +157,8 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 		if (o_str_xerces.str() == o_str_rapidxml.str()) {
 			std::cout << "Processing of XML is identical for file '" <<
 				argv[count_1] << "'." << std::endl;
+			EmitSep('=');
+			std::cout << std::endl;
 			continue;
 		}
 		std::cout << "Processing of XML differs for file '" << argv[count_1] <<
@@ -103,27 +166,38 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 		EmitSep('-');
 		StringVector string_list_xerces(GetSplit(o_str_xerces.str(), "\n"));
 		StringVector string_list_rapidxml(GetSplit(o_str_rapidxml.str(), "\n"));
-		std::pair<StringVectorIter, StringVectorIter> mismatch_location(
-			std::mismatch(string_list_xerces.begin(), string_list_xerces.end(),
-			string_list_rapidxml.begin()));
-		if (mismatch_location.first == string_list_xerces.end()) {
-			std::ostringstream o_str;
-			o_str << "Comparison of strings indicates a difference between the "
-				"generated output for file '" << argv[count_1] << "' when using "
-				"the MLB::XercesUtils library and the MLB::RapidXmlUtils library, "
-				"but std::mismatch() shows equivalent std::vectors of "
-				"std::strings to be identical.";
-			throw std::logic_error(o_str.str());
-		}
-		std::size_t line_index = static_cast<std::size_t>(
-			mismatch_location.first - string_list_xerces.begin());
-		for ( ; (mismatch_location.first != string_list_xerces.end()) &&
-			(mismatch_location.second != string_list_rapidxml.end());
-			++line_index, ++mismatch_location.first, ++mismatch_location.second) {
-			if (*mismatch_location.first !=  *mismatch_location.second)
+		//	Need C++14 in order to use the new std::mismatch() overloads...
+		StringVectorIterC iter_x_b(string_list_xerces.begin());
+		StringVectorIterC iter_x_e(string_list_xerces.end());
+		StringVectorIterC iter_r_b(string_list_rapidxml.begin());
+		StringVectorIterC iter_r_e(string_list_rapidxml.end());
+		std::size_t       line_index = 0;
+		for ( ; (iter_x_b != iter_x_e) && (iter_r_b != iter_r_e);
+			++line_index, ++iter_x_b, ++iter_r_b) {
+			if (*iter_x_b != *iter_r_b)
 				std::cout << std::setw(8) << line_index << ": [" <<
-					*mismatch_location.first << "] ---> [" <<
-					*mismatch_location.second << "]" << std::endl;
+					*iter_x_b << "] ---> [" << *iter_r_b << "]" << std::endl;
+		}
+		if ((iter_x_b != iter_x_e) || (iter_r_b != iter_r_e)) {
+			StringVectorIterC iter_b;
+			StringVectorIterC iter_e;
+			if (iter_x_b != iter_x_e) {
+				iter_b = iter_x_b;
+				iter_e = iter_x_e;
+			}
+			else {
+				iter_b = iter_r_b;
+				iter_e = iter_r_e;
+			}
+			for ( ; iter_b != iter_e; ++line_index, ++iter_b) {
+				std::cout << std::setw(8) << line_index << ": ";
+				if (iter_x_b != iter_x_e)
+					std::cout << "[" << *iter_b << "] ---> ***NON-EXISTANT***" <<
+						std::endl;
+				else
+					std::cout << "***NON-EXISTANT*** ---> [" << *iter_b << "]" <<
+						std::endl;
+			}
 		}
 		EmitSep('=');
 		std::cout << std::endl;

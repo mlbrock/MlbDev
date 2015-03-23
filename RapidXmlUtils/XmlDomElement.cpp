@@ -33,6 +33,8 @@
 #include <iomanip>
 #include <iostream>
 
+#include <boost/shared_ptr.hpp>
+
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
@@ -65,6 +67,8 @@ XmlDomElement::XmlDomElement(
 
 	rapidxml::node_type xerces_node_type = element_ptr->type();
 
+	const char *xerces_element_name = NULL;
+
 	switch (xerces_node_type) {
 		case rapidxml::node_element		:
 			//	Xerces = xercesc::DOMNode::ELEMENT_NODE
@@ -82,7 +86,8 @@ XmlDomElement::XmlDomElement(
 */
 		case rapidxml::node_data			:
 			//	EXPERIMENTAL: Xerces = xercesc::DOMNode::TEXT_NODE
-			node_type_ = NodeType_Text;
+			xerces_element_name = "#text";
+			node_type_          = NodeType_Text;
 			break;
 		case rapidxml::node_cdata			:
 			//	Xerces = xercesc::DOMNode::CDATA_SECTION_NODE
@@ -102,7 +107,8 @@ XmlDomElement::XmlDomElement(
 			break;
 		case rapidxml::node_comment		:
 			//	Xerces = xercesc::DOMNode::COMMENT_NODE
-			node_type_ = NodeType_Comment;
+			xerces_element_name = "#comment";
+			node_type_          = NodeType_Comment;
 			break;
 		case rapidxml::node_document		:
 			//	Xerces = xercesc::DOMNode::DOCUMENT_NODE
@@ -136,14 +142,16 @@ XmlDomElement::XmlDomElement(
 
 	element_name_ = MLB::RapidXmlUtils::XmlStringToString(
 		element_ptr->name());
-	if (node_type_ == NodeType_Text) {
+
+	if (xerces_element_name != NULL) {
 		if (!element_name_.empty()) {
 			std::ostringstream o_str;
-			o_str << "Node type is TEXT (" << node_type_ << "), but the node "
+			o_str << "Node type is " << node_type_ << " uses an imputed Xerces "
+				"element name ('" << xerces_element_name << "'), but the node "
 				"name is not empty ('" << element_name_ << "').";
 			throw std::logic_error(o_str.str());
 		}
-		element_name_ = "#text";	//	Duplicate Xerces behavior.
+		element_name_ = xerces_element_name;	//	Duplicate Xerces element name.
 	}
 
 
@@ -172,7 +180,7 @@ XmlDomElement::XmlDomElement(
 }
 // ////////////////////////////////////////////////////////////////////////////
 
-// ////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 void XmlDomElement::swap(XmlDomElement &other)
 {
 	element_name_.swap(other.element_name_);
@@ -381,8 +389,14 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 #if defined(_MSC_VER) && (_MSC_VER >= 1300)
 # pragma warning(pop)
 #endif // #if defined(_MSC_VER) && (_MSC_VER >= 1300)
-		xml_document.parse<0>(::strdup(xml_string));
-		XmlDomElement(xml_document.first_node()).swap(xml_element);
+		boost::shared_ptr<char> string_sptr(::strdup(xml_string), ::free);
+		xml_document.parse<rapidxml::parse_comment_nodes>(string_sptr.get());
+		//	We ignore leading comment blocks (as Xerces does).
+		rapidxml::xml_node<> *node_ptr = xml_document.first_node();
+		while ((node_ptr->type() == rapidxml::node_comment) &&
+			node_ptr->next_sibling())
+			node_ptr = node_ptr->next_sibling();
+		XmlDomElement(node_ptr).swap(xml_element);
 	}
 	catch (const std::exception &except) {
 		MLB::Utility::Rethrow(except, "Attempt to parse an XML string failed: " +
@@ -533,9 +547,17 @@ void TEST_XmlDomElement(int argc, char **argv)
 
 	RapidXmlContext rapidxml_context;
 
-const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
-XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
-XXX_root_element.EmitElementTree();
+	{
+		const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
+		XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
+		XXX_root_element.EmitElementTree();
+	}
+
+	{
+		const char *xml_string = "<top><!-- Comment 1 --><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
+		XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
+		XXX_root_element.EmitElementTree();
+	}
 
 	if (file_list.empty())
 		MLB::Utility::ThrowInvalidArgument("No XML files were specified.");
