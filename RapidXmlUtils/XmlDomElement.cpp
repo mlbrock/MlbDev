@@ -1,15 +1,9 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXml Utilities Library Module File
+//	MLB RapidXmlUtils Utilities Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
-
-	File Version		:	%I%
-
-	Last Extracted		:	%D%	%T%
-
-	Last Updated		:	%E%	%U%
+	File Name			:	XmlDomElement.cpp
 
 	File Description	:	Implementation of the XmlDomElement class.
 
@@ -39,133 +33,11 @@
 #include <iomanip>
 #include <iostream>
 
-/*
-#if defined(_MSC_VER) && (_MSC_VER >= 1300)
-# pragma warning(push)
-# pragma warning(disable:4626)
-# if _MSC_VER >= 1500
-#  pragma warning(disable:4061 4365)
-# endif // # if _MSC_VER >= 1500
-#endif // #if defined(_MSC_VER) && (_MSC_VER >= 1300)
-
-#error "!!!"
-#include <xercesc/dom/DOMDocument.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/framework/LocalFileInputSource.hpp>
-#include <xercesc/framework/MemBufInputSource.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
-#include <xercesc/sax/HandlerBase.hpp>
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1300)
-# pragma warning(pop)
-#endif // #if defined(_MSC_VER) && (_MSC_VER >= 1300)
-*/
-
-/*
-#include <boost/shared_ptr.hpp>
-*/
-
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
 namespace RapidXmlUtils {
-
-/*
-
-namespace {
-// ////////////////////////////////////////////////////////////////////////////
-class MyXmlErrorHandler : public xercesc::ErrorHandler {
-	typedef boost::shared_ptr<MyXmlErrorHandler> MyXmlErrorHandlerSPtrI;
-public:
-	MyXmlErrorHandler()
-		:xercesc::ErrorHandler()
-	{
-	}
-
-	virtual void warning(const xercesc::SAXParseException &except)
-	{
-		ThrowException("warning", except);
-	}
-	virtual void error(const xercesc::SAXParseException &except)
-	{
-		ThrowException("error", except);
-	}
-	virtual void fatalError(const xercesc::SAXParseException &except)
-	{
-		ThrowException("fatal", except);
-	}
-	virtual void resetErrors()
-	{
-	}
-
-	static MyXmlErrorHandlerSPtrI InstallErrorHandler(
-		xercesc::XercesDOMParser &parser)
-	{
-		MyXmlErrorHandlerSPtrI error_handler(new MyXmlErrorHandler());
-
-		parser.setErrorHandler(error_handler.get());
-
-		return(error_handler);
-	}
-
-private:
-	void ThrowException(const char *exception_type,
-		const xercesc::SAXParseException &except)
-	{
-		std::ostringstream  o_str;
-		const XMLCh        *public_id = except.getPublicId();
-		const XMLCh        *system_id = except.getSystemId();
-		std::string         public_id_string((public_id == NULL) ? "*NONE*" :
-			MLB::Utility::NullOrEmptyToString(XmlStringToString(public_id)));
-		std::string         system_id_string((system_id == NULL) ? "*NONE*" :
-			MLB::Utility::NullOrEmptyToString(XmlStringToString(system_id)));
-
-		o_str << "XML " << exception_type << " exceptional condition was "
-			"detected at column number " << except.getColumnNumber() <<
-			" on line number " << except.getLineNumber() << " of entity "
-			"public identifier '" << public_id_string << "' and entity system "
-			"identifier '" << system_id_string << "'.";
-
-		MLB::Utility::ThrowException(o_str.str());
-	}
-
-	MyXmlErrorHandler(const MyXmlErrorHandler &);
-	MyXmlErrorHandler & operator = (const MyXmlErrorHandler &);
-};
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-typedef boost::shared_ptr<MyXmlErrorHandler> MyXmlErrorHandlerSPtr;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-void ParseXmlDomElementInternal(xercesc::XercesDOMParser &parser,
-	XmlDomElement &xml_element)
-{
-	//	getErrorCount() changed to return an XMLSize_t in Xerces-C 3.0.0...
-	int error_count = static_cast<int>(parser.getErrorCount());
-
-	if (error_count)
-		MLB::Utility::ThrowLogicError("XML parse attempt resulted in " +
-			MLB::Utility::AnyToString(error_count) + " error" +
-			std::string((error_count == 1) ? "" : "s") + ".");
-
-	xercesc::DOMDocument *document_ptr = parser.getDocument();
-
-	if (document_ptr == NULL)
-		MLB::Utility::ThrowLogicError("The method 'xercesc::XercesDOMParser::"
-			"getDocument()' returned null.");
-
-	XmlDomElement(document_ptr->getDocumentElement()).swap(xml_element);
-}
-// ////////////////////////////////////////////////////////////////////////////
-} // Anonymous namespace
-
-*/
 
 // ////////////////////////////////////////////////////////////////////////////
 XmlDomElement::XmlDomElement()
@@ -179,7 +51,8 @@ XmlDomElement::XmlDomElement()
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> *element_ptr)
+XmlDomElement::XmlDomElement(
+	boost::property_tree::detail::rapidxml::xml_node<> *element_ptr)
 	:element_name_()
 	,child_list_()
 	,attribute_map_()
@@ -277,30 +150,12 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 	//	Get the list of children...
 	rapidxml::xml_node<> *child_ptr = element_ptr->first_node();
 	if (child_ptr) {
-/*
-		xercesc::DOMNodeList *sub_elements = element_ptr->getChildNodes();
-		unsigned int count_1;
-		unsigned int child_count = sub_elements->getLength();
-		child_list_.reserve(child_count);
-		for (count_1 = 0; count_1 < child_count; ++count_1) {
-			xercesc::DOMElement *child_ptr =
-				static_cast<xercesc::DOMElement *>(sub_elements->item(count_1));
-			child_list_.push_back(XmlDomElement(child_ptr));
-		}
-*/
-//		unsigned int child_count = 0;
 		while (child_ptr) {
 			child_list_.push_back(XmlDomElement(child_ptr));
 			child_ptr = child_ptr->next_sibling();
-//			++child_count;
 		}
 	}
 	else {
-/*
-		const XMLCh *tmp_node_text = element_ptr->getTextContent();
-		if (tmp_node_text != NULL)
-			node_text_ = MLB::RapidXmlUtils::XmlStringToString(tmp_node_text);
-*/
 		const char *tmp_node_text = element_ptr->value();
 		if (tmp_node_text != NULL)
 			node_text_ = MLB::RapidXmlUtils::XmlStringToString(tmp_node_text);
@@ -309,24 +164,9 @@ XmlDomElement::XmlDomElement(boost::property_tree::detail::rapidxml::xml_node<> 
 	//	Get the list of attributes...
 	rapidxml::xml_attribute<> *attr_ptr = element_ptr->first_attribute();
 	if (attr_ptr) {
-/*
-		xercesc::DOMNamedNodeMap *attrib_list = element_ptr->getAttributes();
-		unsigned int count_1;
-		unsigned int attr_count = attrib_list->getLength();
-		for (count_1 = 0; count_1 < attr_count; ++count_1) {
-			const xercesc::DOMNode *attr_ptr = attrib_list->item(count_1);
-			std::string attr_key(MLB::RapidXmlUtils::XmlStringToString(
-				attr_ptr->getNodeName()));
-			std::string attr_value(MLB::RapidXmlUtils::XmlStringToString(
-				attr_ptr->getNodeValue()));
-			attribute_map_[attr_key] = attr_value;
-		}
-*/
-//		unsigned int attr_count = 0;
 		while (attr_ptr) {
 			attribute_map_[attr_ptr->name()] = attr_ptr->value();
 			attr_ptr = attr_ptr->next_attribute();
-//			++attr_count;
 		}
 	}
 }
@@ -532,20 +372,6 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 		if (!(*xml_string))
 			MLB::Utility::ThrowInvalidArgument("The specified XML string is "
 				"empty.");
-/*
-		xercesc::MemBufInputSource xml_source(
-			reinterpret_cast<const XMLByte *>(xml_string),
-			static_cast<unsigned int>(::strlen(xml_string)), "XML String Source");
-		xercesc::XercesDOMParser parser;
-*/
-/*
-		MyXmlErrorHandlerSPtr    error_handler(
-			MyXmlErrorHandler::InstallErrorHandler(parser));
-*/
-/*
-		parser.parse(xml_source);
-		ParseXmlDomElementInternal(parser, xml_element);
-*/
 # pragma warning(disable:4625 4626)
 #if defined(_MSC_VER) && (_MSC_VER >= 1000)
 # pragma warning(push)
@@ -585,13 +411,6 @@ XmlDomElement &XmlDomElement::ParseXmlFile(const std::string &file_name,
 		if (file_name.empty())
 			MLB::Utility::ThrowInvalidArgument("The specified XML file name is "
 				"empty.");
-/*
-		xercesc::XercesDOMParser parser;
-		MyXmlErrorHandlerSPtr    error_handler(
-			MyXmlErrorHandler::InstallErrorHandler(parser));
-		parser.parse(file_name.c_str());
-		ParseXmlDomElementInternal(parser, xml_element);
-*/
 		XmlDomElement tmp_xml_element;
 		ParseXmlString(MLB::Utility::ReadFileData(file_name), tmp_xml_element);
 		tmp_xml_element.swap(xml_element);

@@ -1,15 +1,9 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXml Utilities Library Module File
+//	MLB RapidXmlUtils Utilities Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
-
-	File Version		:	%I%
-
-	Last Extracted		:	%D%	%T%
-
-	Last Updated		:	%E%	%U%
+	File Name			:	XmlStringToString.cpp
 
 	File Description	:	Implementation of logic to convert from RapidXml
 								strings to C++ strings.
