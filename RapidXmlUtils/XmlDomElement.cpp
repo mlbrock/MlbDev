@@ -16,7 +16,7 @@
 	Revision History	:	2015-03-21 --- Creation.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 2005 - 2015.
+		Copyright Michael L. Brock 2015 - 2015.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -712,7 +712,7 @@ void TEST_XmlDomElement(int argc, char **argv)
 			file_list.push_back(argv[count_1]);
 	}
 
-	RapidXmlContext xerces_context;
+	RapidXmlContext rapidxml_context;
 
 const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
 XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
