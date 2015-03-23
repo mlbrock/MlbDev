@@ -342,34 +342,37 @@ std::string XmlDomElement::GetAttributeValue(const std::string &attribute_name,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-XmlDomElement XmlDomElement::ParseXmlString(const std::string &xml_string)
+XmlDomElement XmlDomElement::ParseXmlString(const std::string &xml_string,
+	bool destructive_xml_parse)
 {
 	XmlDomElement xml_element;
 
-	return(ParseXmlString(xml_string, xml_element));
+	return(ParseXmlString(xml_string, xml_element, destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 XmlDomElement &XmlDomElement::ParseXmlString(const std::string &xml_string,
-	XmlDomElement &xml_element)
+	XmlDomElement &xml_element, bool destructive_xml_parse)
 {
-	return(ParseXmlString(xml_string.c_str(), xml_element));
+	return(ParseXmlString(xml_string.c_str(), xml_element,
+		destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-XmlDomElement XmlDomElement::ParseXmlString(const char *xml_string)
+XmlDomElement XmlDomElement::ParseXmlString(const char *xml_string,
+	bool destructive_xml_parse)
 {
 	XmlDomElement xml_element;
 
-	return(ParseXmlString(xml_string, xml_element));
+	return(ParseXmlString(xml_string, xml_element, destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
-	XmlDomElement &xml_element)
+	XmlDomElement &xml_element, bool destructive_xml_parse)
 {
 	using namespace boost::property_tree::detail;
 
@@ -389,8 +392,17 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 #if defined(_MSC_VER) && (_MSC_VER >= 1300)
 # pragma warning(pop)
 #endif // #if defined(_MSC_VER) && (_MSC_VER >= 1300)
-		boost::shared_ptr<char> string_sptr(::strdup(xml_string), ::free);
-		xml_document.parse<rapidxml::parse_comment_nodes>(string_sptr.get());
+		char                    *tmp_xml_string;
+		boost::shared_ptr<char>  string_sptr;
+		if (destructive_xml_parse)
+			tmp_xml_string = const_cast<char *>(xml_string);
+		else {
+			tmp_xml_string = ::strdup(xml_string);
+			if (!tmp_xml_string)
+				throw std::bad_alloc();
+			string_sptr.reset(tmp_xml_string, ::free);
+		}
+		xml_document.parse<rapidxml::parse_comment_nodes>(tmp_xml_string);
 		//	We ignore leading comment blocks (as Xerces does).
 		rapidxml::xml_node<> *node_ptr = xml_document.first_node();
 		while ((node_ptr->type() == rapidxml::node_comment) &&
@@ -426,7 +438,8 @@ XmlDomElement &XmlDomElement::ParseXmlFile(const std::string &file_name,
 			MLB::Utility::ThrowInvalidArgument("The specified XML file name is "
 				"empty.");
 		XmlDomElement tmp_xml_element;
-		ParseXmlString(MLB::Utility::ReadFileData(file_name), tmp_xml_element);
+		ParseXmlString(MLB::Utility::ReadFileData(file_name),
+			tmp_xml_element, true);
 		tmp_xml_element.swap(xml_element);
 	}
 	catch (const std::exception &except) {
@@ -547,17 +560,22 @@ void TEST_XmlDomElement(int argc, char **argv)
 
 	RapidXmlContext rapidxml_context;
 
+/*
+	Some internal initial tests...
 	{
-		const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
-		XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
-		XXX_root_element.EmitElementTree();
+		const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle>"
+			"</top>";
+		XmlDomElement root_element(XmlDomElement::ParseXmlString(xml_string));
+		root_element.EmitElementTree();
 	}
 
 	{
-		const char *xml_string = "<top><!-- Comment 1 --><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
-		XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
-		XXX_root_element.EmitElementTree();
+		const char *xml_string = "<top><!-- Comment 1 -->"
+			"<middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
+		XmlDomElement root_element(XmlDomElement::ParseXmlString(xml_string));
+		root_element.EmitElementTree();
 	}
+*/
 
 	if (file_list.empty())
 		MLB::Utility::ThrowInvalidArgument("No XML files were specified.");

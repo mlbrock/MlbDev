@@ -425,34 +425,37 @@ std::string XmlDomElement::GetAttributeValue(const std::string &attribute_name,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-XmlDomElement XmlDomElement::ParseXmlString(const std::string &xml_string)
+XmlDomElement XmlDomElement::ParseXmlString(const std::string &xml_string,
+	bool destructive_xml_parse)
 {
 	XmlDomElement xml_element;
 
-	return(ParseXmlString(xml_string, xml_element));
+	return(ParseXmlString(xml_string, xml_element, destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 XmlDomElement &XmlDomElement::ParseXmlString(const std::string &xml_string,
-	XmlDomElement &xml_element)
+	XmlDomElement &xml_element, bool destructive_xml_parse)
 {
-	return(ParseXmlString(xml_string.c_str(), xml_element));
+	return(ParseXmlString(xml_string.c_str(), xml_element,
+		destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-XmlDomElement XmlDomElement::ParseXmlString(const char *xml_string)
+XmlDomElement XmlDomElement::ParseXmlString(const char *xml_string,
+	bool destructive_xml_parse)
 {
 	XmlDomElement xml_element;
 
-	return(ParseXmlString(xml_string, xml_element));
+	return(ParseXmlString(xml_string, xml_element, destructive_xml_parse));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
-	XmlDomElement &xml_element)
+	XmlDomElement &xml_element, bool /* destructive_xml_parse */)
 {
 	try {
 		if (xml_string == NULL)
@@ -621,9 +624,22 @@ void TEST_XmlDomElement(int argc, char **argv)
 
 	XercesContext xerces_context;
 
-const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
-XmlDomElement XXX_root_element(XmlDomElement::ParseXmlString(xml_string));
-XXX_root_element.EmitElementTree();
+/*
+	Some internal initial tests...
+	{
+		const char *xml_string = "<top><middle a=\"1\" b=\"2\" c=\"3\"></middle>"
+			"</top>";
+		XmlDomElement root_element(XmlDomElement::ParseXmlString(xml_string));
+		root_element.EmitElementTree();
+	}
+
+	{
+		const char *xml_string = "<top><!-- Comment 1 -->"
+			"<middle a=\"1\" b=\"2\" c=\"3\"></middle></top>";
+		XmlDomElement root_element(XmlDomElement::ParseXmlString(xml_string));
+		root_element.EmitElementTree();
+	}
+*/
 
 	if (file_list.empty())
 		MLB::Utility::ThrowInvalidArgument("No XML files were specified.");

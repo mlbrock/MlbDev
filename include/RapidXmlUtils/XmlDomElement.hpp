@@ -99,12 +99,23 @@ public:
 	void ConcatElementTree(std::ostream &o_str, unsigned int depth = 0) const;
 	void EmitElementTree(unsigned int depth = 0) const;
 
-	static XmlDomElement  ParseXmlString(const std::string &xml_string);
+	/*
+		In the ParseXmlString() methods, the destructive_xml_parse parameter
+		specifies whether it is permissible that the XML parsing logic modify
+		the contents of the xml_string parameter during parsing.
+
+		Not useful for XML parsing which uses Xerces, but can speed up XML
+		parsing which uses RapidXml.
+	*/
+	static XmlDomElement  ParseXmlString(const std::string &xml_string,
+		bool destructive_xml_parse = false);
 	static XmlDomElement &ParseXmlString(const std::string &xml_string,
-		XmlDomElement &xml_element);
-	static XmlDomElement  ParseXmlString(const char *xml_string);
+		XmlDomElement &xml_element, bool destructive_xml_parse = false);
+	static XmlDomElement  ParseXmlString(const char *xml_string,
+		bool destructive_xml_parse = false);
 	static XmlDomElement &ParseXmlString(const char *xml_string,
-		XmlDomElement &xml_element);
+		XmlDomElement &xml_element, bool destructive_xml_parse = false);
+
 	static XmlDomElement  ParseXmlFile(const std::string &file_name);
 	static XmlDomElement &ParseXmlFile(const std::string &file_name,
 		XmlDomElement &xml_element);
