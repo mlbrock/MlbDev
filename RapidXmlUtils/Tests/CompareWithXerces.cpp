@@ -191,10 +191,10 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 			for ( ; iter_b != iter_e; ++line_index, ++iter_b) {
 				std::cout << std::setw(8) << line_index << ": ";
 				if (iter_x_b != iter_x_e)
-					std::cout << "[" << *iter_b << "] ---> ***NON-EXISTANT***" <<
+					std::cout << "[" << *iter_b << "] ---> ***NON-EXISTENT***" <<
 						std::endl;
 				else
-					std::cout << "***NON-EXISTANT*** ---> [" << *iter_b << "]" <<
+					std::cout << "***NON-EXISTENT*** ---> [" << *iter_b << "]" <<
 						std::endl;
 			}
 		}
