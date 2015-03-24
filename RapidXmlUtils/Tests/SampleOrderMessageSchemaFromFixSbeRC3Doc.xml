@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sbe:messageSchema xmlns:sbe="http://www.fixprotocol.org/ns/simple/RC3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" package="Examples" id="100" description="Test dictionary" byteOrder="littleEndian" xs:schemaLocation="http://www.fixprotocol.org/ns/simple/RC3/SimpleBinary1-0.xsd">
+	<types>
+		<!-- Example types from FIX SBE - RC3 / Section 7.1.1 / Page(s) 68-69 -->
+		<type name="enumEncoding" primitiveType="char"/>
+		<type name="idString" length="8" primitiveType="char" semanticType="String"/>
+		<type name="timestampEncoding" primitiveType="uint64" semanticType="UTCTimestamp"/>
+		<composite name="messageHeader">
+			<type name="blockLength" primitiveType="uint16"/>
+			<type name="templateId" primitiveType="uint16"/>
+			<type name="schemaId" primitiveType="uint16"/>
+			<type name="version" primitiveType="uint16"/>
+		</composite>
+		<composite name="optionalDecimalEncoding" description="Optional decimal with constant exponent">
+			<type name="mantissa" presence="optional" primitiveType="int64"/>
+			<type name="exponent" presence="constant" primitiveType="int8">-3</type>
+		</composite>
+		<composite name="qtyEncoding" description="Decimal constrainted to integers">
+			<type name="mantissa" primitiveType="int32"/>
+			<type name="exponent" presence="constant" primitiveType="int8">0</type>
+		</composite>
+		<enum name="ordTypeEnum" encodingType="enumEncoding">
+			<validValue name="Market" description="Market">1</validValue>
+			<validValue name="Limit" description="Limit">2</validValue>
+			<validValue name="Stop" description="Stop Loss">3</validValue>
+			<validValue name="StopLimit" description="Stop Limit">4</validValue>
+		</enum>
+		<enum name="sideEnum" encodingType="enumEncoding">
+			<validValue name="Buy" description="Buy">1</validValue>
+			<validValue name="Sell" description="Sell">2</validValue>
+		</enum>
+		<!-- Example types from FIX SBE - RC3 / Section 7.2.1 / Page(s) 70-71 -->
+		<type name="date" primitiveType="uint16" semanticType="LocalMktDate"/>
+		<composite name="MONTH_YEAR" semanticType="MonthYear">
+			<type name="year" primitiveType="uint16"/>
+			<type name="month" primitiveType="uint8"/>
+			<type name="day" primitiveType="uint8"/>
+			<type name="week" primitiveType="uint8"/>
+		</composite>
+		<composite name="groupSizeEncoding" description="Repeating group dimensions">
+			<type name="blockLength" primitiveType="uint16" semanticType="Length"/>
+			<type name="numInGroup" primitiveType="uint16" semanticType="NumInGroup"/>
+		</composite>
+		<enum name="execTypeEnum" encodingType="enumEncoding">
+			<validValue name="New" description="New">0</validValue>
+			<validValue name="DoneForDay" description="Done for day">3</validValue>
+			<validValue name="Canceled" description="Canceled">4</validValue>
+			<validValue name="Replaced" description="Replaced">5</validValue>
+			<validValue name="PendingCancel">6</validValue>
+			<validValue name="Rejected" description="Rejected">8</validValue>
+			<validValue name="PendingNew" description="Pending New">A</validValue>
+			<validValue name="Trade" description="partial fill or fill">F</validValue>
+		</enum>
+		<enum name="ordStatusEnum" encodingType="enumEncoding">
+			<validValue name="New" description="New">0</validValue>
+			<validValue name="PartialFilled">1</validValue>
+			<validValue name="Filled" description="Filled">2</validValue>
+			<validValue name="DoneForDay" description="Done for day">3</validValue>
+			<validValue name="Canceled" description="Canceled">4</validValue>
+			<validValue name="PendingCancel">6</validValue>
+			<validValue name="Rejected" description="Rejected">8</validValue>
+			<validValue name="PendingNew" description="Pending New">A</validValue>
+			<validValue name="PendingReplace" >E</validValue>
+		</enum>
+		<!-- Example types from FIX SBE - RC3 / Section 7.3.1 / Page 73 -->
+		<type name="intEnumEncoding" primitiveType="uint8"/>
+		<composite name="DATA" description="Variable-length data">
+			<type name="length" primitiveType="uint16"/>
+			<type name="varData" length="0" primitiveType="uint8"/>
+		</composite>
+		<enum name="businessRejectReasonEnum" encodingType="intEnumEncoding">
+			<validValue name="Other">0</validValue>
+			<validValue name="UnknownID">1</validValue>
+			<validValue name="UnknownSecurity">2</validValue>
+			<validValue name="ApplicationNotAvailable">4</validValue>
+			<validValue name="NotAuthorized">6</validValue>
+		</enum>
+	</types>
+	<!-- Example messages from FIX SBE - RC3 / Section 7.1.1 / Page(s) 68-69 -->
+	<sbe:message name="NewOrderSingle" id="99" blockLength="54" semanticType="D">
+		<field name="ClOrdID" id="11" type="idString" description="Customer Order ID" offset="0" semanticType="String"/>
+		<field name="Account" id="1" type="idString" description="Account mnemonic" offset="8" semanticType="String"/>
+		<field name="Symbol" id="55" type="idString" description="Security ID" offset="16" semanticType="String"/>
+		<field name="Side" id="54" type="sideEnum" description="Side" offset="24" semanticType="char"/>
+		<field name="TransactTime" id="60" type="timestampEncoding" description="Order entry time" offset="25" semanticType="UTCTimestamp"/>
+		<field name="OrderQty" id="38" type="qtyEncoding" description="Order quantity" offset="33" semanticType="Qty"/>
+		<field name="OrdType" id="40" type="ordTypeEnum" description="Order type" offset="37" semanticType="char"/>
+		<field name="Price" id="44" type="optionalDecimalEncoding" description="Limit price" offset="38" semanticType="Price"/>
+		<field name="StopPx" id="99" type="optionalDecimalEncoding" description="Stop price" offset="46" semanticType="Price"/>
+	</sbe:message>
+	<!-- Example messages from FIX SBE - RC3 / Section 7.2.1 / Page(s) 70-71 -->
+	<sbe:message name="ExecutionReport" id="98" blockLength="42" semanticType="8">
+		<field name="OrderID" id="37" type="idString" description="Order ID" offset="0" semanticType="String"/>
+		<field name="ExecID" id="17" type="idString" description="Execution ID" offset="8" semanticType="String"/>
+		<field name="ExecType" id="150" type="execTypeEnum" description="Execution type" offset="16" semanticType="char"/>
+		<field name="OrdStatus" id="39" type="ordStatusEnum" description="Order status" offset="17" semanticType="char"/>
+		<field name="Symbol" id="55" type="idString" description="Security ID" offset="18" semanticType="String"/>
+		<field name="MaturityMonthYear" id="200" type="MONTH_YEAR" description="Expiration" offset="26" semanticType="MonthYear"/>
+		<field name="Side" id="54" type="sideEnum" description="Side" offset="31" semanticType="char"/>
+		<field name="LeavesQty" id="151" type="qtyEncoding" description="Quantity open" offset="32" semanticType="Qty"/>
+		<field name="CumQty" id="14" type="qtyEncoding" description="Executed quantity" offset="36" semanticType="Qty"/>
+		<field name="TradeDate" id="75" type="date" description="Trade date" offset="40" semanticType="LocalMktDate"/>
+		<group name="FillsGrp" id="2112" description="Partial fills" blockLength="12" dimensionType="groupSizeEncoding">
+			<field name="FillPx" id="1364" type="optionalDecimalEncoding" description="Price of partial fill" offset="0" semanticType="Price"/>
+			<field name="FillQty" id="1365" type="qtyEncoding" description="Executed quantity" offset="8" semanticType="Qty"/>
+		</group>
+		<!-- Example message from FIX SBE - RC3 / Section 7.3.1 / Page 73 *** MISSING *** -->
+	</sbe:message>
+
+</sbe:messageSchema>
+

@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<templates ns="https://www.eurexchange.com/members/releases/eurex14/interfaces_enhancedbroadcast_en.html"
+                      xmlns="http://www.fixprotocol.org/ns/fast/td/1.1"
+                      xmlns:scp="http://www.fixprotocol.org/ns/fast/scp/1.1">
+  <template name="PacketHeader" id="110">
+    <typeRef name="packetheader" />
+    <uInt32 name="senderCompId" />
+    <byteVector name="packetSeqNum" />
+    <byteVector name="timeStamp" />
+    <byteVector name="performanceIndicator" />
+  </template>
+  <template name="BeaconMessage" id="81">
+    <typeRef name="beaconmessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <uInt32 name="lastSeqNum1" />
+    <uInt32 name="lastSeqNum2" />
+  </template>
+  <template name="StartService" id="170">
+    <typeRef name="startservice" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+  </template>
+  <template name="EndService" id="171">
+    <typeRef name="endservice" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+  </template>
+  <template name="StartProductReferenceInformation" id="172">
+    <typeRef name="startproductreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="EndProductReferenceInformation" id="173">
+    <typeRef name="endproductreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="StartSingleLegReferenceInformation" id="174">
+    <typeRef name="startsinglelegreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="EndSingleLegReferenceInformation" id="175">
+    <typeRef name="endsinglelegreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="StartStrategyReferenceInformation" id="176">
+    <typeRef name="startstrategyreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="EndStrategyReferenceInformation" id="177">
+    <typeRef name="endstrategyreferenceinformation" />
+    <uInt32 name="timestamp" />
+    <string name="mode" />
+    <string name="busDate" />
+    <uInt32 name="noOfMsgs" />
+  </template>
+  <template name="StartEndSnapshotInformation">
+    <uInt32 name="timestamp" />
+    <string name="prodId" presence="optional">
+      <default />
+    </string>
+    <uInt32 name="noOfMsgs" presence="optional">
+      <default />
+    </uInt32>
+  </template>
+  <template name="StartSingleLegSnapshotInformation" id="178">
+    <typeRef name="startsinglelegsnapshotinformation" />
+    <templateRef name="StartEndSnapshotInformation" />
+  </template>
+  <template name="EndSingleLegSnapshotInformation" id="179">
+    <typeRef name="endsinglelegsnapshotinformation" />
+    <templateRef name="StartEndSnapshotInformation" />
+  </template>
+  <template name="StartStrategySnapshotInformation" id="180">
+    <typeRef name="startstrategysnapshotinformation" />
+    <templateRef name="StartEndSnapshotInformation" />
+  </template>
+  <template name="EndStrategySnapshotInformation" id="181">
+    <typeRef name="endstrategysnapshotinformation" />
+    <templateRef name="StartEndSnapshotInformation" />
+  </template>
+  <template name="ProductReferenceInformation" id="82">
+    <typeRef name="productreferencemessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="seqNum">
+      <increment />
+    </uInt32>
+    <string name="actionType">
+      <copy />
+    </string>
+    <string name="prodId" />
+    <string name="prodType">
+      <copy />
+    </string>
+    <string name="exchIdCode">
+      <copy />
+    </string>
+    <string name="isinCode">
+      <delta />
+    </string>
+    <string name="currTypCode">
+      <copy />
+    </string>
+    <uInt32 name="noOfContracts" />
+    <string name="implied" />
+    <string name="exerciseStyle" presence="optional"><default/></string>
+    <decimal name="ticSize" />
+    <decimal name="ticValue" />
+    <string name="undrId" presence="optional">
+      <default />
+    </string>
+    <string name="undrIsin" presence="optional">
+      <default />
+    </string>
+    <uInt32 name="prodDispDcml" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="exerPrcDcml" presence="optional">
+      <default />
+    </uInt32>
+    <sequence name="streams">
+      <length name="noOfStreams" />
+      <string name="streamType" />
+      <string name="streamService" />
+      <string name="streamAddr">
+        <delta />
+      </string>
+      <uInt32 name="streamPort">
+        <delta />
+      </uInt32>
+      <uInt32 name="mktDpth" />
+      <uInt32 name="recIntvl"  presence="optional" />
+    </sequence>
+    <decimal name="prevUndrClsPrc" presence="optional">
+      <default />
+    </decimal>
+    <sequence name="tickRules">
+    <length name="noOfTickRules" />
+        <decimal name="tickRange" />
+        <decimal name="tickIncrement" />
+    </sequence>
+    <string name="executingSystem" />
+    <string name="prodLongName" />
+    <string name="prodLongType" />
+    <string name="matchTypeCode" />
+    <string name="stratMatchCode" presence="optional"><default/></string>
+    <string name="gatewayLocId" />
+    <decimal name="maxPrice" />
+    <string name="oneSideQuoteAlwd" />
+    <string name="EqBidAskQtyReqrFlag" />
+    <uInt32 name="quoteMinQty" />
+    <uInt32 name="fastMktQuoteMinQty" />
+    <int32 name="fastMktQuotePcnt" />
+    <string name="volaStratUndrId" presence="optional"><default/></string>
+  </template>
+  <template name="SingleLegReferenceInformation" id="83">
+    <typeRef name="singlelegreferencemessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="seqNum">
+      <increment />
+    </uInt32>
+    <string name="actionType">
+      <copy />
+    </string>
+    <uInt32 name="cntrId">
+      <delta />
+    </uInt32>
+    <string name="prodId">
+      <copy />
+    </string>
+    <string name="cntrType">
+      <copy />
+    </string>
+    <string name="cntrExpMthYr">
+      <copy />
+    </string>
+    <string name="cntrExpDate">
+      <copy />
+    </string>
+    <decimal name="cntrExerPrc">
+      <delta />
+    </decimal>
+    <decimal name="cntrOrigExerPrc">
+      <delta />
+    </decimal>
+    <string name="cntrVersNo">
+      <copy />
+    </string>
+    <string name="cntrGenNo" presence="optional">
+      <default />
+    </string>
+    <decimal name="cntrSize" presence="optional">
+      <default />
+    </decimal>
+    <uInt32 name="mktDpth">
+      <copy />
+    </uInt32>
+    <uInt32 name="lepoInd" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="prvAdjOpnInt" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="prvUnadjOpnInt" presence="optional">
+      <default />
+    </uInt32>
+    <decimal name="prvSttlPrc" presence="optional">
+      <default />
+    </decimal>
+    <decimal name="prvClsPrc" presence="optional">
+      <default />
+    </decimal>
+    <string name="instrStatus">
+    </string>
+  </template>
+  <template name="StrategyReferenceInformation" id="84">
+    <typeRef name="strategyreferencemessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="seqNum" presence="optional">
+      <increment />
+    </uInt32>
+    <string name="actionType">
+      <copy />
+    </string>
+    <string name="prodId">
+      <copy />
+    </string>
+    <string name="stratType">
+      <copy />
+    </string>
+    <decimal name="undrPrc" />
+    <uInt32 name="mktDpth">
+      <copy />
+    </uInt32>
+    <sequence name="strategyLegs">
+      <length name="noOfLegs" />
+      <uInt32 name="stratCntrId" />
+      <string name="stratBuySellCode" />
+      <uInt32 name="stratLegVol" />
+    </sequence>
+  </template>
+  <template name="OrderBookSnapshotInformation" id="85">
+    <typeRef name="orderbooksnapshotmessage" />
+    <int64 name="hiResTimestamp">
+      <delta />
+    </int64>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <sequence name="channelSeqNos">
+      <length name="noOfSeqNos" />
+      <uInt32 name="consolSeqNum" />
+    </sequence>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <decimal name="dlyHghPrc" presence="optional">
+      <default />
+    </decimal>
+    <decimal name="dlyLowPrc" presence="optional">
+      <default />
+    </decimal>
+    <uInt32 name="totTrdQty" presence="optional">
+      <default />
+    </uInt32>
+    <string name="tradingStatus" presence="optional">
+      <default />
+    </string>
+    <sequence name="entries">
+      <length name="noOfEntries" />
+      <string name="entryType" />
+      <uInt32 name="entryPrcLvl" presence="optional" />
+      <decimal name="entryPrc">
+        <delta />
+      </decimal>
+      <uInt32 name="entryQty" />
+      <string name="entryPrcSrc" presence="optional" />
+      <uInt32 name="noOfContributors" presence="optional" />
+    </sequence>
+  </template>
+  <template name="OrderBookDeltaInformation" id="86">
+    <typeRef name="orderbookdeltamessage" />
+    <int64 name="hiResTimestamp">
+      <delta />
+    </int64>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="seqNum">
+      <increment />
+    </uInt32>
+    <uInt32 name="linkedBrcastId" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="lbiChannelMap" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="lastTpSeqNum" presence="optional">
+      <default />
+    </uInt32>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <string name="gapIndicator" presence="optional">
+      <default />
+    </string>
+    <decimal name="dlyHghPrc" presence="optional">
+      <default />
+    </decimal>
+    <decimal name="dlyLowPrc" presence="optional">
+      <default />
+    </decimal>
+    <uInt32 name="totTrdQty" presence="optional">
+      <default />
+    </uInt32>
+    <string name="tradingStatus" presence="optional">
+      <default />
+    </string>
+    <sequence name="entries">
+      <length name="noOfEntries" />
+      <string name="updateAction" />
+      <string name="entryType" />
+      <uInt32 name="entryPrcLvl" presence="optional" />
+      <decimal name="entryPrc" />
+      <uInt32 name="entryQty" />
+      <string name="entryPrcSrc" presence="optional" />
+      <uInt32 name="noOfContributors" presence="optional" />
+    </sequence>
+  </template>
+  <template name="RequestInformation" id="87">
+    <typeRef name="requestmessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <string name="actionType">
+      <constant value="1" />
+    </string>
+    <string name="reqType" />
+    <uInt32 name="reqBidQty" presence="optional">
+      <default />
+    </uInt32>
+    <uInt32 name="reqAskQty" presence="optional">
+      <default />
+    </uInt32>
+    <int64 name="reqTim" />
+  </template>
+  <template name="TradeInformation" id="89">
+    <typeRef name="trademessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <string name="gapIndicator" presence="optional">
+        <default />
+    </string>
+    <int64 name="entryTim" />
+    <int64 name="aggressorEntryTim" presence="optional">
+      <default />
+    </int64>
+    <string name="entryType" />
+    <string name="trdType" />
+    <string name="trdInd" />
+    <string name="revInd" />
+    <string name="aggressorSide" />
+    <decimal name="entryPrc" />
+    <uInt32 name="entryQty" />
+    <uInt32 name="totTrdQty" />
+    <uInt32 name="nbOfBuy" />
+    <uInt32 name="nbOfSell" />
+    <uInt32 name="trdEvntSeqNum" />
+    <uInt32 name="tpSeqNum" />
+    <sequence name="transactionIds">
+	<length name="noOfTrnIdNo" />
+	<string name="trnId" />
+    </sequence>
+  </template>
+  <template name="BlockAuctionStatus" id="90">
+    <typeRef name="blockauctionstatus" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <group name="contractDescription" presence="optional">
+      <uInt32 name="cntrId" />
+    </group>
+    <group name="strategyDescription" presence="optional">
+      <string name="prodId" />
+      <string name="stratType" />
+      <decimal name="undrPrc" />
+      <sequence name="strategyLegs">
+        <length name="noOfLegs" />
+        <uInt32 name="stratCntrId" />
+        <string name="stratBuySellCode" />
+        <uInt32 name="stratLegVol" />
+      </sequence>
+    </group>
+    <string name="blkAuctStatus" />
+  </template>
+  <template name="AdditionalContractInformation" id="91">
+    <typeRef name="additionalcontractinformationmessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="cntrId" />
+    <sequence name="entries">
+      <length name="noOfEntries" />
+      <string name="updateAction">
+        <constant value="1" />
+      </string>
+      <string name="entryType" />
+      <decimal name="entryPrc" presence="optional" />
+      <uInt32 name="entryQty" presence="optional" />
+    </sequence>
+  </template>
+  <template name="TradingStatus" id="92">
+    <typeRef name="tradingstatusmessage" />
+    <uInt32 name="timestamp">
+      <delta />
+    </uInt32>
+    <uInt32 name="srcId">
+      <copy />
+    </uInt32>
+    <uInt32 name="seqNum" presence="optional">
+      <increment />
+    </uInt32>
+    <string name="prodId" presence="optional">
+      <default />
+    </string>
+    <uInt32 name="cntrId" presence="optional">
+      <default />
+    </uInt32>
+    <string name="tradingStatus" />
+  </template>
+</templates>

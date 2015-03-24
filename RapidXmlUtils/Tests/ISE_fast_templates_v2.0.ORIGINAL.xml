@@ -1,0 +1,116 @@
+<!--
+
+International Securities Exchange Depth Feed FAST Messages Version 5.3 2/28/08
+
+The MIDAS server publishes three types of messages. These three message types are "Market Data Incremental Refresh",  "Security Status" and "Market Data Snapshot Full Refresh". These messages are defined by FIX 4.4 and extended to carry additional information.
+
+List of changes for V5.3:
+* All data messages have same header: BeginString, MsgType, SenderCompID, MsgSeqNum, SendingTimeJavaEpoch
+* SendingTimeJavaEpoch is time in msec from 1/1/1970, which is standard java time format
+* The snapshot has two new fields, UnderlyingNumber and SeriesNumber which together uniquely identify the series
+* Series Identifiers have been replaced with UnderlyingNumber and SeriesNumber in the status and IncrementalRefresh messages
+* - Symbol, CFICode, MaturityMonthYear, StrikePrice and SecurityDesc have been removed from status and Incremental Refresh 
+* RefreshIndicator and QuantityCustomer now have one Fast Operator, which is Default. The Copy has been removed.
+* The Presence Optional has been removed from QuantityCustomer
+
+And changes from the 022708 version of this template are;
+* The delta has been removed from the sending time
+* UnderlyingNumber and SeriesNumber are UInt32, not UInt16
+* a lot of fields in the 500 snapshot message were re-ordered.
+-->
+
+<templates
+	xmlns="http://www.fixprotocol.org/ns/fast/td/1.1"
+	templateNs="http://www.fixprotocol.org/ns/templates/sample"
+	ns="http://www.fixprotocol.org/ns/fix">
+
+<!--  TEMPLATE  FastReset  -->
+
+	<template name="FastReset" id="120">
+		<typeRef name="FastReset"/>
+	</template>
+
+
+<!--  TEMPLATE  MarketDataIncrementalRefresh  -->
+
+	<template name="MarketDataIncrementalRefresh" id="100">
+		<typeRef name="MarketDataIncrementalRefresh"/>
+
+		<!-- Common header -->
+		<string name="BeginString"> <constant value="FIX.4.4"/> </string>		<!-- 8 -->
+		<string name="MsgType"> <constant value="X"/> </string>			<!-- 35 -->
+		<string name="SenderCompID"> <constant value="ISE"/> </string>		<!-- 49 -->
+        	<uInt32 name="MsgSeqNum"> <increment/> </uInt32>				<!-- 34 -->
+        	<uInt64 name="SendingTimeJavaEpoch"> <copy/> </uInt64>         		<!-- 5297 -->
+
+		<!-- Message specific fields -->
+		<sequence name="MDEntries">
+			<length name="NoMDEntries"> <default value="0"/> </length>		<!-- 268 -->
+			<string name="MDUpdateAction"> <copy/> </string>			<!-- 279 -->
+			<string name="MDEntryType"> <copy/> </string>				<!-- 269 -->
+            	<uInt32 name="UnderlyingNumber"> <copy/> </uInt32>                <!--5295 -->
+            	<uInt32 name="SeriesNumber"> <copy/> </uInt32>                    <!--5296 -->
+			<decimal name="MDEntryPx"> <copy/> </decimal>				<!-- 270 -->
+			<uInt32 name="MDEntrySize"> <copy/> </uInt32>				<!-- 271 -->
+            	<uInt32 name="MDPriceLevel"> <copy/> </uInt32>				<!-- 1023 -->
+            	<uInt32 name="QuantityCustomer"> <default value="0"/> </uInt32>	<!-- 9050 -->
+            	<string name="QuoteCondition" presence="optional"> <copy/> </string>	<!-- 276 -->		
+		</sequence>
+	</template>
+
+
+<!--  TEMPLATE  SecurityStatus  -->
+
+	<template name="SecurityStatus"  id="400">
+		<typeRef name="SecurityStatus"/>
+
+		<!-- Common header -->
+		<string name="BeginString"> <constant value="FIX.4.4"/> </string>		<!-- 8 -->
+		<string name="MsgType"> <constant value="f"/> </string>			<!-- 35 -->
+		<string name="SenderCompID"> <constant value="ISE"/> </string>		<!-- 49 -->
+		<uInt32 name="MsgSeqNum"> <increment/> </uInt32>				<!-- 34 -->
+        	<uInt64 name="SendingTimeJavaEpoch"> <copy/> </uInt64>         		<!-- 5297 -->
+
+		<!-- Message specific fields -->
+        	<uInt32 name="UnderlyingNumber"> <copy/> </uInt32>                  	<!--5295 -->
+        	<uInt32 name="SeriesNumber"> <copy/> </uInt32>                      	<!--5296 -->
+		<uInt32 name="SecurityTradingStatus"> <copy/> </uInt32>			<!-- 326 -->
+	</template>
+
+
+<!--  TEMPLATE  MarketDataSnapshotFullRefresh  -->
+
+	<template name="MarketDataSnapshotFullRefresh" id="500">
+		<typeRef name="MarketDataSnapshotFullRefresh"/>
+
+		<!-- Common header -->
+		<string name="BeginString"> <constant value="FIX.4.4"/> </string>		<!-- 8 -->
+		<string name="MsgType"> <constant value="W"/> </string>			<!-- 35 -->
+		<string name="SenderCompID"> <constant value="ISE"/> </string>		<!-- 49 -->
+        	<uInt32 name="MsgSeqNum"> <increment/> </uInt32>				<!-- 34 -->
+        	<uInt64 name="SendingTimeJavaEpoch"> <copy/> </uInt64>         		<!-- 5297 -->
+
+		<!-- Message specific fields -->
+        	<string name="Symbol"> <copy/> </string>						<!-- 55 -->
+        	<uInt32 name="SeriesNumber"> <copy/> </uInt32>                      	<!--5296 -->
+		<string name="CFICode"> <copy/> </string>						<!-- 461 -->
+		<string name="MaturityMonthYear"> <tail/> </string>				<!-- 200 -->
+		<decimal name="StrikePrice"> <copy/> </decimal>					<!-- 202 -->
+        	<string name="SecurityDesc"> <copy/> </string>					<!-- 107 -->
+        	<uInt32 name="UnderlyingNumber"> <copy/> </uInt32>                  	<!--5295 -->
+		<uInt32 name="SecurityTradingStatus"> <copy/> </uInt32>			<!-- 326 -->
+        	<string name="RefreshIndicator">  <default value="0"/>  </string>  	<!-- 1200 -->
+
+		<sequence name="MDEntries">
+			<length name="NoMDEntries"> <default value="0"/> </length>		<!-- 268 -->
+			<string name="MDEntryType"> <copy/> </string>				<!-- 269 -->
+			<decimal name="MDEntryPx"> <copy/> </decimal>				<!-- 270 -->
+			<uInt32 name="MDEntrySize"> <copy/> </uInt32>				<!-- 271 -->
+            	<uInt32 name="MDPriceLevel"> <copy/> </uInt32>				<!-- 1023 -->
+            	<uInt32 name="QuantityCustomer"> <default value="0"/>  </uInt32>	<!-- 9050 -->
+            	<string name="QuoteCondition" presence="optional"> <copy/> </string>	<!-- 276 -->
+        	</sequence>
+	</template>
+
+</templates>
+
