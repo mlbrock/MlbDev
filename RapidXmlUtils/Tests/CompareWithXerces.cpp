@@ -120,7 +120,7 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 		const char *xml_string = "<!-- Comment 1 --><!-- Comment 2 -->"
 			"<top><!-- Comment 3 -->"
 			"   <middle a=\"1\" b=\"2\" c=\"3\"></middle>"
-			"\t<!--\n\t\tComment 4\n\t-->\n</top><!-- Comment 5 -->"
+			"\t<!--\r\n\t\tComment 4\r\n\t-->\n</top><!-- Comment 5 -->"
 			"<!-- Comment 6 -->";
 		RunInternalStringTests(xml_string);
 	}
@@ -143,9 +143,8 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 				rapidxml_element);
 		}
 		catch (const std::exception &except) {
-			std::cout << "Attempt to parse file '" << argv[count_1] <<
-				"' using the MLB::" << parse_type << " library failed: " <<
-				except.what() << std::endl;
+			std::cout << "Attempt to parse a file using the MLB::" <<
+				parse_type << " library failed: " << except.what() << std::endl;
 			EmitSep('=');
 			std::cout << std::endl;
 			continue;

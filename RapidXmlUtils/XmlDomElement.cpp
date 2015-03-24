@@ -65,11 +65,11 @@ XmlDomElement::XmlDomElement(
 		MLB::Utility::ThrowLogicError("Invalid element pointer passed to "
 			"'XmlDomElement' constructor. Does the input XML file exist?");
 
-	rapidxml::node_type xerces_node_type = element_ptr->type();
+	rapidxml::node_type rapidxml_node_type = element_ptr->type();
 
 	const char *xerces_element_name = NULL;
 
-	switch (xerces_node_type) {
+	switch (rapidxml_node_type) {
 		case rapidxml::node_element		:
 			//	Xerces = xercesc::DOMNode::ELEMENT_NODE
 			node_type_ = NodeType_Element;
@@ -131,7 +131,7 @@ XmlDomElement::XmlDomElement(
 			{
 				std::ostringstream o_str;
 				o_str << "Unhandled rapidxml::node_type enumeration value (" <<
-					xerces_node_type << ").";
+					rapidxml_node_type << ").";
 				throw std::logic_error(o_str.str());
 			}
 			break;
@@ -171,11 +171,9 @@ XmlDomElement::XmlDomElement(
 
 	//	Get the list of attributes...
 	rapidxml::xml_attribute<> *attr_ptr = element_ptr->first_attribute();
-	if (attr_ptr) {
-		while (attr_ptr) {
-			attribute_map_[attr_ptr->name()] = attr_ptr->value();
-			attr_ptr = attr_ptr->next_attribute();
-		}
+	while (attr_ptr) {
+		attribute_map_[attr_ptr->name()] = attr_ptr->value();
+		attr_ptr = attr_ptr->next_attribute();
 	}
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -394,16 +392,34 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 #endif // #if defined(_MSC_VER) && (_MSC_VER >= 1300)
 		char                    *tmp_xml_string;
 		boost::shared_ptr<char>  string_sptr;
-		if (destructive_xml_parse)
+		/*
+			If a destructive XML parse was specified, we'll use the input
+			buffer. Otherwise, we'll work with a copy.
+
+			Also, RapidXml will leave embedded carriage-returns in the node
+			data, so we remove them from the working string.
+		*/
+		if (destructive_xml_parse) {
 			tmp_xml_string = const_cast<char *>(xml_string);
+			char *cr_ptr = tmp_xml_string;
+			while ((cr_ptr = ::strchr(cr_ptr, '\r')) != NULL)
+				::strcpy(cr_ptr, cr_ptr + 1);
+		}
 		else {
-			tmp_xml_string = ::strdup(xml_string);
+			tmp_xml_string = static_cast<char *>(
+				::malloc(::strlen(xml_string) + 1));
 			if (!tmp_xml_string)
 				throw std::bad_alloc();
+			const char *tmp_ptr_1 = xml_string;
+			      char *tmp_ptr_2 = tmp_xml_string;
+			do {
+				if (*tmp_ptr_1 != '\r')
+					*tmp_ptr_2++ = *tmp_ptr_1;
+			} while (*tmp_ptr_1++);
 			string_sptr.reset(tmp_xml_string, ::free);
 		}
 		xml_document.parse<rapidxml::parse_comment_nodes>(tmp_xml_string);
-		//	We ignore leading comment blocks (as Xerces does).
+		//	We ignore leading and trailing comment blocks (as Xerces does).
 		rapidxml::xml_node<> *node_ptr = xml_document.first_node();
 		while ((node_ptr->type() == rapidxml::node_comment) &&
 			node_ptr->next_sibling())
