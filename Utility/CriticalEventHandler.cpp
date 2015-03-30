@@ -218,10 +218,11 @@ void CriticalEventUninstall(SignalInstallDefaultData &signal_data)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <string>
 #include <sstream>
 
-using namespace MLB::Utility;
+#include <Utility/Sleep.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 int main()
@@ -231,22 +232,22 @@ int main()
 		std::endl;
 
 	{
-		CriticalEventContext critical_event_context;
+		MLB::Utility::CriticalEventContext critical_event_context;
 		std::cout << "Installed a critical event handler for this process" <<
 			std::endl;
 		std::cout << "   Send a SIGINT, or close the window, or whatever..." <<
 			std::endl;
 		bool no_signal = true;
 		while (no_signal) {
-			if (CriticalEventTest())
+			if (MLB::Utility::CriticalEventTest())
 				break;
-			Sleep(10);
+			MLB::Utility::SleepSecs(10);
 		}
 	}
 
 	std::cout << std::endl << std::endl <<
 		"DONE: Now exiting program..." << std::endl << std::endl;
-	Sleep(3000);
+	MLB::Utility::SleepSecs(3000);
 
 	return(EXIT_SUCCESS);
 }
