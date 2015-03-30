@@ -37,10 +37,11 @@
 
 #include <iterator>
 
-
 //	////////////////////////////////////////////////////////////////////////////
 
 #ifdef TEST_MAIN
+
+#include <cstdlib>
 
 using namespace MLB::Utility;
 
@@ -123,7 +124,8 @@ template <class ContainerType>
 	std::cout << container_name << std::endl;
 	std::cout << std::string(10, '-') << std::endl;
 	std::copy(the_cont.begin(), the_cont.end(),
-		std::ostream_iterator<ContainerType::value_type>(std::cout, "\n"));
+		std::ostream_iterator<typename ContainerType::value_type>(
+		std::cout, "\n"));
 	std::cout << std::string(10, '-') << std::endl;
 }
 //	////////////////////////////////////////////////////////////////////////////
