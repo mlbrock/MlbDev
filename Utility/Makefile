@@ -1,21 +1,27 @@
 # #############################################################################
 # #############################################################################
-# Utility Library Make File
+# Multiple Architecture Source Code Production System (MASCaPS) Version 3
+# 	Utility Library Make File
 # #############################################################################
+#
+# File Name       : Utility/Makefile
 #
 # File Description: Utility library make file.
 #
 # Revision History: 2000-01-13 --- Creation.
 #                       Michael L. Brock
+#                   2015-03-29 --- Modified for use with MASCaPS Version 3.
+#                       Michael L. Brock
 #
 #       Copyright Michael L. Brock 2000 - 2015.
+#
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
 #       http://www.boost.org/LICENSE_1_0.txt)
 #
 # #############################################################################
 
-include ../.make/MakePrefix.mk
+include ../.MASCaPS/MakePrefixFirst.mk
 
 TARGET_LIBS	=	libUtility.a
 
@@ -88,11 +94,6 @@ SRCS		=	\
 			WaitProcessInfo.cpp		\
 			WideChar.cpp
 
-#TEST_ExecProcess.cpp	:	ExecProcess.cpp
-#	cp -p ExecProcess.cpp TEST_ExecProcess.cpp
-#
-#
-#TARGET_BINS	=	TEST_ExecProcess
-
-include ../.make/MakeSuffix.mk
+include ../.MASCaPS/MakeSuffixFirst.mk
+# ###################################################################
 
