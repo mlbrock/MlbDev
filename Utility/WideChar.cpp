@@ -286,6 +286,7 @@ std::wstring CharMultiByteToWide_string::Convert(const char *in_string)
 
 #ifdef TEST_MAIN
 
+#include <cstring>
 #include <iomanip>
 
 using namespace MLB::Utility;
