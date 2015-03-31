@@ -41,7 +41,8 @@
 //namespace PRIVATE_IMPLEMENTATION__MLB__Utility__Rethrow_cpp {
 //	////////////////////////////////////////////////////////////////////////////
 //	Dinky public symbol to prevent complaints by MS VC++...
-extern const int SomeBogusSymbol = 0;
+extern const int
+	PRIVATE_IMPLEMENTATION__MLB__Utility__Rethrow_cpp_SomeBogusSymbol = 0;
 //	////////////////////////////////////////////////////////////////////////////
 //} // namespace PRIVATE_IMPLEMENTATION__MLB__Utility__Rethrow_cpp
 //} // namespace Utility
@@ -64,7 +65,7 @@ public:
 		ExceptionGeneral(except_string) { }
 	~TestException_1() throw() { }
 
-	const char *what() const {
+	const char *what() const throw() {
 		std::ostringstream what_text;
 		what_text << "***** TestException_1 *****: " << except_string_;
 		tmp_text = what_text.str();
@@ -95,7 +96,7 @@ public:
 		TestException_1(except_string) { }
 	~TestException_2() throw() { }
 
-	const char *what() const {
+	const char *what() const throw() {
 		std::ostringstream what_text;
 		what_text << "***** TestException_2 *****: " << except_string_;
 		tmp_text = what_text.str();
@@ -131,7 +132,12 @@ using namespace MLB::Utility;
 //	////////////////////////////////////////////////////////////////////////////
 void TEST_1()
 {
+#if defined(_MSC_VER) && !defined(__MINGW32__)
 	throw std::exception("Standard Exception");
+#else
+	throw std::exception();
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
+
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -145,7 +151,11 @@ void TEST_2()
 //	////////////////////////////////////////////////////////////////////////////
 void TEST_3()
 {
+#if defined(_MSC_VER) && !defined(__MINGW32__)
 	throw std::bad_alloc("Standard Exception Bad Alloc");
+#else
+	throw std::bad_alloc();
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -291,13 +301,25 @@ int TEST_Rethrow()
 class ExceptionGeneralX_1 : public virtual std::exception {
 public:
 	ExceptionGeneralX_1(const char *except_string = NULL) throw() :
+#if defined(_MSC_VER) && !defined(__MINGW32__)
 		 std::exception(GetFixedString(except_string))
+#else
+		 std::exception()
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
 		,except_string_(GetFixedString(except_string)) { }
 	ExceptionGeneralX_1(const std::string &except_string) throw() :
+#if defined(_MSC_VER) && !defined(__MINGW32__)
 		 std::exception(GetFixedString(except_string.c_str()))
+#else
+		 std::exception()
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
 		,except_string_(GetFixedString(except_string.c_str())) { }
 	ExceptionGeneralX_1(const std::ostringstream &except_string) throw() :
+#if defined(_MSC_VER) && !defined(__MINGW32__)
 		 std::exception(GetFixedString(except_string.str().c_str()))
+#else
+		 std::exception()
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
 		,except_string_(GetFixedString(except_string.str().c_str())) { }
 	~ExceptionGeneralX_1() throw() { }
 
