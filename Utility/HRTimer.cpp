@@ -208,7 +208,10 @@ HRTimerTick GetSystemTicksPerSecond()
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <iomanip>
+
+#include <Utility/Sleep.hpp>
 
 using namespace MLB::Utility;
 
@@ -234,7 +237,7 @@ int main()
 			std::cout << "Sleep " << std::setw(4) << TEST_SleepTimes[count_1] <<
 				": " << std::flush;
 			hr_timer.Start();
-			::Sleep(TEST_SleepTimes[count_1]);
+			SleepSecs(TEST_SleepTimes[count_1]);
 			hr_timer.End();
 			std::cout << " --- elapsed time: " << std::setw(32) <<
 				std::setprecision(12) << hr_timer.GetTickDiffInSeconds() <<

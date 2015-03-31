@@ -272,8 +272,11 @@ void SignalHandlerInstall(int signal_id)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <string>
 #include <sstream>
+
+#include <Utility/Sleep.hpp>
 
 using namespace MLB::Utility;
 
@@ -292,12 +295,12 @@ int main()
 	while (no_signal) {
 		if (SignalEventTest(SIGINT))
 			break;
-		::Sleep(10);
+		SleepSecs(10);
 	}
 
 	std::cout << std::endl << std::endl <<
 		"DONE: Now exiting program..." << std::endl << std::endl;
-	::Sleep(3000);
+	SleepSecs(3000);
 
 	return(EXIT_SUCCESS);
 }
