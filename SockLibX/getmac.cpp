@@ -61,6 +61,8 @@ int NPSL_GetMAC(NPSL_ADDR_MAC *ethernet_address, char *error_text)
 
 #ifdef TEST_MAIN
 
+#include <stdio.h>
+
 COMPAT_FN_DECL(int main, (void));
 
 int main()

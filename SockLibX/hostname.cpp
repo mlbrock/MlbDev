@@ -89,6 +89,8 @@ int NPSL_SetHostName(const char *host_name)
 
 #ifdef TEST_MAIN
 
+#include <stdio.h>
+
 COMPAT_FN_DECL(int main, (void));
 
 int main()

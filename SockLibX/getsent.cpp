@@ -78,6 +78,8 @@ int NPSL_GetServByString(const char *serv_string, const char *serv_proto,
 
 #ifdef TEST_MAIN
 
+#include <stdio.h>
+
 COMPAT_FN_DECL(int main, (int argc, char **argv));
 
 int main(int argc, char **argv)

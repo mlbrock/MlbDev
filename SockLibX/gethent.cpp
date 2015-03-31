@@ -77,6 +77,8 @@ int NPSL_GetHostByString(const char *host_string, NPSL_HOSTENT *host_ent_ptr,
 
 #ifdef TEST_MAIN
 
+#include <stdio.h>
+
 COMPAT_FN_DECL(int main, (int argc, char **argv));
 
 int main(int argc, char **argv)

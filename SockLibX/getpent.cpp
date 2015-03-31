@@ -76,6 +76,8 @@ int NPSL_GetProtoByString(const char *proto_string,
 
 #ifdef TEST_MAIN
 
+#include <stdio.h>
+
 COMPAT_FN_DECL(int main, (int argc, char **argv));
 
 int main(int argc, char **argv)
