@@ -14289,6 +14289,7 @@ void ThrowSystemError(const std::ostringstream &error_text)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <iomanip>
 
 using namespace MLB::Utility;
@@ -14325,7 +14326,10 @@ template <typename ErrorInfo> void ShowErrorList(const char *error_type,
 int main()
 {
 	ShowErrorList("Errno Error List", ErrnoCount, ErrnoList);
+
+#ifdef _Windows
 	ShowErrorList("System Error List", SystemErrorCount, SystemErrorList);
+#endif // #ifdef _Windows
 
 	return(EXIT_SUCCESS);
 }
