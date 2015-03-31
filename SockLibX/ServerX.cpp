@@ -211,7 +211,10 @@ bool ServerX::AcceptInternal(SocketX &client_socket)
 
 #ifdef TEST_MAIN
 
+# include <cstdlib>
 # include <iostream>
+
+#include <Utility/Sleep.hpp>
 
 using namespace MLB::SockLibX;
 
@@ -234,7 +237,7 @@ int main(int argc, char **argv)
 			std::flush;
 		while (this_server.ShouldTryAccept() &&
 			(!this_server.Accept(my_client, 100000)))
-			::Sleep(0);
+			MLB::Utility::SleepSecs(0);
 		if (MLB::Utility::CriticalEventTest()) 
 			std::cout << std::endl << "Exiting because a signal was received." <<
 				std::endl;
