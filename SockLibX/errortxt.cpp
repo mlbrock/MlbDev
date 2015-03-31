@@ -2164,6 +2164,8 @@ const NPSL_SocketErrorSpec *NPSL_GetLastErrorPtr()
 
 #ifdef TEST_MAIN
 
+#include <Utility/C_StringSupport.hpp>
+
 #include <stdio.h>
 
 #ifdef __MSDOS__
@@ -2209,22 +2211,22 @@ int main(int argc, char **argv)
 	printf("Longest Long Message : %u bytes\n", longest_2);
 
 	for (count_1 = 1; count_1 < ((unsigned int) argc); count_1++) {
-		if (!strnicmp("-LONG=", argv[count_1], 6)) {
-			if ((!stricmp(argv[count_1] + 6, "ON")) ||
-				(!stricmp(argv[count_1] + 6, "YES")) ||
-				(!stricmp(argv[count_1] + 6, "TRUE")))
+		if (!MLB::Utility::Utility_strnicmp("-LONG=", argv[count_1], 6)) {
+			if ((!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "ON")) ||
+				(!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "YES")) ||
+				(!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "TRUE")))
 				long_flag = 1;
-			else if ((!stricmp(argv[count_1] + 6, "OFF")) ||
-				(!stricmp(argv[count_1] + 6, "NO")) ||
-				(!stricmp(argv[count_1] + 6, "FALSE")))
+			else if ((!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "OFF")) ||
+				(!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "NO")) ||
+				(!MLB::Utility::Utility_stricmp(argv[count_1] + 6, "FALSE")))
 				long_flag = 0;
 			else
 				DoUsage(argv[0], "Invalid '-LONG=' toggle", 22);
 		}
-		else if ((!strnicmp("-MAX=", argv[count_1], 5)) &&
+		else if ((!MLB::Utility::Utility_strnicmp("-MAX=", argv[count_1], 5)) &&
 			(strlen(argv[count_1]) > 5) && isdigit(argv[count_1][5]))
 			max_text = atoi(argv[count_1] + 5);
-		else if (!stricmp("-ALL", argv[count_1])) {
+		else if (!MLB::Utility::Utility_stricmp("-ALL", argv[count_1])) {
 			printf("-----------------------------------------------------\n");
 			for (count_2 = 0; count_2 < error_count; count_2++)
 				printf("[%05u]:%s\n", count_2,
@@ -2232,8 +2234,8 @@ int main(int argc, char **argv)
 					long_flag, max_text, error_text));
 			printf("-----------------------------------------------------\n");
 		}
-		else if ((!stricmp("-HELP", argv[count_1])) ||
-			(!stricmp("-H", argv[count_1])))
+		else if ((!MLB::Utility::Utility_stricmp("-HELP", argv[count_1])) ||
+			(!MLB::Utility::Utility_stricmp("-H", argv[count_1])))
 			DoUsage(argv[0], "Help request noted.", 0);
 		else
 			printf("%d ---> %s\n", atoi(argv[count_1]),
