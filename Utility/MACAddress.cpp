@@ -559,6 +559,7 @@ std::ostream & operator << (std::ostream &o_str, const MACAddress &datum)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <iostream>
 
 using namespace MLB::Utility;

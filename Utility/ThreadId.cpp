@@ -71,6 +71,7 @@ ThreadId CurrentThreadId()
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <iostream>
 
 using namespace MLB::Utility;

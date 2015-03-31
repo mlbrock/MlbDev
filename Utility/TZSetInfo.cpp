@@ -171,6 +171,8 @@ std::ostream & operator << (std::ostream &o_str, const TZSetInfo &datum)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
+
 using namespace MLB::Utility;
 
 //	////////////////////////////////////////////////////////////////////////////

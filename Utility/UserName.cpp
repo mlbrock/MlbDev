@@ -115,6 +115,7 @@ char *GetCurrentUserName(char *user_name, unsigned int user_name_length)
 
 #ifdef TEST_MAIN
 
+#include <cstdlib>
 #include <iostream>
 
 using namespace MLB::Utility;
