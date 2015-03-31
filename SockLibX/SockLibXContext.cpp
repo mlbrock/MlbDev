@@ -86,6 +86,7 @@ void SockLibXContext::EnsureReady() const
 
 #ifdef TEST_MAIN
 
+# include <cstdlib>
 # include <iostream>
 
 #include <SockLibX/SocketX.hpp>

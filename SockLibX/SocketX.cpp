@@ -1045,6 +1045,7 @@ void SocketX::Invalidate()
 
 #ifdef TEST_MAIN
 
+# include <cstdlib>
 # include <iostream>
 
 using namespace MLB::SockLibX;
