@@ -190,6 +190,8 @@ EXIT_FUNCTION:
 
 #ifdef TEST_MAIN
 
+#include <Utility/C_StringSupport.hpp>
+
 COMPAT_FN_DECL(int main, (int argc, char **argv));
 
 int main(int argc, char **argv)
@@ -214,8 +216,8 @@ int main(int argc, char **argv)
 		"---- ------- --- ----------------------------------------\n\n");
 
 	for (count_1 = 1; count_1 < ((unsigned int) argc); count_1++) {
-		if ((!stricmp("-h", argv[count_1])) ||
-			(!stricmp("-help", argv[count_1]))) {
+		if ((!MLB::Utility::Utility_stricmp("-h", argv[count_1])) ||
+			(!MLB::Utility::Utility_stricmp("-help", argv[count_1]))) {
 			fprintf(stderr, "USAGE:\n   %s %s [ %s . . . ]\n",
 				MLB::NPSLI_Internal::extract_file_name(argv[0]),
 				"[ -hsp ] <host-service-protocol-string> . . .",
@@ -233,9 +235,9 @@ int main(int argc, char **argv)
 	if ((return_code = NPSL_SocketLibStartUp(NULL, error_text)) ==
 		NPSL_SUCCESS) {
 		for (count_1 = 1; count_1 < ((unsigned int) argc); count_1++) {
-			if (!stricmp("-hsp", argv[count_1]))
+			if (!MLB::Utility::Utility_stricmp("-hsp", argv[count_1]))
 				phs_flag = NPSL_FALSE;
-			else if (!stricmp("-phs", argv[count_1]))
+			else if (!MLB::Utility::Utility_stricmp("-phs", argv[count_1]))
 				phs_flag = NPSL_TRUE;
 			else {
 				printf("[%s]:", argv[count_1]);
