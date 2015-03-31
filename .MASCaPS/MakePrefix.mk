@@ -110,12 +110,12 @@ LBM_LIBS	=	\
 MLB_LIB_NAMES	=	\
 			Utility
 
-MLB_LIB_FULL	=	\
+MLB_LIB_FULL	:=	\
 			${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB},${MLB_LIB_NAMES}}}
 
 LDLIBS		=	\
-			${addprefix -l,${MLB_LIB_NAMES}}	\
 			-Bstatic	\
+			${addprefix -l,${MLB_LIB_NAMES}}	\
 			-Bdynamic	\
 			${TIBRV_LIBS}	\
 			${OTHER_LIBS}	\
