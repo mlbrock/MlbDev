@@ -34,7 +34,8 @@ LIB_BASE	=	/usr/lib64
 VER_BOOST	=	boost_1_54_0
 VER_BOOST_FS	=	3
 VER_TIBRV	=	8.1
-VER_XERCES	=	xercesc-3.0.1
+#VER_XERCES	=	xercesc-3.0.1
+VER_XERCES	=	xercesc-c
 VER_PCAP	=	/opt/SomeLocationTBD/LibPCap/1.2.0
 
 INC_OTHER_DIR	=	/usr/include
@@ -123,6 +124,7 @@ LDLIBS		=	\
 			-lm		\
 			-lrt		\
 			$(OTHER_LIBS)	\
+			-lxerces-c	\
 			${BOOST_LIBS}
 	
 LDFLAGS		+=	\
