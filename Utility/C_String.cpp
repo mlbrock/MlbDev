@@ -145,6 +145,17 @@ int Utility_stricmp(const char *ptr_1, const char *ptr_2)
 }
 //	////////////////////////////////////////////////////////////////////////////
 
+//	////////////////////////////////////////////////////////////////////////////
+int Utility_strnicmp(const char *ptr_1, const char *ptr_2, size_t data_length)
+{
+#ifndef __GNUC__
+	return(::strnicmp(ptr_1, ptr_2, data_length));
+#else
+	return(::strncasecmp(ptr_1, ptr_2, data_length));
+#endif // #ifndef __GNUC__
+}
+//	////////////////////////////////////////////////////////////////////////////
+
 } // namespace Utility
 
 } // namespace MLB

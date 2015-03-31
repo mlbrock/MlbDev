@@ -70,6 +70,8 @@ API_UTILITY char *C_strdup(const char *src_string,
 API_UTILITY int   C_stricmp(char *ptr_1, const char *ptr_2,
 	const char *name_string = NULL);
 API_UTILITY int   Utility_stricmp(const char *ptr_1, const char *ptr_2);
+API_UTILITY int   Utility_strnicmp(const char *ptr_1, const char *ptr_2,
+	size_t data_length);
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
