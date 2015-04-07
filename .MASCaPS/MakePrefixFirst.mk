@@ -114,7 +114,7 @@ MASCaPS_INIT_FLAG	:=	"MASCaPS"
 
 # #############################################################################
 
-ifdef (MASCaPS_DEBUG)
+#ifdef (MASCaPS_DEBUG)
 	XXX := ${info "===================== =========================="}
 	XXX := ${info "MASCaPS_FLAT        : " ${MASCaPS_FLAT}}
 	XXX := ${info "--------------------- --------------------------"}
@@ -139,5 +139,5 @@ ifdef (MASCaPS_DEBUG)
 	XXX := ${info "MASCaPS_SUFFIX_LIST : " ${MASCaPS_SUFFIX_LIST}}
 	XXX := ${info "MASCaPS_CONTEXT_LIST: " ${MASCaPS_CONTEXT_LIST}}
 	XXX := ${info "===================== =========================="}
-endif
+#endif
 

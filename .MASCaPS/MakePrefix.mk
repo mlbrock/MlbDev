@@ -66,6 +66,7 @@ CPPFLAGS	+=	\
 			${CPP_BUILD_TYPE} \
 			-I ./ \
 			-I ../include \
+			${CPPFLAGS_ADDED} \
 			-I ${INC_OTHER_DIR} \
 			-I ${INC_LBM_DIR} \
 			-I ${INC_TIBRV_DIR} \
