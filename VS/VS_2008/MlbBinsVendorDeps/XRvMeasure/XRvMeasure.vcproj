@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib RvUtilX.lib"
+				AdditionalDependencies="setargv.obj mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib RvUtilX.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv6_9\lib;$(NOINHERIT)"
@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib RvUtilX.lib"
+				AdditionalDependencies="setargv.obj mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SockLibX.lib libtibrvcpp.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib RvUtilX.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;\Vendor\tibco\Rendezvous\Rv6_9\lib;$(NOINHERIT)"

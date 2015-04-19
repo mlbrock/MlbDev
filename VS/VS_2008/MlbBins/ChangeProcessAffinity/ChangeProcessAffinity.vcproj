@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_3D.lib wpcap.lib packet.lib"
+				AdditionalDependencies="setargv.obj mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_3D.lib wpcap.lib packet.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Lib"
@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_3.lib wpcap.lib packet.lib"
+				AdditionalDependencies="setargv.obj mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib Psapi.lib Utility.lib SocketIo.lib SockLibX.lib XercesUtils.lib VFast.lib xerces-c_3.lib wpcap.lib packet.lib"
 				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib&quot;;\Vendor\WpdPack\4.1.2\WpdPack\Lib"
