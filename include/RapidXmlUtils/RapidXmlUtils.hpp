@@ -52,6 +52,8 @@
 */
 // ////////////////////////////////////////////////////////////////////////////
 
+#define MLB__LIB__SO_RapidXmlUtils
+
 #ifdef MLB__LIB__SO_RapidXmlUtils
 # ifdef RAPIDXMLUTILS_DLL_EXPORTS
 #  define API_RAPIDXMLUTILS		MB_LIB_EXPORT

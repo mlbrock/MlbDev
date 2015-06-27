@@ -58,6 +58,8 @@
 */
 // ////////////////////////////////////////////////////////////////////////////
 
+#define MLB__LIB__SO_XercesUtils
+
 #ifdef MLB__LIB__SO_XercesUtils
 # ifdef XERCESCUTILS_DLL_EXPORTS
 #  define API_XERCESUTILS		MB_LIB_EXPORT
