@@ -63,13 +63,13 @@ enum VFixDataType {
 	VFIXDataType_FloatPercentage   = 14,	
 	VFIXDataType_Char              = 15,
 	VFIXDataType_CharBoolean       = 16,//	'Y' or 'N'
-	VFIXDataType_CharMultiValue    = 17,//	Single-char fields seperated by space.
-	VFixDataType_String            = 18,
-	VFixDataType_StringLanguage    = 19,
-	VFixDataType_StringRawData     = 20,
-	VFixDataType_StringTenor       = 21,//	{D|M|W|Y}x (x > 0)
-	VFixDataType_StringXmlData     = 22,
-	VFIXDataType_StringMultiValue  = 23,//	Multi-char fields seperated by space.	
+	VFIXDataType_MultiValueChar    = 17,//	Single-char fields seperated by space.
+	VFIXDataType_MultiValueString  = 18,//	Multi-char fields seperated by space.	
+	VFixDataType_String            = 19,
+	VFixDataType_StringLanguage    = 20,
+	VFixDataType_StringRawData     = 21,
+	VFixDataType_StringTenor       = 22,//	{D|M|W|Y}x (x > 0)
+	VFixDataType_StringXmlData     = 23,
 	VFixDataType_StringIsoCountry  = 24,//	ISO 3166 country code
 	VFixDataType_StringIsoCurrency = 25,//	ISO 4217 currecny code
 	VFixDataType_StringIsoExchange = 26,//	ISO 10383 market identifier code
@@ -89,7 +89,8 @@ enum VFixDataType {
 	VFixDataType_None              = 40,
 	VFixDataType_Minimum           =  VFixDataType_Int,
 	VFixDataType_Maximum           =  VFixDataType_None,
-	VFixDataType_Count             = 41
+	VFixDataType_Count             =
+		(VFixDataType_Maximum - VFixDataType_Minimum) + 1
 };
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -260,13 +261,13 @@ const char *DataTypeStringFixToVFixList[VFixDataType_Count][2] = {
 	{ "Percentage"            , "FloatPercentage"   },
 	{ "Char"                  , "Char"              },
 	{ "Boolean"               , "CharBoolean"       },
-	{ "MultipleCharValue"     , "CharMultiValue"    },
+	{ "MultipleCharValue"     , "MultiValueChar"    },
+	{ "MultipleStringValue"   , "MultiValueString"  },
 	{ "String"                , "String"            },
 	{ "Language"              , "StringLanguage"    },
 	{ "data"                  , "StringRawData"     },
 	{ "Tenor"                 , "StringTenor"       },
 	{ "XMLData"               , "StringXmlData"     },
-	{ "MultipleStringValue"   , "StringMultiValue"  },
 	{ "Country"               , "StringIsoCountry"  },
 	{ "Currency"              , "StringIsoCurrency" },
 	{ "Exchange"              , "StringIsoExchange" },
@@ -413,7 +414,6 @@ try {
 	const XmlDomElement *base_info_ptr_1(xml_element.GetChildPtr("BaseType"));
 	const std::string   *base_name_ptr_1 = NULL;
 	const std::string   *base_name_ptr_2 = NULL;
-
 
 	if (base_info_ptr_1) {
 		base_name_ptr_1 = &base_info_ptr_1->GetNodeTextFromChildRef();
