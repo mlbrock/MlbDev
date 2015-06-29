@@ -3,9 +3,9 @@
 //	VFix Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	InitDatatypesXml.cpp
+	File Name			:	PFixFieldType.cpp
 
-	File Description	:	Implementation of the InsContext class.
+	File Description	:	Implementation of the PFixFieldType class.
 
 	Revision History	:	2015-06-27 --- Creation.
 									Michael L. Brock
@@ -38,60 +38,75 @@ namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
 //	CODE NOTE: Move to some .hpp file...
-const std::size_t MaxTextLength_FixDataType     = 15;
-const std::size_t MaxTextLength_FixDataTypeBase = 24;
+const std::size_t MaxTextLength_PFixFieldType     = 15;
+const std::size_t MaxTextLength_PFixFieldTypeBase = 24;
 
 const std::size_t MaxTextLength_FixVersion      = 15;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-enum VFixDataType {
-	VFixDataType_Int               =  0,
-	VFixDataType_IntNonNegative    =  1,//	>= 0
-	VFixDataType_IntPositive       =  2,//	>  0
-	VFixDataType_IntLength         =  3,
-	VFixDataType_IntTagNum         =  4,//	>  0, no leading zeroes in string
-	VFixDataType_IntSeqNum         =  5,//	>  0
-	VFixDataType_IntNumInGroup     =  6,//	>= 0
-	VFixDataType_IntDayOfMonth     =  7,//	>= 1 <= 12
-	VFIXDataType_Float             =  8,
-	VFixDataType_FloatDecimal      =  9,
-	VFIXDataType_FloatQty          = 10,
-	VFIXDataType_FloatPrice        = 11,
-	VFIXDataType_FloatPriceOffset  = 12,
-	VFIXDataType_FloatAmt          = 13,
-	VFIXDataType_FloatPercentage   = 14,	
-	VFIXDataType_Char              = 15,
-	VFIXDataType_CharBoolean       = 16,//	'Y' or 'N'
-	VFIXDataType_MultiValueChar    = 17,//	Single-char fields seperated by space.
-	VFIXDataType_MultiValueString  = 18,//	Multi-char fields seperated by space.	
-	VFixDataType_String            = 19,
-	VFixDataType_StringLanguage    = 20,
-	VFixDataType_StringRawData     = 21,
-	VFixDataType_StringTenor       = 22,//	{D|M|W|Y}x (x > 0)
-	VFixDataType_StringXmlData     = 23,
-	VFixDataType_StringIsoCountry  = 24,//	ISO 3166 country code
-	VFixDataType_StringIsoCurrency = 25,//	ISO 4217 currecny code
-	VFixDataType_StringIsoExchange = 26,//	ISO 10383 market identifier code
-	VFixDataType_MonthYear         = 27,//	yyyymm[dd|ww]
-	VFIXDataType_UtcTimestamp      = 28,//	yyyy-mm-ddThh:mm:ss[.xxx]
-	VFIXDataType_UtcTimeOnly       = 29,//	hh:mm:ss[.xxx]
-	VFIXDataType_UtcDateOnly       = 30,//	yyyy-mm-dd
-	VFIXDataType_LocalMktDate      = 31,//	ISO 8601 (yyyy-mm-dd local-time)
-	VFIXDataType_TzTimeOnly        = 32,//	hh:mm[:ss][Z|OFF[+|-hh[:mm]]]
-	VFIXDataType_TzTimestamp       = 33,//	yyyymmdd-hh:mm:ss[Z|OFF[+|-hh[:mm]]]
-	VFixDataType_Date              = 34,
-	VFixDataType_DateTime          = 35,
-	VFixDataType_Time              = 36,
-	VFixDataType_ReservedPlus100   = 37,//	Values > 100 are reserved.
-	VFixDataType_ReservedPlus1000  = 38,//	Values > 1000 are reserved.
-	VFixDataType_ReservedPlus4000  = 39,//	Values > 4000 are reserved.
-	VFixDataType_None              = 40,
-	VFixDataType_Minimum           =  VFixDataType_Int,
-	VFixDataType_Maximum           =  VFixDataType_None,
-	VFixDataType_Count             =
-		(VFixDataType_Maximum - VFixDataType_Minimum) + 1
+//	CODE NOTE: Move to VFixXPortType.hpp.
+enum VFixXPortType {
+	VFixXPortType_Int,
+	VFixXPortType_IntNonNegative,		//	>= 0
+	VFixXPortType_IntPositive,			//	>  0
+	VFixXPortType_IntLength,
+	VFixXPortType_IntTagNum,			//	>  0, no leading zeroes in string
+	VFixXPortType_IntSeqNum,			//	>  0
+	VFixXPortType_IntNumInGroup,		//	>= 0
+	VFixXPortType_IntDayOfMonth,		//	>= 1 <= 12
+	VFixXPortType_Float,
+	VFixXPortType_FloatDecimal,
+	VFixXPortType_FloatQty,
+	VFixXPortType_FloatPrice,
+	VFixXPortType_FloatPriceOffset,
+	VFixXPortType_FloatAmt,
+	VFixXPortType_FloatPercentage,	
+	VFixXPortType_Char,
+	VFixXPortType_CharBoolean,			//	'Y' or 'N'
+	VFixXPortType_MultiValueChar,		//	Single-char fields seperated by space.
+	VFixXPortType_MultiValueString,	//	Multi-char fields seperated by space.	
+	VFixXPortType_String,
+	VFixXPortType_StringLanguage,
+	VFixXPortType_StringRawData,
+	VFixXPortType_StringTenor,			//	{D|M|W|Y}x (x > 0)
+	VFixXPortType_StringXmlData,
+	VFixXPortType_StringIsoCountry,	//	ISO 3166 country code
+	VFixXPortType_StringIsoCurrency,	//	ISO 4217 currecny code
+	VFixXPortType_StringIsoExchange,	//	ISO 10383 market identifier code
+	VFixXPortType_MonthYear,				//	yyyymm[dd|ww]
+	VFixXPortType_UtcTimestamp,			//	yyyy-mm-ddThh:mm:ss[.xxx]
+	VFixXPortType_UtcTimeOnly,			//	hh:mm:ss[.xxx]
+	VFixXPortType_UtcDateOnly,			//	yyyy-mm-dd
+	VFixXPortType_LocalMktDate,			//	ISO 8601 (yyyy-mm-dd local-time)
+	VFixXPortType_TzTimeOnly,			//	hh:mm[:ss][Z|OFF[+|-hh[:mm]]]
+	VFixXPortType_TzTimestamp,			//	yyyymmdd-hh:mm:ss[Z|OFF[+|-hh[:mm]]]
+	VFixXPortType_Date,
+	VFixXPortType_DateTime,
+	VFixXPortType_Time,
+	VFixXPortType_ReservedPlus100,	//	Values > 100 are reserved.
+	VFixXPortType_ReservedPlus1000,	//	Values > 1000 are reserved.
+	VFixXPortType_ReservedPlus4000,	//	Values > 4000 are reserved.
+	VFixXPortType_None,
+	VFixXPortType_Minimum =  VFixXPortType_Int,
+	VFixXPortType_Maximum =  VFixXPortType_None,
+	VFixXPortType_Count   = (VFixXPortType_Maximum - VFixXPortType_Minimum) + 1
 };
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to VFixXPortType.hpp.
+VFixXPortType StringToVFixXPortType(const char *src,
+	bool throw_on_error = true);
+VFixXPortType StringToVFixXPortType(const std::string &src,
+	bool throw_on_error = true);
+VFixXPortType StringToVFixXPortType(const char *src_1, const char *src_2,
+	bool throw_on_error = true);
+VFixXPortType StringToVFixXPortType(const std::string &src_1,
+	const std::string &src_2, bool throw_on_error = true);
+
+const char *VFixXPortTypeToString(VFixXPortType src,
+	bool throw_on_error = true);
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -105,72 +120,62 @@ const char *CopyToString(const std::string &src_str, std::size_t dst_len,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-VFixDataType MapStringToVFixDataType(const char *src);
-VFixDataType MapStringToVFixDataType(const std::string &src);
-VFixDataType MapStringToVFixDataType(const char *src_1, const char *src_2);
-VFixDataType MapStringToVFixDataType(const std::string &src_1,
-	const std::string &src_2);
-
-const char *VFixDataTypeToString(VFixDataType src);
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-//	CODE NOTE: Move to FixDataType.hpp.
-class FixDataType {
+//	CODE NOTE: Move to PFixFieldType.hpp.
+class PFixFieldType {
 public:
-	typedef std::set<FixDataType> FixDataTypeSet_I;
+	typedef std::set<PFixFieldType> PFixFieldTypeSet_I;
 
 	//	Constructor used for searches...
-	explicit FixDataType(const char *name = "");
+	explicit PFixFieldType(const char *name = "");
 
-	explicit FixDataType(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
+	explicit PFixFieldType(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
-	bool operator < (const FixDataType &other) const
+	bool operator < (const PFixFieldType &other) const
 	{
 		return(name_ < other.name_);
 	}
 
-	void swap(FixDataType &other);
+	void swap(PFixFieldType &other);
 
 	friend std::ostream & operator << (std::ostream &o_str,
-		const FixDataType &datum);
+		const PFixFieldType &datum);
 
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
-	static FixDataTypeSet_I &GetDataFromXmlElement(
+	static PFixFieldTypeSet_I &LoadFromXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-		FixDataTypeSet_I &out_set);
+		PFixFieldTypeSet_I &out_set);
 
-	static FixDataTypeSet_I &GetDataFromXmlFile(const std::string &file_name,
-		FixDataTypeSet_I &out_set);
-	static FixDataTypeSet_I  GetDataFromXmlFile(const std::string &file_name);
+	static PFixFieldTypeSet_I &LoadFromXmlFile(const std::string &file_name,
+		PFixFieldTypeSet_I &out_set);
+	static PFixFieldTypeSet_I  LoadFromXmlFile(const std::string &file_name);
 
-	std::string  name_;
-	std::string  base_name_1_;
-	std::string  base_name_2_;
-	std::string  fix_version_added_;
-	std::string  description_;
-	VFixDataType vfix_data_type_;
+	std::string   name_;
+	std::string   base_name_1_;
+	std::string   base_name_2_;
+	std::string   fix_version_added_;
+	std::string   description_;
+	VFixXPortType vfix_xport_type_;
 
 private:
-	FixDataType(const std::string &name, const std::string &base_name_1,
+	PFixFieldType(const std::string &name, const std::string &base_name_1,
 		const std::string &base_name_2, const std::string &fix_version_added,
-		const std::string &description, VFixDataType vfix_data_type);
+		const std::string &description, VFixXPortType vfix_xport_type);
 };
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-typedef std::vector<FixDataType>          FixDataTypeVector;
-typedef FixDataTypeVector::iterator       FixDataTypeVectorIter;
-typedef FixDataTypeVector::const_iterator FixDataTypeVectorIterC;
+typedef std::vector<PFixFieldType>          PFixFieldTypeVector;
+typedef PFixFieldTypeVector::iterator       PFixFieldTypeVectorIter;
+typedef PFixFieldTypeVector::const_iterator PFixFieldTypeVectorIterC;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-typedef std::set<FixDataType>               FixDataTypeSet;
-typedef FixDataTypeSet::iterator            FixDataTypeSetIter;
-typedef FixDataTypeSet::const_iterator      FixDataTypeSetIterC;
-typedef std::pair<FixDataTypeSetIter, bool> FixDataTypeSetInsertPair;
+typedef PFixFieldType::PFixFieldTypeSet_I     PFixFieldTypeSet;
+typedef PFixFieldTypeSet::iterator            PFixFieldTypeSetIter;
+typedef PFixFieldTypeSet::const_iterator      PFixFieldTypeSetIterC;
+typedef std::pair<PFixFieldTypeSetIter, bool> PFixFieldTypeSetInsertPair;
 // ////////////////////////////////////////////////////////////////////////////
 
 } // namespace VFix
@@ -243,7 +248,8 @@ namespace VFix {
 namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
-const char *DataTypeStringFixToVFixList[VFixDataType_Count][2] = {
+//	CODE NOTE: Move to VFixXPortType.cpp.
+const char *DataTypeStringFixToVFixList[VFixXPortType_Count][2] = {
 	{ "int"                   , "Int"               },
 	{ "xs:nonNegativeInteger" , "IntNonNegative"    },
 	{ "xs:positiveInteger"    , "IntPositive"       },
@@ -291,27 +297,28 @@ const char *DataTypeStringFixToVFixList[VFixDataType_Count][2] = {
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-VFixDataType MapStringToVFixDataType(const char *src, bool throw_on_error)
+//	CODE NOTE: Move to VFixXPortType.cpp.
+VFixXPortType StringToVFixXPortType(const char *src, bool throw_on_error)
 {
 	if (src && *src) {
-		for (int count_1 = 0; count_1 < VFixDataType_Count; ++count_1) {
+		for (int count_1 = 0; count_1 < VFixXPortType_Count; ++count_1) {
 			if (!MLB::Utility::Utility_stricmp(src,
 				DataTypeStringFixToVFixList[count_1][0]))
-				return(static_cast<VFixDataType>(count_1));
+				return(static_cast<VFixXPortType>(count_1));
 		}
 		//	Look-aside...
 		if (!MLB::Utility::Utility_stricmp(src, "xs:integer"))
-			return(VFixDataType_Int);
+			return(VFixXPortType_Int);
 		else if (!MLB::Utility::Utility_stricmp(src, "xs:string"))
-			return(VFixDataType_String);
+			return(VFixXPortType_String);
 /*
-	Can't resolve these uniquely.
+	Can't resolve these uniquely as they're actually semantic types.
 		else if (!MLB::Utility::Utility_stricmp(src, "xs:date"))
 		else if (!MLB::Utility::Utility_stricmp(src, "xs:time"))
 		else if (!MLB::Utility::Utility_stricmp(src, "xs:dateTime"))
 */
 		else if (!MLB::Utility::Utility_stricmp(src, "xs:language"))
-			return(VFixDataType_StringLanguage);
+			return(VFixXPortType_StringLanguage);
 		else if (throw_on_error) {
 			std::ostringstream o_str;
 			o_str << "Unable to map the string '" << src << "' to a VFix "
@@ -322,51 +329,62 @@ VFixDataType MapStringToVFixDataType(const char *src, bool throw_on_error)
 	else if (throw_on_error)
 		MLB::Utility::ThrowInvalidArgument("No data type name specified.");
 
-
-	return(VFixDataType_None);
+	return(VFixXPortType_None);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-VFixDataType MapStringToVFixDataType(const std::string &src,
+//	CODE NOTE: Move to VFixXPortType.cpp.
+VFixXPortType StringToVFixXPortType(const std::string &src,
 	bool throw_on_error)
 {
-	return(MapStringToVFixDataType(src.c_str(), throw_on_error));
+	return(StringToVFixXPortType(src.c_str(), throw_on_error));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-VFixDataType MapStringToVFixDataType(const char *src_1, const char *src_2,
+//	CODE NOTE: Move to VFixXPortType.cpp.
+VFixXPortType StringToVFixXPortType(const char *src_1, const char *src_2,
 	bool throw_on_error)
 {
 	if (((!src_1) || (!(*src_1))) && ((!src_2) || (!(*src_2))))
-		return(MapStringToVFixDataType(NULL, throw_on_error));
+		return(StringToVFixXPortType(NULL, throw_on_error));
 	else if ((src_1 && *src_1) && ((!src_2) || (!(*src_2))))
-		return(MapStringToVFixDataType(src_1, throw_on_error));
+		return(StringToVFixXPortType(src_1, throw_on_error));
 	else if (((!src_1) || (!(*src_1))) && (src_2 || (*src_2)))
-		return(MapStringToVFixDataType(src_2, throw_on_error));
+		return(StringToVFixXPortType(src_2, throw_on_error));
 
-	VFixDataType return_code = MapStringToVFixDataType(src_2, false);
+	VFixXPortType return_code = StringToVFixXPortType(src_1, false);
 
-	return((return_code != VFixDataType_None) ? return_code :
-		MapStringToVFixDataType(src_1, throw_on_error));
+	return((return_code != VFixXPortType_None) ? return_code :
+		StringToVFixXPortType(src_2, throw_on_error));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-VFixDataType MapStringToVFixDataType(const std::string &src_1,
+//	CODE NOTE: Move to VFixXPortType.cpp.
+VFixXPortType StringToVFixXPortType(const std::string &src_1,
 	const std::string &src_2, bool throw_on_error)
 {
-	return(MapStringToVFixDataType(src_1.c_str(), src_2.c_str(),
+	return(StringToVFixXPortType(src_1.c_str(), src_2.c_str(),
 		throw_on_error));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-const char *VFixDataTypeToString(VFixDataType src)
+//	CODE NOTE: Move to VFixXPortType.cpp.
+const char *VFixXPortTypeToString(VFixXPortType src, bool throw_on_error)
 {
-	return(((src >= VFixDataType_Minimum) && (src <= VFixDataType_Maximum)) ?
-		DataTypeStringFixToVFixList[src][1] : "*INVALID*");
+	if ((src < VFixXPortType_Minimum) || (src > VFixXPortType_Maximum)) {
+		if (throw_on_error) {
+			std::ostringstream o_str;
+			o_str << "Invalid VFixXPortType enumeration value (" << src << ").";
+			MLB::Utility::ThrowInvalidArgument(o_str.str());
+		}
+		return("*INVALID*");
+	}
+
+	return(DataTypeStringFixToVFixList[src][1]);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -385,14 +403,15 @@ namespace MLB {
 namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataType::FixDataType(const char *name)
+PFixFieldType::PFixFieldType(const char *name)
 	:name_(name)
 {
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataType::FixDataType(const MLB::RapidXmlUtils::XmlDomElement &xml_element)
+PFixFieldType::PFixFieldType(
+	const MLB::RapidXmlUtils::XmlDomElement &xml_element)
 try {
 	using namespace MLB::RapidXmlUtils;
 
@@ -434,47 +453,48 @@ try {
 		}
 	}
 
-	FixDataType(name, (base_name_ptr_1) ? *base_name_ptr_1 : "",
+	PFixFieldType(name, (base_name_ptr_1) ? *base_name_ptr_1 : "",
 		(base_name_ptr_2) ? *base_name_ptr_2 : "", added, description,
-		MapStringToVFixDataType(
+		StringToVFixXPortType(
 			(base_name_ptr_1) ? base_name_ptr_1->c_str() : NULL,
 			(base_name_ptr_2) ? base_name_ptr_2->c_str() : NULL, true)).
 		swap(*this);
 }
 catch (const std::exception &except) {
-	MLB::Utility::Rethrow(except, "Unable to construct an FixDataType "
+	MLB::Utility::Rethrow(except, "Unable to construct an PFixFieldType "
 		"instance: " + std::string(except.what()));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataType::FixDataType(const std::string &name, const std::string &base_name_1,
-	const std::string &base_name_2, const std::string &fix_version_added,
-	const std::string &description, VFixDataType vfix_data_type)
+PFixFieldType::PFixFieldType(const std::string &name,
+	const std::string &base_name_1, const std::string &base_name_2,
+	const std::string &fix_version_added, const std::string &description,
+	VFixXPortType vfix_xport_type)
 	:name_(name)
 	,base_name_1_(base_name_1)
 	,base_name_2_(base_name_2)
 	,fix_version_added_(fix_version_added)
 	,description_(description)
-	,vfix_data_type_(vfix_data_type)
+	,vfix_xport_type_(vfix_xport_type)
 {
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void FixDataType::swap(FixDataType &other)
+void PFixFieldType::swap(PFixFieldType &other)
 {
 	std::swap(name_, other.name_);
 	std::swap(base_name_1_, other.base_name_1_);
 	std::swap(base_name_2_, other.base_name_2_);
 	std::swap(fix_version_added_, other.fix_version_added_);
 	std::swap(description_, other.description_);
-	std::swap(vfix_data_type_, other.vfix_data_type_);
+	std::swap(vfix_xport_type_, other.vfix_xport_type_);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-bool FixDataType::ShouldApplyXmlElement(
+bool PFixFieldType::ShouldApplyXmlElement(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element)
 {
 	using namespace MLB::RapidXmlUtils;
@@ -487,13 +507,13 @@ bool FixDataType::ShouldApplyXmlElement(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataTypeSet &FixDataType::GetDataFromXmlElement(
+PFixFieldTypeSet &PFixFieldType::LoadFromXmlElement(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-	FixDataTypeSet &out_set)
+	PFixFieldTypeSet &out_set)
 {
 	using namespace MLB::RapidXmlUtils;
 
-	FixDataTypeSet tmp_set;
+	PFixFieldTypeSet tmp_set;
 
 	try {
 		if ((xml_element.node_type_ != XmlDomElement::NodeType_Unknown) ||
@@ -510,8 +530,8 @@ FixDataTypeSet &FixDataType::GetDataFromXmlElement(
 			++count_1) {
 			const XmlDomElement &this_element(xml_element.child_list_[count_1]);
 			if (ShouldApplyXmlElement(this_element)) {
-				FixDataType tmp_datum(this_element);
-				FixDataTypeSetInsertPair insert_pair(tmp_set.insert(tmp_datum));
+				PFixFieldType tmp_datum(this_element);
+				PFixFieldTypeSetInsertPair insert_pair(tmp_set.insert(tmp_datum));
 				if (!insert_pair.second) {
 					std::ostringstream o_str;
 					o_str << "Attempt to insert datatype element for datatype "
@@ -536,8 +556,8 @@ FixDataTypeSet &FixDataType::GetDataFromXmlElement(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataTypeSet &FixDataType::GetDataFromXmlFile(const std::string &file_name,
-	FixDataTypeSet &out_set)
+PFixFieldTypeSet &PFixFieldType::LoadFromXmlFile(const std::string &file_name,
+	PFixFieldTypeSet &out_set)
 {
 	MLB::RapidXmlUtils::RapidXmlContext xml_context;
 	MLB::RapidXmlUtils::XmlDomElement   xml_element;
@@ -545,7 +565,7 @@ FixDataTypeSet &FixDataType::GetDataFromXmlFile(const std::string &file_name,
 	try {
 		MLB::RapidXmlUtils::XmlDomElement::ParseXmlFile(file_name,
 			xml_element);
-		GetDataFromXmlElement(xml_element, out_set);
+		LoadFromXmlElement(xml_element, out_set);
 	}
 	catch (const std::exception &except) {
 		std::ostringstream o_str;
@@ -559,23 +579,26 @@ FixDataTypeSet &FixDataType::GetDataFromXmlFile(const std::string &file_name,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-FixDataTypeSet FixDataType::GetDataFromXmlFile(const std::string &file_name)
+PFixFieldTypeSet PFixFieldType::LoadFromXmlFile(const std::string &file_name)
 {
-	FixDataTypeSet out_set;
+	PFixFieldTypeSet out_set;
 
-	return(GetDataFromXmlFile(file_name, out_set));
+	return(LoadFromXmlFile(file_name, out_set));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-std::ostream & operator << (std::ostream &o_str, const FixDataType &datum)
+std::ostream & operator << (std::ostream &o_str, const PFixFieldType &datum)
 {
 	o_str
 		<< std::left
 		<< std::setw(23) << datum.name_              << " "
-		<< std::setw(15) << datum.base_name_1_       << " "
+		<< std::setw( 7) << datum.base_name_1_       << " "
+		<< std::setw(23) << datum.base_name_2_       << " "
 		<< std::setw(10) << datum.fix_version_added_ << " "
-		<< VFixDataTypeToString(datum.vfix_data_type_)
+		<< std::right
+		<< std::setw( 2) << datum.vfix_xport_type_   << " "
+		<< VFixXPortTypeToString(datum.vfix_xport_type_)
 			;
 
 	return(o_str);
@@ -598,9 +621,9 @@ namespace {
 // ////////////////////////////////////////////////////////////////////////////
 void TEST_RunTest(const char *file_name)
 {
-	FixDataTypeSet      element_set(FixDataType::GetDataFromXmlFile(file_name));
-	FixDataTypeSetIterC iter_b(element_set.begin());
-	FixDataTypeSetIterC iter_e(element_set.end());
+	PFixFieldTypeSet      element_set(PFixFieldType::LoadFromXmlFile(file_name));
+	PFixFieldTypeSetIterC iter_b(element_set.begin());
+	PFixFieldTypeSetIterC iter_e(element_set.end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		std::cout << *iter_b << std::endl;
