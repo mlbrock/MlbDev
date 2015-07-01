@@ -32,6 +32,526 @@
 
 // ////////////////////////////////////////////////////////////////////////////
 
+//	Needed for Utility/ColReportHelper.hpp.
+#include <Utility/InlineContainer.hpp>
+
+//	Needed for Utility/ColReportHelper.cpp.
+//	Needed for PFixDataType.hpp
+#include <boost/io/ios_state.hpp>
+
+/*
+	CODE NOTE: To be removed.
+namespace MLB {
+
+namespace Utility {
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &EmitFillLine(const std::vector<std::streamsize> &col_list,
+	std::ostream &o_str, char fill_char, char col_sep_char, bool emit_new_line)
+{
+	if (!col_list.empty()) {
+		boost::io::ios_all_saver                     io_state(o_str);
+		std::vector<std::streamsize>::const_iterator iter_b(col_list.begin());
+		std::vector<std::streamsize>::const_iterator iter_e(col_list.end());
+		std::vector<std::streamsize>::const_iterator iter_this(iter_b);
+		o_str << std::setfill(fill_char);
+		for ( ; iter_this != iter_e; ++iter_this) {
+			if (iter_this != iter_b)
+				o_str << col_sep_char;
+			o_str << std::setw(*iter_this) << "";
+		}
+	}
+
+	if (emit_new_line)
+		o_str << "\n";
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace Utility
+
+} // namespace MLB
+*/
+
+// ////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace Utility {
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.hpp.
+/*
+	Need to save the original widths as the minimum widths for a column.
+
+	Also need an accessor for this new member and a way to change the values
+	for the columns in it.
+*/
+class ColReportHelper {
+public:
+	explicit ColReportHelper(
+		const std::vector<std::string> &name_list_1 = std::vector<std::string>(),
+		const std::vector<std::string> &name_list_2 = std::vector<std::string>(),
+		const std::vector<std::string> &name_list_3 = std::vector<std::string>());
+	explicit ColReportHelper(const std::vector<std::size_t> &min_width_list,
+		const std::vector<std::string> &name_list_1 = std::vector<std::string>(),
+		const std::vector<std::string> &name_list_2 = std::vector<std::string>(),
+		const std::vector<std::string> &name_list_3 = std::vector<std::string>());
+
+	void swap(ColReportHelper &other);
+
+	inline std::size_t ColReportHelper::GetRowCount() const
+	{
+		return(name_list_.size());
+	}
+
+	inline std::size_t ColReportHelper::GetColCount() const
+	{
+		return(min_width_list_.size());
+	}
+
+	std::size_t GetMinColWidth(std::size_t col_index) const;
+	std::size_t GetMaxColWidth(std::size_t col_index) const;
+
+	inline std::streamsize GetMinColWidthSS(std::size_t col_index) const
+	{
+		return(static_cast<std::streamsize>(GetMinColWidth(col_index)));
+	}
+
+	inline std::streamsize GetMaxColWidthSS(std::size_t col_index) const
+	{
+		return(static_cast<std::streamsize>(GetMaxColWidth(col_index)));
+	}
+
+	const std::string &GetColName(std::size_t row_index,
+		std::size_t col_index) const;
+
+	void SetColWidth(std::size_t col_index, std::size_t value);
+	void SetColName(std::size_t row_index, std::size_t col_index,
+		const std::string &value);
+
+	void SetRowCount(std::size_t row_count);
+	void SetColCount(std::size_t col_count);
+
+	std::vector<std::size_t>               &GetMinWidthList();
+	std::vector<std::size_t>               &GetMaxWidthList();
+	std::vector<std::vector<std::string> > &GetNameList();
+
+	const std::vector<std::size_t>               &GetMinWidthList() const;
+	const std::vector<std::size_t>               &GetMaxWidthList() const;
+	const std::vector<std::vector<std::string> > &GetNameList() const;
+
+	std::size_t AssertColCountMinimum(std::size_t col_count_min) const;
+
+	std::streamsize operator [] (std::size_t col_index) const
+	{
+		return(GetMaxColWidthSS(col_index));
+	}
+
+	void ForceRecalculatation();
+
+	std::ostream &EmitFillLine(std::ostream &o_str = std::cout,
+		char fill_char = '=', char col_sep_char = ' ',
+		bool with_new_line = true) const;
+	std::ostream &EmitHeader(std::ostream &o_str = std::cout,
+		char fill_char_1 = '=', char fill_char_2 = '=', char col_sep_char = ' ',
+		bool with_new_line = true) const;
+	std::ostream &EmitTrailer(std::ostream &o_str = std::cout,
+		char fill_char = '=', char col_sep_char = ' ',
+		bool with_new_line = true) const;
+
+private:
+	std::vector<std::size_t>               min_width_list_;
+	std::vector<std::size_t>               max_width_list_;
+	std::vector<std::vector<std::string> > name_list_;
+
+	void RecalculateColWidth(std::size_t col_index);
+
+	void CheckThisIndex(std::size_t element_count, std::size_t index_value,
+		const char *index_name) const;
+
+	static void CheckIndex(std::size_t index_value, const char *index_name);
+};
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace Utility
+
+} // namespace MLB
+
+// ////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace Utility {
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+ColReportHelper::ColReportHelper(
+	const std::vector<std::size_t> &min_width_list,
+	const std::vector<std::string> &name_list_1,
+	const std::vector<std::string> &name_list_2,
+	const std::vector<std::string> &name_list_3)
+	:min_width_list_(min_width_list)
+	,max_width_list_(min_width_list)
+	,name_list_()
+{
+	if (!name_list_1.empty())
+		name_list_.push_back(name_list_1);
+
+	if (!name_list_2.empty()) {
+		name_list_.resize(2);
+		name_list_[1] = name_list_2;
+	}
+
+	if (!name_list_3.empty()) {
+		name_list_.resize(3);
+		name_list_[2] = name_list_3;
+	}
+
+	//	Complete construction
+	ForceRecalculatation();
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+ColReportHelper::ColReportHelper(
+	const std::vector<std::string> &name_list_1,
+	const std::vector<std::string> &name_list_2,
+	const std::vector<std::string> &name_list_3)
+	:min_width_list_()
+	,max_width_list_()
+	,name_list_()
+{
+	ColReportHelper::ColReportHelper(std::vector<std::size_t>(),
+		name_list_1, name_list_2, name_list_3).swap(*this);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::swap(ColReportHelper &other)
+{
+	min_width_list_.swap(other.min_width_list_);
+	max_width_list_.swap(other.max_width_list_);
+	name_list_.swap(other.name_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::size_t ColReportHelper::GetMinColWidth(std::size_t col_index) const
+{
+	CheckThisIndex(GetColCount(), col_index, "column");
+
+	return(min_width_list_[col_index]);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::size_t ColReportHelper::GetMaxColWidth(std::size_t col_index) const
+{
+	CheckThisIndex(GetColCount(), col_index, "column");
+
+	return(max_width_list_[col_index]);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+const std::string &ColReportHelper::GetColName(std::size_t row_index,
+	std::size_t col_index) const
+{
+	CheckThisIndex(GetRowCount(), row_index, "row");
+	CheckThisIndex(GetColCount(), col_index, "column");
+
+	return(name_list_[row_index][col_index]);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::SetColWidth(std::size_t col_index, std::size_t value)
+{
+	CheckIndex(col_index, "column");
+
+	if (col_index >= GetColCount())
+		SetColCount(col_index + 1);
+
+	if (value != min_width_list_[col_index]) {
+		min_width_list_[col_index] = value;
+		RecalculateColWidth(col_index);
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::SetColName(std::size_t row_index, std::size_t col_index,
+	const std::string &value)
+{
+	CheckIndex(row_index, "row");
+	CheckIndex(col_index, "column");
+
+	if (row_index >= GetRowCount())
+		SetRowCount(row_index + 1);
+
+	if (col_index >= GetColCount())
+		SetColCount(col_index + 1);
+
+	std::size_t old_width = name_list_[row_index][col_index].size();
+
+	name_list_[row_index][col_index] = value;
+
+	if (value.size() != old_width)
+		RecalculateColWidth(col_index);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::SetRowCount(std::size_t row_count)
+{
+	std::size_t old_row_count = GetRowCount();
+
+	if (row_count < old_row_count)
+		name_list_.resize(row_count);
+	else if (row_count != old_row_count) {
+		name_list_.resize(row_count);
+		for (std::size_t count_1 = old_row_count; count_1 < row_count; ++count_1)
+			name_list_[count_1].resize(GetColCount());
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::SetColCount(std::size_t col_count)
+{
+	if (col_count == GetColCount())
+		return;
+
+	min_width_list_.resize(col_count);
+	max_width_list_.resize(col_count);
+
+	for (std::size_t count_1 = 0; count_1 < GetRowCount(); ++count_1)
+		name_list_[count_1].resize(col_count);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::vector<std::size_t> &ColReportHelper::GetMinWidthList()
+{
+	return(min_width_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::vector<std::size_t> &ColReportHelper::GetMaxWidthList()
+{
+	return(max_width_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::vector<std::vector<std::string> > &ColReportHelper::GetNameList()
+{
+	return(name_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::size_t ColReportHelper::AssertColCountMinimum(
+	std::size_t col_count_min) const
+{
+	if (GetColCount() < col_count_min) {
+		std::ostringstream o_str;
+		o_str << "The number of columns in an instance of ColReportHelper (" <<
+			GetColCount() << ") is less than the minimum required by the "
+			"application (" << col_count_min << ").";
+		MLB::Utility::ThrowLogicError(o_str.str());
+	}
+
+	return(GetColCount());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+const std::vector<std::size_t> &ColReportHelper::GetMinWidthList() const
+{
+	return(min_width_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+const std::vector<std::size_t> &ColReportHelper::GetMaxWidthList() const
+{
+	return(max_width_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+const std::vector<std::vector<std::string> > &
+	ColReportHelper::GetNameList() const
+{
+	return(name_list_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::ForceRecalculatation()
+{
+	std::size_t col_count =
+		std::max(min_width_list_.size(), max_width_list_.size());
+
+	for (std::size_t count_1 = 0; count_1 < GetRowCount(); ++count_1)
+		col_count = std::max(col_count, name_list_[count_1].size());
+
+	min_width_list_.resize(col_count);
+	max_width_list_.resize(col_count);
+
+	for (std::size_t count_1 = 0; count_1 < GetRowCount(); ++count_1)
+		name_list_[count_1].resize(col_count);
+
+	for (std::size_t count_1 = 0; count_1 < col_count; ++count_1)
+		RecalculateColWidth(count_1);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::RecalculateColWidth(std::size_t col_index)
+{
+	std::size_t max_width = min_width_list_[col_index];
+
+	for (std::size_t count_1 = 0; count_1 < GetRowCount(); ++count_1)
+		max_width = std::max(max_width, name_list_[count_1][col_index].size());
+
+	max_width_list_[col_index] = max_width;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::CheckThisIndex(std::size_t element_count,
+	std::size_t index_value, const char *index_name) const
+{
+	if (index_value >= element_count) {
+		std::ostringstream o_str;
+		o_str << "The specified " << index_name << " index value (" <<
+			index_value << ") is not less than the number of " << index_name <<
+			"s (" << element_count << ").";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+void ColReportHelper::CheckIndex(std::size_t index_value,
+	const char *index_name)
+{
+	if (index_value == std::numeric_limits<std::size_t>::max()) {
+		std::ostringstream o_str;
+		o_str << "The specified " << index_name << " index value (" <<
+			index_value << ") is not less than the maximum representable (" <<
+			index_value << ").";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::ostream &ColReportHelper::EmitFillLine(std::ostream &o_str, char fill_char,
+	char col_sep_char, bool with_new_line) const
+{
+	if (!GetColCount())
+		return(o_str);
+
+	boost::io::ios_all_saver io_state(o_str);
+
+	o_str << std::setfill(fill_char);
+
+	for (std::size_t count_1 = 0; count_1 < GetColCount(); ++count_1) {
+		if (count_1)
+			o_str << col_sep_char;
+		o_str << std::setw(GetMaxColWidthSS(count_1)) << "";
+	}
+
+	if (with_new_line)
+		o_str << "\n";
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::ostream &ColReportHelper::EmitHeader(std::ostream &o_str,
+	char fill_char_1, char fill_char_2, char col_sep_char,
+	bool with_new_line) const
+{
+	if (!GetColCount())
+		return(o_str);
+
+	EmitFillLine(o_str, fill_char_1, col_sep_char, true);
+
+	{
+		boost::io::ios_all_saver io_state(o_str);
+		o_str << std::left;
+		for (std::size_t count_1 = 0; count_1 < GetRowCount(); ++count_1) {
+			for (std::size_t count_2 = 0; count_2 < GetColCount(); ++count_2) {
+				if (count_2)
+					o_str << col_sep_char;
+				o_str << std::setw(GetMaxColWidthSS(count_2)) <<
+					GetColName(count_1, count_2);
+			}
+			o_str << "\n";
+		}
+	}
+
+	return(EmitFillLine(o_str, fill_char_2, col_sep_char, with_new_line));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: Move to ColReportHelper.cpp.
+std::ostream &ColReportHelper::EmitTrailer(std::ostream &o_str, char fill_char,
+	char col_sep_char, bool with_new_line) const
+{
+	return(EmitFillLine(o_str, fill_char, col_sep_char, with_new_line));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace Utility
+
+} // namespace MLB
+
+// ////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+// ////////////////////////////////////////////////////////////////////////////
+
 namespace MLB {
 
 namespace VFix {
@@ -150,6 +670,12 @@ public:
 	static PFixFieldTypeSet_I &LoadFromXmlFile(const std::string &file_name,
 		PFixFieldTypeSet_I &out_set);
 	static PFixFieldTypeSet_I  LoadFromXmlFile(const std::string &file_name);
+
+	//	CODE NOTE: For testing. May be removed at some later date.
+	static std::set<int> &CheckForUnusedTypes(const PFixFieldTypeSet_I &in_set,
+		std::set<int> &out_set);
+	static std::size_t    EmitUnusedTypes(const PFixFieldTypeSet_I &in_set,
+		std::ostream &o_str = std::cout);
 
 	std::string   name_;
 	std::string   base_name_1_;
@@ -412,7 +938,14 @@ PFixFieldType::PFixFieldType(const char *name)
 // ////////////////////////////////////////////////////////////////////////////
 PFixFieldType::PFixFieldType(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element)
-try {
+try
+	:name_()
+	,base_name_1_()
+	,base_name_2_()
+	,fix_version_added_()
+	,description_()
+	,vfix_xport_type_(VFixXPortType_None)
+{
 	using namespace MLB::RapidXmlUtils;
 
 	if ((xml_element.node_type_ != XmlDomElement::NodeType_Element) ||
@@ -455,9 +988,12 @@ try {
 
 	PFixFieldType(name, (base_name_ptr_1) ? *base_name_ptr_1 : "",
 		(base_name_ptr_2) ? *base_name_ptr_2 : "", added, description,
+/*
 		StringToVFixXPortType(
 			(base_name_ptr_1) ? base_name_ptr_1->c_str() : NULL,
 			(base_name_ptr_2) ? base_name_ptr_2->c_str() : NULL, true)).
+*/
+		StringToVFixXPortType(name.c_str(), true)).
 		swap(*this);
 }
 catch (const std::exception &except) {
@@ -588,18 +1124,158 @@ PFixFieldTypeSet PFixFieldType::LoadFromXmlFile(const std::string &file_name)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+std::set<int> &PFixFieldType::CheckForUnusedTypes(
+	const PFixFieldTypeSet &in_set, std::set<int> &out_set)
+{
+	std::set<int> tmp_set;
+
+	for (int count_1 = VFixXPortType_Minimum; count_1 <= VFixXPortType_Maximum;
+		++count_1) {
+		if (count_1 != VFixXPortType_None)
+			tmp_set.insert(count_1);
+	}
+
+	PFixFieldTypeSetIterC iter_b(in_set.begin());
+	PFixFieldTypeSetIterC iter_e(in_set.end());
+
+	for ( ; iter_b != iter_e; ++iter_b) {
+		std::set<int>::iterator iter_f(tmp_set.find(iter_b->vfix_xport_type_));
+		if (iter_f != tmp_set.end())
+			tmp_set.erase(iter_f);
+	}
+
+	out_set.swap(tmp_set);
+
+	return(out_set);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &EmitFillLine(const std::vector<std::streamsize> &col_list,
+	std::ostream &o_str = std::cout, char fill_char = '=',
+	char col_sep_char = ' ', bool emit_new_line = true);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::size_t PFixFieldType::EmitUnusedTypes(const PFixFieldTypeSet &in_set,
+	std::ostream &o_str)
+{
+	std::set<int> out_set;
+
+	CheckForUnusedTypes(in_set, out_set);
+
+	std::set<int>::const_iterator iter_b(out_set.begin());
+	std::set<int>::const_iterator iter_e(out_set.end());
+
+	for ( ; iter_b != iter_e; ++iter_b)
+		o_str << DataTypeStringFixToVFixList[*iter_b][1] << std::endl;
+
+	return(out_set.size());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+/*
+	CODE NOTE: To be removed.
+// ////////////////////////////////////////////////////////////////////////////
+const MLB::Utility::InlineContainer<std::streamsize> &ResolveColWidths(
+	MLB::Utility::InlineContainer<std::streamsize> &start_widths,
+	const std::vector<std::string> &name_list_1 = std::vector<std::string>(),
+	const std::vector<std::string> &name_list_2 = std::vector<std::string>(),
+	const std::vector<std::string> &name_list_3 = std::vector<std::string>())
+{
+	std::size_t size_0 = start_widths.size();
+	std::size_t size_1 = name_list_1.size();
+	std::size_t size_2 = name_list_2.size();
+	std::size_t size_3 = name_list_3.size();
+	std::size_t max_name_list_size = std::max(size_1, std::max(size_2, size_3));
+
+	if (max_name_list_size > size_0)
+		start_widths.resize(max_name_list_size);
+
+	for (std::size_t count_1 = 0; count_1 < max_name_list_size; ++count_1)
+		std::size_t this_size = std::max(start_widths[count_1],
+			std::max(((count_1 < size_1) ? name_list_1[count_1].size() : 0),
+				std::max(((count_1 < size_2) ? name_list_2[count_1].size() : 0),
+					((count_1 < size_3) ? name_list_3[count_1].size() : 0))));
+
+	return(start_widths);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const MLB::Utility::InlineContainer<std::streamsize> ResolveColWidths(
+	const std::vector<std::string> &name_list_1 = std::vector<std::string>(),
+	const std::vector<std::string> &name_list_2 = std::vector<std::string>(),
+	const std::vector<std::string> &name_list_3 = std::vector<std::string>())
+{
+	MLB::Utility::InlineContainer<std::streamsize> start_widths;
+
+	return(ResolveColWidths(start_widths, name_list_1, name_list_2,
+		name_list_3));
+}
+// ////////////////////////////////////////////////////////////////////////////
+*/
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+/*
+const MLB::Utility::InlineContainer<std::string>     ColNames_PFixFieldType_1(
+	MLB::Utility::MakeInlineVector<std::string>
+		("Type")("Base")("Base")("Fix Version")("XPort")("XPort"));
+const MLB::Utility::InlineContainer<std::string>     ColNames_PFixFieldType_2(
+	MLB::Utility::MakeInlineVector<std::string>
+		("Name")("Name 1")("Name 2")("Added")("Value")("Name"));
+const MLB::Utility::InlineContainer<std::streamsize> ColWidths_PFixFieldType(
+	ResolveColWidths(
+		MLB::Utility::MakeInlineVector<std::streamsize>(23)(7)(23)(10)(2)(10),
+		ColNames_PFixFieldType_1, ColNames_PFixFieldType_2);
+*/
+const MLB::Utility::ColReportHelper MyColReportHelper(
+	MLB::Utility::MakeInlineVector<std::size_t>(23)(7)(23)(10)(2)(19),
+	MLB::Utility::MakeInlineVector<std::string>
+		("Type")("Base")("Base")("Fix Version")("XPort")("XPort"),
+	MLB::Utility::MakeInlineVector<std::string>
+		("Name")("Name 1")("Name 2")("Added")("Value")("Name"));
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const PFixFieldType &datum)
 {
+	MyColReportHelper.AssertColCountMinimum(6);
+
+	boost::io::ios_all_saver io_state(o_str);
+
 	o_str
 		<< std::left
-		<< std::setw(23) << datum.name_              << " "
-		<< std::setw( 7) << datum.base_name_1_       << " "
-		<< std::setw(23) << datum.base_name_2_       << " "
-		<< std::setw(10) << datum.fix_version_added_ << " "
+		<< std::setw(MyColReportHelper[0]) << datum.name_              << " "
+		<< std::setw(MyColReportHelper[1]) << datum.base_name_1_       << " "
+		<< std::setw(MyColReportHelper[2]) << datum.base_name_2_       << " "
+		<< std::setw(MyColReportHelper[3]) << datum.fix_version_added_ << " "
 		<< std::right
-		<< std::setw( 2) << datum.vfix_xport_type_   << " "
+		<< std::setw(MyColReportHelper[4]) << datum.vfix_xport_type_   << " "
 		<< VFixXPortTypeToString(datum.vfix_xport_type_)
 			;
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str,
+	const PFixFieldTypeSet &datum)
+{
+	MyColReportHelper.EmitHeader(o_str, '=', '-', ' ', true);
+
+	PFixFieldTypeSetIterC iter_b(datum.begin());
+	PFixFieldTypeSetIterC iter_e(datum.end());
+
+	for ( ; iter_b != iter_e; ++iter_b)
+		o_str << *iter_b << std::endl;
+
+	MyColReportHelper.EmitTrailer(o_str, '=', ' ', true);
 
 	return(o_str);
 }
@@ -621,12 +1297,40 @@ namespace {
 // ////////////////////////////////////////////////////////////////////////////
 void TEST_RunTest(const char *file_name)
 {
+/*
+std::cout << "GetFillLineString(42)                        : " <<
+	MLB::Utility::GetFillLineString(42, 10)    << std::endl;
+std::cout << "GetFillLineString(static_cast<double>(42.5)) : " <<
+	MLB::Utility::GetFillLineString(static_cast<double>(42.5), 10)  << std::endl;
+std::cout << "GetFillLineString(static_cast<float>(42.6))  : " <<
+	MLB::Utility::GetFillLineString(static_cast<float>(42.6), 10)  << std::endl;
+std::cout << "GetFillLineString(\"Why?\")                    : " <<
+	MLB::Utility::GetFillLineString("Why", 10) << std::endl;
+
+std::cout << "GetFillLineStringX(42)                       : " <<
+	MLB::Utility::GetFillLineStringX(42, 10)    << std::endl;
+std::cout << "GetFillLineString(static_cast<double>(42.5)) : " <<
+	MLB::Utility::GetFillLineStringX(static_cast<double>(42.5), 10)  << std::endl;
+std::cout << "GetFillLineStringX(static_cast<float>(42.6)) : " <<
+	MLB::Utility::GetFillLineStringX(static_cast<float>(42.6), 10)  << std::endl;
+std::cout << "GetFillLineStringX(\"Why?\")                   : " <<
+	MLB::Utility::GetFillLineStringX("Why", 10) << std::endl;
+*/
+
+/*
 	PFixFieldTypeSet      element_set(PFixFieldType::LoadFromXmlFile(file_name));
 	PFixFieldTypeSetIterC iter_b(element_set.begin());
 	PFixFieldTypeSetIterC iter_e(element_set.end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		std::cout << *iter_b << std::endl;
+*/
+
+	PFixFieldTypeSet element_set(PFixFieldType::LoadFromXmlFile(file_name));
+
+	std::cout << element_set << std::endl;
+
+	PFixFieldType::EmitUnusedTypes(element_set);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -672,4 +1376,32 @@ int main(int argc, char **argv)
 */
 
 #endif // #ifdef TEST_MAIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
