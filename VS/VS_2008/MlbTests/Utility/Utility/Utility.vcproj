@@ -345,6 +345,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\Utility\TabularReportSupport.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\Utility\ThreadId.cpp"
 				>
 			</File>

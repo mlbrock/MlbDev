@@ -201,5 +201,8 @@
     <ClCompile Include="..\..\..\..\..\Utility\WideChar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Utility\TabularReportSupport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

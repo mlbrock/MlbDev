@@ -77,6 +77,7 @@ SRCS		=	\
 			Sleep.cpp			\
 			StringSupport.cpp		\
 			SystemError.cpp			\
+			TabularReportSupport.cpp	\
 			ThreadId.cpp			\
 			ThrowError.cpp			\
 			Time.cpp			\
