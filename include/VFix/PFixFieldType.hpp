@@ -69,6 +69,11 @@ public:
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixFieldType &datum);
 
+	static const PFixFieldType *FindElement(const PFixFieldTypeSet_I &in_set,
+		const char *name, bool thow_if_not_found = false);
+	static const PFixFieldType *FindElement(const PFixFieldTypeSet_I &in_set,
+		const std::string &name, bool thow_if_not_found = false);
+
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 

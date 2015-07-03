@@ -71,8 +71,9 @@ try
 	const std::string   &added(xml_element.GetAttributeValue("added", true));
 	const std::string   &name(xml_element.GetChildRef("Name").
 		GetNodeTextFromChildRef());
-	const std::string   &description(xml_element.GetChildRef("Description").
-		GetNodeTextFromChildRef());
+	const XmlDomElement &desc_ref(xml_element.GetChildRef("Description"));
+	const std::string   &description((desc_ref.HasNodeTextFromChild()) ?
+		desc_ref.GetNodeTextFromChildRef() : "");
 	const XmlDomElement *base_info_ptr_1(xml_element.GetChildPtr("BaseType"));
 	const std::string   *base_name_ptr_1 = NULL;
 	const std::string   *base_name_ptr_2 = NULL;
@@ -140,6 +141,33 @@ void PFixFieldType::swap(PFixFieldType &other)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
+	const char *name, bool thow_if_not_found)
+{
+	PFixFieldTypeSetIterC iter_f(in_set.find(PFixFieldType(name)));
+
+	if (iter_f == in_set.end()) {
+		if (!thow_if_not_found)
+			return(NULL);
+		std::ostringstream o_str;
+		o_str << "Unable to locate type name '" << name << "' in the set of " <<
+			in_set.size() << " PFixFieldType elements.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+		
+	return(&(*iter_f));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
+	const std::string &name, bool thow_if_not_found)
+{
+	return(FindElement(in_set, name.c_str(), thow_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 bool PFixFieldType::ShouldApplyXmlElement(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element)
 {
@@ -181,7 +209,7 @@ PFixFieldTypeSet &PFixFieldType::ParseXmlElement(
 	}
 	catch (const std::exception &except) {
 		std::ostringstream o_str;
-		o_str << "Attempt to parse the FIX datatypes XML data failed: " <<
+		o_str << "Attempt to parse the FIX datatype XML data failed: " <<
 			except.what();
 		MLB::Utility::Rethrow(except, o_str.str());
 	}
@@ -267,14 +295,6 @@ void PFixFieldType::AddElement(const PFixFieldType &datum,
 	}
 }
 // ////////////////////////////////////////////////////////////////////////////
-
-/*
-// ////////////////////////////////////////////////////////////////////////////
-std::ostream &EmitFillLine(const std::vector<std::streamsize> &col_list,
-	std::ostream &o_str = std::cout, char fill_char = '=',
-	char col_sep_char = ' ', bool emit_new_line = true);
-// ////////////////////////////////////////////////////////////////////////////
-*/
 
 namespace {
 
@@ -413,12 +433,14 @@ int main(int argc, char **argv)
 	try {
 		if (ParseCmdLineArg::HasCmdLineHelp(argc, argv, 1)) {
 			std::cout << "USAGE: " << std::endl <<
-				"   " << argv[0] << " <xml-file-name> [ <xml-file-name> ... ]" <<
+				"   " << argv[0] << " <fix-xml-datatype-file> "
+				"[ <fix-xml-datatype-file> ... ]" <<
 				std::endl << std::endl;
 			return(EXIT_SUCCESS);
 		}
 		else if (argc < 2)
-			ThrowInvalidArgument("No XML files were specified.");
+			ThrowInvalidArgument("No XML files were specified. "
+				"Use '-h' for help.");
 		for (int count_1 = 1; count_1 < argc; ++count_1) {
 			TEST_RunTest(argv[count_1]);
 		}
@@ -435,11 +457,11 @@ int main(int argc, char **argv)
 /*
 	Testing command line for Linux:
 	------- ------- ---- --- ------
-	..\..\..\..\..\VFix\XML\FIX.5.0SP2\Base\Datatypes.xml > TestResults.InitDatatypesXml.txt
+	..\..\..\..\..\VFix\XML\FIX.5.0SP2\Base\Datatypes.xml > TestResults.MLB.VFix.PFixFieldType.txt
 
 	Testing command line for Windows:
 	------- ------- ---- --- --------
-	XML/FIX.5.0SP2/Base/Datatypes.xml > TestResults.InitDatatypesXml.txt
+	XML/FIX.5.0SP2/Base/Datatypes.xml > TestResults.MLB.VFix.PFixFieldType.txt
 */
 
 #endif // #ifdef TEST_MAIN
