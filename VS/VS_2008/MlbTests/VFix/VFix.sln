@@ -6,6 +6,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VFix_DLL", "VFix_DLL\VFix_DLL.vcproj", "{18EBBAB3-9E5D-4758-AC32-E416CCDAE55F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_VFIX_PFixFieldType", "ZZZ_VFIX_PFixFieldType\ZZZ_VFIX_PFixFieldType.vcproj", "{7C962A90-A1F8-4A06-9C4B-D898406DCA20}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70898B45-6340-4961-983E-A064F031865C} = {70898B45-6340-4961-983E-A064F031865C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

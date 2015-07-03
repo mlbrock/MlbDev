@@ -153,7 +153,7 @@ bool PFixFieldType::ShouldApplyXmlElement(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixFieldTypeSet &PFixFieldType::LoadFromXmlElement(
+PFixFieldTypeSet &PFixFieldType::ParseXmlElement(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element,
 	PFixFieldTypeSet &out_set)
 {
@@ -175,17 +175,8 @@ PFixFieldTypeSet &PFixFieldType::LoadFromXmlElement(
 		for (std::size_t count_1 = 0; count_1 < xml_element.child_list_.size();
 			++count_1) {
 			const XmlDomElement &this_element(xml_element.child_list_[count_1]);
-			if (ShouldApplyXmlElement(this_element)) {
-				PFixFieldType tmp_datum(this_element);
-				PFixFieldTypeSetInsertPair insert_pair(tmp_set.insert(tmp_datum));
-				if (!insert_pair.second) {
-					std::ostringstream o_str;
-					o_str << "Attempt to insert datatype element for datatype "
-						"name '" << tmp_datum.name_ << "' failed because it is "
-						"already in the set of datatypes.";
-					MLB::Utility::ThrowInvalidArgument(o_str.str());
-				}
-			}
+			if (ShouldApplyXmlElement(this_element))
+				AddElement(PFixFieldType(this_element), tmp_set);
 		}
 	}
 	catch (const std::exception &except) {
@@ -202,7 +193,7 @@ PFixFieldTypeSet &PFixFieldType::LoadFromXmlElement(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixFieldTypeSet &PFixFieldType::LoadFromXmlFile(const std::string &file_name,
+PFixFieldTypeSet &PFixFieldType::ParseXmlFile(const std::string &file_name,
 	PFixFieldTypeSet &out_set)
 {
 	MLB::RapidXmlUtils::RapidXmlContext xml_context;
@@ -211,7 +202,7 @@ PFixFieldTypeSet &PFixFieldType::LoadFromXmlFile(const std::string &file_name,
 	try {
 		MLB::RapidXmlUtils::XmlDomElement::ParseXmlFile(file_name,
 			xml_element);
-		LoadFromXmlElement(xml_element, out_set);
+		ParseXmlElement(xml_element, out_set);
 	}
 	catch (const std::exception &except) {
 		std::ostringstream o_str;
@@ -225,11 +216,11 @@ PFixFieldTypeSet &PFixFieldType::LoadFromXmlFile(const std::string &file_name,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixFieldTypeSet PFixFieldType::LoadFromXmlFile(const std::string &file_name)
+PFixFieldTypeSet PFixFieldType::ParseXmlFile(const std::string &file_name)
 {
 	PFixFieldTypeSet out_set;
 
-	return(LoadFromXmlFile(file_name, out_set));
+	return(ParseXmlFile(file_name, out_set));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -262,10 +253,28 @@ std::set<VFixXPortType> &PFixFieldType::CheckForUnusedTypes(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+void PFixFieldType::AddElement(const PFixFieldType &datum,
+	PFixFieldTypeSet_I &out_set)
+{
+	PFixFieldTypeSetInsertPair insert_pair(out_set.insert(datum));
+
+	if (!insert_pair.second) {
+		std::ostringstream o_str;
+		o_str << "Attempt to insert datatype element for datatype name '" <<
+			datum.name_ << "' failed because it is already in the set of "
+			"datatypes.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+/*
+// ////////////////////////////////////////////////////////////////////////////
 std::ostream &EmitFillLine(const std::vector<std::streamsize> &col_list,
 	std::ostream &o_str = std::cout, char fill_char = '=',
 	char col_sep_char = ' ', bool emit_new_line = true);
 // ////////////////////////////////////////////////////////////////////////////
+*/
 
 namespace {
 
@@ -384,7 +393,7 @@ namespace {
 // ////////////////////////////////////////////////////////////////////////////
 void TEST_RunTest(const char *file_name)
 {
-	PFixFieldTypeSet element_set(PFixFieldType::LoadFromXmlFile(file_name));
+	PFixFieldTypeSet element_set(PFixFieldType::ParseXmlFile(file_name));
 
 	std::cout << element_set << std::endl;
 

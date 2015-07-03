@@ -72,13 +72,15 @@ public:
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
-	static PFixFieldTypeSet_I &LoadFromXmlElement(
+	static PFixFieldTypeSet_I &ParseXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element,
 		PFixFieldTypeSet_I &out_set);
-
-	static PFixFieldTypeSet_I &LoadFromXmlFile(const std::string &file_name,
+	static PFixFieldTypeSet_I &ParseXmlFile(const std::string &file_name,
 		PFixFieldTypeSet_I &out_set);
-	static PFixFieldTypeSet_I  LoadFromXmlFile(const std::string &file_name);
+	static PFixFieldTypeSet_I  ParseXmlFile(const std::string &file_name);
+
+	static void                AddElement(const PFixFieldType &element,
+		PFixFieldTypeSet_I &out_set);
 
 	//	CODE NOTE: For testing. May be removed at some later date.
 	static std::set<VFixXPortType> &CheckForUnusedTypes(
