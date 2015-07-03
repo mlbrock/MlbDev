@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="ZZZ_VFIX_FixDataType"
-	ProjectGUID="{4174F7A6-AEE5-47BF-92C0-1F5EB75AF2E8}"
-	RootNamespace="ZZZ_VFIX_FixDataType"
+	Name="ZZZ_VFIX_PFixFieldType"
+	ProjectGUID="{7C962A90-A1F8-4A06-9C4B-D898406DCA20}"
+	RootNamespace="ZZZ_VFIX_PFixFieldType"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -196,7 +196,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\..\VFix\FixDataType.cpp"
+				RelativePath="..\..\..\..\..\VFix\PFixFieldType.cpp"
 				>
 			</File>
 		</Filter>
