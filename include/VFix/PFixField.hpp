@@ -118,6 +118,8 @@ public:
 	static void AddElement(const PFixField &datum, PFixFieldSet_I &out_set);
 
 	VFixTagNum    tag_;
+	VFixTagNum    ref_to_tag_;
+	VFixTagNum    ref_from_tag_;
 	std::string   name_;
 	std::string   type_name_;
 	std::string   abbreviation_;
@@ -126,7 +128,8 @@ public:
 	VFixXPortType vfix_xport_type_;
 
 private:
-	PFixField(VFixTagNum tag, const std::string &name,
+	PFixField(VFixTagNum tag, VFixTagNum ref_to_tag,
+		VFixTagNum ref_from_tag, const std::string &name,
 		const std::string &type_name_, const std::string &abbreviation,
 		const std::string &fix_version, const std::string &description,
 		VFixXPortType vfix_xport_type);

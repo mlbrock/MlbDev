@@ -59,6 +59,8 @@ PFixField::PFixField(VFixTagNum tag, const std::string &name,
 PFixField::PFixField(const MLB::RapidXmlUtils::XmlDomElement &xml_element)
 try
 	:tag_()
+	,ref_to_tag_(0)
+	,ref_from_tag_(0)
 	,name_()
 	,type_name_()
 	,abbreviation_()
@@ -96,11 +98,18 @@ try
 	const XmlDomElement &desc_ref(xml_element.GetChildRef("Description"));
 	const std::string   &description((desc_ref.HasNodeTextFromChild()) ?
 		desc_ref.GetNodeTextFromChildRef() : "");
+	const XmlDomElement *ref_ptr(xml_element.GetChildPtr("AssociatedDataTag"));
+	std::string          assoc_tag((ref_ptr) ?
+		ref_ptr->GetNodeTextFromChildRef() : "");
 
-	VFixTagNum tag_num = MLB::Utility::CheckIsNumericString<VFixTagNum>(tag, 1);
+	VFixTagNum tag_num       =
+		MLB::Utility::CheckIsNumericString<VFixTagNum>(tag, 1);
+	VFixTagNum assoc_tag_num = (!ref_ptr) ? 0 :
+		MLB::Utility::CheckIsNumericString<VFixTagNum>(
+		ref_ptr->GetNodeTextFromChildRef(), 1);
 
-	PFixField(tag_num, name, type_name, abbreviation, added, description,
-		vfix_xport_type_).swap(*this);
+	PFixField(tag_num, assoc_tag_num, 0, name, type_name, abbreviation, added,
+		description, vfix_xport_type_).swap(*this);
 }
 catch (const std::exception &except) {
 	MLB::Utility::Rethrow(except, "Unable to construct an PFixField "
@@ -109,11 +118,14 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixField::PFixField(VFixTagNum tag, const std::string &name,
+PFixField::PFixField(VFixTagNum tag, VFixTagNum ref_to_tag,
+	VFixTagNum ref_from_tag, const std::string &name,
 	const std::string &type_name, const std::string &abbreviation,
 	const std::string &fix_version, const std::string &description,
 	VFixXPortType vfix_xport_type)
 	:tag_(tag)
+	,ref_to_tag_(ref_to_tag)
+	,ref_from_tag_(ref_from_tag)
 	,name_(name)
 	,type_name_(type_name)
 	,abbreviation_(abbreviation)
@@ -244,11 +256,11 @@ namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
 const MLB::Utility::TabularReportSupport MyTabularReportSupport(
-	MLB::Utility::MakeInlineVector<std::size_t>(10)(39)(19)(28)(10)(2)(19),
+	MLB::Utility::MakeInlineVector<std::size_t>(10)(10)(10)(39)(19)(28)(10)(2)(19),
 	MLB::Utility::MakeInlineVector<std::string>
-		("Field Tag")("Field")("Type")("Abbreviation")("Fix Version")("XPort")("XPort"),
+		("Field Tag")("Ref To")("Ref From")("Field")("Type")("Abbreviation")("Fix Version")("XPort")("XPort"),
 	MLB::Utility::MakeInlineVector<std::string>
-		("Number")("Name")("Name")("Name")("Added")("Value")("Name"));
+		("Number")("Tag")("Tag")("Name")("Name")("Name")("Added")("Value")("Name"));
 // ////////////////////////////////////////////////////////////////////////////
 
 } // Anonymous namespace
@@ -256,20 +268,22 @@ const MLB::Utility::TabularReportSupport MyTabularReportSupport(
 // ////////////////////////////////////////////////////////////////////////////
 std::ostream &PFixField::EmitTabular(std::ostream &o_str) const
 {
-	MyTabularReportSupport.AssertColCountMinimum(7);
+	MyTabularReportSupport.AssertColCountMinimum(9);
 
 	boost::io::ios_all_saver io_state(o_str);
 
 	o_str
 		<< std::right
 		<< std::setw(MyTabularReportSupport[0]) << tag_             << " "
+		<< std::setw(MyTabularReportSupport[1]) << ref_to_tag_      << " "
+		<< std::setw(MyTabularReportSupport[2]) << ref_from_tag_    << " "
 		<< std::left
-		<< std::setw(MyTabularReportSupport[1]) << name_            << " "
-		<< std::setw(MyTabularReportSupport[2]) << type_name_       << " "
-		<< std::setw(MyTabularReportSupport[3]) << abbreviation_    << " "
-		<< std::setw(MyTabularReportSupport[4]) << fix_version_     << " "
+		<< std::setw(MyTabularReportSupport[3]) << name_            << " "
+		<< std::setw(MyTabularReportSupport[4]) << type_name_       << " "
+		<< std::setw(MyTabularReportSupport[5]) << abbreviation_    << " "
+		<< std::setw(MyTabularReportSupport[6]) << fix_version_     << " "
 		<< std::right
-		<< std::setw(MyTabularReportSupport[5]) << vfix_xport_type_ << " "
+		<< std::setw(MyTabularReportSupport[7]) << vfix_xport_type_ << " "
 		<< std::left
 		<< VFixXPortTypeToString(vfix_xport_type_)
 			;
@@ -304,6 +318,8 @@ std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
 	o_str
 		<< "{"
 		<< "\"tag_\": "               << datum.tag_          << ", "
+		<< "\"ref_to_tag_\": "        << datum.ref_to_tag_   << ", "
+		<< "\"ref_from_tag_\": "      << datum.ref_from_tag_ << ", "
 		<< "\"name_\": \""            << datum.name_         << "\", "
 		<< "\"type_name\": \""        << datum.type_name_    << "\", "
 		<< "\"abbreviation_\": \""    << datum.abbreviation_ << "\", "
@@ -349,7 +365,7 @@ void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
 {
 	PFixFieldSet element_set(PFixField::ParseXmlFile(field_file_name));
 
-	std::cout << element_set << std::endl << std::endl;
+//	std::cout << element_set << std::endl << std::endl;
 
 	PFixField::EmitTabular(element_set, std::cout);
 	std::cout << std::endl;
