@@ -87,6 +87,11 @@ public:
 
 	void swap(PFixField &other);
 
+	std::ostream &EmitTabular(std::ostream &o_str = std::cout) const;
+
+	static std::ostream &EmitTabular(const PFixFieldSet_I &in_set,
+		std::ostream &o_str = std::cout);
+
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixField &datum);
 
@@ -111,13 +116,6 @@ public:
 	static PFixFieldSet_I  ParseXmlFile(const std::string &file_name);
 
 	static void AddElement(const PFixField &datum, PFixFieldSet_I &out_set);
-
-	//	CODE NOTE: For testing. May be removed at some later date.
-	static std::set<VFixXPortType> &CheckForUnusedTypes(
-		const PFixFieldSet_I &in_set, std::set<VFixXPortType> &out_set);
-	//	CODE NOTE: For testing. May be removed at some later date.
-	static std::size_t    EmitUnusedTypes(const PFixFieldSet_I &in_set,
-		std::ostream &o_str = std::cout);
 
 	VFixTagNum    tag_;
 	std::string   name_;
@@ -182,6 +180,10 @@ typedef boost::multi_index::index<PFixFieldMISet,
 typedef PFixFieldMISetIdxByAbbr::iterator       PFixFieldMISetIdxByAbbrIter;
 typedef PFixFieldMISetIdxByAbbr::const_iterator PFixFieldMISetIdxByAbbrIterC;
 //	////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const PFixFieldSet &datum);
+// ////////////////////////////////////////////////////////////////////////////
 
 } // namespace VFix
 

@@ -66,6 +66,11 @@ public:
 
 	void swap(PFixFieldType &other);
 
+	std::ostream &EmitTabular(std::ostream &o_str = std::cout) const;
+
+	static std::ostream &EmitTabular(const PFixFieldTypeSet_I &in_set,
+		std::ostream &o_str = std::cout);
+
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixFieldType &datum);
 
@@ -119,6 +124,11 @@ typedef PFixFieldType::PFixFieldTypeSet_I     PFixFieldTypeSet;
 typedef PFixFieldTypeSet::iterator            PFixFieldTypeSetIter;
 typedef PFixFieldTypeSet::const_iterator      PFixFieldTypeSetIterC;
 typedef std::pair<PFixFieldTypeSetIter, bool> PFixFieldTypeSetInsertPair;
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str,
+	const PFixFieldTypeSet &datum);
 // ////////////////////////////////////////////////////////////////////////////
 
 } // namespace VFix

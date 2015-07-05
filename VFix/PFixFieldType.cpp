@@ -319,6 +319,49 @@ const MLB::Utility::TabularReportSupport MyTabularReportSupportUnused(
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixFieldType::EmitTabular(std::ostream &o_str) const
+{
+	MyTabularReportSupport.AssertColCountMinimum(6);
+
+	boost::io::ios_all_saver io_state(o_str);
+
+	o_str
+		<< std::left
+		<< std::setw(MyTabularReportSupport[0]) << name_            << " "
+		<< std::setw(MyTabularReportSupport[1]) << base_name_1_     << " "
+		<< std::setw(MyTabularReportSupport[2]) << base_name_2_     << " "
+		<< std::setw(MyTabularReportSupport[3]) << fix_version_     << " "
+		<< std::right
+		<< std::setw(MyTabularReportSupport[4]) << vfix_xport_type_ << " "
+		<< std::left
+		<< VFixXPortTypeToString(vfix_xport_type_)
+			;
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixFieldType::EmitTabular(const PFixFieldTypeSet &in_set,
+	std::ostream &o_str)
+{
+	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
+
+	PFixFieldTypeSetIterC iter_b(in_set.begin());
+	PFixFieldTypeSetIterC iter_e(in_set.end());
+
+	for ( ; iter_b != iter_e; ++iter_b) {
+		iter_b->EmitTabular(o_str);
+		o_str << std::endl;
+	}
+
+	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 std::size_t PFixFieldType::EmitUnusedTypes(const PFixFieldTypeSet &in_set,
 	std::ostream &o_str)
 {
@@ -364,15 +407,14 @@ std::ostream & operator << (std::ostream &o_str, const PFixFieldType &datum)
 	boost::io::ios_all_saver io_state(o_str);
 
 	o_str
-		<< std::left
-		<< std::setw(MyTabularReportSupport[0]) << datum.name_            << " "
-		<< std::setw(MyTabularReportSupport[1]) << datum.base_name_1_     << " "
-		<< std::setw(MyTabularReportSupport[2]) << datum.base_name_2_     << " "
-		<< std::setw(MyTabularReportSupport[3]) << datum.fix_version_     << " "
-		<< std::right
-		<< std::setw(MyTabularReportSupport[4]) << datum.vfix_xport_type_ << " "
-		<< std::left
-		<< VFixXPortTypeToString(datum.vfix_xport_type_)
+		<< "{"
+		<< "\"name_\": \""            << datum.name_        << "\", "
+		<< "\"base_name_1_\": \""     << datum.base_name_1_ << "\", "
+		<< "\"base_name_2_\": \""     << datum.base_name_2_ << "\", "
+		<< "\"fix_version_\": \""     << datum.fix_version_ << "\", "
+		<< "\"vfix_xport_type_\": \"" <<
+			VFixXPortTypeToString(datum.vfix_xport_type_)    << "\""
+		<< "}"
 			;
 
 	return(o_str);
@@ -383,15 +425,11 @@ std::ostream & operator << (std::ostream &o_str, const PFixFieldType &datum)
 std::ostream & operator << (std::ostream &o_str,
 	const PFixFieldTypeSet &datum)
 {
-	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
-
 	PFixFieldTypeSetIterC iter_b(datum.begin());
 	PFixFieldTypeSetIterC iter_e(datum.end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		o_str << *iter_b << std::endl;
-
-	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
 
 	return(o_str);
 }
@@ -415,7 +453,10 @@ void TEST_RunTest(const char *file_name)
 {
 	PFixFieldTypeSet element_set(PFixFieldType::ParseXmlFile(file_name));
 
-	std::cout << element_set << std::endl;
+	std::cout << element_set << std::endl << std::endl;
+
+	PFixFieldType::EmitTabular(element_set, std::cout);
+	std::cout << std::endl;
 
 	PFixFieldType::EmitUnusedTypes(element_set);
 }

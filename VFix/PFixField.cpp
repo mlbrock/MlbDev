@@ -224,34 +224,6 @@ PFixFieldSet PFixField::ParseXmlFile(const std::string &file_name)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-std::set<VFixXPortType> &PFixField::CheckForUnusedTypes(
-	const PFixFieldSet &in_set, std::set<VFixXPortType> &out_set)
-{
-	std::set<VFixXPortType> tmp_set;
-
-	for (int count_1 = VFixXPortType_Minimum; count_1 <= VFixXPortType_Maximum;
-		++count_1) {
-		if (count_1 != VFixXPortType_None)
-			tmp_set.insert(static_cast<VFixXPortType>(count_1));
-	}
-
-	PFixFieldSetIterC iter_b(in_set.begin());
-	PFixFieldSetIterC iter_e(in_set.end());
-
-	for ( ; iter_b != iter_e; ++iter_b) {
-		std::set<VFixXPortType>::iterator iter_f(
-			tmp_set.find(iter_b->vfix_xport_type_));
-		if (iter_f != tmp_set.end())
-			tmp_set.erase(iter_f);
-	}
-
-	out_set.swap(tmp_set);
-
-	return(out_set);
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 void PFixField::AddElement(const PFixField &datum,
 	PFixFieldSet_I &out_set)
 {
@@ -279,60 +251,10 @@ const MLB::Utility::TabularReportSupport MyTabularReportSupport(
 		("Number")("Name")("Name")("Name")("Added")("Value")("Name"));
 // ////////////////////////////////////////////////////////////////////////////
 
-// ////////////////////////////////////////////////////////////////////////////
-const MLB::Utility::TabularReportSupport MyTabularReportSupportUnused(
-	MLB::Utility::MakeInlineVector<std::size_t>(23)(2)(19),
-	MLB::Utility::MakeInlineVector<std::string>
-		("Type")("XPort")("XPort"),
-	MLB::Utility::MakeInlineVector<std::string>
-		("Name")("Value")("Name"));
-// ////////////////////////////////////////////////////////////////////////////
-
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-std::size_t PFixField::EmitUnusedTypes(const PFixFieldSet &in_set,
-	std::ostream &o_str)
-{
-	MyTabularReportSupportUnused.EmitFillLineUnbroken(o_str, '*', true);
-	MyTabularReportSupportUnused.EmitCentered(" UNUSED PFIX TYPES REPORT ",
-		o_str, '*', true);
-	MyTabularReportSupportUnused.EmitFillLineUnbroken(o_str, '*', true);
-
-	std::set<VFixXPortType> out_set;
-
-	CheckForUnusedTypes(in_set, out_set);
-
-	MyTabularReportSupportUnused.EmitHeader(o_str, '=', '-', ' ', true);
-
-	std::set<VFixXPortType>::const_iterator iter_b(out_set.begin());
-	std::set<VFixXPortType>::const_iterator iter_e(out_set.end());
-
-/*
-	CODE NOTE: Fix me!!!
-	for ( ; iter_b != iter_e; ++iter_b)
-		o_str
-			<< std::left
-			<< std::setw(MyTabularReportSupportUnused[0])            <<
-				VFixXPortTypeToString(*iter_b, 0, true)               << " "
-			<< std::right
-			<< std::setw(MyTabularReportSupportUnused[1]) << *iter_b << " "
-			<< std::left
-			<< VFixXPortTypeToString(*iter_b, 1, true)
-			<< "\n"
-				;
-*/
-
-	MyTabularReportSupportUnused.EmitTrailer(o_str, '=', ' ', true);
-
-	MyTabularReportSupportUnused.EmitFillLineUnbroken(o_str, '*', true);
-
-	return(out_set.size());
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
+std::ostream &PFixField::EmitTabular(std::ostream &o_str) const
 {
 	MyTabularReportSupport.AssertColCountMinimum(7);
 
@@ -340,16 +262,55 @@ std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
 
 	o_str
 		<< std::right
-		<< std::setw(MyTabularReportSupport[0]) << datum.tag_             << " "
+		<< std::setw(MyTabularReportSupport[0]) << tag_             << " "
 		<< std::left
-		<< std::setw(MyTabularReportSupport[1]) << datum.name_            << " "
-		<< std::setw(MyTabularReportSupport[2]) << datum.type_name_       << " "
-		<< std::setw(MyTabularReportSupport[3]) << datum.abbreviation_    << " "
-		<< std::setw(MyTabularReportSupport[4]) << datum.fix_version_     << " "
+		<< std::setw(MyTabularReportSupport[1]) << name_            << " "
+		<< std::setw(MyTabularReportSupport[2]) << type_name_       << " "
+		<< std::setw(MyTabularReportSupport[3]) << abbreviation_    << " "
+		<< std::setw(MyTabularReportSupport[4]) << fix_version_     << " "
 		<< std::right
-		<< std::setw(MyTabularReportSupport[5]) << datum.vfix_xport_type_ << " "
+		<< std::setw(MyTabularReportSupport[5]) << vfix_xport_type_ << " "
 		<< std::left
-		<< VFixXPortTypeToString(datum.vfix_xport_type_)
+		<< VFixXPortTypeToString(vfix_xport_type_)
+			;
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixField::EmitTabular(const PFixFieldSet &in_set,
+	std::ostream &o_str)
+{
+	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
+
+	PFixFieldSetIterC iter_b(in_set.begin());
+	PFixFieldSetIterC iter_e(in_set.end());
+
+	for ( ; iter_b != iter_e; ++iter_b) {
+		iter_b->EmitTabular(o_str);
+		o_str << std::endl;
+	}
+
+	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
+{
+	o_str
+		<< "{"
+		<< "\"tag_\": "               << datum.tag_          << ", "
+		<< "\"name_\": \""            << datum.name_         << "\", "
+		<< "\"type_name\": \""        << datum.type_name_    << "\", "
+		<< "\"abbreviation_\": \""    << datum.abbreviation_ << "\", "
+		<< "\"fix_version_\": \""     << datum.fix_version_  << "\", "
+		<< "\"vfix_xport_type_\": \"" <<
+			VFixXPortTypeToString(datum.vfix_xport_type_)     << "\""
+		<< "}"
 			;
 
 	return(o_str);
@@ -360,15 +321,11 @@ std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
 std::ostream & operator << (std::ostream &o_str,
 	const PFixFieldSet &datum)
 {
-	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
-
 	PFixFieldSetIterC iter_b(datum.begin());
 	PFixFieldSetIterC iter_e(datum.end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		o_str << *iter_b << std::endl;
-
-	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
 
 	return(o_str);
 }
@@ -392,9 +349,10 @@ void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
 {
 	PFixFieldSet element_set(PFixField::ParseXmlFile(field_file_name));
 
-	std::cout << element_set << std::endl;
+	std::cout << element_set << std::endl << std::endl;
 
-	PFixField::EmitUnusedTypes(element_set);
+	PFixField::EmitTabular(element_set, std::cout);
+	std::cout << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
 
