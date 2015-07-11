@@ -49,7 +49,7 @@
 # pragma warning(disable:4625 4626)
 #endif // #ifdef _Windows
 
-#include <boost/multi_index_container_fwd.hpp>
+//#include <boost/multi_index_container_fwd.hpp>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
@@ -67,6 +67,10 @@ namespace MLB {
 namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
+class PFixMessageSet;
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 typedef unsigned int VFixComponentId;
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -74,7 +78,6 @@ typedef unsigned int VFixComponentId;
 class PFixMessage {
 	typedef boost::multi_index_container<PFixMessage> PFixMessageMISet;
 public:
-	typedef std::set<PFixMessage> PFixMessageSet_I;
 
 	//	Constructor used for searches...
 	explicit PFixMessage(const std::string &name = "");
@@ -88,29 +91,51 @@ public:
 
 	void swap(PFixMessage &other);
 
+	std::string GetIdString() const;
+
 	std::ostream &EmitTabular(std::ostream &o_str = std::cout) const;
 
-	static std::ostream &EmitTabular(const PFixMessageSet_I &in_set,
+	static std::ostream &EmitTabularByMessageType(const PFixMessageSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabularByName(const PFixMessageSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabularByAbbr(const PFixMessageSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabular(const PFixMessageSet &in_set,
 		std::ostream &o_str = std::cout);
 
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixMessage &datum);
 
-	static const PFixMessage *FindElement(const PFixMessageSet_I &in_set,
+	static const PFixMessage *FindElementByMessageType(
+		const PFixMessageSet &in_set, const std::string &key,
+		bool throw_if_not_found = false);
+
+	//	Only works for message types which are numeric, obviously.
+	static const PFixMessage *FindElementByMessageType(
+		const PFixMessageSet &in_set, std::size_t key,
+		bool throw_if_not_found = false);
+	static const PFixMessage *FindElementByName(const PFixMessageSet &in_set,
+		const std::string &key, bool throw_if_not_found = false);
+	static const PFixMessage *FindElementByAbbr(const PFixMessageSet &in_set,
+		const std::string &key, bool throw_if_not_found = false);
+
+	//	Searches first by abbreviation, then by name.
+	static const PFixMessage *FindElement(const PFixMessageSet &in_set,
 		const std::string &name, bool thow_if_not_found = false);
 
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
-	static PFixMessageSet_I &ParseXmlElement(
+	static PFixMessageSet &ParseXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-		PFixMessageSet_I &out_set);
-	static PFixMessageSet_I &ParseXmlFile(const std::string &file_name,
-		PFixMessageSet_I &out_set);
-	static PFixMessageSet_I  ParseXmlFile(const std::string &file_name);
+		PFixMessageSet &out_set);
+	static PFixMessageSet &ParseXmlFile(const std::string &file_name,
+		PFixMessageSet &out_set);
+	static PFixMessageSet  ParseXmlFile(const std::string &file_name);
 
 	static void              AddElement(const PFixMessage &element,
-		PFixMessageSet_I &out_set);
+		PFixMessageSet &out_set);
 
 	VFixComponentId component_id_;
 	std::string     message_type_;
@@ -129,18 +154,6 @@ private:
 };
 // ////////////////////////////////////////////////////////////////////////////
 
-// ////////////////////////////////////////////////////////////////////////////
-typedef std::vector<PFixMessage>          PFixMessageVector;
-typedef PFixMessageVector::iterator       PFixMessageVectorIter;
-typedef PFixMessageVector::const_iterator PFixMessageVectorIterC;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-typedef PFixMessage::PFixMessageSet_I       PFixMessageSet;
-typedef PFixMessageSet::iterator            PFixMessageSetIter;
-typedef PFixMessageSet::const_iterator      PFixMessageSetIterC;
-typedef std::pair<PFixMessageSetIter, bool> PFixMessageSetInsertPair;
-// ////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 struct PFixMessageByCompId  { };
@@ -152,11 +165,6 @@ typedef boost::multi_index_container<
 	PFixMessage,
 	boost::multi_index::indexed_by<
 		boost::multi_index::ordered_unique<
-			boost::multi_index::tag<PFixMessageByCompId>,
-			BOOST_MULTI_INDEX_MEMBER(PFixMessage, VFixComponentId , component_id_)
-		>
-		,
-		boost::multi_index::ordered_unique<
 			boost::multi_index::tag<PFixMessageByMsgType>,
 			BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, message_type_)
 		>
@@ -167,33 +175,49 @@ typedef boost::multi_index_container<
 		>
 		,
 		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixMessageByCompId>,
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, VFixComponentId , component_id_)
+		>
+		,
+		boost::multi_index::ordered_unique<
 			boost::multi_index::tag<PFixMessageByAbbr>,
 			BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, abbreviation_)
 		>
 	>
 > PFixMessageMISet;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixMessageMISet, 
-	PFixMessageByCompId>::type                       PFixMessageMISetIdxByCompId;
-typedef PFixMessageMISetIdxByCompId::iterator       PFixMessageMISetIdxByCompIdIter;
-typedef PFixMessageMISetIdxByCompId::const_iterator PFixMessageMISetIdxByCompIdIterC;
+// ////////////////////////////////////////////////////////////////////////////
 
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixMessageMISet, 
-	PFixMessageByMsgType>::type                       PFixMessageMISetIdxByMsgType;
-typedef PFixMessageMISetIdxByMsgType::iterator       PFixMessageMISetIdxByMsgTypeIter;
-typedef PFixMessageMISetIdxByMsgType::const_iterator PFixMessageMISetIdxByMsgTypeIterC;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixMessageMISet,
-	PFixMessageByName>::type                       PFixMessageMISetIdxByName;
-typedef PFixMessageMISetIdxByName::iterator       PFixMessageMISetIdxByNameIter;
-typedef PFixMessageMISetIdxByName::const_iterator PFixMessageMISetIdxByNameIterC;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixMessageMISet,
-	PFixMessageByAbbr>::type                       PFixMessageMISetIdxByAbbr;
-typedef PFixMessageMISetIdxByAbbr::iterator       PFixMessageMISetIdxByAbbrIter;
-typedef PFixMessageMISetIdxByAbbr::const_iterator PFixMessageMISetIdxByAbbrIterC;
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+class PFixMessageSet {
+public:
+	PFixMessageSet()
+	{
+	}
+
+	PFixMessageMISet &Get()
+	{
+		return(the_set_);
+	}
+
+	const PFixMessageMISet &Get() const
+	{
+		return(the_set_);
+	}
+
+	void swap(PFixMessageSet &other)
+	{
+		the_set_.swap(other.the_set_);
+	}
+
+	std::size_t size() const
+	{
+		return(the_set_.size());
+	}
+
+private:
+	PFixMessageMISet the_set_;
+};
+// //////////////////////////////////////////////////////////////////////////// 
 
 // ////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const PFixMessageSet &datum);

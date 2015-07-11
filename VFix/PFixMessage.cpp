@@ -39,6 +39,21 @@ namespace MLB {
 
 namespace VFix {
 
+namespace {
+
+//	////////////////////////////////////////////////////////////////////////////
+typedef boost::multi_index::index<PFixMessageMISet, 
+	PFixMessageByMsgType>::type PFixMessageMISetIdxByMsgType;
+typedef boost::multi_index::index<PFixMessageMISet,
+	PFixMessageByName>::type    PFixMessageMISetIdxByName;
+typedef boost::multi_index::index<PFixMessageMISet, 
+	PFixMessageByCompId>::type  PFixMessageMISetIdxByCompId;
+typedef boost::multi_index::index<PFixMessageMISet,
+	PFixMessageByAbbr>::type    PFixMessageMISetIdxByAbbr;
+//	////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
 // ////////////////////////////////////////////////////////////////////////////
 PFixMessage::PFixMessage(const std::string &message_type)
 	:message_type_(message_type)
@@ -139,21 +154,90 @@ void PFixMessage::swap(PFixMessage &other)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
-	const std::string &name, bool thow_if_not_found)
+std::string PFixMessage::GetIdString() const
 {
-	PFixMessageSetIterC iter_f(in_set.find(PFixMessage(name)));
+	std::ostringstream o_str;
 
-	if (iter_f == in_set.end()) {
-		if (!thow_if_not_found)
+	o_str << "Key: {message type '" << message_type_ << "', name '" << name_ <<
+		"', component id '" << component_id_ << "', abbreviation '" <<
+		abbreviation_ << "'}";
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename MISetIndexType>
+	const PFixMessage *FindElementHelper(const MISetIndexType &set_index,
+		const char *by_name, const std::string &key, bool throw_if_not_found)
+{
+	typename MISetIndexType::const_iterator iter_f(set_index.find(key));
+
+	if (iter_f == set_index.end()) {
+		if (!throw_if_not_found)
 			return(NULL);
 		std::ostringstream o_str;
-		o_str << "Unable to locate type name '" << name << "' in the set of " <<
-			in_set.size() << " PFixMessage elements.";
+		o_str << "Unable to locate message " << by_name << " '" << key <<
+			"' in the set of " << set_index.size() << " PFixMessage elements.";
 		MLB::Utility::ThrowInvalidArgument(o_str.str());
 	}
-		
+
 	return(&(*iter_f));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixMessage *PFixMessage::FindElementByMessageType(
+	const PFixMessageSet &in_set, const std::string &key,
+	bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixMessageByMsgType>(),
+		"type", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixMessage *PFixMessage::FindElementByMessageType(
+	const PFixMessageSet &in_set, std::size_t key, bool throw_if_not_found)
+{
+	std::ostringstream o_str;
+
+	o_str << key;
+
+	return(FindElementByMessageType(in_set, o_str.str(), throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixMessage *PFixMessage::FindElementByName(const PFixMessageSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixMessageByName>(),
+		"name", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixMessage *PFixMessage::FindElementByAbbr(const PFixMessageSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixMessageByAbbr>(),
+		"abbreviation", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	const PFixMessage *datum_ptr;
+
+	return(((datum_ptr = FindElementByAbbr(in_set, key, false)) != NULL) ?
+		datum_ptr : FindElementByName(in_set, key, throw_if_not_found));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -242,16 +326,44 @@ PFixMessageSet PFixMessage::ParseXmlFile(const std::string &file_name)
 
 // ////////////////////////////////////////////////////////////////////////////
 void PFixMessage::AddElement(const PFixMessage &datum,
-	PFixMessageSet_I &out_set)
+	PFixMessageSet &out_set)
 {
-	PFixMessageSetInsertPair insert_pair(out_set.insert(datum));
-
-	if (!insert_pair.second) {
+	try {
+		MLB::Utility::ThrowIfEmpty(datum.message_type_, "MessageType");
+		MLB::Utility::ThrowIfEmpty(datum.name_,         "Name");
+		MLB::Utility::ThrowIfEmpty(datum.abbreviation_, "Abbreviation");
+		const PFixMessage *msg_ptr;
+		if ((msg_ptr = FindElementByName(out_set, datum.abbreviation_,
+			false)) != NULL) {
+			//	Error if new abbreviation is in the set of message type name...
+			std::ostringstream o_str;
+			o_str << "The new element abbreviation '" << datum.abbreviation_ <<
+				"' is already in use as a message type name in element " <<
+				msg_ptr->GetIdString() << ".";
+			MLB::Utility::ThrowInvalidArgument(o_str.str());
+		}
+		else if ((msg_ptr = FindElementByAbbr(out_set, datum.name_,
+			false)) != NULL) {
+			//	Error if new message type name is in the set of abbreviations...
+			std::ostringstream o_str;
+			o_str << "The new element message type name '" << datum.name_ <<
+				"' is already in use as an abbreviation in element " <<
+				msg_ptr->GetIdString() << ".";
+			MLB::Utility::ThrowInvalidArgument(o_str.str());
+		}
+		std::pair<PFixMessageMISetIdxByMsgType::const_iterator, bool>
+			insert_pair(out_set.Get().get<PFixMessageByMsgType>().insert(datum));
+		if (!insert_pair.second)
+			MLB::Utility::ThrowInvalidArgument("The return value of the set "
+				"insert operation indicates that one or more unique keys are "
+				"already in the set and conflict with element " +
+				insert_pair.first->GetIdString() + ".");
+	}
+	catch (const std::exception &except) {
 		std::ostringstream o_str;
-		o_str << "Attempt to insert datatype element for datatype name '" <<
-			datum.name_ << "' failed because it is already in the set of "
-			"datatypes.";
-		MLB::Utility::ThrowInvalidArgument(o_str.str());
+		o_str << "Attempt to insert element " << datum.GetIdString() <<
+			" failed: " << except.what();
+		MLB::Utility::Rethrow(except, o_str.str());
 	}
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -262,7 +374,8 @@ namespace {
 const MLB::Utility::TabularReportSupport MyTabularReportSupport(
 	MLB::Utility::MakeInlineVector<std::size_t>(5)(39)(5)(29)(15)(19)(10),
 	MLB::Utility::MakeInlineVector<std::string>
-		("Message")("Message")("Component")("Category")("Section")("Abbreviation")("Fix Version"),
+		("Message")("Message")("Component")("Category")("Section")
+			("Abbreviation")("Fix Version"),
 	MLB::Utility::MakeInlineVector<std::string>
 		("Type")("Name")("Id")("Id")("Id")("Name")("Added"));
 // ////////////////////////////////////////////////////////////////////////////
@@ -293,14 +406,24 @@ std::ostream &PFixMessage::EmitTabular(std::ostream &o_str) const
 }
 // ////////////////////////////////////////////////////////////////////////////
 
+namespace {
+
 // ////////////////////////////////////////////////////////////////////////////
-std::ostream &PFixMessage::EmitTabular(const PFixMessageSet &in_set,
-	std::ostream &o_str)
+template <typename MISetIndexType>
+	std::ostream &EmitTabularHelper(const MISetIndexType &set_index,
+		const char *by_type, std::ostream &o_str)
 {
+	{
+		std::ostringstream tmp_o_str;
+		tmp_o_str << " PFixMessage Report by " << by_type << " ";
+		MyTabularReportSupport.EmitFillLineUnbroken(o_str, '=', true);
+		MyTabularReportSupport.EmitCentered(tmp_o_str.str(), o_str, ' ');
+	}
+
 	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
 
-	PFixMessageSetIterC iter_b(in_set.begin());
-	PFixMessageSetIterC iter_e(in_set.end());
+	typename MISetIndexType::const_iterator iter_b(set_index.begin());
+	typename MISetIndexType::const_iterator iter_e(set_index.end());
 
 	for ( ; iter_b != iter_e; ++iter_b) {
 		iter_b->EmitTabular(o_str);
@@ -310,6 +433,43 @@ std::ostream &PFixMessage::EmitTabular(const PFixMessageSet &in_set,
 	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
 
 	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixMessage::EmitTabularByMessageType(
+	const PFixMessageSet &in_set, std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixMessageByMsgType>(),
+		"Message Type", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixMessage::EmitTabularByName(const PFixMessageSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixMessageByName>(),
+		"Name", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixMessage::EmitTabularByAbbr(const PFixMessageSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixMessageByAbbr>(),
+		"Abbreviation", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixMessage::EmitTabular(const PFixMessageSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularByMessageType(in_set, o_str));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -340,8 +500,16 @@ std::ostream & operator << (std::ostream &o_str, const PFixMessage &datum)
 std::ostream & operator << (std::ostream &o_str,
 	const PFixMessageSet &datum)
 {
-	PFixMessageSetIterC iter_b(datum.begin());
-	PFixMessageSetIterC iter_e(datum.end());
+/*
+	PFixMessageMISetIdxByMsgTypeIterC iter_b(
+		datum.Get().get<PFixMessageByMsgType>().begin());
+	PFixMessageMISetIdxByMsgTypeIterC iter_e(
+		datum.Get().get<PFixMessageByMsgType>().end());
+*/
+	PFixMessageMISet::nth_index<0>::type::const_iterator iter_b(
+		datum.Get().get<0>().begin());
+	PFixMessageMISet::nth_index<0>::type::const_iterator iter_e(
+		datum.Get().get<0>().end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		o_str << *iter_b << std::endl;
@@ -370,7 +538,13 @@ void TEST_RunTest(const char *file_name)
 
 	std::cout << element_set << std::endl << std::endl;
 
-	PFixMessage::EmitTabular(element_set, std::cout);
+	PFixMessage::EmitTabularByMessageType(element_set, std::cout);
+	std::cout << std::endl;
+
+	PFixMessage::EmitTabularByName(element_set, std::cout);
+	std::cout << std::endl;
+
+	PFixMessage::EmitTabularByAbbr(element_set, std::cout);
 	std::cout << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
