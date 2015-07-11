@@ -142,12 +142,12 @@ void PFixFieldType::swap(PFixFieldType &other)
 
 // ////////////////////////////////////////////////////////////////////////////
 const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
-	const std::string &name, bool thow_if_not_found)
+	const std::string &name, bool throw_if_not_found)
 {
 	PFixFieldTypeSetIterC iter_f(in_set.find(PFixFieldType(name)));
 
 	if (iter_f == in_set.end()) {
-		if (!thow_if_not_found)
+		if (!throw_if_not_found)
 			return(NULL);
 		std::ostringstream o_str;
 		o_str << "Unable to locate type name '" << name << "' in the set of " <<

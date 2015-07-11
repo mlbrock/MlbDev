@@ -98,11 +98,11 @@ public:
 /*
 	CODE NOTE: Pending implementation.
 	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		VFixTagNum tag, bool thow_if_not_found = false);
+		VFixTagNum tag, bool throw_if_not_found = false);
 	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		const char *name, bool thow_if_not_found = false);
+		const char *name, bool throw_if_not_found = false);
 	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		const std::string &name, bool thow_if_not_found = false);
+		const std::string &name, bool throw_if_not_found = false);
 */
 
 	static bool ShouldApplyXmlElement(
