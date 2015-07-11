@@ -77,7 +77,7 @@ public:
 	typedef std::set<PFixMessage> PFixMessageSet_I;
 
 	//	Constructor used for searches...
-	explicit PFixMessage(const char *name = "");
+	explicit PFixMessage(const std::string &name = "");
 
 	explicit PFixMessage(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
@@ -96,8 +96,6 @@ public:
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixMessage &datum);
 
-	static const PFixMessage *FindElement(const PFixMessageSet_I &in_set,
-		const char *name, bool thow_if_not_found = false);
 	static const PFixMessage *FindElement(const PFixMessageSet_I &in_set,
 		const std::string &name, bool thow_if_not_found = false);
 
@@ -152,28 +150,28 @@ struct PFixMessageByAbbr    { };
 //	----------------------------------------------------------------------------
 typedef boost::multi_index_container<
 	PFixMessage,
-		boost::multi_index::indexed_by<
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixMessageByCompId>,
-				BOOST_MULTI_INDEX_MEMBER(PFixMessage, VFixComponentId , component_id_)
-			>
-			,
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixMessageByMsgType>,
-				BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, message_type_)
-			>
-			,
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixMessageByName>,
-				BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, name_)
-			>
-			,
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixMessageByAbbr>,
-				BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, abbreviation_)
-			>
+	boost::multi_index::indexed_by<
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixMessageByCompId>,
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, VFixComponentId , component_id_)
 		>
-	> PFixMessageMISet;
+		,
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixMessageByMsgType>,
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, message_type_)
+		>
+		,
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixMessageByName>,
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, name_)
+		>
+		,
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixMessageByAbbr>,
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, std::string, abbreviation_)
+		>
+	>
+> PFixMessageMISet;
 //	----------------------------------------------------------------------------
 typedef boost::multi_index::index<PFixMessageMISet, 
 	PFixMessageByCompId>::type                       PFixMessageMISetIdxByCompId;

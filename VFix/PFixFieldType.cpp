@@ -39,7 +39,7 @@ namespace MLB {
 namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixFieldType::PFixFieldType(const char *name)
+PFixFieldType::PFixFieldType(const std::string &name)
 	:name_(name)
 {
 }
@@ -142,7 +142,7 @@ void PFixFieldType::swap(PFixFieldType &other)
 
 // ////////////////////////////////////////////////////////////////////////////
 const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
-	const char *name, bool thow_if_not_found)
+	const std::string &name, bool thow_if_not_found)
 {
 	PFixFieldTypeSetIterC iter_f(in_set.find(PFixFieldType(name)));
 
@@ -156,14 +156,6 @@ const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
 	}
 		
 	return(&(*iter_f));
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-const PFixFieldType *PFixFieldType::FindElement(const PFixFieldTypeSet &in_set,
-	const std::string &name, bool thow_if_not_found)
-{
-	return(FindElement(in_set, name.c_str(), thow_if_not_found));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

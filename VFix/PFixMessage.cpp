@@ -40,7 +40,7 @@ namespace MLB {
 namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixMessage::PFixMessage(const char *message_type)
+PFixMessage::PFixMessage(const std::string &message_type)
 	:message_type_(message_type)
 {
 }
@@ -138,11 +138,9 @@ void PFixMessage::swap(PFixMessage &other)
 }
 // ////////////////////////////////////////////////////////////////////////////
 
-/*
-	CODE NOTE: To be removed.
 // ////////////////////////////////////////////////////////////////////////////
 const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
-	const char *name, bool thow_if_not_found)
+	const std::string &name, bool thow_if_not_found)
 {
 	PFixMessageSetIterC iter_f(in_set.find(PFixMessage(name)));
 
@@ -158,15 +156,6 @@ const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
 	return(&(*iter_f));
 }
 // ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
-	const std::string &name, bool thow_if_not_found)
-{
-	return(FindElement(in_set, name.c_str(), thow_if_not_found));
-}
-// ////////////////////////////////////////////////////////////////////////////
-*/
 
 // ////////////////////////////////////////////////////////////////////////////
 bool PFixMessage::ShouldApplyXmlElement(
@@ -271,7 +260,7 @@ namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
 const MLB::Utility::TabularReportSupport MyTabularReportSupport(
-	MLB::Utility::MakeInlineVector<std::size_t>(5)(39)(5)(29)(23)(23)(10),
+	MLB::Utility::MakeInlineVector<std::size_t>(5)(39)(5)(29)(15)(19)(10),
 	MLB::Utility::MakeInlineVector<std::string>
 		("Message")("Message")("Component")("Category")("Section")("Abbreviation")("Fix Version"),
 	MLB::Utility::MakeInlineVector<std::string>
