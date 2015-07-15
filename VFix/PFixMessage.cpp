@@ -24,6 +24,7 @@
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/PFixMessage.hpp>
+#include <VFix/VFixMISetHolder.hpp>
 
 #include <Utility/C_StringSupport.hpp>
 #include <Utility/InlineContainer.hpp>
@@ -38,6 +39,10 @@
 namespace MLB {
 
 namespace VFix {
+
+// ////////////////////////////////////////////////////////////////////////////
+class PFixMessageSet : public VFixMISetHolder<PFixMessageMISet> { };
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace {
 
@@ -512,12 +517,6 @@ std::ostream & operator << (std::ostream &o_str, const PFixMessage &datum)
 std::ostream & operator << (std::ostream &o_str,
 	const PFixMessageSet &datum)
 {
-/*
-	PFixMessageMISetIdxByMsgTypeIterC iter_b(
-		datum.Get().get<PFixMessageByMsgType>().begin());
-	PFixMessageMISetIdxByMsgTypeIterC iter_e(
-		datum.Get().get<PFixMessageByMsgType>().end());
-*/
 	PFixMessageMISet::nth_index<0>::type::const_iterator iter_b(
 		datum.Get().get<0>().begin());
 	PFixMessageMISet::nth_index<0>::type::const_iterator iter_e(
