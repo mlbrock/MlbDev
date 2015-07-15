@@ -62,6 +62,10 @@ namespace MLB {
 namespace VFix {
 
 // ////////////////////////////////////////////////////////////////////////////
+class PFixFieldSet;
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 typedef unsigned int VFixTagNum;
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -69,7 +73,6 @@ typedef unsigned int VFixTagNum;
 class PFixField {
 	typedef boost::multi_index_container<PFixField> PFixFieldMISet;
 public:
-	typedef std::set<PFixField> PFixFieldSet_I;
 
 	//	Constructor used for searches in std::set<>s...
 	explicit PFixField(VFixTagNum tag = 0);
@@ -87,35 +90,54 @@ public:
 
 	void swap(PFixField &other);
 
+	std::string GetIdString() const;
+
 	std::ostream &EmitTabular(std::ostream &o_str = std::cout) const;
 
-	static std::ostream &EmitTabular(const PFixFieldSet_I &in_set,
+	static std::ostream &EmitTabularByTag(const PFixFieldSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabularByName(const PFixFieldSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabularByAbbr(const PFixFieldSet &in_set,
+		std::ostream &o_str = std::cout);
+	static std::ostream &EmitTabular(const PFixFieldSet &in_set,
 		std::ostream &o_str = std::cout);
 
 	friend std::ostream & operator << (std::ostream &o_str,
 		const PFixField &datum);
 
-/*
-	CODE NOTE: Pending implementation.
-	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		VFixTagNum tag, bool throw_if_not_found = false);
-	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		const char *name, bool throw_if_not_found = false);
-	static const PFixField *FindElement(const PFixFieldSet_I &in_set,
-		const std::string &name, bool throw_if_not_found = false);
-*/
+	static const PFixField *FindElementByTag(const PFixFieldSet &in_set,
+		VFixTagNum key, bool throw_if_not_found = false);
+	static const PFixField *FindElementByName(const PFixFieldSet &in_set,
+		const std::string &key, bool throw_if_not_found = false);
+	static const PFixField *FindElementByAbbr(const PFixFieldSet &in_set,
+		const std::string &key, bool throw_if_not_found = false);
+
+	/*
+		I've observed that field abbreviations in the FIX repository XML
+		file Fields.xml are not unique to a field (as the message abbreviations
+		in Messages.xml are).
+
+		This method therefore searches first by name. If the desired key is
+		not found by name, it then searches by abbreviation, but only returns a
+		found abbreviation if it is unique. If no abbreviation is found, or
+		if a found abbreviation was not unique, the method will, if the
+		provided key is wholly numeric, search for the tag number.
+	*/
+	static const PFixField *FindElement(const PFixFieldSet &in_set,
+		const std::string &key, bool thow_if_not_found = false);
 
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
 
-	static PFixFieldSet_I &ParseXmlElement(
+	static PFixFieldSet &ParseXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-		PFixFieldSet_I &out_set);
-	static PFixFieldSet_I &ParseXmlFile(const std::string &file_name,
-		PFixFieldSet_I &out_set);
-	static PFixFieldSet_I  ParseXmlFile(const std::string &file_name);
+		PFixFieldSet &out_set);
+	static PFixFieldSet &ParseXmlFile(const std::string &file_name,
+		PFixFieldSet &out_set);
+	static PFixFieldSet  ParseXmlFile(const std::string &file_name);
 
-	static void AddElement(const PFixField &datum, PFixFieldSet_I &out_set);
+	static void AddElement(const PFixField &datum, PFixFieldSet &out_set);
 
 	VFixTagNum    tag_;
 	VFixTagNum    ref_to_tag_;
@@ -136,13 +158,6 @@ private:
 };
 // ////////////////////////////////////////////////////////////////////////////
 
-// ////////////////////////////////////////////////////////////////////////////
-typedef PFixField::PFixFieldSet_I         PFixFieldSet;
-typedef PFixFieldSet::iterator            PFixFieldSetIter;
-typedef PFixFieldSet::const_iterator      PFixFieldSetIterC;
-typedef std::pair<PFixFieldSetIter, bool> PFixFieldSetInsertPair;
-// ////////////////////////////////////////////////////////////////////////////
-
 //	////////////////////////////////////////////////////////////////////////////
 struct PFixFieldByTag  { };
 struct PFixFieldByName { };
@@ -150,39 +165,56 @@ struct PFixFieldByAbbr { };
 //	----------------------------------------------------------------------------
 typedef boost::multi_index_container<
 	PFixField,
-		boost::multi_index::indexed_by<
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixFieldByTag>,
-				BOOST_MULTI_INDEX_MEMBER(PFixField, VFixTagNum, tag_)
-			>
-			,
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixFieldByName>,
-				BOOST_MULTI_INDEX_MEMBER(PFixField, std::string, name_)
-			>
-			,
-			boost::multi_index::ordered_unique<
-				boost::multi_index::tag<PFixFieldByAbbr>,
-				BOOST_MULTI_INDEX_MEMBER(PFixField, std::string, abbreviation_)
-			>
+	boost::multi_index::indexed_by<
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixFieldByTag>,
+			BOOST_MULTI_INDEX_MEMBER(PFixField, VFixTagNum, tag_)
 		>
-	> PFixFieldMISet;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixFieldMISet, 
-	PFixFieldByTag>::type                       PFixFieldMISetIdxByTag;
-typedef PFixFieldMISetIdxByTag::iterator       PFixFieldMISetIdxByTagIter;
-typedef PFixFieldMISetIdxByTag::const_iterator PFixFieldMISetIdxByTagIterC;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixFieldMISet,
-	PFixFieldByName>::type                       PFixFieldMISetIdxByName;
-typedef PFixFieldMISetIdxByName::iterator       PFixFieldMISetIdxByNameIter;
-typedef PFixFieldMISetIdxByName::const_iterator PFixFieldMISetIdxByNameIterC;
-//	----------------------------------------------------------------------------
-typedef boost::multi_index::index<PFixFieldMISet,
-	PFixFieldByAbbr>::type                       PFixFieldMISetIdxByAbbr;
-typedef PFixFieldMISetIdxByAbbr::iterator       PFixFieldMISetIdxByAbbrIter;
-typedef PFixFieldMISetIdxByAbbr::const_iterator PFixFieldMISetIdxByAbbrIterC;
+		,
+		boost::multi_index::ordered_unique<
+			boost::multi_index::tag<PFixFieldByName>,
+			BOOST_MULTI_INDEX_MEMBER(PFixField, std::string, name_)
+		>
+		,
+		boost::multi_index::ordered_non_unique<
+			boost::multi_index::tag<PFixFieldByAbbr>,
+			BOOST_MULTI_INDEX_MEMBER(PFixField, std::string, abbreviation_)
+		>
+	>
+> PFixFieldMISet;
 //	////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+class PFixFieldSet {
+public:
+	PFixFieldSet()
+	{
+	}
+
+	PFixFieldMISet &Get()
+	{
+		return(the_set_);
+	}
+
+	const PFixFieldMISet &Get() const
+	{
+		return(the_set_);
+	}
+
+	void swap(PFixFieldSet &other)
+	{
+		the_set_.swap(other.the_set_);
+	}
+
+	std::size_t size() const
+	{
+		return(the_set_.size());
+	}
+
+private:
+	PFixFieldMISet the_set_;
+};
+// //////////////////////////////////////////////////////////////////////////// 
 
 // ////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const PFixFieldSet &datum);

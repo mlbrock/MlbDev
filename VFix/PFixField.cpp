@@ -38,6 +38,19 @@ namespace MLB {
 
 namespace VFix {
 
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+typedef boost::multi_index::index<PFixFieldMISet, 
+	PFixFieldByTag>::type                          PFixFieldMISetIdxByTag;
+typedef boost::multi_index::index<PFixFieldMISet,
+	PFixFieldByName>::type                         PFixFieldMISetIdxByName;
+typedef boost::multi_index::index<PFixFieldMISet,
+	PFixFieldByAbbr>::type                         PFixFieldMISetIdxByAbbr;
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
 // ////////////////////////////////////////////////////////////////////////////
 PFixField::PFixField(VFixTagNum tag)
 	:tag_(tag)
@@ -153,6 +166,105 @@ void PFixField::swap(PFixField &other)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+std::string PFixField::GetIdString() const
+{
+	std::ostringstream o_str;
+
+	o_str << "Key: {field tag number '" << tag_ << "', name '" << name_ <<
+		"', abbreviation '" << abbreviation_ << "'}";
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename MISetIndexType>
+	const PFixField *FindElementHelper(const MISetIndexType &set_index,
+		const char *by_name, const typename MISetIndexType::key_type &key,
+		bool throw_if_not_found)
+{
+	typename MISetIndexType::const_iterator iter_f(set_index.find(key));
+
+	if (iter_f == set_index.end()) {
+		if (!throw_if_not_found)
+			return(NULL);
+		std::ostringstream o_str;
+		o_str << "Unable to locate field " << by_name << " '" << key <<
+			"' in the set of " << set_index.size() << " PFixField elements.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+
+	return(&(*iter_f));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixField *PFixField::FindElementByTag(const PFixFieldSet &in_set,
+	VFixTagNum key, bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixFieldByTag>(),
+		"tag number", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixField *PFixField::FindElementByName(const PFixFieldSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixFieldByName>(),
+		"name", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixField *PFixField::FindElementByAbbr(const PFixFieldSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	return(FindElementHelper(in_set.Get().get<PFixFieldByAbbr>(),
+		"abbreviation", key, throw_if_not_found));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const PFixField *PFixField::FindElement(const PFixFieldSet &in_set,
+	const std::string &key, bool throw_if_not_found)
+{
+	const PFixField *datum_ptr;
+
+	if ((datum_ptr = FindElementByName(in_set, key, false)) != NULL)
+		return(datum_ptr);
+
+	const PFixFieldMISetIdxByAbbr           &abbr_idx(
+		in_set.Get().get<PFixFieldByAbbr>());
+	PFixFieldMISetIdxByAbbr::const_iterator  iter_f(abbr_idx.lower_bound(key));
+
+	if ((iter_f != abbr_idx.end()) && (iter_f->abbreviation_ == key) &&
+		((++iter_f == abbr_idx.end()) || (iter_f->abbreviation_ != key)))
+		return(&(*--iter_f));
+
+	VFixTagNum tag;
+
+	if (MLB::Utility::ParseNumericString<VFixTagNum>(key, tag, false, 1) &&
+		((datum_ptr = FindElementByTag(in_set, tag, false)) != NULL))
+		return(datum_ptr);
+
+	if (throw_if_not_found) {
+		std::ostringstream o_str;
+		o_str << "Unable to locate '" << key << "' as a field name, field "
+			"abbreviation or field tag number in the set of " << in_set.size() <<
+			" PFixField elements.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+
+	return(NULL);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 bool PFixField::ShouldApplyXmlElement(
 	const MLB::RapidXmlUtils::XmlDomElement &xml_element)
 {
@@ -236,18 +348,47 @@ PFixFieldSet PFixField::ParseXmlFile(const std::string &file_name)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void PFixField::AddElement(const PFixField &datum,
-	PFixFieldSet_I &out_set)
+void PFixField::AddElement(const PFixField &datum, PFixFieldSet &out_set)
 {
-	PFixFieldSetInsertPair insert_pair(out_set.insert(datum));
+	try {
+		MLB::Utility::ThrowIfEmpty(datum.name_, "Name");
+		const PFixField *msg_ptr;
+/*
+		CODE NOTE: Not implemented as the field abbreviations in the FIX
+		repository XML file Fields.xml are not unique to a field (as the
+		message abbreviations in Messages.xml are).
 
-	if (!insert_pair.second) {
+		if ((msg_ptr = FindElementByName(out_set, datum.abbreviation_,
+			false)) != NULL) {
+			//	Error if new abbreviation is in the set of message type name...
+			std::ostringstream o_str;
+			o_str << "The new element abbreviation '" << datum.abbreviation_ <<
+				"' is already in use as a field name in element " <<
+				msg_ptr->GetIdString() << ".";
+			MLB::Utility::ThrowInvalidArgument(o_str.str());
+		}
+*/
+		if ((msg_ptr = FindElementByAbbr(out_set, datum.name_, false)) != NULL) {
+			//	Error if new message type name is in the set of abbreviations...
+			std::ostringstream o_str;
+			o_str << "The new element field name '" << datum.name_ <<
+				"' is already in use as an abbreviation in element " <<
+				msg_ptr->GetIdString() << ".";
+			MLB::Utility::ThrowInvalidArgument(o_str.str());
+		}
+		std::pair<PFixFieldMISetIdxByTag::const_iterator, bool>
+			insert_pair(out_set.Get().get<PFixFieldByTag>().insert(datum));
+		if (!insert_pair.second)
+			MLB::Utility::ThrowInvalidArgument("The return value of the set "
+				"insert operation indicates that one or more unique keys are "
+				"already in the set and conflict with element " +
+				insert_pair.first->GetIdString() + ".");
+	}
+	catch (const std::exception &except) {
 		std::ostringstream o_str;
-		o_str << "Attempt to insert field element for field tag " <<
-			datum.tag_ << ", name '" << datum.name_ << "', abbreviation '" <<
-			datum.abbreviation_ << "' failed because it is already in the set of "
-			"fields.";
-		MLB::Utility::ThrowInvalidArgument(o_str.str());
+		o_str << "Attempt to insert element " << datum.GetIdString() <<
+			" failed: " << except.what();
+		MLB::Utility::Rethrow(except, o_str.str());
 	}
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -292,14 +433,24 @@ std::ostream &PFixField::EmitTabular(std::ostream &o_str) const
 }
 // ////////////////////////////////////////////////////////////////////////////
 
+namespace {
+
 // ////////////////////////////////////////////////////////////////////////////
-std::ostream &PFixField::EmitTabular(const PFixFieldSet &in_set,
-	std::ostream &o_str)
+template <typename MISetIndexType>
+	std::ostream &EmitTabularHelper(const MISetIndexType &set_index,
+		const char *by_type, std::ostream &o_str)
 {
+	{
+		std::ostringstream tmp_o_str;
+		tmp_o_str << " PFixField Report by " << by_type << " ";
+		MyTabularReportSupport.EmitFillLineUnbroken(o_str, '=', true);
+		MyTabularReportSupport.EmitCentered(tmp_o_str.str(), o_str, ' ');
+	}
+
 	MyTabularReportSupport.EmitHeader(o_str, '=', '-', ' ', true);
 
-	PFixFieldSetIterC iter_b(in_set.begin());
-	PFixFieldSetIterC iter_e(in_set.end());
+	typename MISetIndexType::const_iterator iter_b(set_index.begin());
+	typename MISetIndexType::const_iterator iter_e(set_index.end());
 
 	for ( ; iter_b != iter_e; ++iter_b) {
 		iter_b->EmitTabular(o_str);
@@ -309,6 +460,43 @@ std::ostream &PFixField::EmitTabular(const PFixFieldSet &in_set,
 	MyTabularReportSupport.EmitTrailer(o_str, '=', ' ', true);
 
 	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixField::EmitTabularByTag(const PFixFieldSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixFieldByTag>(),
+		"Tag Number", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixField::EmitTabularByName(const PFixFieldSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixFieldByName>(),
+		"Name", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixField::EmitTabularByAbbr(const PFixFieldSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularHelper(in_set.Get().get<PFixFieldByAbbr>(),
+		"Abbreviation", o_str));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream &PFixField::EmitTabular(const PFixFieldSet &in_set,
+	std::ostream &o_str)
+{
+	return(EmitTabularByTag(in_set, o_str));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -337,8 +525,10 @@ std::ostream & operator << (std::ostream &o_str, const PFixField &datum)
 std::ostream & operator << (std::ostream &o_str,
 	const PFixFieldSet &datum)
 {
-	PFixFieldSetIterC iter_b(datum.begin());
-	PFixFieldSetIterC iter_e(datum.end());
+	PFixFieldMISet::nth_index<0>::type::const_iterator iter_b(
+		datum.Get().get<0>().begin());
+	PFixFieldMISet::nth_index<0>::type::const_iterator iter_e(
+		datum.Get().get<0>().end());
 
 	for ( ; iter_b != iter_e; ++iter_b)
 		o_str << *iter_b << std::endl;
@@ -367,7 +557,13 @@ void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
 
 //	std::cout << element_set << std::endl << std::endl;
 
-	PFixField::EmitTabular(element_set, std::cout);
+	PFixField::EmitTabularByTag(element_set, std::cout);
+	std::cout << std::endl;
+
+	PFixField::EmitTabularByName(element_set, std::cout);
+	std::cout << std::endl;
+
+	PFixField::EmitTabularByAbbr(element_set, std::cout);
 	std::cout << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
