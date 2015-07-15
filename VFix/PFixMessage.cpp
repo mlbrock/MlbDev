@@ -99,7 +99,7 @@ try
 		GetNodeTextFromChildRef());
 	/*
 		The FIX repository seems to always have this element (even if the
-		text of the element is the same as the field name). But we won't
+		text of the element is the same as the message name). But we won't
 		impose the requirement that it be present...
 	*/
 	const XmlDomElement *abbr_ptr(xml_element.GetChildPtr("AbbrName"));
@@ -236,8 +236,20 @@ const PFixMessage *PFixMessage::FindElement(const PFixMessageSet &in_set,
 {
 	const PFixMessage *datum_ptr;
 
-	return(((datum_ptr = FindElementByAbbr(in_set, key, false)) != NULL) ?
-		datum_ptr : FindElementByName(in_set, key, throw_if_not_found));
+	if (((datum_ptr = FindElementByName(in_set, key, false)) != NULL) ||
+		 ((datum_ptr = FindElementByAbbr(in_set, key, false)) != NULL) ||
+		 ((datum_ptr = FindElementByMessageType(in_set, key, false)) != NULL))
+		return(datum_ptr);
+
+	if (throw_if_not_found) {
+		std::ostringstream o_str;
+		o_str << "Unable to locate '" << key << "' as a message name, "
+			"message abbreviation or message type string in the set of " <<
+			in_set.size() << " PFixMessage elements.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+
+	return(NULL);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -561,8 +573,8 @@ int main(int argc, char **argv)
 	try {
 		if (ParseCmdLineArg::HasCmdLineHelp(argc, argv, 1)) {
 			std::cout << "USAGE: " << std::endl <<
-				"   " << argv[0] << " <fix-xml-datatype-file> "
-				"[ <fix-xml-datatype-file> ... ]" <<
+				"   " << argv[0] << " <fix-xml-message-file> "
+				"[ <fix-xml-message-file> ... ]" <<
 				std::endl << std::endl;
 			return(EXIT_SUCCESS);
 		}

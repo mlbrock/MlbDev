@@ -120,9 +120,12 @@ public:
 	static const PFixMessage *FindElementByAbbr(const PFixMessageSet &in_set,
 		const std::string &key, bool throw_if_not_found = false);
 
-	//	Searches first by abbreviation, then by name.
+	/*
+		This method searches first by name, then by abbreviation, and finally
+		message type.
+	*/
 	static const PFixMessage *FindElement(const PFixMessageSet &in_set,
-		const std::string &name, bool thow_if_not_found = false);
+		const std::string &key, bool thow_if_not_found = false);
 
 	static bool ShouldApplyXmlElement(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
