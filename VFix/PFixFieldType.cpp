@@ -394,8 +394,6 @@ std::size_t PFixFieldType::EmitUnusedTypes(const PFixFieldTypeSet &in_set,
 // ////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const PFixFieldType &datum)
 {
-	MyTabularReportSupport.AssertColCountMinimum(6);
-
 	boost::io::ios_all_saver io_state(o_str);
 
 	o_str

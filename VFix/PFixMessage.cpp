@@ -283,7 +283,7 @@ PFixMessageSet &PFixMessage::ParseXmlElement(
 			(xml_element.element_name_ != "Messages")) {
 			std::ostringstream o_str;
 			o_str << "Expected the major node in the XML for a FIX datatype to "
-				"have the name 'Message' and the node type " <<
+				"have the name 'Messages' and the node type " <<
 				XmlDomElement::NodeType_Unknown << " , but its actual name is '" << 
 				xml_element.element_name_ << "' and the node type is " <<
 				xml_element.node_type_ << ".";
@@ -493,8 +493,6 @@ std::ostream &PFixMessage::EmitTabular(const PFixMessageSet &in_set,
 // ////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const PFixMessage &datum)
 {
-	MyTabularReportSupport.AssertColCountMinimum(6);
-
 	boost::io::ios_all_saver io_state(o_str);
 
 	o_str
