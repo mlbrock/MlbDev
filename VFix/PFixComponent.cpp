@@ -58,7 +58,7 @@ typedef boost::multi_index::index<PFixComponentMISet,
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixComponent::PFixComponent(const VFixComponentId component_id)
+PFixComponent::PFixComponent(const PFixComponentId component_id)
 	:component_id_(component_id)
 {
 }
@@ -113,8 +113,8 @@ try
 		desc_ptr->HasNodeTextFromChild()) ? desc_ptr->GetNodeTextFromChildRef() :
 		"");
 
-	VFixComponentId component_id =
-		MLB::Utility::CheckIsNumericString<VFixComponentId>(comp_id, 1);
+	PFixComponentId component_id =
+		MLB::Utility::CheckIsNumericString<PFixComponentId>(comp_id, 1);
 
 	PFixComponent(component_id, component_type, name, category_id,
 		abbreviation, added, description).swap(*this);
@@ -126,7 +126,7 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixComponent::PFixComponent(VFixComponentId component_id,
+PFixComponent::PFixComponent(PFixComponentId component_id,
 	const std::string &component_type, const std::string &name,
 	const std::string &category_id, const std::string &abbreviation,
 	const std::string &fix_version, const std::string &description)
@@ -196,8 +196,8 @@ const PFixComponent *PFixComponent::FindElementById(
 	const PFixComponentSet &in_set, const std::string &key,
 	bool throw_if_not_found)
 {
-	VFixComponentId component_id =
-		MLB::Utility::CheckIsNumericString<VFixComponentId>(key);
+	PFixComponentId component_id =
+		MLB::Utility::CheckIsNumericString<PFixComponentId>(key);
 
 	return(FindElementHelper(in_set.Get().get<PFixComponentByCompId>(),
 		"identifier", component_id, throw_if_not_found));
@@ -206,7 +206,7 @@ const PFixComponent *PFixComponent::FindElementById(
 
 // ////////////////////////////////////////////////////////////////////////////
 const PFixComponent *PFixComponent::FindElementById(
-	const PFixComponentSet &in_set, VFixComponentId key, bool throw_if_not_found)
+	const PFixComponentSet &in_set, PFixComponentId key, bool throw_if_not_found)
 {
 	std::ostringstream o_str;
 

@@ -70,16 +70,12 @@ class PFixComponentSet;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-typedef unsigned int VFixComponentId;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 class PFixComponent {
 	typedef boost::multi_index_container<PFixComponent> PFixComponentMISet;
 public:
 
 	//	Constructors used for searches...
-	explicit PFixComponent(VFixComponentId component_id = 0);
+	explicit PFixComponent(PFixComponentId component_id = 0);
 	explicit PFixComponent(const std::string &name);
 
 	explicit PFixComponent(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
@@ -111,7 +107,7 @@ public:
 	static const PFixComponent *FindElementById(const PFixComponentSet &in_set,
 		const std::string &key, bool throw_if_not_found = false);
 	static const PFixComponent *FindElementById(const PFixComponentSet &in_set,
-		VFixComponentId key, bool throw_if_not_found = false);
+		PFixComponentId key, bool throw_if_not_found = false);
 	static const PFixComponent *FindElementByName(const PFixComponentSet &in_set,
 		const std::string &key, bool throw_if_not_found = false);
 	static const PFixComponent *FindElementByAbbr(const PFixComponentSet &in_set,
@@ -137,7 +133,7 @@ public:
 	static void              AddElement(const PFixComponent &element,
 		PFixComponentSet &out_set);
 
-	VFixComponentId component_id_;
+	PFixComponentId component_id_;
 	std::string     component_type_;
 	std::string     name_;
 	std::string     category_id_;
@@ -146,7 +142,7 @@ public:
 	std::string     description_;
 
 private:
-	PFixComponent(VFixComponentId component_id, const std::string &component_type,
+	PFixComponent(PFixComponentId component_id, const std::string &component_type,
 		const std::string &name, const std::string &category_id,
 		const std::string &abbreviation, const std::string &fix_version,
 		const std::string &description);
@@ -163,7 +159,7 @@ typedef boost::multi_index_container<
 	boost::multi_index::indexed_by<
 		boost::multi_index::ordered_unique<
 			boost::multi_index::tag<PFixComponentByCompId>,
-			BOOST_MULTI_INDEX_MEMBER(PFixComponent, VFixComponentId , component_id_)
+			BOOST_MULTI_INDEX_MEMBER(PFixComponent, PFixComponentId , component_id_)
 		>
 		,
 		boost::multi_index::ordered_unique<

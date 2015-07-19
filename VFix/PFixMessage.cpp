@@ -114,8 +114,8 @@ try
 	const std::string   &description((desc_ref.HasNodeTextFromChild()) ?
 		desc_ref.GetNodeTextFromChildRef() : "");
 
-	VFixComponentId component_id =
-		MLB::Utility::CheckIsNumericString<VFixComponentId>(comp_id, 1);
+	PFixComponentId component_id =
+		MLB::Utility::CheckIsNumericString<PFixComponentId>(comp_id, 1);
 
 	PFixMessage(component_id, message_type, name, category_id,
 		section_id, abbreviation, added, description).swap(*this);
@@ -127,7 +127,7 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixMessage::PFixMessage(VFixComponentId component_id,
+PFixMessage::PFixMessage(PFixComponentId component_id,
 	const std::string &message_type, const std::string &name,
 	const std::string &category_id, const std::string &section_id,
 	const std::string &abbreviation, const std::string &fix_version,

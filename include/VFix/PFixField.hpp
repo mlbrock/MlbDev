@@ -65,19 +65,15 @@ class PFixFieldSet;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-typedef unsigned int VFixTagNum;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 class PFixField {
 	typedef boost::multi_index_container<PFixField> PFixFieldMISet;
 public:
 
 	//	Constructor used for searches in std::set<>s...
-	explicit PFixField(VFixTagNum tag = 0);
+	explicit PFixField(PFixTagNum tag = 0);
 
 	//	Constructor used for searches in boost::multi_index<>s...
-	PFixField(VFixTagNum tag, const std::string &name,
+	PFixField(PFixTagNum tag, const std::string &name,
 		const std::string &type_name);
 
 	explicit PFixField(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
@@ -106,7 +102,7 @@ public:
 		const PFixField &datum);
 
 	static const PFixField *FindElementByTag(const PFixFieldSet &in_set,
-		VFixTagNum key, bool throw_if_not_found = false);
+		PFixTagNum key, bool throw_if_not_found = false);
 	static const PFixField *FindElementByName(const PFixFieldSet &in_set,
 		const std::string &key, bool throw_if_not_found = false);
 	static const PFixField *FindElementByAbbr(const PFixFieldSet &in_set,
@@ -138,9 +134,9 @@ public:
 
 	static void AddElement(const PFixField &datum, PFixFieldSet &out_set);
 
-	VFixTagNum    tag_;
-	VFixTagNum    ref_to_tag_;
-	VFixTagNum    ref_from_tag_;
+	PFixTagNum    tag_;
+	PFixTagNum    ref_to_tag_;
+	PFixTagNum    ref_from_tag_;
 	std::string   name_;
 	std::string   type_name_;
 	std::string   abbreviation_;
@@ -149,8 +145,8 @@ public:
 	VFixXPortType vfix_xport_type_;
 
 private:
-	PFixField(VFixTagNum tag, VFixTagNum ref_to_tag,
-		VFixTagNum ref_from_tag, const std::string &name,
+	PFixField(PFixTagNum tag, PFixTagNum ref_to_tag,
+		PFixTagNum ref_from_tag, const std::string &name,
 		const std::string &type_name_, const std::string &abbreviation,
 		const std::string &fix_version, const std::string &description,
 		VFixXPortType vfix_xport_type);
@@ -167,7 +163,7 @@ typedef boost::multi_index_container<
 	boost::multi_index::indexed_by<
 		boost::multi_index::ordered_unique<
 			boost::multi_index::tag<PFixFieldByTag>,
-			BOOST_MULTI_INDEX_MEMBER(PFixField, VFixTagNum, tag_)
+			BOOST_MULTI_INDEX_MEMBER(PFixField, PFixTagNum, tag_)
 		>
 		,
 		boost::multi_index::ordered_unique<

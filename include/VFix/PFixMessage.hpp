@@ -69,10 +69,6 @@ class PFixMessageSet;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-typedef unsigned int VFixComponentId;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 class PFixMessage {
 	typedef boost::multi_index_container<PFixMessage> PFixMessageMISet;
 public:
@@ -138,7 +134,7 @@ public:
 	static void              AddElement(const PFixMessage &element,
 		PFixMessageSet &out_set);
 
-	VFixComponentId component_id_;
+	PFixComponentId component_id_;
 	std::string     message_type_;
 	std::string     name_;
 	std::string     category_id_;
@@ -148,7 +144,7 @@ public:
 	std::string     description_;
 
 private:
-	PFixMessage(VFixComponentId component_id, const std::string &message_type,
+	PFixMessage(PFixComponentId component_id, const std::string &message_type,
 		const std::string &name, const std::string &category_id,
 		const std::string &section_id, const std::string &abbreviation,
 		const std::string &fix_version, const std::string &description);
@@ -176,7 +172,7 @@ typedef boost::multi_index_container<
 		,
 		boost::multi_index::ordered_unique<
 			boost::multi_index::tag<PFixMessageByCompId>,
-			BOOST_MULTI_INDEX_MEMBER(PFixMessage, VFixComponentId , component_id_)
+			BOOST_MULTI_INDEX_MEMBER(PFixMessage, PFixComponentId , component_id_)
 		>
 		,
 		boost::multi_index::ordered_unique<

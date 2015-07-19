@@ -57,14 +57,14 @@ typedef boost::multi_index::index<PFixFieldMISet,
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixField::PFixField(VFixTagNum tag)
+PFixField::PFixField(PFixTagNum tag)
 	:tag_(tag)
 {
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixField::PFixField(VFixTagNum tag, const std::string &name,
+PFixField::PFixField(PFixTagNum tag, const std::string &name,
 	const std::string &type_name)
 	:tag_(tag)
 	,name_(name)
@@ -120,10 +120,10 @@ try
 	std::string          assoc_tag((ref_ptr) ?
 		ref_ptr->GetNodeTextFromChildRef() : "");
 
-	VFixTagNum tag_num       =
-		MLB::Utility::CheckIsNumericString<VFixTagNum>(tag, 1);
-	VFixTagNum assoc_tag_num = (!ref_ptr) ? 0 :
-		MLB::Utility::CheckIsNumericString<VFixTagNum>(
+	PFixTagNum tag_num       =
+		MLB::Utility::CheckIsNumericString<PFixTagNum>(tag, 1);
+	PFixTagNum assoc_tag_num = (!ref_ptr) ? 0 :
+		MLB::Utility::CheckIsNumericString<PFixTagNum>(
 		ref_ptr->GetNodeTextFromChildRef(), 1);
 
 	PFixField(tag_num, assoc_tag_num, 0, name, type_name, abbreviation, added,
@@ -136,8 +136,8 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixField::PFixField(VFixTagNum tag, VFixTagNum ref_to_tag,
-	VFixTagNum ref_from_tag, const std::string &name,
+PFixField::PFixField(PFixTagNum tag, PFixTagNum ref_to_tag,
+	PFixTagNum ref_from_tag, const std::string &name,
 	const std::string &type_name, const std::string &abbreviation,
 	const std::string &fix_version, const std::string &description,
 	VFixXPortType vfix_xport_type)
@@ -209,7 +209,7 @@ template <typename MISetIndexType>
 
 // ////////////////////////////////////////////////////////////////////////////
 const PFixField *PFixField::FindElementByTag(const PFixFieldSet &in_set,
-	VFixTagNum key, bool throw_if_not_found)
+	PFixTagNum key, bool throw_if_not_found)
 {
 	return(FindElementHelper(in_set.Get().get<PFixFieldByTag>(),
 		"tag number", key, throw_if_not_found));
@@ -251,9 +251,9 @@ const PFixField *PFixField::FindElement(const PFixFieldSet &in_set,
 		((++iter_f == abbr_idx.end()) || (iter_f->abbreviation_ != key)))
 		return(&(*--iter_f));
 
-	VFixTagNum tag;
+	PFixTagNum tag;
 
-	if (MLB::Utility::ParseNumericString<VFixTagNum>(key, tag, false, 1) &&
+	if (MLB::Utility::ParseNumericString<PFixTagNum>(key, tag, false, 1) &&
 		((datum_ptr = FindElementByTag(in_set, tag, false)) != NULL))
 		return(datum_ptr);
 
