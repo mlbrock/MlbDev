@@ -179,6 +179,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\VFix\PFixMsgContent.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\VFix\VFixXPortType.cpp"
 				>
 			</File>
