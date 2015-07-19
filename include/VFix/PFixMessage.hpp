@@ -45,11 +45,9 @@
 
 #ifdef _Windows
 # pragma warning(push)
-//# pragma warning(disable:4217 4510 4610 4623 4625 4626 4668)
 # pragma warning(disable:4625 4626)
 #endif // #ifdef _Windows
 
-//#include <boost/multi_index_container_fwd.hpp>
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
