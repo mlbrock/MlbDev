@@ -30,6 +30,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_VFIX_PFixMsgContent", "
 		{70898B45-6340-4961-983E-A064F031865C} = {70898B45-6340-4961-983E-A064F031865C}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_VFIX_PFixEnum", "ZZZ_VFIX_PFixEnum\ZZZ_VFIX_PFixEnum.vcproj", "{62101DFD-0D17-4154-B24E-D6AE8D19AFA1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70898B45-6340-4961-983E-A064F031865C} = {70898B45-6340-4961-983E-A064F031865C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_VFIX_PFixRepository", "ZZZ_VFIX_PFixRepository\ZZZ_VFIX_PFixRepository.vcproj", "{5D3A0CBD-BC5F-4A4B-9839-50FB59A3DA29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70898B45-6340-4961-983E-A064F031865C} = {70898B45-6340-4961-983E-A064F031865C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -64,6 +74,14 @@ Global
 		{C9B190A2-1994-4C73-97ED-8F23A246503D}.Debug|Win32.Build.0 = Debug|Win32
 		{C9B190A2-1994-4C73-97ED-8F23A246503D}.Release|Win32.ActiveCfg = Release|Win32
 		{C9B190A2-1994-4C73-97ED-8F23A246503D}.Release|Win32.Build.0 = Release|Win32
+		{62101DFD-0D17-4154-B24E-D6AE8D19AFA1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{62101DFD-0D17-4154-B24E-D6AE8D19AFA1}.Debug|Win32.Build.0 = Debug|Win32
+		{62101DFD-0D17-4154-B24E-D6AE8D19AFA1}.Release|Win32.ActiveCfg = Release|Win32
+		{62101DFD-0D17-4154-B24E-D6AE8D19AFA1}.Release|Win32.Build.0 = Release|Win32
+		{5D3A0CBD-BC5F-4A4B-9839-50FB59A3DA29}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D3A0CBD-BC5F-4A4B-9839-50FB59A3DA29}.Debug|Win32.Build.0 = Debug|Win32
+		{5D3A0CBD-BC5F-4A4B-9839-50FB59A3DA29}.Release|Win32.ActiveCfg = Release|Win32
+		{5D3A0CBD-BC5F-4A4B-9839-50FB59A3DA29}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

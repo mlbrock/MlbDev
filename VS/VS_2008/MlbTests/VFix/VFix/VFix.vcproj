@@ -167,6 +167,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\VFix\PFixEnum.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\VFix\PFixField.cpp"
 				>
 			</File>
@@ -180,6 +184,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\..\VFix\PFixMsgContent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\VFix\PFixRepository.cpp"
 				>
 			</File>
 			<File
