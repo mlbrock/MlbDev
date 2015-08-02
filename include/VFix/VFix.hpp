@@ -67,6 +67,7 @@ namespace VFix {
 typedef unsigned int PFixComponentId;
 typedef unsigned int PFixIndent;
 typedef unsigned int PFixTagNum;
+typedef unsigned int PFixEnumSortOrder;
 // ////////////////////////////////////////////////////////////////////////////
 
 } // namespace VFix

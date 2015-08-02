@@ -37,6 +37,7 @@
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFixXPortType.hpp>
+#include <VFix/VFixMISetHolder.hpp>
 
 #include <RapidXmlUtils/RapidXmlContext.hpp>
 #include <RapidXmlUtils/XmlDomElement.hpp>
@@ -83,6 +84,8 @@ class PFixMsgContentSet;
 class PFixMsgContent {
 	typedef boost::multi_index_container<PFixMsgContent> PFixMsgContentMISet;
 public:
+
+	PFixMsgContent();
 
 	explicit PFixMsgContent(
 		const MLB::RapidXmlUtils::XmlDomElement &xml_element);
@@ -185,6 +188,10 @@ typedef boost::multi_index_container<
 		>
 	>
 > PFixMsgContentMISet;
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+class PFixMsgContentSet : public VFixMISetHolder<PFixMsgContentMISet> { };
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
