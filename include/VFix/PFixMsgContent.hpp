@@ -73,7 +73,26 @@ namespace VFix {
 
 		\d+(\.\d+)?
 */
-typedef unsigned int PFixPosition;
+typedef unsigned int PFixPositionValue;
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+struct PFixPosition {
+	explicit PFixPosition(unsigned int major = 0, unsigned int minor = 0);
+	PFixPosition(const std::string &position_string);
+	PFixPosition(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
+
+	bool operator < (const PFixPosition &other) const;
+
+	void swap(PFixPosition &other);
+
+	PFixPositionValue major_;
+	PFixPositionValue minor_;
+};
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const PFixPosition &datum);
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -118,12 +137,12 @@ public:
 	static const PFixMsgContent *FindElementByTag(const PFixMsgContentSet &in_set,
 		PFixComponentId component_id_key, PFixTagNum tag_key,
 		bool throw_if_not_found = false);
-	static const PFixMsgContent *FindElementByPosition(const PFixMsgContentSet &in_set,
-		PFixComponentId component_id_key, const PFixPosition position_key,
-		bool throw_if_not_found = false);
-	static const PFixMsgContent *FindElementByPosition(const PFixMsgContentSet &in_set,
-		PFixComponentId component_id_key, const std::string &position_key,
-		bool throw_if_not_found = false);
+	static const PFixMsgContent *FindElementByPosition(
+		const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
+		const PFixPosition &position_key, bool throw_if_not_found = false);
+	static const PFixMsgContent *FindElementByPosition(
+		const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
+		const std::string &position_key, bool throw_if_not_found = false);
 
 	/*
 		This method searches first by name, then by abbreviation, and finally
@@ -157,8 +176,9 @@ public:
 
 private:
 	PFixMsgContent(PFixComponentId component_id, const std::string &tag_text,
-		PFixTagNum tag, PFixIndent indent, PFixPosition position, bool reqd,
-		const std::string &fix_version, const std::string &description);
+		PFixTagNum tag, PFixIndent indent, const PFixPosition &position,
+		bool reqd, const std::string &fix_version,
+		const std::string &description);
 };
 // ////////////////////////////////////////////////////////////////////////////
 

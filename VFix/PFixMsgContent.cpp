@@ -52,12 +52,103 @@ typedef boost::multi_index::index<PFixMsgContentMISet,
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
+PFixPosition::PFixPosition(unsigned int major,
+	unsigned int minor)
+	:major_(major)
+	,minor_(minor)
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+PFixPosition::PFixPosition(const std::string &position)
+try
+	:major_(0)
+	,minor_(0)
+{
+	std::string        position_string(position);
+	std::size_t        sep_pos   = position_string.find('.');
+	const char        *major_ptr = position_string.c_str();
+	const char        *minor_ptr = (sep_pos == std::string::npos) ? "" :
+		(major_ptr + sep_pos + 1);
+
+	if (sep_pos != std::string::npos)
+		position_string[sep_pos] = '\0';
+
+		PFixPositionValue major =
+			MLB::Utility::CheckIsNumericString<PFixPositionValue>(major_ptr);
+		PFixPositionValue minor =
+			MLB::Utility::CheckIsNumericString<PFixPositionValue>(minor_ptr);
+
+	PFixPosition(major, minor).swap(*this);
+}
+catch (const std::exception &except) {
+	MLB::Utility::Rethrow(except, "Attempt to parse the position string '" +
+		position + "' failed: " + std::string(except.what()));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+PFixPosition::PFixPosition(const MLB::RapidXmlUtils::XmlDomElement &xml_element)
+try
+	:major_(0)
+	,minor_(0)
+{
+	std::string tmp_position;
+
+	try {
+		/*
+			CODE NOTE: Must add the Xerces & RapidXml:
+				std::string GetNodeTextFromChild();
+		*/
+		tmp_position = xml_element.GetChildRef("Position").
+			GetNodeTextFromChildRef();
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Attempt to locate the position "
+			"element failed: " + std::string(except.what()));
+	}
+
+	PFixPosition(tmp_position).swap(*this);
+}
+catch (const std::exception &except) {
+	MLB::Utility::Rethrow(except, "Unable to construct an PFixPosition "
+		"from a PFixMsgContent position element: " + std::string(except.what()));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool PFixPosition::operator < (const PFixPosition &other) const
+{
+	return((major_ < other.major_) ? true :
+		((major_ == other.major_) ? (minor_ < other.minor_) : false));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void PFixPosition::swap(PFixPosition &other)
+{
+	std::swap(major_, other.major_);
+	std::swap(minor_, other.minor_);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::ostream & operator << (std::ostream &o_str, const PFixPosition &datum)
+{
+	o_str << datum.major_ << '.' << datum.minor_;
+
+	return(o_str);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 PFixMsgContent::PFixMsgContent()
 	:component_id_()
 	,tag_text_()
 	,tag_(0)
 	,indent_(0)
-	,position_(0)
+	,position_()
 	,reqd_(false)
 	,fix_version_()
 	,description_()
@@ -73,7 +164,7 @@ try
 	,tag_text_()
 	,tag_(0)
 	,indent_(0)
-	,position_(0)
+	,position_()
 	,reqd_(false)
 	,fix_version_()
 	,description_()
@@ -97,8 +188,6 @@ try
 		GetNodeTextFromChildRef());
 	const std::string   &indent_string(xml_element.GetChildRef("Indent").
 		GetNodeTextFromChildRef());
-	const std::string   &position_string(xml_element.GetChildRef("Position").
-		GetNodeTextFromChildRef());
 	const std::string   &reqd_string(xml_element.GetChildRef("Reqd").
 		GetNodeTextFromChildRef());
 	const XmlDomElement *desc_ptr(xml_element.GetChildPtr("Description"));
@@ -112,8 +201,7 @@ try
 		MLB::Utility::CheckIsNumericString<PFixComponentId>(comp_id, 1);
 	PFixIndent      indent       =
 		MLB::Utility::CheckIsNumericString<PFixIndent>(indent_string);
-	PFixPosition    position     =
-		MLB::Utility::CheckIsNumericString<PFixPosition>(position_string, 1);
+	PFixPosition    position(xml_element);
 	bool            reqd;
 	MLB::Utility::ParseCmdLineArg::ParseCmdLineDatum(reqd_string, reqd);
 
@@ -129,7 +217,7 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 PFixMsgContent::PFixMsgContent(PFixComponentId component_id,
 	const std::string &tag_text, PFixTagNum tag, PFixIndent indent,
-	PFixPosition position, bool reqd, const std::string &fix_version,
+	const PFixPosition &position, bool reqd, const std::string &fix_version,
 	const std::string &description)
 	:component_id_(component_id)
 	,tag_text_(tag_text)
@@ -223,7 +311,7 @@ const PFixMsgContent *PFixMsgContent::FindElementByTag(
 // ////////////////////////////////////////////////////////////////////////////
 const PFixMsgContent *PFixMsgContent::FindElementByPosition(
 	const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
-	PFixPosition position_key, bool throw_if_not_found)
+	const PFixPosition &position_key, bool throw_if_not_found)
 {
 	return(FindElementHelper(in_set.Get().get<PFixMsgContentByCompIdPos>(),
 		"position", component_id_key, position_key, throw_if_not_found));
@@ -235,11 +323,10 @@ const PFixMsgContent *PFixMsgContent::FindElementByPosition(
 	const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
 	const std::string &position_key, bool throw_if_not_found)
 {
-	PFixComponentId tmp_position_key;
+	PFixPosition tmp_position_key;
 
 	try {
-		tmp_position_key =
-			MLB::Utility::CheckIsNumericString<PFixComponentId>(position_key);
+		tmp_position_key = PFixPosition(position_key);
 	}
 	catch (const std::exception &) {
 		if (!throw_if_not_found)
