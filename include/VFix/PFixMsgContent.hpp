@@ -73,26 +73,6 @@ namespace VFix {
 
 		\d+(\.\d+)?
 */
-typedef unsigned int PFixPositionValue;
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-struct PFixPosition {
-	explicit PFixPosition(unsigned int major = 0, unsigned int minor = 0);
-	PFixPosition(const std::string &position_string);
-	PFixPosition(const MLB::RapidXmlUtils::XmlDomElement &xml_element);
-
-	bool operator < (const PFixPosition &other) const;
-
-	void swap(PFixPosition &other);
-
-	PFixPositionValue major_;
-	PFixPositionValue minor_;
-};
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-std::ostream & operator << (std::ostream &o_str, const PFixPosition &datum);
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -139,14 +119,12 @@ public:
 		bool throw_if_not_found = false);
 	static const PFixMsgContent *FindElementByPosition(
 		const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
-		const PFixPosition &position_key, bool throw_if_not_found = false);
-	static const PFixMsgContent *FindElementByPosition(
-		const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
 		const std::string &position_key, bool throw_if_not_found = false);
 
 	/*
-		This method searches first by name, then by abbreviation, and finally
-		component id.
+		This method searches first for a unique combination of component id and
+		tag number, then for a unique combination of component id and position
+		string.
 	*/
 	static const PFixMsgContent *FindElement(const PFixMsgContentSet &in_set,
 		PFixComponentId component_id_key, const std::string &key,
@@ -169,14 +147,14 @@ public:
 	std::string     tag_text_;
 	PFixTagNum      tag_;
 	PFixIndent      indent_;
-	PFixPosition    position_;
+	std::string     position_;
 	bool            reqd_;
 	std::string     fix_version_;
 	std::string     description_;
 
 private:
 	PFixMsgContent(PFixComponentId component_id, const std::string &tag_text,
-		PFixTagNum tag, PFixIndent indent, const PFixPosition &position,
+		PFixTagNum tag, PFixIndent indent, const std::string &position,
 		bool reqd, const std::string &fix_version,
 		const std::string &description);
 };
@@ -198,12 +176,12 @@ typedef boost::multi_index_container<
 			>
 		>
 		,
-		boost::multi_index::ordered_unique<
+		boost::multi_index::ordered_non_unique<
 			boost::multi_index::tag<PFixMsgContentByCompIdPos>,
 			boost::multi_index::composite_key<
 				PFixMsgContent,
 				BOOST_MULTI_INDEX_MEMBER(PFixMsgContent, PFixComponentId, component_id_),
-				BOOST_MULTI_INDEX_MEMBER(PFixMsgContent, PFixPosition,    position_)
+				BOOST_MULTI_INDEX_MEMBER(PFixMsgContent, std::string,     position_)
 			>
 		>
 	>

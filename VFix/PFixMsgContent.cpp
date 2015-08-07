@@ -52,97 +52,6 @@ typedef boost::multi_index::index<PFixMsgContentMISet,
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-PFixPosition::PFixPosition(unsigned int major,
-	unsigned int minor)
-	:major_(major)
-	,minor_(minor)
-{
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-PFixPosition::PFixPosition(const std::string &position)
-try
-	:major_(0)
-	,minor_(0)
-{
-	std::string        position_string(position);
-	std::size_t        sep_pos   = position_string.find('.');
-	const char        *major_ptr = position_string.c_str();
-	const char        *minor_ptr = (sep_pos == std::string::npos) ? "" :
-		(major_ptr + sep_pos + 1);
-
-	if (sep_pos != std::string::npos)
-		position_string[sep_pos] = '\0';
-
-		PFixPositionValue major =
-			MLB::Utility::CheckIsNumericString<PFixPositionValue>(major_ptr);
-		PFixPositionValue minor =
-			MLB::Utility::CheckIsNumericString<PFixPositionValue>(minor_ptr);
-
-	PFixPosition(major, minor).swap(*this);
-}
-catch (const std::exception &except) {
-	MLB::Utility::Rethrow(except, "Attempt to parse the position string '" +
-		position + "' failed: " + std::string(except.what()));
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-PFixPosition::PFixPosition(const MLB::RapidXmlUtils::XmlDomElement &xml_element)
-try
-	:major_(0)
-	,minor_(0)
-{
-	std::string tmp_position;
-
-	try {
-		/*
-			CODE NOTE: Must add the Xerces & RapidXml:
-				std::string GetNodeTextFromChild();
-		*/
-		tmp_position = xml_element.GetChildRef("Position").
-			GetNodeTextFromChildRef();
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Attempt to locate the position "
-			"element failed: " + std::string(except.what()));
-	}
-
-	PFixPosition(tmp_position).swap(*this);
-}
-catch (const std::exception &except) {
-	MLB::Utility::Rethrow(except, "Unable to construct an PFixPosition "
-		"from a PFixMsgContent position element: " + std::string(except.what()));
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-bool PFixPosition::operator < (const PFixPosition &other) const
-{
-	return((major_ < other.major_) ? true :
-		((major_ == other.major_) ? (minor_ < other.minor_) : false));
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-void PFixPosition::swap(PFixPosition &other)
-{
-	std::swap(major_, other.major_);
-	std::swap(minor_, other.minor_);
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-std::ostream & operator << (std::ostream &o_str, const PFixPosition &datum)
-{
-	o_str << datum.major_ << '.' << datum.minor_;
-
-	return(o_str);
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 PFixMsgContent::PFixMsgContent()
 	:component_id_()
 	,tag_text_()
@@ -186,6 +95,8 @@ try
 		GetNodeTextFromChildRef());
 	const std::string   &tag_text(xml_element.GetChildRef("TagText").
 		GetNodeTextFromChildRef());
+	const std::string   &position(xml_element.GetChildRef("Position").
+			GetNodeTextFromChildRef());
 	const std::string   &indent_string(xml_element.GetChildRef("Indent").
 		GetNodeTextFromChildRef());
 	const std::string   &reqd_string(xml_element.GetChildRef("Reqd").
@@ -201,7 +112,6 @@ try
 		MLB::Utility::CheckIsNumericString<PFixComponentId>(comp_id, 1);
 	PFixIndent      indent       =
 		MLB::Utility::CheckIsNumericString<PFixIndent>(indent_string);
-	PFixPosition    position(xml_element);
 	bool            reqd;
 	MLB::Utility::ParseCmdLineArg::ParseCmdLineDatum(reqd_string, reqd);
 
@@ -217,7 +127,7 @@ catch (const std::exception &except) {
 // ////////////////////////////////////////////////////////////////////////////
 PFixMsgContent::PFixMsgContent(PFixComponentId component_id,
 	const std::string &tag_text, PFixTagNum tag, PFixIndent indent,
-	const PFixPosition &position, bool reqd, const std::string &fix_version,
+	const std::string &position, bool reqd, const std::string &fix_version,
 	const std::string &description)
 	:component_id_(component_id)
 	,tag_text_(tag_text)
@@ -311,31 +221,10 @@ const PFixMsgContent *PFixMsgContent::FindElementByTag(
 // ////////////////////////////////////////////////////////////////////////////
 const PFixMsgContent *PFixMsgContent::FindElementByPosition(
 	const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
-	const PFixPosition &position_key, bool throw_if_not_found)
+	const std::string &position_key, bool throw_if_not_found)
 {
 	return(FindElementHelper(in_set.Get().get<PFixMsgContentByCompIdPos>(),
 		"position", component_id_key, position_key, throw_if_not_found));
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-const PFixMsgContent *PFixMsgContent::FindElementByPosition(
-	const PFixMsgContentSet &in_set, PFixComponentId component_id_key,
-	const std::string &position_key, bool throw_if_not_found)
-{
-	PFixPosition tmp_position_key;
-
-	try {
-		tmp_position_key = PFixPosition(position_key);
-	}
-	catch (const std::exception &) {
-		if (!throw_if_not_found)
-			return(NULL);
-		throw;
-	}
-
-	return(FindElementByPosition(in_set, component_id_key, tmp_position_key,
-		throw_if_not_found));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -346,11 +235,18 @@ const PFixMsgContent *PFixMsgContent::FindElement(
 {
 	const PFixMsgContent *datum_ptr;
 
-	if (((datum_ptr = FindElementByTag(in_set, component_id_key, other_key,
-		false)) != NULL) ||
-		 ((datum_ptr = FindElementByPosition(in_set, component_id_key,
-			other_key, false)) != NULL))
+	if ((datum_ptr = FindElementByTag(in_set, component_id_key, other_key,
+		false)) != NULL)
 		return(datum_ptr);
+
+	const PFixMsgContentMISetIdxByCompIdPos           &pos_idx(
+		in_set.Get().get<PFixMsgContentByCompIdPos>());
+	PFixMsgContentMISetIdxByCompIdPos::const_iterator  iter_f(
+		pos_idx.lower_bound(boost::make_tuple(component_id_key, other_key)));
+
+	if ((iter_f != pos_idx.end()) && (iter_f->position_ == other_key) &&
+		((++iter_f == pos_idx.end()) || (iter_f->position_ != other_key)))
+		return(&(*--iter_f));
 
 	if (throw_if_not_found) {
 		std::ostringstream o_str;
@@ -477,7 +373,7 @@ namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
 const MLB::Utility::TabularReportSupport MyTabularReportSupport(
-	MLB::Utility::MakeInlineVector<std::size_t>(5)(34)(31)(26)(22)(10),
+	MLB::Utility::MakeInlineVector<std::size_t>(5)(34)(10)(10)(10)(10),
 	MLB::Utility::MakeInlineVector<std::string>
 		("Component")("Tag")("Indent")("Position")("Field Is")("Fix Version"),
 	MLB::Utility::MakeInlineVector<std::string>
@@ -499,9 +395,9 @@ std::ostream &PFixMsgContent::EmitTabular(std::ostream &o_str) const
 		<< std::left
 		<< std::setw(MyTabularReportSupport[1]) << tag_text_     << " "
 		<< std::right
-		<< std::setw(MyTabularReportSupport[2]) << indent_ << " "
-		<< std::setw(MyTabularReportSupport[3]) << position_     << " "
+		<< std::setw(MyTabularReportSupport[2]) << indent_       << " "
 		<< std::left
+		<< std::setw(MyTabularReportSupport[3]) << position_     << " "
 		<< std::setw(MyTabularReportSupport[4]) <<
 			MLB::Utility::AnyToString(reqd_)                      << " "
 		<<                                         fix_version_
@@ -623,7 +519,7 @@ void TEST_RunTest(const char *file_name)
 {
 	PFixMsgContentSet element_set(PFixMsgContent::ParseXmlFile(file_name));
 
-	std::cout << element_set << std::endl << std::endl;
+//	std::cout << element_set << std::endl << std::endl;
 
 	PFixMsgContent::EmitTabularByTag(element_set, std::cout);
 	std::cout << std::endl;
