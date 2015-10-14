@@ -393,6 +393,84 @@ void PFixField::AddElement(const PFixField &datum, PFixFieldSet &out_set)
 }
 // ////////////////////////////////////////////////////////////////////////////
 
+// ////////////////////////////////////////////////////////////////////////////
+bool PFixField::FixUpSet(PFixFieldSet &in_set)
+{
+	return(FixUpSet(in_set, NULL));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool PFixField::FixUpSet(PFixFieldSet &in_set,
+	std::vector<std::string> &out_error_list)
+{
+	return(FixUpSet(in_set, &out_error_list));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool PFixField::FixUpSet(PFixFieldSet &in_set,
+	std::vector<std::string> *out_error_list)
+{
+	std::size_t out_error_count = (out_error_list) ? out_error_list->size() : 0;
+
+	const PFixFieldMISetIdxByTag           &tag_idx(
+		in_set.Get().get<PFixFieldByTag>());
+	PFixFieldMISetIdxByTag::const_iterator  iter_b(tag_idx.begin());
+	PFixFieldMISetIdxByTag::const_iterator  iter_e(tag_idx.end());
+
+	for ( ; iter_b != iter_e; ++iter_b)
+		const_cast<PFixField *>(&(*iter_b))->ref_from_tag_ = 0;
+
+	iter_b = tag_idx.begin();
+
+	for (std::size_t count_1 = 0 ; iter_b != iter_e; ++iter_b, ++count_1) {
+		try {
+			if (iter_b->tag_ < 1) {
+				std::ostringstream o_str;
+				o_str << "Invalid tag number (" << iter_b->tag_ << "): valid "
+					"range is from 1 to " <<
+					std::numeric_limits<PFixTagNum>::max() << ", inclusive.";
+				MLB::Utility::ThrowInvalidArgument(o_str.str());
+			}
+			if (iter_b->ref_to_tag_) {
+				const PFixField *ref_ptr_1 =
+					PFixField::FindElementByTag(in_set, iter_b->ref_to_tag_);
+				if (!ref_ptr_1) {
+					std::ostringstream o_str;
+					o_str << "Unable to locate reference target tag number " <<
+						iter_b->ref_to_tag_ << ".";
+					MLB::Utility::ThrowInvalidArgument(o_str.str());
+				}
+				if (ref_ptr_1->ref_from_tag_) {
+					const PFixField *ref_ptr_2 =
+						PFixField::FindElementByTag(in_set,
+						ref_ptr_1->ref_from_tag_);
+					std::ostringstream o_str;
+					o_str << "The reference by that element to tag number " <<
+						iter_b->ref_to_tag_ << " (" << ref_ptr_1->GetIdString() <<
+						") has been usurped by tag number " << ref_ptr_2->tag_ <<
+						" (" << ref_ptr_2->GetIdString() << ").";
+					MLB::Utility::ThrowInvalidArgument(o_str.str());
+				}
+				std::set<int>::difference_type difference = ref_ptr_1 - &(*iter_b);
+				const_cast<PFixField *>(ref_ptr_1)->ref_from_tag_ = iter_b->tag_;
+			}
+		}
+		catch (const std::exception &except) {
+			std::ostringstream o_str;
+			o_str << "Element " << iter_b->GetIdString() << " is invalid: " <<
+				except.what();
+			if (!out_error_list)
+				MLB::Utility::Rethrow(except, o_str.str());
+			out_error_list->push_back(o_str.str());
+		}
+	}
+
+	return((!out_error_list) || (out_error_list->size() == out_error_count));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
 namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -565,6 +643,12 @@ void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
 
 	PFixField::EmitTabularByAbbr(element_set, std::cout);
 	std::cout << std::endl;
+
+	std::vector<std::string> error_list;
+
+	if (!PFixField::FixUpSet(element_set, error_list))
+		std::copy(error_list.begin(), error_list.end(),
+			std::ostream_iterator<std::string>(std::cout, " "));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

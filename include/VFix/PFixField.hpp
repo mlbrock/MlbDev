@@ -135,6 +135,10 @@ public:
 
 	static void AddElement(const PFixField &datum, PFixFieldSet &out_set);
 
+	static bool FixUpSet(PFixFieldSet &in_set);
+	static bool FixUpSet(PFixFieldSet &in_set,
+		std::vector<std::string> &out_error_list);
+
 	PFixTagNum    tag_;
 	PFixTagNum    ref_to_tag_;
 	PFixTagNum    ref_from_tag_;
@@ -151,6 +155,9 @@ private:
 		const std::string &type_name_, const std::string &abbreviation,
 		const std::string &fix_version, const std::string &description,
 		VFixXPortType vfix_xport_type);
+
+	static bool FixUpSet(PFixFieldSet &in_set,
+		std::vector<std::string> *out_error_list);
 };
 // ////////////////////////////////////////////////////////////////////////////
 
