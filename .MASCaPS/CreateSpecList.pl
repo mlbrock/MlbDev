@@ -266,7 +266,7 @@ sub EmitHelp {
 			"         of the <spec> parameter are emitted.\n",
 			"\n",
 			"         If not specified the default value will be used which\n",
-			"         is the string '", $base_file_name, "'.\n",
+			"         is the string 'Context'.\n",
 			"\n";
 	print "      <spec>\n",
 			"         Specifies the directory path name which is to be used\n",
