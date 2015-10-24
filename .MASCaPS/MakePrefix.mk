@@ -38,6 +38,7 @@ VER_TIBRV	=	8.1
 VER_XERCES	=	xercesc-c
 VER_PCAP	=	/opt/SomeLocationTBD/LibPCap/1.2.0
 
+INC_BASIC_DIR	=	./
 INC_OTHER_DIR	=	/usr/include
 #INC_BOOST_DIR	=       /usr/include/boost/${VER_BOOST}/include
 INC_BOOST_DIR	=       /usr/include
@@ -47,6 +48,7 @@ INC_LBM_DIR	=	/home/brockm/Downloads/29West/UMS_5.0/Linux-glibc-2.5-x86_64/inclu
 INC_CELOX_DIR	=	${VER_CELOX}/share/celoxica/include
 INC_PCAP_DIR	=	${VER_PCAP}/include
 
+LIB_BASIC_DIR	=	./
 LIB_OTHER_DIR	=	/usr/lib64
 #LIB_BOOST_DIR	=	${LIB_BASE}/${VER_BOOST}
 LIB_BOOST_DIR	=	${LIB_OTHER_DIR}
@@ -66,6 +68,7 @@ CPPFLAGS	+=	\
 			${DEF_CELOX_CPP} \
 			${CPP_BUILD_TYPE} \
 			-I ./ \
+			-I ${INC_BASIC_DIR} \
 			-I ../include \
 			${CPPFLAGS_ADDED} \
 			-I ${INC_OTHER_DIR} \
@@ -113,8 +116,8 @@ LBM_LIBS	=	\
 MLB_LIB_NAMES	=	\
 			Utility
 
-MLB_LIB_FULL	:=	\
-			${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB},${MLB_LIB_NAMES}}}
+MLB_LIB_FULL	=	\
+			${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB}/lib,${MLB_LIB_NAMES}}}
 
 LDLIBS		=	\
 			-Bstatic	\

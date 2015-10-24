@@ -23,6 +23,7 @@
 #
 # #############################################################################
 
+
 # -----------------------------------------------------------------------------
 # We are not initialized
 MASCaPS_INIT_FLAG	:=
@@ -33,6 +34,42 @@ MASCaPS_INIT_FLAG	:=
 MASCaPS_EMPTY_STRING	:=	"SOMETHING"
 MASCaPS_EMPTY_STRING	:=
 # -----------------------------------------------------------------------------
+
+
+
+# -----------------------------------------------------------------------------
+# CODE NOTE: Test code. To be removed.
+ZZZ := aaa bbb ccc
+ifneq ($(word 1, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
+	THIS_VAL := $(word 1, ${ZZZ})
+	OUT := ${info 1 = ${THIS_VAL}}}
+else
+	OUT := ${info 1 = *** N/A ***}
+endif
+ifneq ($(word 2, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
+	THIS_VAL := $(word 2, ${ZZZ})
+	OUT := ${info 2 = ${THIS_VAL}}}
+else
+	OUT := ${info 2 = *** N/A ***}
+endif
+ifneq ($(word 3, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
+	THIS_VAL := $(word 3, ${ZZZ})
+	OUT := ${info 3 = ${THIS_VAL}}}
+else
+	OUT := ${info 3 = *** N/A ***}
+endif
+ifneq ($(word 4, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
+	THIS_VAL := $(word 4, ${ZZZ})
+	OUT := ${info 4 = ${THIS_VAL}}}
+else
+	OUT := ${info 4 = *** N/A ***}
+endif
+# -----------------------------------------------------------------------------
+
+
+
+
+
 
 # -----------------------------------------------------------------------------
 # Uncomment the following line to use the flattened makefile include structure.
@@ -78,6 +115,17 @@ MASCaPS_UIDNAME	:=	MASCaPS-UNIQUE-NAME-${MASCaPS_UIDNAME}
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
+# Strip the leading directory common to invoking makefile and the .MASCaPS
+# directory. This will get us the target suffix and tell us whether they
+# share common parental directories...
+MASCaPS_TARGET_SFIX := ${subst ${MASCaPS_DIR_PARENT_S},,${PREV_FILE_DIR}}
+# If it hasn't changed, it wasn't common
+ifeq (${MASCaPS_TARGET_SFIX} , ${PREV_FILE_DIR})
+	OUT := ${error "The invoking makefile ('${PREV_FILE_PATH}') and the basic MASCaPS makefile ('${CURR_FILE_PATH}') do not share a common directory at the appropriate level ('${MASCaPS_DIR_PARENT}')."}
+endif
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
 # You can define the MASCaPS_SPEC_DIR here (or in an invoking makefile).
 # For example, in this file un-comment the following line:
 #	MASCaPS_SPEC_DIR := Linux/3.12.8/x86_64/gcc/4.8.2/debug
@@ -93,20 +141,10 @@ MASCaPS_UIDNAME	:=	MASCaPS-UNIQUE-NAME-${MASCaPS_UIDNAME}
 #
 # Otherwise, we'll construct a specification using the uname command. In this
 # case, the compiler will default to 'gcc' and the build type to 'debug'.
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
+#
 # If the MASCaPS_SPEC_DIR wasn't defined earlier, do so now...
 ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
-#	# Strip the leading directory common to invoking makefile and
-#	# .MASCaPS directory
-#	TMP_SPEC_DIR := ${subst ${MASCaPS_DIR_PARENT_S},"",${PREV_FILE_DIR}}
-#	# If it hasn't changed, it wasn't common
-#	ifeq (${TMP_SPEC_DIR} , ${PREV_FILE_DIR})
-#		TMP_VALUE := ${error "The invoking makefile ('${PREV_FILE_PATH}') and the basic MASCaPS makefile ('${CURR_FILE_PATH}') do not share a common directory at the appropriate level ('${MASCaPS_DIR_PARENT}')"}
-#	endif
-#	MASCaPS_SPEC_DIR := ${TMP_SPEC_DIR}
-# Get the default spec info...
+	# Get the default spec info...
 	ifeq (${MASCaPS_SPEC_OS} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_OS	:=	${shell uname -s}
 	endif
@@ -134,17 +172,46 @@ else
 	ifeq (${TMP_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
 		XXX := ${error "The MASCaPS specification string '${MASCaPS_SPEC_DIR}' is invalid."}
 	endif
-#	ifgt (0 , ${words ${TMP_SPEC_DIR}})
-#       	MASCaPS_SPEC_OS	:=	$(word 1, ${TMP_SPEC_DIR})
-#	endif
+	ifneq ($(word 1, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_OS := $(word 1, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_OS :=
+	endif
+	ifneq ($(word 2, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_OSVER := $(word 2, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_OSVER :=
+	endif
+	ifneq ($(word 3, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_MACH := $(word 3, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_MACH :=
+	endif
+	ifneq ($(word 4, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_CPP := $(word 4, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_CPP :=
+	endif
+	ifneq ($(word 5, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_CPPVER := $(word 5, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_CPPVER :=
+	endif
+	ifneq ($(word 6, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
+		MASCaPS_SPEC_BUILD := $(word 6, ${TMP_SPEC_DIR})
+	else
+		MASCaPS_SPEC_BUILD :=
+	endif
 endif
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 MASCaPS_TARGET_BASE	:=	${MASCaPS_DIR_PARENT}/TargetPlatform/${MASCaPS_SPEC_DIR}
-MASCaPS_TARGET_OBJ	:=	${MASCaPS_TARGET_BASE}/obj
+MASCaPS_TARGET_DEP	:=	${MASCaPS_TARGET_BASE}/dep/${MASCaPS_TARGET_SFIX}
+MASCaPS_TARGET_OBJ	:=	${MASCaPS_TARGET_BASE}/obj/${MASCaPS_TARGET_SFIX}
 MASCaPS_TARGET_LIB	:=	${MASCaPS_TARGET_BASE}/lib
 MASCaPS_TARGET_BIN	:=	${MASCaPS_TARGET_BASE}/bin
+MKDIR_RESULTS		:=	${shell mkdir -p ${MASCaPS_TARGET_DEP} ${MASCaPS_TARGET_OBJ} ${MASCaPS_TARGET_LIB} ${MASCaPS_TARGET_BIN}}
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -183,8 +250,10 @@ MASCaPS_INIT_FLAG	:=	"MASCaPS"
 
 # #############################################################################
 
-#ifdef (MASCaPS_DEBUG)
+ifdef MASCaPS_DEBUG
 	XXX := ${info ========================================================}
+	XXX := ${info MASCaPS_DEBUG       : ${MASCaPS_DEBUG}}
+	XXX := ${info --------------------------------------------------------}
 	XXX := ${info MASCaPS_FLAT        : ${MASCaPS_FLAT}}
 	XXX := ${info --------------------------------------------------------}
 	XXX := ${info CURR_FILE_NAME      : ${CURR_FILE_NAME}}
@@ -199,7 +268,9 @@ MASCaPS_INIT_FLAG	:=	"MASCaPS"
 	XXX := ${info --------------------------------------------------------}
 	XXX := ${info MASCaPS_UIDNAME     : ${MASCaPS_UIDNAME}}
 	XXX := ${info --------------------------------------------------------}
+	XXX := ${info MASCaPS_TARGET_SFIX : ${MASCaPS_TARGET_SFIX}}
 	XXX := ${info MASCaPS_TARGET_BASE : ${MASCaPS_TARGET_BASE}}
+	XXX := ${info MASCaPS_TARGET_DEP  : ${MASCaPS_TARGET_DEP}}
 	XXX := ${info MASCaPS_TARGET_OBJ  : ${MASCaPS_TARGET_OBJ}}
 	XXX := ${info MASCaPS_TARGET_LIB  : ${MASCaPS_TARGET_LIB}}
 	XXX := ${info MASCaPS_TARGET_BIN  : ${MASCaPS_TARGET_BIN}}
@@ -219,12 +290,7 @@ MASCaPS_INIT_FLAG	:=	"MASCaPS"
 	XXX := ${info MASCaPS_SUFFIX_LIST : ${MASCaPS_SUFFIX_LIST}}
 	XXX := ${info MASCaPS_CONTEXT_LIST: ${MASCaPS_CONTEXT_LIST}}
 	XXX := ${info ========================================================}
-#endif
-
-
-
-
-
+endif
 
 
 

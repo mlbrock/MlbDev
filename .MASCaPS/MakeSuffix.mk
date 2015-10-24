@@ -10,7 +10,7 @@
 #
 # Revision History: 1992-08-04 --- Creation as .MASCaPS/postmake.mk.
 #                       Michael L. Brock
-#                   2000-01-13 --- Split into as .MASCaPS/MakeSuffix.mk.
+#                   2000-01-13 --- Split into .MASCaPS/MakeSuffix.mk.
 #                       Michael L. Brock
 #                   2015-03-27 --- Modified as .MASCaPS/MakeSuffix.mk.
 #                       Michael L. Brock
@@ -24,56 +24,51 @@
 # #############################################################################
 
 # #############################################################################
-OBJS		=	${SRCS:.c=.o}
-OBJS		=	${SRCS:.cpp=.o}
-DEPS		=	${SRCS:.c=.P}
-DEPS		=	${SRCS:.cpp=.P}
+OBJS		:=	${SRCS:.c=.o}
+OBJS		:=	${OBJS:.cpp=.o}
+OBJS	   	:= 	${addprefix ${MASCaPS_TARGET_OBJ}/,${OBJS}}
 
-TARGET_LIBS_DST	   = ${addprefix ${MASCaPS_TARGET_LIB},${TARGET_LIBS}}
-TARGET_LIBS_SO_DST = ${addprefix ${MASCaPS_TARGET_LIB},${TARGET_LIBS_SO}}
-TARGET_BINS_DST	   = ${addprefix ${MASCaPS_TARGET_BIN},${TARGET_BINS}}
+DEPS		:=	${SRCS:.c=.dep}
+DEPS		:=	${DEPS:.cpp=.dep}
+DEPS	   	:= 	${addprefix ${MASCaPS_TARGET_DEP}/,${DEPS}}
+
+${MASCaPS_TARGET_OBJ}/%.o	:	%.c ${MASCaPS_TARGET_DEP}/%.dep
+	${COMPILE.c} -o $@ $<
+
+${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
+	${COMPILE.cc} -o $@ $<
+
+TARGET_LIBS_DST	   = ${addprefix ${MASCaPS_TARGET_LIB}/,${TARGET_LIBS}}
+TARGET_LIBS_SO_DST = ${addprefix ${MASCaPS_TARGET_LIB}/,${TARGET_LIBS_SO}}
+TARGET_BINS_DST	   = ${addprefix ${MASCaPS_TARGET_BIN}/,${TARGET_BINS}}
 
 all		:	${TARGET_LIBS}	\
 			${TARGET_LIBS_SO} \
 			${TARGET_BINS}
 
-#XXX = @echo ${TARGET_LIBS_DST}
-
-${TARGET_LIBS}	:	${OBJS} ${DEPS}
+# ##### For static libraries.
+${TARGET_LIBS}	:	${DEPS} ${OBJS}
 	@${AR} ${ARFLAGS} $@ ${OBJS}
 	@ranlib $@
 	@cp -p $@ ${MASCaPS_TARGET_LIB}/.
 
 # ##### For shared libraries.
-${TARGET_LIBS_SO}	:	${OBJS} ${DEPS}
-	gcc -shared -W1,-soname,$@ -o $@.0 ${OBJS}
+${TARGET_LIBS_SO}	:	${DEPS} ${OBJS}
+	gcc -shared -Wl,-soname,$@ -o $@.0 ${OBJS}
 	@cp -p $@.0 ${MASCaPS_TARGET_LIB}/.
 
-${TARGET_BINS}	:	${MLB_LIB_FULL}
+${TARGET_BINS}	:	${DEPS} ${MLB_LIB_FULL}
 
-%.P		:	%.cpp
+${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
 	$(COMPILE.cc) -MD -o $@ $<
-	@cp $*.d $*.P; \
+	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
 		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
-		-e '/^$$/ d' -e 's/$$/ :/' < $*.d >> $*.P; \
-		rm -f $*.d
+		-e '/^$$/ d' -e 's/$$/ :/' < ${MASCaPS_TARGET_DEP}/$*.d >> \
+		${MASCaPS_TARGET_DEP}/$*.dep; \
+		rm -f ${MASCaPS_TARGET_DEP}/$*.d
 
--include $(SRCS:.cpp=.P)
+-include ${DEPS}
 
-.PHONY		:	clean clean_objs clean_libs clean_bins
-
-clean_objs	:
-	-@/bin/rm ${OBJS} > /dev/null 2>&1
-
-clean_libs	:
-	-@rm ${TARGET_LIBS} ../lib/${TARGET_LIBS} > /dev/null 2>&1
-
-clean_bins	:
-	-@rm ${TARGET_BINS} ../bin/${TARGET_BINS} > /dev/null 2>&1
-
-clean		:	clean_objs	\
-			clean_libs	\
-			clean_bins
 # #############################################################################
 
 # #############################################################################
@@ -172,12 +167,17 @@ testcoverage_%		:	testcoverage_%.o
 	coverage ${LINK.cc} -o $@ $< ${LDFLAGS} ${LDLIBS} ${LIBS} ${LDFLAGS}
 # #############################################################################
 
-# ###################################################################
-# ###################################################################
+# #############################################################################
+# #############################################################################
 # Automatic builds of modules with 'TEST_MAIN' harnesses . . .
-# ###################################################################
-TEST_BASE_NAMES_CMD		=	\
-	grep TEST_MAIN ${SRCS} ${BIN_SRCS} | \
+# #############################################################################
+TEST_SRC_LIST			 =	${SRCS} ${BIN_SRCS}
+TEST_SRC_LIST			:=	$(strip ${TEST_SRC_LIST})
+ifeq (${TEST_SRC_LIST} , ${MASCaPS_EMPTY_STRING})
+	TEST_BASE_NAMES_CMD	=
+else
+	TEST_BASE_NAMES_CMD	=	\
+	grep TEST_MAIN ${TEST_SRC_LIST} | \
 	/usr/bin/perl -e \
 		'while (<>) { \
 			chop; \
@@ -188,21 +188,70 @@ TEST_BASE_NAMES_CMD		=	\
 			} \
 		} \
 		exit(0);'
+endif
 
 TEST_BASE_NAMES			=	${shell ${TEST_BASE_NAMES_CMD}}
 
 TEST_NAMES			=	$(TEST_BASE_NAMES:%=test_%)
 TEST_PURIFY_NAMES		=	$(TEST_BASE_NAMES:%=testpurify_%)
 TEST_QUANTIFY_NAMES		=	$(TEST_BASE_NAMES:%=testquantify_%)
-TEST_COVERAGE_NAMES		=	$(TEST_BASE_NAMES:%=testcoverage_%)
+TEST_PURECOV_NAMES		=	$(TEST_BASE_NAMES:%=testpurecov_%)
 
 test_all			:	${TEST_NAMES} ${SRCS}
+
+tests_all			:	test_all
 
 testpurify_all			:	${TEST_PURIFY_NAMES} ${SRCS}
 
 testquantify_all		:	${TEST_QUANTIFY_NAMES} ${SRCS}
 
-testcoverage_all		:	${TEST_COVERAGE_NAMES} ${SRCS}
+testpurecov_all			:	${TEST_PURECOV_NAMES} ${SRCS}
 
-# ###################################################################
+# #############################################################################
+
+# #############################################################################
+# #############################################################################
+# Clean support...
+# #############################################################################
+.PHONY		:	clean clean_deps clean_objs clean_libs clean_bins \
+			clean_tests clean_tests_purify clean_tests_quantify \
+			clean_tests_purecov
+
+clean_deps	:
+	-@/bin/rm ${DEPS} > /dev/null 2>&1
+
+clean_objs	:
+	-@/bin/rm ${OBJS} > /dev/null 2>&1
+
+clean_libs	:
+	-@rm ${TARGET_LIBS_DST} ${TARGET_LIBS_SO_DST} > /dev/null 2>&1
+
+clean_bins	:
+	-@rm ${TARGET_BINS_DST} > /dev/null 2>&1
+
+clean_tests	:
+	-@rm ${TEST_NAMES} > /dev/null 2>&1
+
+clean_tests_purify:
+	-@rm ${TEST_PURIFY_NAMES} > /dev/null 2>&1
+
+clean_tests_quantify:
+	-@rm ${TEST_QUANTIFY_NAMES} > /dev/null 2>&1
+
+clean_tests_purecov:
+	-@rm ${TEST_PURECOV_NAMES} > /dev/null 2>&1
+
+clean_tests_all	:	\
+			clean_tests		\
+			clean_tests_purify	\
+			clean_tests_quantify	\
+			clean_tests_purecov
+
+clean		:	\
+			clean_deps	\
+			clean_objs	\
+			clean_libs	\
+			clean_bins	\
+			clean_tests_all
+# #############################################################################
 
