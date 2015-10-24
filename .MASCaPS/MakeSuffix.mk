@@ -44,20 +44,26 @@ TARGET_BINS_DST	   = ${addprefix ${MASCaPS_TARGET_BIN}/,${TARGET_BINS}}
 
 all		:	${TARGET_LIBS}	\
 			${TARGET_LIBS_SO} \
-			${TARGET_BINS}
+			${TARGET_BINS_DST}
 
 # ##### For static libraries.
 ${TARGET_LIBS}	:	${DEPS} ${OBJS}
 	@${AR} ${ARFLAGS} $@ ${OBJS}
 	@ranlib $@
 	@cp -p $@ ${MASCaPS_TARGET_LIB}/.
+	@rm    $@
 
 # ##### For shared libraries.
 ${TARGET_LIBS_SO}	:	${DEPS} ${OBJS}
 	gcc -shared -Wl,-soname,$@ -o $@.0 ${OBJS}
 	@cp -p $@.0 ${MASCaPS_TARGET_LIB}/.
+	@rm    $@
 
-${TARGET_BINS}	:	${DEPS} ${MLB_LIB_FULL}
+${TARGET_BINS}		:	${DEPS} ${MLB_LIB_FULL}
+
+${TARGET_BINS_DST}	:	${TARGET_BINS}
+	@cp -p ${TARGET_BINS} ${MASCaPS_TARGET_BIN}/.
+	@rm    ${TARGET_BINS}
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
 	$(COMPILE.cc) -MD -o $@ $<
@@ -224,22 +230,22 @@ clean_objs	:
 	-@/bin/rm ${OBJS} > /dev/null 2>&1
 
 clean_libs	:
-	-@rm ${TARGET_LIBS_DST} ${TARGET_LIBS_SO_DST} > /dev/null 2>&1
+	-@rm ${TARGET_LIBS} ${TARGET_LIBS_SO} ${TARGET_LIBS_DST} ${TARGET_LIBS_SO_DST} > /dev/null 2>&1
 
 clean_bins	:
-	-@rm ${TARGET_BINS_DST} > /dev/null 2>&1
+	-@rm ${TARGET_BINS} ${TARGET_BINS_DST} > /dev/null 2>&1
 
 clean_tests	:
-	-@rm ${TEST_NAMES} > /dev/null 2>&1
+	-@rm test_* > /dev/null 2>&1
 
 clean_tests_purify:
-	-@rm ${TEST_PURIFY_NAMES} > /dev/null 2>&1
+	-@rm testpurify_* > /dev/null 2>&1
 
 clean_tests_quantify:
-	-@rm ${TEST_QUANTIFY_NAMES} > /dev/null 2>&1
+	-@rm testquantify_* > /dev/null 2>&1
 
 clean_tests_purecov:
-	-@rm ${TEST_PURECOV_NAMES} > /dev/null 2>&1
+	-@rm testpurecov_* > /dev/null 2>&1
 
 clean_tests_all	:	\
 			clean_tests		\
