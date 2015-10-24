@@ -8,6 +8,8 @@
 #
 # Revision History: 2008-07-31 --- Creation.
 #                       Michael L. Brock
+#                   2015-10-24 --- Modified for use with MASCaPS Version 3.
+#                       Michael L. Brock
 #
 #       Copyright Michael L. Brock 2008 - 2015.
 #       Distributed under the Boost Software License, Version 1.0.
@@ -16,7 +18,7 @@
 #
 # #############################################################################
 
-include ../.make/MakePrefix.mk
+include ../.MASCaPS/MakePrefixFirst.mk
 
 TARGET_BINS	=	\
 			CannedPacketConverter		\
@@ -27,5 +29,8 @@ TARGET_BINS	=	\
 
 SRCS		=
 
-include ../.make/MakeSuffix.mk
+# Only the MLB libraries below are needed for the executables in this Makefile.
+MLB_LIB_NAMES	=	SocketIo Utility
+
+include ../.MASCaPS/MakeSuffixFirst.mk
 
