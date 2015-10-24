@@ -1,2 +1,2 @@
-CPP_BUILD_TYPE	=	-ggdb
+CPP_BUILD_TYPE	=	-ggdb3
 
