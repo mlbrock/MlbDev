@@ -50,7 +50,7 @@
 			ReportFatalError($tmp_error);
 		}
 		elsif ($tmp_list[0] !~ /^\-\-?PRE(FIX)?((_|\-)?NAME)?=(.+)$/i) {
-			$tmp_error = "The -prefix parameter ('", $tmp_list[0], "') does " .
+			$tmp_error = "The -prefix parameter ('" . $tmp_list[0] . "') does " .
 				"not specify a directory name string.";
 			ReportFatalError($tmp_error);
 		}
@@ -115,12 +115,12 @@
 		$spec_string =~ s/^\s+|\s+$//g;
 		if (($spec_string eq "") || ($spec_string eq "/") ||
 			($spec_string eq "\\") || ($spec_string eq ".")) {
-			$tmp_error = "No body to MASCaPS spec string ('" .
+			$tmp_error = "The MASCaPS spec string is effectively empty ('" .
 				$spec_string . "').";
 			ReportFatalError($tmp_error);
 		}
 		elsif ($spec_string =~ /\s+/) {
-			$tmp_error = "MASCaPS spec string contains whitespace ('" .
+			$tmp_error = "The MASCaPS spec string contains whitespace ('" .
 				$spec_string . "').";
 			ReportFatalError($tmp_error);
 		}
@@ -142,6 +142,7 @@
 					@spec_list     =  split(/\s*\/\s*/, $spec_string);
 					unshift(@spec_list, "");
 					$work_string   =  "";
+					$part_string   =  "";
 					$out_string    =  "";
 					$all_string    =  "";
 					@combo_list    = (
@@ -150,27 +151,37 @@
 						".".$this_username,
 						".".$this_username.".".$this_hostname,
 					);
+					%part_hash = ();
 					for $this_spec (@spec_list) {
+						$seg_count = 1;
 						if ($this_spec ne "") {
 							$work_string .= $this_spec . $path_sep_char;
+							$part_string  = $this_spec . $path_sep_char;
+							if (($part_string ne $work_string) &&
+								 (!defined($part_hash[$part_string]))) {
+								$seg_count = 2;
+							}
 						}
-						for $this_combo (@combo_list) {
-							$this_file = $prefix_name.
-								$work_string.$base_file_name.$this_combo.".mk";
-							if (CheckComboFile($work_string, $this_combo)) {
-								$out_string .= (($out_string eq "") ? "" : " ").
+						for ($count_1 = 0; $count_1 < $seg_count; ++$count_1) {
+							$seg_string = (!$count_1) ? $work_string : $part_string;
+							for $this_combo (@combo_list) {
+								$this_file = $prefix_name.
+									$seg_string.$base_file_name.$this_combo.".mk";
+								if (CheckComboFile($seg_string, $this_combo)) {
+									$out_string .= (($out_string eq "") ? "" : " ").
+										$this_file;
+								}
+								$all_string .= (($all_string eq "") ? "" : " ").
 									$this_file;
 							}
-							$all_string .= (($all_string eq "") ? "" : " ").
-								$this_file;
 						}
 					}
 					$return_code = 0;
 					if ($debug_flag) {
-						print STDERR "=" x 79; print "\n";
-						print STDERR "=" x 79; print "\n";
+						print STDERR "=" x 79; print STDERR "\n";
+						print STDERR "=" x 79; print STDERR "\n";
 						print STDERR "Debugging Info:\n";
-						print STDERR "-" x 79; print "\n";
+						print STDERR "-" x 79; print STDERR "\n";
 						print STDERR "Debugging Flag: ",
 							(($debug_flag) ? "TRUE" : "FALSE"), "\n";
 						print STDERR "Flattened Flag: ",
@@ -178,14 +189,18 @@
 						print STDERR "Path Sep Chat : ", $path_sep_char, "\n";
 						print STDERR "Prefix Path   : ", $prefix_name, "\n";
 						print STDERR "Base String   : ", $base_file_name, "\n";
-						print STDERR "-" x 79; print "\n";
-						print STDERR "MASCaPS Include Makefiles (All):\n";
-						print STDERR "------- ------- --------- ------\n";
-						print STDERR join("\n", split(/ /, $all_string)), "\n";
-						print STDERR "-" x 79; print "\n";
-						print STDERR "MASCaPS Include Makefiles (Used):\n";
-						print STDERR "------- ------- --------- ------\n";
-						print STDERR join("\n", split(/ /, $out_string)), "\n";
+						print STDERR "-" x 79; print STDERR "\n";
+						@tmp_list = split(/ /, $all_string);
+						print STDERR "MASCaPS Include Makefiles (All) :";
+						printf(STDERR "%5d\n", $#tmp_list + 1);
+						print STDERR "------- ------- --------- ------ -----\n";
+						print STDERR join("\n", @tmp_list), "\n";
+						print STDERR "-" x 79; print STDERR "\n";
+						@tmp_list = split(/ /, $out_string);
+						print STDERR "MASCaPS Include Makefiles (Used):";
+						printf(STDERR "%5d\n", $#tmp_list + 1);
+						print STDERR "------- ------- --------- ------ -----\n";
+						print STDERR join("\n", @tmp_list), "\n";
 						print STDERR "=" x 79; print STDERR "\n\n";
 					}
 					print $out_string, "\n";
