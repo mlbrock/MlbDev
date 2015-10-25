@@ -96,7 +96,7 @@ MASCaPS_TARGET_DEP	:=	${MASCaPS_TARGET_BASE}/dep/${MASCaPS_TARGET_SFIX}
 MASCaPS_TARGET_OBJ	:=	${MASCaPS_TARGET_BASE}/obj/${MASCaPS_TARGET_SFIX}
 MASCaPS_TARGET_LIB	:=	${MASCaPS_TARGET_BASE}/lib
 MASCaPS_TARGET_BIN	:=	${MASCaPS_TARGET_BASE}/bin
-MKDIR_RESULTS		:=	${shell mkdir -p ${MASCaPS_TARGET_DEP} ${MASCaPS_TARGET_OBJ} ${MASCaPS_TARGET_LIB} ${MASCaPS_TARGET_BIN}}
+TMP_MKDIR_RESULTS	:=	${shell mkdir -p ${MASCaPS_TARGET_DEP} ${MASCaPS_TARGET_OBJ} ${MASCaPS_TARGET_LIB} ${MASCaPS_TARGET_BIN}}
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------

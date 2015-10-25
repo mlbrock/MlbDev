@@ -24,13 +24,18 @@
 # #############################################################################
 
 # #############################################################################
+
+# -----------------------------------------------------------------------------
 OBJS		:=	${SRCS:.c=.o}
 OBJS		:=	${OBJS:.cpp=.o}
 OBJS	   	:= 	${addprefix ${MASCaPS_TARGET_OBJ}/,${OBJS}}
+# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
 DEPS		:=	${SRCS:.c=.dep}
 DEPS		:=	${DEPS:.cpp=.dep}
 DEPS	   	:= 	${addprefix ${MASCaPS_TARGET_DEP}/,${DEPS}}
+# -----------------------------------------------------------------------------
 
 ${MASCaPS_TARGET_OBJ}/%.o	:	%.c ${MASCaPS_TARGET_DEP}/%.dep
 	${COMPILE.c} -o $@ $<
@@ -46,16 +51,20 @@ all		:	${TARGET_LIBS}	\
 			${TARGET_LIBS_SO} \
 			${TARGET_BINS_DST}
 
+# -----------------------------------------------------------------------------
 # ##### For static libraries.
-${TARGET_LIBS}	:	${DEPS} ${OBJS}
+${TARGET_LIBS}		:	${DEPS} ${OBJS}
 	@${AR} ${ARFLAGS} $@ ${OBJS}
 	@ranlib $@
 	@cp -p $@ ${MASCaPS_TARGET_LIB}/.
+# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
 # ##### For shared libraries.
-${TARGET_LIBS_SO}	:	${DEPS} ${OBJS}
+${TARGET_LIBS_SO}	: ${DEPS} ${OBJS}
 	gcc -shared -Wl,-soname,$@ -o $@.0 ${OBJS}
 	@cp -p $@.0 ${MASCaPS_TARGET_LIB}/.
+# -----------------------------------------------------------------------------
 
 ${TARGET_BINS}		:	${DEPS} ${MLB_LIB_FULL}
 
@@ -64,6 +73,14 @@ ${TARGET_BINS_DST}	:	${TARGET_BINS}
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
 	$(COMPILE.cc) -MD -o $@ $<
+	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
+		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+		-e '/^$$/ d' -e 's/$$/ :/' < ${MASCaPS_TARGET_DEP}/$*.d >> \
+		${MASCaPS_TARGET_DEP}/$*.dep; \
+		rm -f ${MASCaPS_TARGET_DEP}/$*.d
+
+${MASCaPS_TARGET_DEP}/%.dep	:	%.c
+	$(COMPILE.c) -MD -o $@ $<
 	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
 		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 		-e '/^$$/ d' -e 's/$$/ :/' < ${MASCaPS_TARGET_DEP}/$*.d >> \
@@ -213,12 +230,17 @@ testpurecov_all			:	${TEST_PURECOV_NAMES} ${SRCS}
 # #############################################################################
 
 # #############################################################################
+.PHONY		:	\
+			MASCaPS_FORCED_TARGET \
+			clean clean_deps clean_objs clean_libs clean_bins \
+			clean_tests clean_tests_purify clean_tests_quantify \
+			clean_tests_purecov
+# #############################################################################
+
+# #############################################################################
 # #############################################################################
 # Clean support...
 # #############################################################################
-.PHONY		:	clean clean_deps clean_objs clean_libs clean_bins \
-			clean_tests clean_tests_purify clean_tests_quantify \
-			clean_tests_purecov
 
 clean_deps	:
 	-@/bin/rm ${DEPS} > /dev/null 2>&1
