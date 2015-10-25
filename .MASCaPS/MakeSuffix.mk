@@ -51,19 +51,16 @@ ${TARGET_LIBS}	:	${DEPS} ${OBJS}
 	@${AR} ${ARFLAGS} $@ ${OBJS}
 	@ranlib $@
 	@cp -p $@ ${MASCaPS_TARGET_LIB}/.
-	@rm    $@
 
 # ##### For shared libraries.
 ${TARGET_LIBS_SO}	:	${DEPS} ${OBJS}
 	gcc -shared -Wl,-soname,$@ -o $@.0 ${OBJS}
 	@cp -p $@.0 ${MASCaPS_TARGET_LIB}/.
-	@rm    $@
 
 ${TARGET_BINS}		:	${DEPS} ${MLB_LIB_FULL}
 
 ${TARGET_BINS_DST}	:	${TARGET_BINS}
 	@cp -p ${TARGET_BINS} ${MASCaPS_TARGET_BIN}/.
-	@rm    ${TARGET_BINS}
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
 	$(COMPILE.cc) -MD -o $@ $<

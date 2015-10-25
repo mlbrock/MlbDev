@@ -23,8 +23,7 @@
 #
 # #############################################################################
 
-
-# -----------------------------------------------------------------------------
+# #############################################################################
 # We are not initialized
 MASCaPS_INIT_FLAG	:=
 # -----------------------------------------------------------------------------
@@ -34,42 +33,6 @@ MASCaPS_INIT_FLAG	:=
 MASCaPS_EMPTY_STRING	:=	"SOMETHING"
 MASCaPS_EMPTY_STRING	:=
 # -----------------------------------------------------------------------------
-
-
-
-# -----------------------------------------------------------------------------
-# CODE NOTE: Test code. To be removed.
-ZZZ := aaa bbb ccc
-ifneq ($(word 1, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
-	THIS_VAL := $(word 1, ${ZZZ})
-	OUT := ${info 1 = ${THIS_VAL}}}
-else
-	OUT := ${info 1 = *** N/A ***}
-endif
-ifneq ($(word 2, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
-	THIS_VAL := $(word 2, ${ZZZ})
-	OUT := ${info 2 = ${THIS_VAL}}}
-else
-	OUT := ${info 2 = *** N/A ***}
-endif
-ifneq ($(word 3, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
-	THIS_VAL := $(word 3, ${ZZZ})
-	OUT := ${info 3 = ${THIS_VAL}}}
-else
-	OUT := ${info 3 = *** N/A ***}
-endif
-ifneq ($(word 4, ${ZZZ}) , ${MASCaPS_EMPTY_STRING})
-	THIS_VAL := $(word 4, ${ZZZ})
-	OUT := ${info 4 = ${THIS_VAL}}}
-else
-	OUT := ${info 4 = *** N/A ***}
-endif
-# -----------------------------------------------------------------------------
-
-
-
-
-
 
 # -----------------------------------------------------------------------------
 # Uncomment the following line to use the flattened makefile include structure.
@@ -164,6 +127,7 @@ ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_BUILD	:=	debug
 	endif
 	MASCaPS_SPEC_DIR	:=	${MASCaPS_SPEC_OS}/${MASCaPS_SPEC_OSVER}/${MASCaPS_SPEC_MACH}/${MASCaPS_SPEC_CPP}/${MASCaPS_SPEC_CPPVER}/${MASCaPS_SPEC_BUILD}
+	MASCaPS_SPEC_SRC	:=	Calculated
 else
 	TMP_SPEC_DIR	:=	${MASCaPS_SPEC_DIR}
 	TMP_SPEC_DIR	:=	$(strip ${TMP_SPEC_DIR})
@@ -202,6 +166,7 @@ else
 	else
 		MASCaPS_SPEC_BUILD :=
 	endif
+	MASCaPS_SPEC_SRC	:=	Specified
 endif
 # -----------------------------------------------------------------------------
 
@@ -229,11 +194,6 @@ MASCaPS_PREFIX_LIST	:=	${subst ${MASCaPS_UIDNAME},MakePrefix,${MASCaPS_FILE_LIST
 MASCaPS_SUFFIX_LIST	:=	${subst ${MASCaPS_UIDNAME},MakeSuffix,${MASCaPS_FILE_LIST}}
 MASCaPS_CONTEXT_LIST	:=	${subst ${MASCaPS_UIDNAME},MakeContext,${MASCaPS_FILE_LIST}}
 # -----------------------------------------------------------------------------
-
-# CODE NOTE: Test code. To be removed.
-#MASCaPS_PREFIX_LIST :=  /media/sf_MlbDev/.MASCaPS/MakePrefix.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_MakePrefix.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_debug_MakePrefix.mk
-#MASCaPS_SUFFIX_LIST :=  /media/sf_MlbDev/.MASCaPS/MakeSuffix.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_MakeSuffix.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_debug_MakeSuffix.mk
-#MASCaPS_CONTEXT_LIST:=  /media/sf_MlbDev/.MASCaPS/MakeContext.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_MakeContext.mk /media/sf_MlbDev/.MASCaPS/Linux_3.12.8_x86_64_gcc_4.8.2_debug_MakeContext.mk
 
 # MASCaPS is now initialized
 MASCaPS_INIT_FLAG	:=	"MASCaPS"
@@ -275,6 +235,7 @@ ifdef MASCaPS_DEBUG
 	XXX := ${info MASCaPS_TARGET_LIB  : ${MASCaPS_TARGET_LIB}}
 	XXX := ${info MASCaPS_TARGET_BIN  : ${MASCaPS_TARGET_BIN}}
 	XXX := ${info --------------------------------------------------------}
+	XXX := ${info MASCaPS_SPEC_SRC    : ${MASCaPS_SPEC_SRC}}
 	XXX := ${info MASCaPS_SPEC_DIR    : ${MASCaPS_SPEC_DIR}}
 	XXX := ${info --------------------------------------------------------}
 	XXX := ${info MASCaPS_SPEC_OS     : ${MASCaPS_SPEC_OS}}
@@ -292,10 +253,5 @@ ifdef MASCaPS_DEBUG
 	XXX := ${info ========================================================}
 endif
 
-
-
-
-
-
-
+# #############################################################################
 
