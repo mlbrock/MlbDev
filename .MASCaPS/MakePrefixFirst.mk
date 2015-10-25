@@ -88,87 +88,7 @@ ifeq (${MASCaPS_TARGET_SFIX} , ${PREV_FILE_DIR})
 endif
 # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# You can define the MASCaPS_SPEC_DIR here (or in an invoking makefile).
-# For example, in this file un-comment the following line:
-#	MASCaPS_SPEC_DIR := Linux/3.12.8/x86_64/gcc/4.8.2/debug
-#
-# Or you could specify in the command line of the invoiking makefile, like:
-#	make --eval=MASCaPS_SPEC_DIR=Linux/2.32.0/x86_64/gcc/4.8.2/optimized
-#
-# Or you could specify it as an environment variable. But you also must tell
-# Gnu Make to give variables defined in the environment precedence over
-# variables defined in makefiles:
-#	export MASCaPS_SPEC_DIR=Linux/3.1.2/i386/gcc/4.1.2/debug-3
-#	make --environment-overrides
-#
-# Otherwise, we'll construct a specification using the uname command. In this
-# case, the compiler will default to 'gcc' and the build type to 'debug'.
-#
-# If the MASCaPS_SPEC_DIR wasn't defined earlier, do so now...
-ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
-	# Get the default spec info...
-	ifeq (${MASCaPS_SPEC_OS} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_OS	:=	${shell uname -s}
-	endif
-	ifeq (${MASCaPS_SPEC_OSVER} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_OSVER	:=	${shell uname -r | cut -d ' ' -f 1 | cut -d '-' -f 1}
-	endif
-	ifeq (${MASCaPS_SPEC_MACH} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_MACH	:=	${shell uname -m}
-	endif
-	ifeq (${MASCaPS_SPEC_CPP} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPP	:=	gcc
-	endif
-	ifeq (${MASCaPS_SPEC_CPPVER} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPPVER	:=	${shell ${MASCaPS_SPEC_CPP} --version | head -1 | cut -d ' ' -f 3}
-	endif
-	ifeq (${MASCaPS_SPEC_BUILD} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_BUILD	:=	debug
-	endif
-	MASCaPS_SPEC_DIR	:=	${MASCaPS_SPEC_OS}/${MASCaPS_SPEC_OSVER}/${MASCaPS_SPEC_MACH}/${MASCaPS_SPEC_CPP}/${MASCaPS_SPEC_CPPVER}/${MASCaPS_SPEC_BUILD}
-	MASCaPS_SPEC_SRC	:=	Calculated
-else
-	TMP_SPEC_DIR	:=	${MASCaPS_SPEC_DIR}
-	TMP_SPEC_DIR	:=	$(strip ${TMP_SPEC_DIR})
-	TMP_SPEC_DIR	:=	${subst /, ,${TMP_SPEC_DIR}}
-	TMP_SPEC_DIR	:=	$(strip ${TMP_SPEC_DIR})
-	ifeq (${TMP_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
-		XXX := ${error "The MASCaPS specification string '${MASCaPS_SPEC_DIR}' is invalid."}
-	endif
-	ifneq ($(word 1, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_OS := $(word 1, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_OS :=
-	endif
-	ifneq ($(word 2, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_OSVER := $(word 2, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_OSVER :=
-	endif
-	ifneq ($(word 3, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_MACH := $(word 3, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_MACH :=
-	endif
-	ifneq ($(word 4, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPP := $(word 4, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_CPP :=
-	endif
-	ifneq ($(word 5, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPPVER := $(word 5, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_CPPVER :=
-	endif
-	ifneq ($(word 6, ${TMP_SPEC_DIR}) , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_BUILD := $(word 6, ${TMP_SPEC_DIR})
-	else
-		MASCaPS_SPEC_BUILD :=
-	endif
-	MASCaPS_SPEC_SRC	:=	Specified
-endif
-# -----------------------------------------------------------------------------
+include ${MASCaPS_DIR_NAME}/MakeSpecInfo.mk
 
 # -----------------------------------------------------------------------------
 MASCaPS_TARGET_BASE	:=	${MASCaPS_DIR_PARENT}/TargetPlatform/${MASCaPS_SPEC_DIR}
@@ -211,46 +131,46 @@ MASCaPS_INIT_FLAG	:=	"MASCaPS"
 # #############################################################################
 
 ifdef MASCaPS_DEBUG
-	XXX := ${info ========================================================}
-	XXX := ${info MASCaPS_DEBUG       : ${MASCaPS_DEBUG}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_FLAT        : ${MASCaPS_FLAT}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info CURR_FILE_NAME      : ${CURR_FILE_NAME}}
-	XXX := ${info CURR_FILE_PATH      : ${CURR_FILE_PATH}}
-	XXX := ${info MASCaPS_DIR_NAME    : ${MASCaPS_DIR_NAME}}
-	XXX := ${info MASCaPS_DIR_PARENT  : ${MASCaPS_DIR_PARENT}}
-	XXX := ${info MASCaPS_DIR_PARENT_S: ${MASCaPS_DIR_PARENT_S}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info PREV_FILE_NAME      : ${PREV_FILE_NAME}}
-	XXX := ${info PREV_FILE_PATH      : ${PREV_FILE_PATH}}
-	XXX := ${info PREV_FILE_DIR       : ${PREV_FILE_DIR}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_UIDNAME     : ${MASCaPS_UIDNAME}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_TARGET_SFIX : ${MASCaPS_TARGET_SFIX}}
-	XXX := ${info MASCaPS_TARGET_BASE : ${MASCaPS_TARGET_BASE}}
-	XXX := ${info MASCaPS_TARGET_DEP  : ${MASCaPS_TARGET_DEP}}
-	XXX := ${info MASCaPS_TARGET_OBJ  : ${MASCaPS_TARGET_OBJ}}
-	XXX := ${info MASCaPS_TARGET_LIB  : ${MASCaPS_TARGET_LIB}}
-	XXX := ${info MASCaPS_TARGET_BIN  : ${MASCaPS_TARGET_BIN}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_SPEC_SRC    : ${MASCaPS_SPEC_SRC}}
-	XXX := ${info MASCaPS_SPEC_DIR    : ${MASCaPS_SPEC_DIR}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_SPEC_OS     : ${MASCaPS_SPEC_OS}}
-	XXX := ${info MASCaPS_SPEC_OSVER  : ${MASCaPS_SPEC_OSVER}}
-	XXX := ${info MASCaPS_SPEC_MACH   : ${MASCaPS_SPEC_MACH}}
-	XXX := ${info MASCaPS_SPEC_CPP    : ${MASCaPS_SPEC_CPP}}
-	XXX := ${info MASCaPS_SPEC_CPPVER : ${MASCaPS_SPEC_CPPVER}}
-	XXX := ${info MASCaPS_SPEC_BUILD  : ${MASCaPS_SPEC_BUILD}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_FILE_LIST   : ${MASCaPS_FILE_LIST}}
-	XXX := ${info --------------------------------------------------------}
-	XXX := ${info MASCaPS_PREFIX_LIST : ${MASCaPS_PREFIX_LIST}}
-	XXX := ${info MASCaPS_SUFFIX_LIST : ${MASCaPS_SUFFIX_LIST}}
-	XXX := ${info MASCaPS_CONTEXT_LIST: ${MASCaPS_CONTEXT_LIST}}
-	XXX := ${info ========================================================}
+ X:=${info ===================================================================}
+ X:=${info MASCaPS_DEBUG       : ${MASCaPS_DEBUG}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_FLAT        : ${MASCaPS_FLAT}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info CURR_FILE_NAME      : ${CURR_FILE_NAME}}
+ X:=${info CURR_FILE_PATH      : ${CURR_FILE_PATH}}
+ X:=${info MASCaPS_DIR_NAME    : ${MASCaPS_DIR_NAME}}
+ X:=${info MASCaPS_DIR_PARENT  : ${MASCaPS_DIR_PARENT}}
+ X:=${info MASCaPS_DIR_PARENT_S: ${MASCaPS_DIR_PARENT_S}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info PREV_FILE_NAME      : ${PREV_FILE_NAME}}
+ X:=${info PREV_FILE_PATH      : ${PREV_FILE_PATH}}
+ X:=${info PREV_FILE_DIR       : ${PREV_FILE_DIR}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_UIDNAME     : ${MASCaPS_UIDNAME}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_TARGET_SFIX : ${MASCaPS_TARGET_SFIX}}
+ X:=${info MASCaPS_TARGET_BASE : ${MASCaPS_TARGET_BASE}}
+ X:=${info MASCaPS_TARGET_DEP  : ${MASCaPS_TARGET_DEP}}
+ X:=${info MASCaPS_TARGET_OBJ  : ${MASCaPS_TARGET_OBJ}}
+ X:=${info MASCaPS_TARGET_LIB  : ${MASCaPS_TARGET_LIB}}
+ X:=${info MASCaPS_TARGET_BIN  : ${MASCaPS_TARGET_BIN}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_SPEC_SRC    : ${MASCaPS_SPEC_SRC}}
+ X:=${info MASCaPS_SPEC_DIR    : ${MASCaPS_SPEC_DIR}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_SPEC_OS     : ${MASCaPS_SPEC_OS}}
+ X:=${info MASCaPS_SPEC_OSVER  : ${MASCaPS_SPEC_OSVER}}
+ X:=${info MASCaPS_SPEC_MACH   : ${MASCaPS_SPEC_MACH}}
+ X:=${info MASCaPS_SPEC_CPP    : ${MASCaPS_SPEC_CPP}}
+ X:=${info MASCaPS_SPEC_CPPVER : ${MASCaPS_SPEC_CPPVER}}
+ X:=${info MASCaPS_SPEC_BUILD  : ${MASCaPS_SPEC_BUILD}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_FILE_LIST   : ${MASCaPS_FILE_LIST}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info MASCaPS_PREFIX_LIST : ${MASCaPS_PREFIX_LIST}}
+ X:=${info MASCaPS_SUFFIX_LIST : ${MASCaPS_SUFFIX_LIST}}
+ X:=${info MASCaPS_CONTEXT_LIST: ${MASCaPS_CONTEXT_LIST}}
+ X:=${info ===================================================================}
 endif
 
 # #############################################################################
