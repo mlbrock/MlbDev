@@ -126,7 +126,6 @@ endif
 
 # -----------------------------------------------------------------------------
 ifeq (${TMP_SHOW_MASCaPS_SPEC_INFO} , Yes)
-X:=${info TMP_SHOW_MASCaPS_SPEC_INFO = ${TMP_SHOW_MASCaPS_SPEC_INFO}}
  X:=${info ===================================================================}
  X:=${info MASCaPS_SPEC_SRC    : ${MASCaPS_SPEC_SRC}}
  X:=${info MASCaPS_SPEC_DIR    : ${MASCaPS_SPEC_DIR}}
