@@ -125,14 +125,14 @@
 			ReportFatalError($tmp_error);
 		}
 		else {
-			$this_hostname =  `/bin/hostname -s`;
+			$this_hostname =  `hostname -s`;
 			if ($? == -1) {
 				$tmp_error = "ERROR: Attempt to determine host name failed: " . $!;
 				ReportFatalError($tmp_error);
 			}
 			else {
 				$this_hostname =~ s/^\s+|\s+$//g;
-				$this_username =  `/usr/bin/whoami`;
+				$this_username =  `whoami`;
 				if ($? == -1) {
 					$tmp_error = "Attempt to determine user name failed: " . $!;
 					ReportFatalError($tmp_error);

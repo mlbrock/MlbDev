@@ -15,6 +15,31 @@
 #                   2015-03-27 --- Modified as .MASCaPS/MakePrefixFirst.mk.
 #                       Michael L. Brock
 #
+# Notes           : The following are assumed to be available in the path
+#                   available to the Bourne shell (sh) instances which are
+#                   at present or may be in the future started by the various
+#                   make scripts:
+#                       basename
+#                       chmod
+#                       cp
+#                       cut
+#                       dirname
+#                       gcc/g++
+#                       grep
+#                       head
+#                       hostname
+#                       ld
+#                       ls
+#                       make
+#                       mkdir
+#                       perl
+#                       ranlib
+#                       rm
+#                       sed
+#                       uname
+#                       uuidgen
+#                       whoami
+#
 #       Copyright Michael L. Brock 1992 - 2015.
 #
 #       Distributed under the Boost Software License, Version 1.0.
@@ -54,9 +79,9 @@ CURR_FILE_NAME	:=	${lastword ${MAKEFILE_LIST}}
 # Full, canonical name of this makefile
 CURR_FILE_PATH	:=	${realpath ${CURR_FILE_NAME}}
 # Directory in which this makefile resides (named /?/.MASCaPS)
-MASCaPS_DIR_NAME	:=	${shell /bin/dirname ${CURR_FILE_PATH}}
+MASCaPS_DIR_NAME	:=	${shell dirname ${CURR_FILE_PATH}}
 # Directory in which the .MASCaPS directory resides
-MASCaPS_DIR_PARENT	:=	${shell /bin/dirname ${MASCaPS_DIR_NAME}}
+MASCaPS_DIR_PARENT	:=	${shell dirname ${MASCaPS_DIR_NAME}}
 # Same, but with its trailing slash
 MASCaPS_DIR_PARENT_S	:=	${MASCaPS_DIR_PARENT}/
 # -----------------------------------------------------------------------------
@@ -68,12 +93,12 @@ PREV_FILE_NAME	:=	${lastword ${filter-out ${CURR_FILE_NAME}, \
 # Full, canonical name of the invoking makefile
 PREV_FILE_PATH  :=	${realpath ${PREV_FILE_NAME}}
 # Directory in which the invoking makefile resides
-PREV_FILE_DIR	:=	${shell /bin/dirname ${PREV_FILE_PATH}}
+PREV_FILE_DIR	:=	${shell dirname ${PREV_FILE_PATH}}
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # Unique name to assist in include list construction 
-MASCaPS_UIDNAME	:=	${shell /bin/uuidgen}
+MASCaPS_UIDNAME	:=	${shell uuidgen}
 MASCaPS_UIDNAME	:=	MASCaPS-UNIQUE-NAME-${MASCaPS_UIDNAME}
 # -----------------------------------------------------------------------------
 
@@ -100,7 +125,8 @@ TMP_MKDIR_RESULTS	:=	${shell mkdir -p ${MASCaPS_TARGET_DEP} ${MASCaPS_TARGET_OBJ
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-MASCaPS_FILE_LIST	:=	${shell ${MASCaPS_DIR_NAME}/CreateSpecList.pl \
+MASCaPS_FILE_LIST	:=	${shell perl -x \
+	${MASCaPS_DIR_NAME}/CreateSpecList.pl \
 	${MASCaPS_FLAT} --prefix=${MASCaPS_DIR_NAME} \
 	--base_name=${MASCaPS_UIDNAME} ${MASCaPS_SPEC_DIR}}
 FIRST_FILE_STRING	:=	${firstword ${MASCaPS_FILE_LIST}}

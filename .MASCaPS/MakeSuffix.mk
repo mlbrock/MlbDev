@@ -198,7 +198,7 @@ ifeq (${TEST_SRC_LIST} , ${MASCaPS_EMPTY_STRING})
 else
 	TEST_BASE_NAMES_CMD	=	\
 	grep TEST_MAIN ${TEST_SRC_LIST} | \
-	/usr/bin/perl -e \
+	perl -e \
 		'while (<>) { \
 			chop; \
 			if (($$_ =~ /^.+:\s*\#\s*ifdef\s+TEST_MAIN/) && \
@@ -243,10 +243,10 @@ testpurecov_all			:	${TEST_PURECOV_NAMES} ${SRCS}
 # #############################################################################
 
 clean_deps	:
-	-@/bin/rm ${DEPS} > /dev/null 2>&1
+	-@rm ${DEPS} > /dev/null 2>&1
 
 clean_objs	:
-	-@/bin/rm ${OBJS} > /dev/null 2>&1
+	-@rm ${OBJS} > /dev/null 2>&1
 
 clean_libs	:
 	-@rm ${TARGET_LIBS} ${TARGET_LIBS_SO} ${TARGET_LIBS_DST} ${TARGET_LIBS_SO_DST} > /dev/null 2>&1

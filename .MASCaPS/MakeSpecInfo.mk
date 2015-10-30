@@ -56,7 +56,7 @@ ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_CPP	:=	gcc
 	endif
 	ifeq (${MASCaPS_SPEC_CPPVER} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPPVER	:=	${shell ${MASCaPS_SPEC_CPP} --version | head -1 | cut -d ' ' -f 3}
+		MASCaPS_SPEC_CPPVER	:=	${shell ${MASCaPS_SPEC_CPP} --version | head -1 | cut -d ' ' -f 3 | cut -d '-' -f 1 | cut -d '(' -f 1 | cut -d ')' -f 1}
 	endif
 	ifeq (${MASCaPS_SPEC_BUILD} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_BUILD	:=	debug

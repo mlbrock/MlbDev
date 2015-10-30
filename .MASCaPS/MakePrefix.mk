@@ -26,8 +26,8 @@
 # #############################################################################
 
 TMP_FILE_NAME	:=	${lastword ${MAKEFILE_LIST}}
-TMP_DIR_NAME_1	:=	${shell /bin/dirname ${TMP_FILE_NAME}}
-TMP_DIR_NAME_2	:=	${shell /bin/dirname ${TMP_DIR_NAME_1}}
+TMP_DIR_NAME_1	:=	${shell dirname ${TMP_FILE_NAME}}
+TMP_DIR_NAME_2	:=	${shell dirname ${TMP_DIR_NAME_1}}
 
 CPP_BUILD_TYPE	=
 
