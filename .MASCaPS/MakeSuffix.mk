@@ -37,14 +37,6 @@ DEPS		:=	${DEPS:.cpp=.dep}
 DEPS	   	:= 	${addprefix ${MASCaPS_TARGET_DEP}/,${DEPS}}
 # -----------------------------------------------------------------------------
 
-${MASCaPS_TARGET_OBJ}/%.o	:	%.c ${MASCaPS_TARGET_DEP}/%.dep
-	@mkdir -p ${@D}
-	${COMPILE.c} -o $@ $<
-
-${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
-	@mkdir -p ${@D}
-	${COMPILE.cc} -o $@ $<
-
 TARGET_LIBS_DST	   = ${addprefix ${MASCaPS_TARGET_LIB}/,${TARGET_LIBS}}
 TARGET_LIBS_SO_DST = ${addprefix ${MASCaPS_TARGET_LIB}/,${TARGET_LIBS_SO}}
 TARGET_BINS_DST	   = ${addprefix ${MASCaPS_TARGET_BIN}/,${TARGET_BINS}}
@@ -68,6 +60,14 @@ ${TARGET_LIBS_SO}	: ${DEPS} ${OBJS}
 	@cp -p $@.0 ${MASCaPS_TARGET_LIB}/.
 # -----------------------------------------------------------------------------
 
+${MASCaPS_TARGET_OBJ}/%.o	:	%.c ${MASCaPS_TARGET_DEP}/%.dep
+	@mkdir -p ${@D}
+	${COMPILE.c} -o $@ $<
+
+${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
+	@mkdir -p ${@D}
+	${COMPILE.cc} -o $@ $<
+
 ${TARGET_BINS}		:	${DEPS} ${MLB_LIB_FULL}
 
 ${TARGET_BINS_DST}	:	${TARGET_BINS}
@@ -90,8 +90,6 @@ ${MASCaPS_TARGET_DEP}/%.dep	:	%.c
 		-e '/^$$/ d' -e 's/$$/ :/' < ${MASCaPS_TARGET_DEP}/$*.d >> \
 		${MASCaPS_TARGET_DEP}/$*.dep; \
 		rm -f ${MASCaPS_TARGET_DEP}/$*.d
-
--include ${DEPS}
 
 # #############################################################################
 
@@ -282,5 +280,36 @@ clean		:	\
 			clean_libs	\
 			clean_bins	\
 			clean_tests_all
+# #############################################################################
+
+# #############################################################################
+# #############################################################################
+# The list of all clean targets...
+#
+# 
+# #############################################################################
+MASCaPS_CLEAN_LIST	:=	clean clean_deps clean_objs clean_libs \
+				clean_bins clean_tests_all clean_tests_all \
+				clean_tests clean_tests_purify \
+				clean_tests_quantify clean_tests_purecov
+# #############################################################################
+
+# #############################################################################
+# #############################################################################
+# If certain targets are specified on the command line, we don't want to
+# generate or include the dependency files. Examples of such targets are the
+# various clean targets I've listed in MASCaPS_CLEAN_LIST. But you may want to
+# add others. If so, append them to the value of MASCaPS_NO_DEPS_INC.
+# #############################################################################
+
+MASCaPS_NO_DEPS_INC	:=	${MASCaPS_CLEAN_LIST}
+
+TMP_VALUE		:=	$(filter ${MAKECMDGOALS} , ${MASCaPS_NO_DEPS_INC})
+MASCaPS_IS_CLEAN	:=	$(strip ${TMP_VALUE})
+
+ifeq (${MASCaPS_IS_CLEAN} , ${MASCaPS_EMPTY_STRING})
+-include ${DEPS}
+endif
+
 # #############################################################################
 
