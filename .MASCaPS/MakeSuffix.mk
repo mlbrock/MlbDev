@@ -38,9 +38,11 @@ DEPS	   	:= 	${addprefix ${MASCaPS_TARGET_DEP}/,${DEPS}}
 # -----------------------------------------------------------------------------
 
 ${MASCaPS_TARGET_OBJ}/%.o	:	%.c ${MASCaPS_TARGET_DEP}/%.dep
+	@mkdir -p ${@D}
 	${COMPILE.c} -o $@ $<
 
 ${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
+	@mkdir -p ${@D}
 	${COMPILE.cc} -o $@ $<
 
 TARGET_LIBS_DST	   = ${addprefix ${MASCaPS_TARGET_LIB}/,${TARGET_LIBS}}
@@ -72,6 +74,7 @@ ${TARGET_BINS_DST}	:	${TARGET_BINS}
 	@cp -p ${TARGET_BINS} ${MASCaPS_TARGET_BIN}/.
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
+	@mkdir -p ${@D}
 	$(COMPILE.cc) -MD -o $@ $<
 	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
 		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
@@ -80,6 +83,7 @@ ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
 		rm -f ${MASCaPS_TARGET_DEP}/$*.d
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.c
+	@mkdir -p ${@D}
 	$(COMPILE.c) -MD -o $@ $<
 	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
 		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
