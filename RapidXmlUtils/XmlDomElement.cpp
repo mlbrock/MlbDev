@@ -381,7 +381,6 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 		if (!(*xml_string))
 			MLB::Utility::ThrowInvalidArgument("The specified XML string is "
 				"empty.");
-# pragma warning(disable:4625 4626)
 #if defined(_MSC_VER) && (_MSC_VER >= 1000)
 # pragma warning(push)
 # pragma warning(disable:4625 4626)
@@ -403,7 +402,7 @@ XmlDomElement &XmlDomElement::ParseXmlString(const char *xml_string,
 			tmp_xml_string = const_cast<char *>(xml_string);
 			char *cr_ptr = tmp_xml_string;
 			while ((cr_ptr = ::strchr(cr_ptr, '\r')) != NULL)
-				::strcpy(cr_ptr, cr_ptr + 1);
+				::memmove(cr_ptr, cr_ptr + 1, ::strlen(cr_ptr + 1) + 1);
 		}
 		else {
 			tmp_xml_string = static_cast<char *>(
