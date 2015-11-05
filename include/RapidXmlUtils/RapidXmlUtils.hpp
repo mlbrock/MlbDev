@@ -31,6 +31,7 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1500)
 # pragma warning(push)
+# pragma warning(disable: 4365 4625 4626)
 #endif // #if defined(_MSC_VER) && (_MSC_VER >= 1500)
 
 #include <boost/property_tree/detail/rapidxml.hpp>
