@@ -29,8 +29,10 @@ TMP_FILE_NAME	:=	${lastword ${MAKEFILE_LIST}}
 TMP_DIR_NAME_1	:=	${shell dirname ${TMP_FILE_NAME}}
 TMP_DIR_NAME_2	:=	${shell dirname ${TMP_DIR_NAME_1}}
 
-LINK_STATIC_STD	:=	-static-libgcc -static-libstdc++
-LINK_STATIC_BIN	:=	-static ${LINK_STD_STATIC}
+LINK_STATIC_CPP	:=	-static-libstdc++
+LINK_STATIC_GCC	:=	-static-libgcc
+LINK_STATIC_STD	:=	${LINK_STATIC_CPP} ${LINK_STATIC_GCC}
+LINK_STATIC_BIN	:=	-static ${LINK_STATIC_STD}
 LINK_STATIC	 =
 
 CPP_BUILD_TYPE	=
