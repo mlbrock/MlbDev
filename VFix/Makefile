@@ -1,7 +1,7 @@
 # #############################################################################
 # #############################################################################
 # Multiple Architecture Source Code Production System (MASCaPS) Version 3
-# 	VFast Library Make File
+# 	VFix Library Make File
 # #############################################################################
 #
 # File Name       : VFix/Makefile
