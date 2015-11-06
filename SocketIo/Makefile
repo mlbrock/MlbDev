@@ -31,6 +31,7 @@ SRCS		=	\
 			IpAddressGeneric.cpp		\
 			MulticastIP.cpp			\
 			PacketFileReader.cpp		\
+			PacketFileReaderTmp.cpp		\
 			PacketFileWriter.cpp		\
 			PacketFormat.cpp		\
 			PacketReceiver.cpp		\
