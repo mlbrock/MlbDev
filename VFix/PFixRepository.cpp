@@ -55,7 +55,7 @@ template <typename SetType>
 template <typename SetType>
 	SetType &ShimParseXmlFile(const std::string &file_name, SetType &out_set)
 {
-	SetType::value_type sample_type;
+	typename SetType::value_type sample_type;
 
 	return(SetType::value_type::ParseXmlFile(file_name, out_set));
 }

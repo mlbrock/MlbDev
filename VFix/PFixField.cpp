@@ -453,7 +453,6 @@ bool PFixField::FixUpSet(PFixFieldSet &in_set,
 						" (" << ref_ptr_2->GetIdString() << ").";
 					MLB::Utility::ThrowInvalidArgument(o_str.str());
 				}
-				std::set<int>::difference_type difference = ref_ptr_1 - &(*iter_b);
 				const_cast<PFixField *>(ref_ptr_1)->ref_from_tag_ = iter_b->tag_;
 			}
 		}
