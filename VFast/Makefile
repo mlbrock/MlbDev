@@ -25,7 +25,13 @@ include ../.MASCaPS/MakePrefixFirst.mk
 
 TARGET_LIBS	=	libVFast.a
 
-TARGET_BINS	=
+TARGET_BINS	=	\
+			Tools/AnalyzeFieldSpecs				\
+			Tools/CheckFieldDispatch			\
+			Tools/EbsDeltaAnalyzer				\
+			Tools/EbsOrderBookEventAnalyzer			\
+			Tools/ExtractEbsStreams				\
+			Tools/VFastMsgParser
 
 SRCS		=	\
 			CmeConfigFile.cpp				\
