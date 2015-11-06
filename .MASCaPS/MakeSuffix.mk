@@ -68,7 +68,7 @@ ${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
 	@mkdir -p ${@D}
 	${COMPILE.cc} -o $@ $<
 
-${TARGET_BINS}		:	${DEPS} ${MLB_LIB_FULL}
+${TARGET_BINS}		:	${MLB_LIB_FULL}
 
 ${TARGET_BINS_DST}	:	${TARGET_BINS}
 	@cp -p ${TARGET_BINS} ${MASCaPS_TARGET_BIN}/.
