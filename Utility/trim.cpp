@@ -111,17 +111,15 @@ char *in_text;
 	char *temp_ptr_1 = in_text;
 	char *temp_ptr_2 = in_text;
 
-	while (*temp_ptr_1) {
-		if (!isspace(*((unsigned char *) temp_ptr_1))) {
-			while (*temp_ptr_1)
-				*in_text++ = *temp_ptr_1++;
-			*in_text = '\0';
-			return(temp_ptr_2);
-		}
-		temp_ptr_1++;
+	if (isspace(*((unsigned char *) temp_ptr_1++))) {
+		while (isspace(*((unsigned char *) temp_ptr_1)))
+			++temp_ptr_1;
+		do {
+			*temp_ptr_2++ = *temp_ptr_1;
+		} while (*temp_ptr_1++);
 	}
 
-	return(temp_ptr_2);
+	return(in_text);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -271,4 +269,142 @@ char *in_text;
 } // namespace Utility
 
 } // namespace MLB
+
+#ifdef TEST_MAIN
+
+#include <cstdlib>
+
+using namespace MLB::Utility;
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+struct TEST_Element {
+	TEST_Element(int ltrim_delta, int rtrim_delta, const char *str)
+		:str_(str)
+		,ltrim_len_((ltrim_delta < 0) ? 0 :
+			(str_.size() - static_cast<std::size_t>(ltrim_delta)))
+		,rtrim_len_((rtrim_delta < 0) ? 0 :
+			(str_.size() - static_cast<std::size_t>(rtrim_delta)))
+		,trim_len_((ltrim_len_ || rtrim_len_) ? (str_.size() -
+			(((ltrim_len_) ? (str_.size() - ltrim_len_) : 0) +
+			 ((rtrim_len_) ? (str_.size() - rtrim_len_) : 0))) : 0)
+	{
+	}
+
+	std::string str_;
+	std::size_t ltrim_len_;
+	std::size_t rtrim_len_;
+	std::size_t trim_len_;
+};
+//	----------------------------------------------------------------------------
+const TEST_Element TEST_TrimList[] = {
+	TEST_Element( 0,  0, ""),
+	TEST_Element( 0,  0, "no-trim"),
+	TEST_Element(-1, -1, "       "),
+	TEST_Element(-1, -1, " \t\n\f\v\r "),
+	TEST_Element( 1,  0, " ltrim-1"),
+	TEST_Element( 2,  0, "  ltrim-2"),
+	TEST_Element( 3,  0, "   ltrim-3"),
+	TEST_Element( 0,  1, "rtrim-1 "),
+	TEST_Element( 0,  2, "rtrim-2  "),
+	TEST_Element( 0,  3, "rtrim-3   "),
+	TEST_Element( 1,  1, " trim-1 "),
+	TEST_Element( 2,  2, "  trim-2  "),
+	TEST_Element( 3,  3, "   trim-3   "),
+	TEST_Element( 0,  0, "internal space-0"),
+	TEST_Element( 1,  1, " internal space-1 "),
+	TEST_Element( 1,  1, " internal  space-2 "),
+	TEST_Element( 1,  1, " internal   space-3 ")
+};
+const std::size_t  TEST_TrimCount  = sizeof(TEST_TrimList) /
+	sizeof(TEST_TrimList[0]);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string TEST_EmitString(const char *in_string, std::size_t padding = 20)
+{
+	std::size_t        in_length = ::strlen(in_string);
+	std::ostringstream o_str;
+
+	o_str << "[";
+
+	while (*in_string) {
+		o_str << ((::strchr("\t\v\f\n\r", *in_string)) ? '*' : *in_string);
+		++in_string;
+	}
+
+	o_str << "]";
+
+	if (in_length < padding)
+		o_str <<
+			std::setw(static_cast<std::streamsize>(padding - in_length)) << " ";
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_OneFunction(int &return_code, const char *func_name,
+	char * (*func_ptr)(char *), std::size_t (TEST_Element::*func_len_ptr))
+{
+	for (std::size_t count_1 = 0; count_1 < TEST_TrimCount; ++count_1) {
+		std::string tmp_string(TEST_TrimList[count_1].str_.c_str());
+		std::cout << std::left << std::setw(6) << func_name << std::right <<
+			": " << TEST_EmitString(tmp_string.c_str()) << " ---> ";
+		std::size_t result_len = ::strlen((*func_ptr)(
+			const_cast<char *>(tmp_string.c_str())));
+		std::cout << TEST_EmitString(tmp_string.c_str()) << ": ";
+		if (TEST_TrimList[count_1].*func_len_ptr == result_len)
+			std::cout << "OK" << std::endl;
+		else {
+			std::cout << "FAILED: Chars expected=" <<
+				TEST_TrimList[count_1].*func_len_ptr << ", actual=" <<
+				result_len << std::endl;
+			return_code = EXIT_FAILURE;
+		}
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+#define TEST_MAIN_RUN_FUNC_BASIC(return_code, func_name, mdata_name)	\
+	TEST_OneFunction(return_code, #func_name, func_name,					\
+		&TEST_Element:: mdata_name)
+#define TEST_MAIN_RUN_FUNC(return_code, func_name)							\
+	TEST_MAIN_RUN_FUNC_BASIC(return_code, func_name, func_name##_len_)
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_AllFunctions(int &return_code)
+{
+	TEST_MAIN_RUN_FUNC(return_code, ltrim);
+	TEST_MAIN_RUN_FUNC(return_code, rtrim);
+	TEST_MAIN_RUN_FUNC(return_code,  trim);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+// ////////////////////////////////////////////////////////////////////////////
+int main()
+{
+	int return_code = EXIT_SUCCESS;
+
+	try {
+		TEST_AllFunctions(return_code);
+	}
+	catch (const std::exception &except) {
+		return_code = EXIT_FAILURE;
+		std::cout << std::endl << "ERROR: " << except.what() << std::endl;
+	}
+
+	if (return_code != EXIT_SUCCESS)
+		std::cout << "One or more tests failed." << std::endl;
+
+	return(return_code);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+#endif // #ifdef TEST_MAIN
 

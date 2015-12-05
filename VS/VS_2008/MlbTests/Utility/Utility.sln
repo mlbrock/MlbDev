@@ -180,6 +180,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_WideChar", "ZZZ_UT
 		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_trim", "ZZZ_UTIL_trim\ZZZ_UTIL_trim.vcproj", "{A8CA8C3F-F4B7-4F40-88C8-D7C816018593}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -334,6 +339,10 @@ Global
 		{0B6A0990-DADC-4EBB-9417-A74679A39E6D}.Debug|Win32.Build.0 = Debug|Win32
 		{0B6A0990-DADC-4EBB-9417-A74679A39E6D}.Release|Win32.ActiveCfg = Release|Win32
 		{0B6A0990-DADC-4EBB-9417-A74679A39E6D}.Release|Win32.Build.0 = Release|Win32
+		{A8CA8C3F-F4B7-4F40-88C8-D7C816018593}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A8CA8C3F-F4B7-4F40-88C8-D7C816018593}.Debug|Win32.Build.0 = Debug|Win32
+		{A8CA8C3F-F4B7-4F40-88C8-D7C816018593}.Release|Win32.ActiveCfg = Release|Win32
+		{A8CA8C3F-F4B7-4F40-88C8-D7C816018593}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
