@@ -70,6 +70,7 @@ LIB_PCAP_DIR	=	${LIB_BASE}
 
 #			-DBOOST_FILESYSTEM_VERSION=${VER_BOOST_FS} \
 
+# ----- C preprocessor specific flags --- for C & C++.
 CPPFLAGS	+=	\
 			-rdynamic \
 			-D__STDC_FORMAT_MACROS \
@@ -94,14 +95,21 @@ CPPFLAGS	+=	\
 			-fmessage-length=0 \
 			-Wno-deprecated-declarations \
 			-Wno-write-strings \
-			-Wno-invalid-offsetof \
 			-Wredundant-decls \
 			-Wpointer-arith \
-			-Woverloaded-virtual \
 			-Wno-conversion \
 			-Wno-strict-aliasing \
 			-pthread \
 			-m64
+
+# ----- C++ specific flags
+CXXFLAGS	+=	\
+			-Wno-invalid-offsetof \
+			-Woverloaded-virtual
+
+# ----- C specific flags
+CFLAGS		+=	\
+			-ansi
 
 OTHER_LIBS	=
 

@@ -1,6 +1,8 @@
 CPPFLAGS	+=	\
 			-Woverlength-strings	\
-			-Woverloaded-virtual	\
 			-Wformat		\
 			-Wuninitialized
+
+CXXFLAGS	+=	\
+			-Woverloaded-virtual
 
