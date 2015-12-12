@@ -109,7 +109,7 @@ CXXFLAGS	+=	\
 
 # ----- C specific flags
 CFLAGS		+=	\
-			-ansi
+			-D_GNU_SOURCE
 
 OTHER_LIBS	=
 
