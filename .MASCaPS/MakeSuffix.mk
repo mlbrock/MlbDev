@@ -313,3 +313,36 @@ endif
 
 # #############################################################################
 
+# #############################################################################
+
+ifdef MASCaPS_DEBUG
+ X:=${info ===================================================================}
+ X:=${info SRCS                : ${SRCS}}
+ X:=${info OBJS                : ${OBJS}}
+ X:=${info DEPS                : ${DEPS}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info TARGET_LIBS_DST     : ${TARGET_LIBS_DST}}
+ X:=${info TARGET_LIBS_SO_DST  : ${TARGET_LIBS_SO_DST}}
+ X:=${info TARGET_BINS_DST     : ${TARGET_BINS_DST}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info TEST_NAMES          : ${TEST_NAMES}}
+ X:=${info TEST_PURIFY_NAMES   : ${TEST_PURIFY_NAMES}}
+ X:=${info TEST_QUANTIFY_NAMES : ${TEST_QUANTIFY_NAMES}}
+ X:=${info TEST_PURECOV_NAMES  : ${TEST_PURECOV_NAMES}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info CC                  : ${CC}}
+ X:=${info CXX                 : ${CXX}}
+ X:=${info LD                  : ${LD}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info COMPILE.c           : ${COMPILE.c}}
+ X:=${info COMPILE.cc          : ${COMPILE.cc}}
+ X:=${info COMPILE.cpp         : ${COMPILE.cpp}}
+ X:=${info -------------------------------------------------------------------}
+ X:=${info LINK.c              : ${LINK.c}}
+ X:=${info LINK.cc             : ${LINK.cc}}
+ X:=${info LINK.cpp            : ${LINK.cpp}}
+ X:=${info ===================================================================}
+endif
+
+# #############################################################################
+
