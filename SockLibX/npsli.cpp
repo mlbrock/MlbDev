@@ -18,7 +18,7 @@
 	Revision History	:	1996-04-10 --- Creation.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1996 - 2015.
+		Copyright Michael L. Brock 1996 - 2016.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -113,7 +113,7 @@ int         target_char;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  trim
 						String Justification Functions:trim
@@ -180,7 +180,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  ltrim
 						String Justification Functions:ltrim
@@ -260,7 +260,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  rtrim
 						String Justification Functions:rtrim
@@ -332,7 +332,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  oneblank
 						String Justification Functions:oneblank
@@ -411,7 +411,7 @@ char *text;
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1986 - 2015 Michael L. Brock
+   COPYRIGHT   :	Copyright 1986 - 2016 Michael L. Brock
 
    OUTPUT INDEX:	nocontrl
 						Miscellaneous Functions:nocontrl
@@ -515,7 +515,7 @@ char *text;
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1986 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1986 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	str_digit
 						Character Class Functions:Decimal Digit Character Class Functions:str_digit
@@ -618,7 +618,7 @@ int         sense_flag;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  meml_allocate
 						Memory List Functions:meml_allocate
@@ -768,7 +768,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  meml_append
 						Memory List Functions:meml_append
@@ -898,7 +898,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  meml_remove
 						Memory List Functions:meml_remove
@@ -1011,7 +1011,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  meml_remove_all
 						Memory List Functions:meml_remove_all
@@ -1098,7 +1098,7 @@ void         ***data_list;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  strl_append
 						String List Functions:strl_append
@@ -1195,7 +1195,7 @@ const char      *in_string;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  strl_remove
 						String List Functions:strl_remove
@@ -1269,7 +1269,7 @@ unsigned int    element_count;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  strl_remove_all
 						String List Functions:strl_remove_all
@@ -1365,7 +1365,7 @@ char         ***string_list;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1991 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1991 - 2016 Michael L. Brock
 
    OUTPUT INDEX:  strln_append
 						String List Functions:strln_append
@@ -1470,7 +1470,7 @@ size_t          string_length;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1992 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1992 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	sepwordl
 						String Splitting Functions:sepwordl
@@ -1604,7 +1604,7 @@ char         ***string_list;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1992 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1992 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	sepwordc_keep
 						String Splitting Functions:sepwordc_keep
@@ -1769,7 +1769,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1992 - 2015 Michael L. Brock
+   COPYRIGHT   :  Copyright 1992 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	sepwordx_keep
 						String Splitting Functions:sepwordx_keep
@@ -1917,7 +1917,7 @@ EXIT_FUNCTION:
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgItem
 						Error Description Functions:STR_AllocMsgItem
@@ -2031,7 +2031,7 @@ bytes required.
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgList
 						Error Description Functions:STR_AllocMsgList
@@ -2151,7 +2151,7 @@ va_dcl
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgPtrList
 						Error Description Functions:STR_AllocMsgPtrList
@@ -2252,7 +2252,7 @@ va_dcl
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgItemVA
 						Error Description Functions:STR_AllocMsgItemVA
@@ -2348,7 +2348,7 @@ va_list       arg_list;
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgListVA
 						Error Description Functions:STR_AllocMsgListVA
@@ -2451,7 +2451,7 @@ va_list       arg_list;
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1995 - 2015 Michael L. Brock
+	COPYRIGHT	:	Copyright 1995 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	STR_AllocMsgPtrListVA
 						Error Description Functions:STR_AllocMsgPtrListVA
@@ -2529,7 +2529,7 @@ va_list       arg_list;
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1996 - 2015 Michael L. Brock
+   COPYRIGHT   :	Copyright 1996 - 2016 Michael L. Brock
 
    OUTPUT INDEX:	extract_file_name
 						Miscellaneous Functions:extract_file_name

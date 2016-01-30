@@ -17,7 +17,7 @@
 	Revision History	:	1993-04-12 --- Creation
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1993 - 2015.
+		Copyright Michael L. Brock 1993 - 2016.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -69,7 +69,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2015 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitServEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitServEnt
@@ -131,7 +131,7 @@ void NPSL_InitServEnt(NPSL_SERVENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2015 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2016 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitServEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitServEntList
