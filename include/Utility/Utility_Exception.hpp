@@ -263,12 +263,12 @@ template <typename ExceptType> void Rethrow(const ExceptType &,
 		throw std::runtime_error(except_string);
 	}
 	catch (const std::bad_alloc &) {
-#if defined(_MSC_VER) && !defined(__MINGW32__)
+#if defined(_MSC_VER) && !defined(__MINGW32__) && (_MSC_VER < 1700)
 		// Because P. J. and Pete provided a ctor taking a const char *...
 		throw std::bad_alloc(except_string);
 #else
 		throw;
-#endif // #if defined(_MSC_VER) && !defined(__MINGW32__)
+#endif // #if defined(_MSC_VER) && !defined(__MINGW32__) && (_MSC_VER < 1700)
 	}
 	catch (const std::bad_exception &) {
 #if defined(_MSC_VER) && !defined(__MINGW32__)

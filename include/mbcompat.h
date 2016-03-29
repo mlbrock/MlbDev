@@ -77,11 +77,11 @@
 /*	***********************************************************************	*/
 #ifdef _Windows
 # ifndef __MINGW32__
-#  if _MSC_VER <= 1600
+#  if _MSC_VER <= 1700
 #   if _MSC_VER >= 1310
 #    pragma warning(disable:4820)
 #   endif /* if _MSC_VER >= 1310 */
-#  endif /* if _MSC_VER <= 1600 */
+#  endif /* if _MSC_VER <= 1700 */
 # endif /* # ifndef __MINGW32__ */
 #endif /* #ifdef _Windows */
 /*	***********************************************************************	*/
@@ -292,7 +292,7 @@
 #   pragma warning(disable:4503 4710 4786)
 #  endif /* # ifndef __MINGW32__ */
 	/* ...And using a version of of MS VC++ less than or equal MSVC 2010... */
-#  if _MSC_VER <= 1600
+#  if _MSC_VER <= 1700
 #   if _MSC_VER >= 1310
 #    pragma warning(disable:4619 4820)
 #    pragma warning(disable:4217)
@@ -351,7 +351,7 @@
 #   if _MSC_VER >= 1310
 #    pragma warning(default:4217)
 #   endif /* if _MSC_VER >= 1310 */
-#  endif /* if _MSC_VER < 1600 */
+#  endif /* if _MSC_VER <= 1700 */
 # endif /* #ifdef HH__mbcompat_h__HH___Windows_MinMax_Guard */
 #endif /* #ifdef __cplusplus */
 /*	***********************************************************************	*/
