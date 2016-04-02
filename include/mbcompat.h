@@ -30,28 +30,82 @@
 
 /*	***********************************************************************	*/
 /*	***********************************************************************	*/
+/* A compatibility shim for the old Borland C++ compiler...						*/
 /*	***********************************************************************	*/
-#if defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER)
-# ifndef _Windows
-#  define _Windows 1	/* Compatibility with the old Borland C++ compiler. */
-# endif /* # ifndef _Windows */
-#endif /* #if defined(_WIN16) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) */
+#ifndef _Windows
+# if _MSC_VER || _WIN16 || _WIN32 || _WIN64 || WINDOWS
+#  define _Windows 1
+# endif /* # if _MSC_VER || _WIN16 || _WIN32 || _WIN64 || WINDOWS */
+#endif /* #  ifndef _Windows */
+/*	***********************************************************************	*/
 
+/*	***********************************************************************	*/
+/*	***********************************************************************	*/
+/*	***********************************************************************	*/
+#ifdef __cplusplus
+# if defined(_MSC_VER)
+#  if (_MSC_VER <= 1310)
+#   if !defined(HH__mbcompat_h__HH___Windows_MinMax_Guard)
+#    define HH__mbcompat_h__HH___Windows_MinMax_Guard	1
+#   endif /* if !defined(HH__mbcompat_h__HH___Windows_MinMax_Guard) */
+#  elif !defined(NOMINMAX)
+#   define NOMINMAX	1
+#  endif /* if (_MSC_VER <= 1310) */
+# endif /* #if defined(_MSC_VER) */
+#endif /* #ifdef __cplusplus */
 /*	***********************************************************************	*/
 
 /*	***********************************************************************	*/
 /*	***********************************************************************	*/
 /*
-	Get rid of spurious warnings from more recent VC++ compilers...
+	Get rid of spurious warnings from more recent VC++ compilers:
+
+	C4996: The compiler encountered a deprecated declaration
+
+	C4217: 'operator' : member template functions cannot be used for
+          copy-assignment or copy-construction
+	C4503: 'identifier' : decorated name length exceeded, name was truncated
+	C4514: 'function': unreferenced inline function has been removed
+	C4548: expression before comma has no effect; expected expression
+          with side-effect
+	C4571: informational: catch(…) semantics changed since Visual C++ 7.1;
+          structured exceptions (SEH) are no longer caught
+	C4619: #pragma warning: there is no warning number 'number'
+	C4668: 'symbol' is not defined as a preprocessor macro, replacing with
+          '0' for 'directives'
+	C4710: 'function': function not inlined
+	C4711: function 'function' selected for inline expansion
+	C4786: 'symbol' : object name was truncated to 'number' characters in
+          the debug information
+	C4820: 'bytes' bytes padding added after construct 'member_name'
+
+	VS 2003+
+		/Wall /wd4619 /wd4668 /wd4711 /wd4820
+	VS 2008+
+		/Wall /wd4619 /wd4668 /wd4711 /wd4820 /wd4548 /wd4571
+   VS 2010+
+		/Wall /wd4619 /wd4668 /wd4711 /wd4820 /wd4548 /wd4571 /wd4350 /wd4503 /wd4514 /wd4710 /wd4786
 */
 /*	***********************************************************************	*/
-#ifdef _Windows
-# if !defined(__MINGW32__)
-#  if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#ifdef _MSC_VER
+# ifndef __MINGW32__
+#  if (_MSC_VER >= 1500)
+#   pragma warning(disable:4996)
+#  endif // #if (_MSC_VER >= 1500)
+#  if _MSC_VER >= 1310
+#   pragma warning(disable:4619 4668 4711 4820)
+#  endif /* if _MSC_VER >= 1310 */
+#  if (_MSC_VER >= 1400)
 #   pragma warning(disable:4548 4571)
-#  endif /* #if defined(_MSC_VER) && (_MSC_VER >= 1400) */
-# endif /* #if !defined(__MINGW32__) */
-#endif /* #ifdef _Windows */
+#  endif /* #if (_MSC_VER >= 1400) */
+#  if (_MSC_VER >= 1500)
+#   pragma warning(disable:4350 4503 4514 4710 4786)
+#  endif /* #if (_MSC_VER <= 1500) */
+/* Pushed disables...                                                      */
+#  pragma warning(push)
+/* Place other warnings to be disabled for this file here...               */
+# endif /* #ifndef __MINGW32__ */
+#endif /* #ifdef _MSC_VER */
 /*	***********************************************************************	*/
 
 /*	***********************************************************************	*/
@@ -61,29 +115,16 @@
 	"deprecation" of standard libaray functions.
 */
 /*	***********************************************************************	*/
-#if defined(_MSC_VER) && (_MSC_VER >= 1400)
-# ifndef _CRT_SECURE_NO_DEPRECATE
-#  define _CRT_SECURE_NO_DEPRECATE	1
-# endif /* # ifndef _CRT_SECURE_NO_DEPRECATE */
-# ifndef _CRT_NONSTDC_NO_DEPRECATE
-#  define _CRT_NONSTDC_NO_DEPRECATE	1
-# endif /* # ifndef _CRT_NONSTDC_NO_DEPRECATE */
-#endif /* #if defined(_MSC_VER) && (_MSC_VER >= 1400) */
-/*	***********************************************************************	*/
-
-/*	***********************************************************************	*/
-/*	***********************************************************************	*/
-/* Some pragmas to disable the more stupid MSVC warnings...						*/
-/*	***********************************************************************	*/
-#ifdef _Windows
-# ifndef __MINGW32__
-#  if _MSC_VER <= 1700
-#   if _MSC_VER >= 1310
-#    pragma warning(disable:4820)
-#   endif /* if _MSC_VER >= 1310 */
-#  endif /* if _MSC_VER <= 1700 */
-# endif /* # ifndef __MINGW32__ */
-#endif /* #ifdef _Windows */
+#ifdef _MSC_VER
+# if (_MSC_VER >= 1400)
+#  ifndef _CRT_SECURE_NO_DEPRECATE
+#   define _CRT_SECURE_NO_DEPRECATE	1
+#  endif /* # ifndef _CRT_SECURE_NO_DEPRECATE */
+#  ifndef _CRT_NONSTDC_NO_DEPRECATE
+#   define _CRT_NONSTDC_NO_DEPRECATE	1
+#  endif /* # ifndef _CRT_NONSTDC_NO_DEPRECATE */
+# endif /* #if (_MSC_VER >= 1400) */
+#endif /* #ifdef _MSC_VER */
 /*	***********************************************************************	*/
 
 /*	***********************************************************************	*/
@@ -215,7 +256,7 @@
 #  define MBCOMPAT_EXCEPT_THROW(except)				throw(except)
 #  define MBCOMPAT_EXCEPT_THROW_CTOR(except, data)	throw(except(data))
 #  define MBCOMPAT_EXCEPT_RETHROW						throw
-#  if _Windows
+#  ifdef _MSC_VER
 #   if _MSC_VER <= 1300
 #    ifndef __GNUC__
 #     ifndef MBCOMPAT_EXCEPT_NO_SPEC
@@ -224,7 +265,7 @@
 #     endif /* #   ifndef MBCOMPAT_EXCEPT_NO_SPEC */
 #    endif /* #ifndef __GNUC */
 #   endif /* #  if _MSC_VER <= 1300 */
-#  endif /* # if _Windows */
+#  endif /* # ifdef _MSC_VER */
 #  ifndef MBCOMPAT_EXCEPT_NO_SPEC
 #   define MBCOMPAT_EXCEPT_NOTHROW						throw()
 #   define MBCOMPAT_EXCEPT_CANTHROW(except)			throw(except)
@@ -278,32 +319,12 @@
 /* To prevent the problems caused by the macro definitions 'min' and 'max'.*/
 /*	***********************************************************************	*/
 #ifdef __cplusplus
-# ifdef _Windows
-#  define HH__mbcompat_h__HH___Windows_MinMax_Guard	1
-# elif WINDOWS
-#  define HH__mbcompat_h__HH___Windows_MinMax_Guard	1
-# elif WIN32
-#  define HH__mbcompat_h__HH___Windows_MinMax_Guard	1
-# endif /* #ifdef _Windows */
-
-	/* If compiling under Windows... */
+	/* If compiling under Windows and we need to protect min/max... */
 # ifdef HH__mbcompat_h__HH___Windows_MinMax_Guard
-#  ifndef __MINGW32__
-#   pragma warning(disable:4503 4710 4786)
-#  endif /* # ifndef __MINGW32__ */
 	/* ...And using a version of of MS VC++ less than or equal MSVC 2010... */
 #  if _MSC_VER <= 1700
-#   if _MSC_VER >= 1310
-#    pragma warning(disable:4619 4820)
-#    pragma warning(disable:4217)
-#   endif /* if _MSC_VER >= 1310 */
-#   if defined(_MSC_VER) && (_MSC_VER >= 1500)
-#    pragma warning(disable:4548)
-#   endif /* #if defined(_MSC_VER) && (_MSC_VER >= 1500) */
-#   define NOMINMAX
-#   ifndef __MINGW32__
-#    pragma warning(disable:4018 4100 4146 4244 4245 4511 4512 4514 4663)
-#   endif /* #   ifndef __MINGW32__ */
+#   pragma warning(push)
+#   pragma warning(disable:4018 4100 4146 4244 4245 4511 4512 4663)
     /*
 		Following occur in MSVC 2010 with /Wall. They've promised to fix in 2011.
 		C:\Program Files\Microsoft Visual Studio 10.0\VC\include\crtdbg.h(1078): warning C4986: 'operator new[]': exception specification does not match previous declaration
@@ -319,9 +340,6 @@
 #   if _MSC_VER == 1600
 #    pragma warning(pop)
 #   endif /* #   if _MSC_VER == 1600 */
-#   ifndef __MINGW32__
-#    pragma warning(default:4018 4100 4146 4244 4245 4511 4512 4663)
-#   endif /* #   ifndef __MINGW32__ */
 #   ifdef min
 #    undef min
 #   endif /* #  ifdef min */
@@ -345,12 +363,7 @@
 		} /* namespace std */
 #    endif /* #    if _MSC_VER < 1300 */
 #   endif /* # ifdef _XUTILITY_ */
-#   if defined(_MSC_VER) && (_MSC_VER < 1500)
-#    pragma warning(default:4548)
-#   endif /* #if defined(_MSC_VER) && (_MSC_VER >= 1500) */
-#   if _MSC_VER >= 1310
-#    pragma warning(default:4217)
-#   endif /* if _MSC_VER >= 1310 */
+#   pragma warning(pop)
 #  endif /* if _MSC_VER <= 1700 */
 # endif /* #ifdef HH__mbcompat_h__HH___Windows_MinMax_Guard */
 #endif /* #ifdef __cplusplus */
@@ -417,6 +430,17 @@
 #else
 # define MB_LIB_EXCEPTION_CLASS(some_api)
 #endif /* #ifdef _Windows */
+/*	***********************************************************************	*/
+
+/*	***********************************************************************	*/
+/*	***********************************************************************	*/
+/* Restore pushed disables...                                              */
+/*	***********************************************************************	*/
+#ifdef _MSC_VER
+# ifndef __MINGW32__
+#  pragma warning(pop)
+# endif /* #ifndef __MINGW32__ */
+#endif /* #ifdef _MSC_VER */
 /*	***********************************************************************	*/
 
 #endif /* #ifndef HH__mbcompat_h__HH */

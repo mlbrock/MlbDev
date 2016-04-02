@@ -69,11 +69,6 @@
 #endif // #ifdef MB_LIB_THIS_SIDE
 #define MB_LIB_THIS_SIDE	API_UTILITY
 
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1500)
-# pragma warning(disable:4996)
-#endif // #if defined(_MSC_VER) && (_MSC_VER >= 1500)
-
 #ifdef _Windows
 # if !defined(__MINGW32__)
 #  pragma warning(push)
