@@ -18,10 +18,11 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)..\_lib\$(ConfigurationName)\"
-			IntermediateDirectory="Debug"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\lib\"
+			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="4"
 			CharacterSet="2"
+			BuildLogFile="$(IntDir)\$(ProjectName).BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -49,7 +50,7 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				ProgramDataBaseFileName="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDataBaseFileName="$(OutDir)$(ProjectName).pdb"
 				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="3"
@@ -65,17 +66,18 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).lib"
+				OutputFile="$(OutDir)$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
+				OutputDocumentFile="$(IntDir)\..\$(ProjectName).xml"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).bsc"
+				OutputFile="$(IntDir)\..\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -86,11 +88,12 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)..\_lib\$(ConfigurationName)\"
-			IntermediateDirectory="Release"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\lib\"
+			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
+			BuildLogFile="$(IntDir)\$(ProjectName).BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -116,7 +119,7 @@
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				ProgramDataBaseFileName="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDataBaseFileName="$(OutDir)$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -131,17 +134,18 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).lib"
+				OutputFile="$(OutDir)$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
+				OutputDocumentFile="$(IntDir)\..\$(ProjectName).xml"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				OutputFile="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).bsc"
+				OutputFile="$(IntDir)\..\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"

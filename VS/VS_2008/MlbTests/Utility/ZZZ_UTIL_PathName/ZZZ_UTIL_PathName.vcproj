@@ -18,10 +18,11 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)..\_bin\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\bin\"
+			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="1"
 			CharacterSet="2"
+			BuildLogFile="$(IntDir)\$(ProjectName).BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -47,8 +48,9 @@
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				ProgramDataBaseFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDataBaseFileName="$(OutDir)$(ProjectName).pdb"
 				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="3"
@@ -65,17 +67,18 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="setargv.obj ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib"
-				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
+				OutputFile="$(OutDir)$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib"
+				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_50\lib"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)$(ProjectName).pdb"
 				GenerateMapFile="true"
-				MapFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).map"
+				MapFileName="$(OutDir)$(ProjectName).map"
 				MapExports="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -86,10 +89,11 @@
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
+				OutputDocumentFile="$(IntDir)\..\$(ProjectName).xml"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).bsc"
+				OutputFile="$(IntDir)\..\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -103,11 +107,12 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)..\_bin\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\bin\"
+			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
+			BuildLogFile="$(IntDir)\$(ProjectName).BuildLog.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -132,10 +137,12 @@
 				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_50"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;MB_LIB_STATIC;TEST_MAIN"
+				MinimalRebuild="false"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="false"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				ProgramDataBaseFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDataBaseFileName="$(OutDir)$(ProjectName).pdb"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -151,18 +158,19 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="setargv.obj ActiveDS.lib adsiid.lib mpr.lib Rpcrt4.lib Ws2_32.lib snmpapi.lib netapi32.lib"
-				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).exe"
+				OutputFile="$(OutDir)$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(SolutionDir)..\_lib\$(ConfigurationName)&quot;;\Vendor\Boost\boost_1_50\lib"
+				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_50\lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).pdb"
+				ProgramDatabaseFile="$(OutDir)$(ProjectName).pdb"
 				GenerateMapFile="true"
-				MapFileName="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).map"
+				MapFileName="$(OutDir)$(ProjectName).map"
 				MapExports="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -173,10 +181,11 @@
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
+				OutputDocumentFile="$(IntDir)\..\$(ProjectName).xml"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				OutputFile="$(SolutionDir)..\_bin\$(ConfigurationName)\$(ProjectName).bsc"
+				OutputFile="$(IntDir)\..\$(ProjectName).bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
