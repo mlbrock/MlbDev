@@ -126,9 +126,10 @@ char *trim(char *in_text);
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-inline API_UTILITY bool IsNull(const char *test_string)
+template <typename DatumType>
+	inline API_UTILITY bool IsNull(const DatumType *test_datum)
 {
-	return(test_string == NULL);
+	return(test_datum == NULL);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -177,6 +178,7 @@ inline API_UTILITY std::string NullOrEmptyToStringWithColon(
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace {
+
 //	////////////////////////////////////////////////////////////////////////////
 inline API_UTILITY void ThrowIfSupport(const char *name_string,
 	const char *error_string)
@@ -188,16 +190,18 @@ inline API_UTILITY void ThrowIfSupport(const char *name_string,
 		std::string(error_string));
 }
 //	////////////////////////////////////////////////////////////////////////////
+
 } // Anonymous namespace
 
 //	////////////////////////////////////////////////////////////////////////////
-inline API_UTILITY const char *ThrowIfNull(const char *test_string,
+template <typename DatumType>
+	inline API_UTILITY DatumType *ThrowIfNull(DatumType *test_datum,
 	const char *name_string = NULL)
 {
-	if (test_string == NULL)
+	if (test_datum == NULL)
 		ThrowIfSupport(name_string, " is a 'NULL' pointer.");
 
-	return(test_string);
+	return(test_datum);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -213,8 +217,8 @@ inline API_UTILITY const char *ThrowIfEmpty(const char *test_string,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-inline API_UTILITY const std::string &ThrowIfEmpty(const std::string &test_string,
-	const char *name_string = NULL)
+inline API_UTILITY const std::string &ThrowIfEmpty(
+	const std::string &test_string, const char *name_string = NULL)
 {
 	ThrowIfEmpty(test_string.c_str(), name_string);
 
