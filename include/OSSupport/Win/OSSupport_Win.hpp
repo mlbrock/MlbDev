@@ -55,7 +55,7 @@
 #include <Utility/TimeSupport.hpp>
 #include <Utility/VersionNumber.hpp>
 
-#include <OSSupport.hpp>
+#include <OSSupport/OSSupport.hpp>
 
 #include <psapi.h>
 

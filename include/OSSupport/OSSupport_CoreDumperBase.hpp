@@ -44,7 +44,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport.hpp>
+#include <OSSupport/OSSupport.hpp>
 
 #ifdef _MSC_VER
 # pragma warning(push)

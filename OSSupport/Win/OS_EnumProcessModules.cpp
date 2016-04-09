@@ -32,7 +32,7 @@
 
 #include <BoostX.hpp>
 
-#include <OSSupport_Win.hpp>
+#include <OSSupport/Win/OSSupport_Win.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 

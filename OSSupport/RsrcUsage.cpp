@@ -31,10 +31,10 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-//#include <OSSupport_RsrcUsage.h>
+//#include <OSSupport/OSSupport_RsrcUsage.h>
 
 //	CODE NOTE: To be removed.
-#include <OSSupport.hpp>
+#include <OSSupport/OSSupport.hpp>
 
 #include <Utility/StringSupport.hpp>
 #include <Utility/ValueToStringRadix.hpp>

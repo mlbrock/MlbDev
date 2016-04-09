@@ -66,7 +66,7 @@
 #include <Utility.hpp>
 
 #ifdef _MSC_VER
-# include <OSSupport_Win.hpp>
+# include <OSSupport/Win/OSSupport_Win.hpp>
 # else
 # error "This operating system is not yet supported by the OSSupport library."
 #endif // #ifdef _MSC_VER

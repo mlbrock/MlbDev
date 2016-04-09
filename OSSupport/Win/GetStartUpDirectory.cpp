@@ -29,7 +29,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win.hpp>
+#include <OSSupport/Win/OSSupport_Win.hpp>
 
 #include <Utility/PathName.hpp>
 
