@@ -65,6 +65,8 @@
 
 #include <Utility.hpp>
 
+#include <mbtypes.h>
+
 #ifdef _MSC_VER
 # include <OSSupport/Win/OSSupport_Win.hpp>
 # else

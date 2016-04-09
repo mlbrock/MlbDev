@@ -293,6 +293,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\OSSupport\Win\OS_GetModuleHandleEx.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\OSSupport\Win\OS_GetProcAddress.cpp"
 				>
 			</File>

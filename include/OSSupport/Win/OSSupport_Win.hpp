@@ -57,14 +57,17 @@
 
 #include <OSSupport/OSSupport.hpp>
 
+#include <map>
+
 #include <psapi.h>
 
+#pragma warning(push)
 #pragma warning(disable:4217 4668)
 
 #include <boost/shared_ptr.hpp>
 #include <boost/shared_array.hpp>
 
-# pragma warning(default:4217 4668)
+# pragma warning(pop)
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -212,6 +215,8 @@ struct API_OSSUPPORT OS_VersionInfoKey {
 	static OS_VersionInfoKey &ZeroLangAndCode(OS_VersionInfoKey &datum) {
 		datum.lang_code_ = 0;
 		datum.code_page_ = 0;
+
+		return(datum);
 	}
 
 	static void ZeroLangAndCode(std::set<OS_VersionInfoKey> &data) {
@@ -230,6 +235,12 @@ struct API_OSSUPPORT OS_VersionInfoKey {
 	WORD        code_page_;
 	std::string info_value_;
 };
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+typedef std::map<FARPROC, Native_UInt16> WinProcAddrMap;
+typedef WinProcAddrMap::iterator         WinProcAddrMapIter;
+typedef WinProcAddrMap::const_iterator   WinProcAddrMapIterC;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -309,8 +320,18 @@ API_OSSUPPORT std::string  OS_GetModuleFileNameEx(HANDLE process_handle,
 	HMODULE module_handle);
 
 //	Kernel32.lib/GetModuleHandle()
+API_OSSUPPORT HMODULE OS_GetModuleHandle(const char *module_name,
+	bool throw_if_not_loaded = true);
 API_OSSUPPORT HMODULE OS_GetModuleHandle(const std::string &module_name,
 	bool throw_if_not_loaded = true);
+API_OSSUPPORT HMODULE OS_GetModuleHandle();
+
+//	Kernel32.lib/GetModuleHandleEx()
+API_OSSUPPORT HMODULE OS_GetModuleHandleEx(DWORD flags,
+	const char *module_name, bool throw_if_not_loaded = true);
+API_OSSUPPORT HMODULE OS_GetModuleHandleEx(DWORD flags,
+	const std::string &module_name, bool throw_if_not_loaded = true);
+API_OSSUPPORT HMODULE OS_GetModuleHandleEx(bool inc_ref_count = false);
 
 //	Kernel32.lib/FreeLibrary()
 API_OSSUPPORT BOOL    OS_FreeLibrary(HMODULE module_handle);
@@ -320,9 +341,21 @@ API_OSSUPPORT HMODULE OS_LoadLibrary(const std::string &library_name);
 
 //	Kernel32.lib/GetProcAddress()
 API_OSSUPPORT FARPROC OS_GetProcAddress(HMODULE module_handle,
+	const char *proc_spec, bool require_proc = true);
+API_OSSUPPORT FARPROC OS_GetProcAddress(HMODULE module_handle,
+	Native_UInt16 proc_ordinal, bool require_proc = true);
+API_OSSUPPORT FARPROC OS_GetProcAddress(HMODULE module_handle,
 	const std::string &proc_name, bool require_proc = true);
 API_OSSUPPORT FARPROC OS_GetProcAddress(const std::string &module_name,
+	const char *proc_spec, bool require_proc = true);
+API_OSSUPPORT FARPROC OS_GetProcAddress(const std::string &module_name,
+	Native_UInt16 proc_ordinal, bool require_proc = true);
+API_OSSUPPORT FARPROC OS_GetProcAddress(const std::string &module_name,
 	const std::string &proc_name, bool require_proc = true);
+API_OSSUPPORT std::string OS_GetProcAddressArgDescription(
+	const char *proc_spec);
+API_OSSUPPORT WinProcAddrMap GetWinProcAddrMap(HMODULE module_handle);
+API_OSSUPPORT WinProcAddrMap GetWinProcAddrMap(const std::string &module_name);
 
 //	Version.lib/GetFileVersionInfoSize()
 API_OSSUPPORT DWORD OS_GetFileVersionInfoSize(const std::string &file_name,

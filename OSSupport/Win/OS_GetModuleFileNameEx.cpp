@@ -50,14 +50,15 @@ char *OS_GetModuleFileNameEx(HANDLE process_handle, HMODULE module_handle,
 
 	HMODULE psapi_module_handle = EnsureLoadedLibrary("psapi", true);
 
+#pragma warning(push)
 #pragma warning(disable:4191)
 	OS_FPtr_GetModuleFileNameExA proc_addr =
 		reinterpret_cast<OS_FPtr_GetModuleFileNameExA>(OS_GetProcAddress(
 		psapi_module_handle, "GetModuleFileNameExA", true));
-#pragma warning(default:4191)
+#pragma warning(pop)
 
-	if ((*proc_addr)(process_handle, module_handle, module_name,
-		module_name_length) == 0)
+	if ((*proc_addr)(process_handle, module_handle,
+		reinterpret_cast<LPTSTR>(module_name), module_name_length) == 0)
 		MLB::Utility::ThrowSystemError("Call to 'GetModuleFileNameExA()' for "
 			"process " + MLB::Utility::ValueToStringHex(process_handle) +
 			", module " + MLB::Utility::ValueToStringHex(module_handle) + " with "
