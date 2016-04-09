@@ -1211,10 +1211,7 @@ std::string GetExtension(const std::string &path_name)
 #include <Utility/TimeSupport.hpp>
 #include <Utility/StringSupport.hpp>
 #include <Utility/UniqueId.hpp>
-
 #include <Utility/EmitterSep.hpp>
-#include <Utility/EmitterTab.hpp>
-#include <Utility/EmitterCommentCpp.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -1622,11 +1619,6 @@ std::string TEST_GetExtItems(const char *expected, const char *actual)
 void TEST_GetExtension(int &return_code, bool with_detail = true)
 {
 	std::size_t max_text = 0;
-
-std::cout << EmitterTab(1) << "EmitterTab(1)" << std::endl;
-std::cout << EmitterTab(2) << "EmitterTab(2)" << std::endl;
-std::cout << EmitterTab(3) << "EmitterTab(3)" << std::endl;
-std::cout << EmitterCommentCpp() << "EmitterCommentCpp()" << std::endl;
 
 	std::cout << EmitterSep('=');
 	std::cout << "Testing GetExtensionPtr()" << std::endl;
