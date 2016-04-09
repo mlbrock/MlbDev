@@ -58,9 +58,13 @@
 #endif // #ifdef MB_LIB_THIS_SIDE
 #define MB_LIB_THIS_SIDE	API_BOOSTX
 
-#ifdef _Windows
+#ifdef _MSC_VER
+# pragma warning(push)
 # pragma warning(disable:4217 4275 4668 4625 4626)
-#endif // #ifdef _Windows
+# if (_MSC_VER >= 1500)
+#  pragma warning(disable:4061 4365)
+# endif // #if (_MSC_VER >= 1500)
+#endif // #ifdef _MSC_VER
 
 #include <boost/thread/recursive_mutex.hpp>
 #include <boost/thread/xtime.hpp>
@@ -74,9 +78,9 @@ namespace boost {
 }
 #endif // #if BOOST_VERSION < 105000
 
-#ifdef _Windows
-# pragma warning(default:4217 4275 4668 4625 4626)
-#endif // #ifdef _Windows
+#ifdef _MSC_VER
+# pragma warning(pop)
+#endif // #ifdef _MSC_VER
 
 // ////////////////////////////////////////////////////////////////////////////
 

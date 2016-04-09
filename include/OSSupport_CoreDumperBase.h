@@ -46,11 +46,19 @@
 
 #include <OSSupport.h>
 
-#pragma warning(disable:4217 4275 4668 4625 4626)
+#ifdef _MSC_VER
+# pragma warning(push)
+# pragma warning(disable:4217 4275 4668 4625 4626)
+# if (_MSC_VER >= 1500)
+#  pragma warning(disable:4061 4365)
+# endif // #if (_MSC_VER >= 1500)
+#endif // #ifdef _MSC_VER
 
 #include <boost/thread/mutex.hpp>
 
-# pragma warning(default:4217 4275 4668 4625 4626)
+#ifdef _MSC_VER
+# pragma warning(pop)
+#endif // #ifdef _MSC_VER
 
 // ////////////////////////////////////////////////////////////////////////////
 
