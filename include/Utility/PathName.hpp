@@ -24,7 +24,6 @@
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__PathName_hpp__HH
 
 #define HH__MLB__Utility__PathName_hpp__HH	1
@@ -65,8 +64,23 @@ const char PathNameSeparatorCanonical_String[] = "/";
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+#ifdef __MSDOS__
+const char PathNameMetaChar_String[] = "\\/:";
+#elif _Windows
+const char PathNameMetaChar_String[] = "\\/:";
+#elif _VMS_
+const char PathNameMetaChar_String[] = "[]:";
+#else
+const char PathNameMetaChar_String[] = "/";
+#endif // #ifdef __MSDOS__
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 API_UTILITY bool         IsPathNameSlash(char in_path_char);
 API_UTILITY bool         IsPathNameSlash(const char *in_path_string);
+
+API_UTILITY bool         IsPathMetaChar(char in_path_char);
+API_UTILITY bool         IsPathMetaChar(const char *in_path_string);
 
 API_UTILITY std::string  CanonicalizePathNameSlashes(
 	const std::string &path_name_in);
@@ -152,6 +166,14 @@ API_UTILITY void TruncateFileSize(const std::string &file_name,
 	unsigned long long new_file_size);
 API_UTILITY void TruncateFileSize(FileHandleNative file_handle,
 	unsigned long long new_file_size);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+API_UTILITY const char  *GetExtensionPtr(const char *path_name,
+	std::size_t path_length);
+API_UTILITY const char  *GetExtensionPtr(const char *path_name);
+API_UTILITY const char  *GetExtensionPtr(const std::string &path_name);
+API_UTILITY std::string  GetExtension(const std::string &path_name);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace Utility

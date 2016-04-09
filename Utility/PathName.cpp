@@ -98,6 +98,20 @@ bool IsPathNameSlash(const char *in_path_string)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+bool IsPathMetaChar(char in_path_char)
+{
+	return(in_path_char && ::strchr(PathNameMetaChar_String, in_path_char));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+bool IsPathMetaChar(const char *in_path_string)
+{
+	return(IsPathMetaChar(*in_path_string));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 std::string CanonicalizePathNameSlashes(const std::string &path_name_in)
 {
 	char datum[MaxPathNameLength + 1 + 1];
@@ -1143,6 +1157,51 @@ void TruncateFileSize(FileHandleNative file_handle,
 }
 //	////////////////////////////////////////////////////////////////////////////
 
+//	////////////////////////////////////////////////////////////////////////////
+const char *GetExtensionPtr(const char *path_name, std::size_t path_length)
+{
+	if (*path_name && path_length) {
+		const char *curr_ptr = path_name + (path_length - 1);
+		if (*curr_ptr == '.')
+			return(NULL);
+		while (--curr_ptr > path_name) {
+			if (*curr_ptr == '.')
+				break;
+			else if (IsPathMetaChar(*curr_ptr))
+				return(NULL);
+		}
+		if ((*curr_ptr == '.') && (curr_ptr > path_name) &&
+			(!IsPathMetaChar(*(curr_ptr - 1))))
+			return(++curr_ptr);
+	}
+
+	return(NULL);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const char *GetExtensionPtr(const char *path_name)
+{
+	return(GetExtensionPtr(path_name, ::strlen(path_name)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const char *GetExtensionPtr(const std::string &path_name)
+{
+	return(GetExtensionPtr(path_name.c_str(), path_name.size()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+std::string GetExtension(const std::string &path_name)
+{
+	const char *ext_ptr = GetExtensionPtr(path_name);
+
+	return((ext_ptr) ? ext_ptr : "");
+}
+//	////////////////////////////////////////////////////////////////////////////
+
 } // namespace Utility
 
 } // namespace MLB
@@ -1152,6 +1211,10 @@ void TruncateFileSize(FileHandleNative file_handle,
 #include <Utility/TimeSupport.hpp>
 #include <Utility/StringSupport.hpp>
 #include <Utility/UniqueId.hpp>
+
+#include <Utility/EmitterSep.hpp>
+#include <Utility/EmitterTab.hpp>
+#include <Utility/EmitterCommentCpp.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -1491,6 +1554,110 @@ void TEST_CheckNativeFileString(int &return_code)
 }
 // ////////////////////////////////////////////////////////////////////////////
 
+// ////////////////////////////////////////////////////////////////////////////
+typedef std::pair<const char *, const char *> TEST_ExtPair;
+
+const TEST_ExtPair TEST_ExtPairList[] = {
+	TEST_ExtPair(".No_Ext_Leading_Period",                                 NULL),
+	TEST_ExtPair(".No_Ext_Leading_Period.",                                NULL),
+	TEST_ExtPair(".Has_Ext_Leading_Period.ext",                            "ext"),
+	TEST_ExtPair(".Has_Ext_Leading_Period.ext.",                           NULL),
+	TEST_ExtPair("No_Ext",                                                 NULL),
+	TEST_ExtPair("No_Ext.",                                                NULL),
+	TEST_ExtPair("Has_Ext.ext",                                            "ext"),
+	TEST_ExtPair("Has_Ext.ext.",                                           NULL),
+	TEST_ExtPair("Has.Ext.Multiple.Periods.ext",                           "ext"),
+	TEST_ExtPair("Has.Ext.Multiple.Periods.ext.",                          NULL),
+	//	Unices and Windows...
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",          NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",         NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext",     "ext"),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",    NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext",                          NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext.",                         NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has_Ext.ext",                     "ext"),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                    NULL),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext",    "ext")
+#ifdef WIN32
+	,
+	//	Just Windows...
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",        NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",       NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext",   "ext"),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",  NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext",                        NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext.",                       NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has_Ext.ext",                   "ext"),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                  NULL),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext",  "ext"),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext.", NULL)
+#endif // #ifdef WIN32
+};
+const std::size_t  TEST_ExtPairCount  =
+	sizeof(TEST_ExtPairList) / sizeof(TEST_ExtPairList[0]);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+const char *TEST_GetExtItem(const char *src)
+{
+	return((src) ? src : "***NULL***");
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string TEST_GetExtItems(const char *expected, const char *actual)
+{
+	std::ostringstream o_str;
+
+	o_str
+		<< "   : EXPECTED=[" << TEST_GetExtItem(expected) << "]\n"
+		<< "   : ACTUAL  =[" << TEST_GetExtItem(actual)   << "]"
+			;
+
+	return(o_str.str());
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+void TEST_GetExtension(int &return_code, bool with_detail = true)
+{
+	std::size_t max_text = 0;
+
+std::cout << EmitterTab(1) << "EmitterTab(1)" << std::endl;
+std::cout << EmitterTab(2) << "EmitterTab(2)" << std::endl;
+std::cout << EmitterTab(3) << "EmitterTab(3)" << std::endl;
+std::cout << EmitterCommentCpp() << "EmitterCommentCpp()" << std::endl;
+
+	std::cout << EmitterSep('=');
+	std::cout << "Testing GetExtensionPtr()" << std::endl;
+	std::cout << EmitterSep('-');
+
+	for (std::size_t count_1 = 0; count_1 < TEST_ExtPairCount; ++count_1)
+		max_text = std::max(max_text, ::strlen(TEST_ExtPairList[count_1].first));
+
+	for (std::size_t count_1 = 0; count_1 < TEST_ExtPairCount; ++count_1) {
+		std::cout << std::setw(3) << count_1 << ": [" << std::left <<
+			std::setw(static_cast<std::streamsize>(max_text)) <<
+			TEST_ExtPairList[count_1].first << std::right << "] ---> ";
+		const char *ext_ptr = GetExtensionPtr(TEST_ExtPairList[count_1].first);
+		bool        failed  = false;
+		if (((!ext_ptr) && TEST_ExtPairList[count_1].second) ||
+			 (ext_ptr && (!TEST_ExtPairList[count_1].second)) ||
+			 (ext_ptr && ::strcmp(ext_ptr, TEST_ExtPairList[count_1].second))) {
+			failed      = true;
+			return_code = EXIT_FAILURE;
+		}
+		std::cout << ((failed) ? "FAILED" : "OK");
+		if (with_detail || failed)
+			std::cout << "\n" <<
+				TEST_GetExtItems(TEST_ExtPairList[count_1].second, ext_ptr);
+		std::cout << std::endl;
+	}
+
+	std::cout << EmitterSep('=') << std::endl;
+}
+// ////////////////////////////////////////////////////////////////////////////
+
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -1504,6 +1671,7 @@ int main(int argc, char **argv)
 		TEST_CheckNativeFileString(return_code);
 		TEST_SomeOtherStuff(return_code);
 		TEST_MoveFileLogic(return_code);
+		TEST_GetExtension(return_code);
 	}
 	catch (const std::exception &except) {
 		std::cout << std::endl;
