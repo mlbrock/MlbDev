@@ -25,9 +25,9 @@
 // ////////////////////////////////////////////////////////////////////////////
 
 
-#ifndef HH_MLB_OSSupport_h_HH
+#ifndef HH___MLB__OSSupport__OSSupport_hpp___HH
 
-#define HH_MLB_OSSupport_h_HH	1
+#define HH___MLB__OSSupport__OSSupport_hpp___HH	1
 
 #define MLB_LIB_OSSupport
 
@@ -127,5 +127,5 @@ API_OSSUPPORT void ThrowNotSupported(const std::string &func_name,
 
 } // namespace MLB
 
-#endif // #ifndef HH_MLB_OSSupport_h_HH
+#endif // #ifndef HH___MLB__OSSupport__OSSupport_hpp___HH
 

@@ -24,9 +24,9 @@
 */
 //	////////////////////////////////////////////////////////////////////////////
  
-#ifndef HH_MLB_OSSupport_File_h_HH
+#ifndef HH___MLB__OSSupport__OSSupport_File_hpp___HH
 
-#define HH_MLB_OSSupport_File_h_HH	1
+#define HH___MLB__OSSupport__OSSupport_File_hpp___HH	1
 
 //	////////////////////////////////////////////////////////////////////////////
 //	////////////////////////////////////////////////////////////////////////////
@@ -258,5 +258,5 @@ private:
 
 } // namespace MLB
 
-#endif // #ifndef HH_MLB_OSSupport_File_h_HH
+#endif // #ifndef HH___MLB__OSSupport__OSSupport_File_hpp___HH
 
