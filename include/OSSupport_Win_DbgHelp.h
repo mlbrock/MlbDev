@@ -34,8 +34,8 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win.h>
-#include <OSSupport_CoreDumperBase.h>
+#include <OSSupport_Win.hpp>
+#include <OSSupport_CoreDumperBase.hpp>
 
 #ifdef _MSC_VER
 # pragma warning(push)

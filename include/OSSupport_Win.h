@@ -35,7 +35,7 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file OSSupport_Win.h
+	\file OSSupport_Win.hpp
 
 	\brief	The MLB Operating System Support header file for Microsoft Windows.
 
@@ -55,7 +55,7 @@
 #include <Utility/TimeSupport.hpp>
 #include <Utility/VersionNumber.hpp>
 
-#include <OSSupport.h>
+#include <OSSupport.hpp>
 
 #include <psapi.h>
 

@@ -29,7 +29,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_CoreDumperBase.h>
+#include <OSSupport_CoreDumperBase.hpp>
 
 #include <Utility/PathName.hpp>
 #include <Utility/StringSupport.hpp>

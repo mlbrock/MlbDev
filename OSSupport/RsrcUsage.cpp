@@ -34,7 +34,7 @@
 //#include <OSSupport_RsrcUsage.h>
 
 //	CODE NOTE: To be removed.
-#include <OSSupport.h>
+#include <OSSupport.hpp>
 
 #include <Utility/StringSupport.hpp>
 #include <Utility/ValueToStringRadix.hpp>

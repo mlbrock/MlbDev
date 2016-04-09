@@ -30,7 +30,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win.h>
+#include <OSSupport_Win.hpp>
 
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/Utility_Exception.hpp>

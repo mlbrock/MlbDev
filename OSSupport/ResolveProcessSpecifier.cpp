@@ -30,7 +30,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport.h>
+#include <OSSupport.hpp>
 
 #include <Utility/Utility_Exception.hpp>
 

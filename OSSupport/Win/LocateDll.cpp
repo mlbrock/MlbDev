@@ -35,7 +35,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win.h>
+#include <OSSupport_Win.hpp>
 
 #include <Utility/PathName.hpp>
 #include <Utility/StringSupport.hpp>

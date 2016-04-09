@@ -1,7 +1,7 @@
 /*
 	Added files:
 	----- ------
-	OSSupport_CoreDumperBase.h
+	OSSupport_CoreDumperBase.hpp
 
 	CoreDumperBase.cpp
 	Win/FileTimeToTimeSpec.cpp
@@ -41,7 +41,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win.h>
+#include <OSSupport_Win.hpp>
 
 #include <Utility/Utility_Exception.hpp>
 

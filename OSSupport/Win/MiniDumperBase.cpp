@@ -29,7 +29,7 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include <OSSupport_Win_DbgHelp.h>
+#include <OSSupport_Win_DbgHelp.hpp>
 
 #include <Utility/EnumFlagOps.hpp>
 #include <Utility/ValueToStringRadix.hpp>
