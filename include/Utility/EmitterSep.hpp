@@ -100,7 +100,7 @@ template <typename CharType>
 		boost::io::basic_ios_all_saver<CharType> io_state(o_str);
 		o_str << std::setfill(datum.SepChar()) <<
 			std::setw(static_cast<std::streamsize>(datum.SepLength())) <<
-			IoCharInfo<CharType>::string_type();
+			typename IoCharInfo<CharType>::string_type();
 		if (datum.EndLine())
 			o_str << std::endl;
 	}

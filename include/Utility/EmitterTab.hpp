@@ -98,12 +98,12 @@ template <typename CharType>
 		if (datum.UseTabs())
 			o_str << std::setfill(datum.FillChar()) <<
 				std::setw(static_cast<std::streamsize>(datum.TabCount())) <<
-				IoCharInfo<CharType>::string_type();
+				typename IoCharInfo<CharType>::string_type();
 		else
 			o_str << std::setfill(datum.FillChar()) <<
 				std::setw(static_cast<std::streamsize>(
 				datum.TabCount() * datum.TabSize())) <<
-				IoCharInfo<CharType>::string_type();
+				typename IoCharInfo<CharType>::string_type();
 	}
 
 	return(o_str);
