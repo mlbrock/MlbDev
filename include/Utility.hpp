@@ -69,10 +69,13 @@
 #endif // #ifdef MB_LIB_THIS_SIDE
 #define MB_LIB_THIS_SIDE	API_UTILITY
 
-#ifdef _Windows
+#ifdef _MSC_VER
 # if !defined(__MINGW32__)
 #  pragma warning(push)
 #  pragma warning(disable:4018 4100 4146 4244 4290 4511 4512 4663)
+#  if (_MSC_VER == 1600)	//	Needed for new and delete that one version.
+#   pragma warning(disable:4986)
+#  endif // #if (_MSC_VER == 1600)
 # endif // #if !defined(__MINGW32__)
 # include <Windows.h>
 # include <bitset>
@@ -106,7 +109,7 @@
 # include <math.h>
 # include <vector>
 # include <netdb.h>
-#endif // #ifdef _Windows
+#endif // #ifdef _MSC_VER
 
 // ////////////////////////////////////////////////////////////////////////////
 
