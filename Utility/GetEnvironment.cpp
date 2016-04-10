@@ -36,6 +36,8 @@
 # include <unistd.h>
 #endif // #ifdef _Windows
 
+#include <boost/shared_ptr.hpp>
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
@@ -66,20 +68,84 @@ std::string::size_type GetEnvStringSeparatorIndex(const std::string &env_string)
 }
 // ////////////////////////////////////////////////////////////////////////////
 
+#ifdef _Windows
+
+namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+std::string GetWinEnvironmentBuffer()
+{
+	std::string env_buffer;
+
+#ifdef UNICODE
+
+	boost::shared_ptr<wchar_t> original_ptr(::GetEnvironmentStrings(),
+		::FreeEnvironmentStrings);
+
+	const wchar_t *begin_ptr = original_ptr.get();
+	const wchar_t *end_ptr   = begin_ptr;
+
+	while (*end_ptr != L'\0') {
+		if (*++end_ptr == L'\0')
+			end_ptr++;
+	}
+
+	int src_length = static_cast<int>(end_ptr - begin_ptr + 1);
+	int dst_length = ::WideCharToMultiByte(CP_ACP, 0, begin_ptr,
+		src_length, NULL, 0, NULL, NULL);
+
+	if (dst_length < 1) {
+		std::ostringstream error_text;
+		error_text << "The wide character string can not be converted: The "
+			"attempt to determine the ANSI equivalent length returned " <<
+			dst_length << ".";
+		ThrowLogicError(error_text.str());
+	}
+
+	std::string(static_cast<std::size_t>(dst_length), '\0').swap(env_buffer);
+
+	if (!::WideCharToMultiByte(CP_ACP, 0, begin_ptr, src_length,
+		const_cast<char *>(env_buffer.c_str()), dst_length, NULL, NULL ))
+		ThrowLogicError("Attempt to convert a Unicode environment buffer "
+			"failed.");
+
+#else
+
+	boost::shared_ptr<char>  original_ptr(::GetEnvironmentStrings(),
+		::FreeEnvironmentStrings);
+	const char              *begin_ptr = original_ptr.get();
+	const char              *curr_ptr  = begin_ptr;
+
+	if (begin_ptr) {
+		while (*curr_ptr)
+			curr_ptr += ::strlen(curr_ptr) + 1;
+		std::string(begin_ptr,
+			static_cast<std::size_t>((curr_ptr - begin_ptr) + 1)).
+			swap(env_buffer);
+	}
+
+#endif // #ifdef UNICODE
+
+	return(env_buffer);
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+#endif // #ifdef _Windows
+
 // ////////////////////////////////////////////////////////////////////////////
 void GetEnvironment(EnvpList &env_list)
 {
 	EnvpList tmp_env_list;
 
 #ifdef _Windows
-	LPTSTR      original_ptr    = ::GetEnvironmentStrings();
-	const char *env_strings_ptr = static_cast<char *>(original_ptr);
-
-	if (env_strings_ptr == NULL)
-		throw ExceptionGeneral("Unable to get a pointer to the list of "
-			"environment strings.");
-
 	try {
+		std::string  env_string(GetWinEnvironmentBuffer());
+		const char  *env_strings_ptr = env_string.c_str();
+		if (env_string.empty())
+			throw ExceptionGeneral("Unable to get a pointer to the list of "
+				"environment strings.");
 		//	If returned pointer pointers to ASCII NUL, then no environment.
 		if (*env_strings_ptr) {
 			//	First few strings returned by GetEnvironmentStrings() are drive
@@ -94,11 +160,10 @@ void GetEnvironment(EnvpList &env_list)
 			}
 		}
 	}
-	catch (const std::exception &) {
-		::FreeEnvironmentStrings(original_ptr);
-		throw;
+	catch (const std::exception &except) {
+		Rethrow(except, "Unable to retrieve the Windows environment "
+			"variables: " + std::string(except.what()));
 	}
-	::FreeEnvironmentStrings(original_ptr);
 #else
 	char **env_ptr = environ;
 
@@ -404,6 +469,8 @@ EnvpList MergeEnvironment(const EnvpList &base_env, const EnvpList &added_env,
 
 #ifdef TEST_MAIN
 
+#include <Utility/EmitterSep.hpp>
+
 #include <cstdlib>
 #include <iterator>
 
@@ -461,7 +528,7 @@ void TEST_RunTest(const EnvpList &base_env, const EnvpList &added_env,
 	std::cout << "---- ----:" << std::endl;
 	std::copy(base_env.begin(), base_env.end(),
 		std::ostream_iterator<EnvpList::value_type>(std::cout, "\n"));
-	std::cout << std::setfill('-') << std::setw(79) << "" <<
+	std::cout << std::setfill('-') << std::setw(79) << "" << std::endl;
 	std::cout << "Added List:" << std::endl;
 	std::cout << "----- ----:" << std::endl;
 	std::copy(added_env.begin(), added_env.end(),
@@ -485,6 +552,22 @@ void TEST_RunTest(const EnvpList &base_env, const EnvpList &added_env,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+void TEST_DumpEnv()
+{
+	std::cout << EmitterSep('=');
+	std::cout << "Complete Environment:\n";
+	std::cout << EmitterSep('-');
+
+	EnvpList real_env(GetEnvironment());
+
+	std::copy(real_env.begin(), real_env.end(),
+		std::ostream_iterator<EnvpList::value_type>(std::cout, "\n"));
+
+	std::cout << EmitterSep('=') << std::endl;
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 int main()
 {
 	int return_code = EXIT_SUCCESS;
@@ -496,6 +579,7 @@ int main()
 		TEST_Populate(TEST_AddedEnvCount, TEST_AddedEnvList, added_env);
 		TEST_RunTest(base_env, added_env, false, false);
 		TEST_RunTest(base_env, added_env, true, false);
+		TEST_DumpEnv();
 	}
 	catch (const std::exception &except) {
 		std::cerr << std::endl << std::endl << "ERROR: " << except.what() <<
