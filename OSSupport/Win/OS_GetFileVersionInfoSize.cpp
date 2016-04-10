@@ -48,19 +48,19 @@ DWORD OS_GetFileVersionInfoSize(const std::string &file_name,
 
 	HMODULE module_handle = EnsureLoadedLibrary("version", true);
 
-	typedef COMPAT_FN_TYPE(DWORD (WINAPI *OS_FPtr_GetFileVersionInfoSize),
-		(LPTSTR, LPDWORD));
+	typedef COMPAT_FN_TYPE(DWORD (WINAPI *OS_FPtr_GetFileVersionInfoSizeA),
+		(LPSTR, LPDWORD));
 
 #pragma warning(disable:4191)
-	OS_FPtr_GetFileVersionInfoSize get_size_proc_addr   =
-		reinterpret_cast<OS_FPtr_GetFileVersionInfoSize>(OS_GetProcAddress(
+	OS_FPtr_GetFileVersionInfoSizeA get_size_proc_addr   =
+		reinterpret_cast<OS_FPtr_GetFileVersionInfoSizeA>(OS_GetProcAddress(
 		module_handle, "GetFileVersionInfoSizeA", true));
 #pragma warning(default:4191)
 
 	if ((info_size = (*get_size_proc_addr)(const_cast<char *>(file_name.c_str()),
 		&unknown_value)) == 0)
-		MLB::Utility::ThrowSystemError("Call to 'GetFileVersionInfoSize()' for "
-			"file name '" + file_name + "' failed");
+		MLB::Utility::ThrowSystemError("Call to 'GetFileVersionInfoSizeA()' "
+			"for file name '" + file_name + "' failed");
 
 	return(info_size);
 }

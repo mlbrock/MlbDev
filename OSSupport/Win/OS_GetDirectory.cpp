@@ -64,8 +64,8 @@ void HandleGetDirResult(unsigned int name_size, DWORD needed_size,
 // ////////////////////////////////////////////////////////////////////////////
 char *OS_GetCurrentDirectory(char *name_buffer, unsigned int name_size)
 {
-	HandleGetDirResult(name_size, ::GetCurrentDirectory(name_size, name_buffer),
-		"GetCurrentDirectory");
+	HandleGetDirResult(name_size,
+		::GetCurrentDirectoryA(name_size, name_buffer), "GetCurrentDirectory");
 
 	return(name_buffer);
 }
@@ -93,8 +93,8 @@ std::string OS_GetCurrentDirectory()
 // ////////////////////////////////////////////////////////////////////////////
 char *OS_GetSystemDirectory(char *name_buffer, unsigned int name_size)
 {
-	HandleGetDirResult(name_size, ::GetSystemDirectory(name_buffer, name_size),
-		"GetSystemDirectory");
+	HandleGetDirResult(name_size,
+		::GetSystemDirectoryA(name_buffer, name_size), "GetSystemDirectory");
 
 	return(name_buffer);
 }
@@ -122,8 +122,8 @@ std::string OS_GetSystemDirectory()
 // ////////////////////////////////////////////////////////////////////////////
 char *OS_GetWindowsDirectory(char *name_buffer, unsigned int name_size)
 {
-	HandleGetDirResult(name_size, ::GetWindowsDirectory(name_buffer, name_size),
-		"GetWindowsDirectory");
+	HandleGetDirResult(name_size,
+		::GetWindowsDirectoryA(name_buffer, name_size), "GetWindowsDirectory");
 
 	return(name_buffer);
 }

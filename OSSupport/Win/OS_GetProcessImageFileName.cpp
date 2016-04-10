@@ -44,8 +44,8 @@ namespace OSSupport {
 char *OS_GetProcessImageFileName(HANDLE process_handle, char *file_name,
 	DWORD file_name_length)
 {
-	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetProcessImageFileName),
-		(HANDLE, LPTSTR, DWORD));
+	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetProcessImageFileNameA),
+		(HANDLE, LPSTR, DWORD));
 
 	process_handle = ((process_handle == INVALID_HANDLE_VALUE) ||
 		(process_handle == 0)) ? GetCurrentProcess() : process_handle;
@@ -53,14 +53,14 @@ char *OS_GetProcessImageFileName(HANDLE process_handle, char *file_name,
 	HMODULE module_handle = EnsureLoadedLibrary("psapi", true);
 
 #pragma warning(disable:4191)
-	OS_FPtr_GetProcessImageFileName proc_addr =
-		reinterpret_cast<OS_FPtr_GetProcessImageFileName>(OS_GetProcAddress(
-		module_handle, "GetProcessImageFileName"));
+	OS_FPtr_GetProcessImageFileNameA proc_addr =
+		reinterpret_cast<OS_FPtr_GetProcessImageFileNameA>(OS_GetProcAddress(
+		module_handle, "GetProcessImageFileNameA"));
 #pragma warning(default:4191)
 
 	if ((*proc_addr)(((FARPROC) process_handle), file_name,
 		file_name_length) == 0)
-		MLB::Utility::ThrowSystemError("Call to 'GetProcessImageFileName()' "
+		MLB::Utility::ThrowSystemError("Call to 'GetProcessImageFileNameA()' "
 			"failed.");
 
 	return(file_name);

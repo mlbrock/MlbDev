@@ -49,12 +49,12 @@ HMODULE OS_GetModuleHandleEx(DWORD flags, const char *module_name,
 {
 	HMODULE module_handle;
 
-	if (::GetModuleHandleEx(flags, reinterpret_cast<LPCTSTR>(module_name),
+	if (::GetModuleHandleExA(flags, reinterpret_cast<LPCSTR>(module_name),
 		&module_handle) == 0) {
 		if (throw_if_not_loaded ||
 			(flags & GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS)) {
 			std::ostringstream o_str;
-			o_str << "Call to 'GetModuleHandleEx(" <<
+			o_str << "Call to 'GetModuleHandleExA(" <<
 				MLB::Utility::ValueToStringHex(flags) << ", ";
 			if (flags & GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS)
 				o_str << MLB::Utility::ValueToStringHex(module_name);

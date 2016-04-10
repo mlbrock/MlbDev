@@ -46,7 +46,7 @@ char *OS_GetModuleBaseName(HANDLE process_handle, HMODULE module_handle,
 	char *module_name, DWORD module_name_length)
 {
 	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetModuleBaseNameA),
-		(HANDLE, HMODULE, LPTSTR, DWORD));
+		(HANDLE, HMODULE, LPSTR, DWORD));
 
 	HMODULE psapi_module_handle = EnsureLoadedLibrary("psapi", true);
 

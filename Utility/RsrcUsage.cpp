@@ -629,8 +629,8 @@ void RsrcUsage::GetRsrcUsageByWindowsHandle(HANDLE selector, RsrcUsage &datum)
 
 	RsrcUsage                           tmp_datum;
 
-	if ((module_kernel32 = ::GetModuleHandle("Kernel32")) == NULL)
-		ThrowSystemError("Call to 'GetModuleHandle()' for 'Kernel32' failed.");
+	if ((module_kernel32 = ::GetModuleHandleA("Kernel32")) == NULL)
+		ThrowSystemError("Call to 'GetModuleHandleA()' for 'Kernel32' failed.");
 
 # pragma warning(disable:4191)
 	if ((proc_times_fptr =
@@ -652,15 +652,15 @@ void RsrcUsage::GetRsrcUsageByWindowsHandle(HANDLE selector, RsrcUsage &datum)
 	}
 
 # if _MSC_VER >= 1300
-	if ((module_psapi = ::GetModuleHandle("psapi")) == NULL) {
+	if ((module_psapi = ::GetModuleHandleA("psapi")) == NULL) {
 		//	Note that we do not perform a 'FreeLibrary()' for psapi.dll. This
 		//	is because we'll probably need it subsequently...
 		HMODULE psapi_dll_handle;
-		if ((psapi_dll_handle = ::LoadLibrary("psapi.dll")) == NULL)
+		if ((psapi_dll_handle = ::LoadLibraryA("psapi.dll")) == NULL)
 			ThrowSystemError("Call to 'LoadLibrary()' for 'psapi.dll' failed.");
 	}
 
-	if ((module_psapi = ::GetModuleHandle("psapi")) != NULL) {
+	if ((module_psapi = ::GetModuleHandleA("psapi")) != NULL) {
 # pragma warning(disable:4191)
 		if ((mem_info_fptr =
 			reinterpret_cast<GEN_Win32_FPtr_GetMemInfoFPtr>(::GetProcAddress(module_psapi,

@@ -352,17 +352,17 @@ void OSFile::Open(const std::string &file_name, bool read_only_flag,
 
 	bool new_file_flag = false;
 
-	if (::GetFileAttributes(file_name.c_str()) == INVALID_FILE_ATTRIBUTES) {
+	if (::GetFileAttributesA(file_name.c_str()) == INVALID_FILE_ATTRIBUTES) {
 		if ((GetLastError() != ERROR_FILE_NOT_FOUND) || read_only_flag)
 			ThrowSystemError("Attempt to open file '" + file_name +
-				"' failed --- GetFileAttributes() failed");
+				"' failed --- GetFileAttributesA() failed");
 		new_file_flag = true;
 	}
 
 	if (do_not_create && new_file_flag)
 		ThrowException("File '" + file_name + "' does not already exist.");
 
-	if ((native_handle_ = ::CreateFile(file_name.c_str(),
+	if ((native_handle_ = ::CreateFileA(file_name.c_str(),
 		static_cast<DWORD>((read_only_flag) ? FILE_READ_DATA :
 			(FILE_READ_DATA | FILE_WRITE_DATA)),
 		FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -372,7 +372,7 @@ void OSFile::Open(const std::string &file_name, bool read_only_flag,
 		FILE_ATTRIBUTE_NORMAL,
 		NULL)) == INVALID_HANDLE_VALUE)
 		ThrowSystemError("Attempt to open file '" + file_name +
-			"' with 'CreateFile()' failed");
+			"' with 'CreateFileA()' failed");
 
 	file_name_    = file_name;
 	file_size_    = GetFileSize(file_name);

@@ -177,8 +177,8 @@ void SetCurrentPath(const char *new_path)
 		ThrowInvalidArgument("Invocation of 'SetCurrentPath()' with a path name "
 			"argument equal to 'NULL'.");
 #if _Windows
-	if (!::SetCurrentDirectory(new_path))
-		ThrowSystemError("Invocation of 'SetCurrentDirectory()' for path "
+	if (!::SetCurrentDirectoryA(new_path))
+		ThrowSystemError("Invocation of 'SetCurrentDirectoryA()' for path "
 			"name '" + std::string(new_path) + "' failed");
 #else
 	if (chdir(new_path) != 0)
@@ -697,18 +697,18 @@ void PathNameToGeneric(const std::string &in_path, std::string &out_path,
 
 	char  unc_info[(MaxPathNameLength * 2) + 1];
 	DWORD unc_info_size = sizeof(unc_info);
-	if (::WNetGetUniversalName(tmp_path.c_str(), UNIVERSAL_NAME_INFO_LEVEL,
+	if (::WNetGetUniversalNameA(tmp_path.c_str(), UNIVERSAL_NAME_INFO_LEVEL,
 		&unc_info, &unc_info_size) == NO_ERROR)
 		out_path =
-			reinterpret_cast<UNIVERSAL_NAME_INFO *>(unc_info)->lpUniversalName;
+			reinterpret_cast<UNIVERSAL_NAME_INFOA *>(unc_info)->lpUniversalName;
 	else {
 		SystemErrorCode last_error = GetLastError();
 		if (last_error != ERROR_NOT_CONNECTED)
 			ThrowSystemError("Invocation of 'WNetGetUniversalName()' for path "
 				"name '" + tmp_path + "' failed");
 		char datum[(MaxPathNameLength * 2) + 1];
-		if (!::GetLongPathName(tmp_path.c_str(), datum, sizeof(datum) - 1))
-			ThrowSystemError(last_error, "Invocation of 'WNetGetUniversalName()' "
+		if (!::GetLongPathNameA(tmp_path.c_str(), datum, sizeof(datum) - 1))
+			ThrowSystemError(last_error, "Invocation of 'WNetGetUniversalNameA()' "
 				"for path name '" + tmp_path + "' failed");
 		out_path = datum;
 	}
@@ -1055,7 +1055,7 @@ void TruncateFileSize(const char *file_name, unsigned long long new_file_size)
 	try {
 #ifdef _MSC_VER
 		HANDLE file_handle;
-		if ((file_handle = ::CreateFile(file_name,
+		if ((file_handle = ::CreateFileA(file_name,
 //			FILE_READ_DATA,
 			(FILE_READ_DATA | FILE_WRITE_DATA),
 			FILE_SHARE_READ | FILE_SHARE_WRITE,

@@ -46,7 +46,7 @@ char *OS_GetModuleFileNameEx(HANDLE process_handle, HMODULE module_handle,
 	char *module_name, DWORD module_name_length)
 {
 	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetModuleFileNameExA),
-		(HANDLE, HMODULE, LPTSTR, DWORD));
+		(HANDLE, HMODULE, LPSTR, DWORD));
 
 	HMODULE psapi_module_handle = EnsureLoadedLibrary("psapi", true);
 
@@ -57,8 +57,8 @@ char *OS_GetModuleFileNameEx(HANDLE process_handle, HMODULE module_handle,
 		psapi_module_handle, "GetModuleFileNameExA", true));
 #pragma warning(pop)
 
-	if ((*proc_addr)(process_handle, module_handle,
-		reinterpret_cast<LPTSTR>(module_name), module_name_length) == 0)
+	if ((*proc_addr)(process_handle, module_handle, module_name,
+		module_name_length) == 0)
 		MLB::Utility::ThrowSystemError("Call to 'GetModuleFileNameExA()' for "
 			"process " + MLB::Utility::ValueToStringHex(process_handle) +
 			", module " + MLB::Utility::ValueToStringHex(module_handle) + " with "

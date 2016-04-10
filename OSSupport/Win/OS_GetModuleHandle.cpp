@@ -45,17 +45,17 @@ HMODULE OS_GetModuleHandle(const char *module_name, bool throw_if_not_loaded)
 {
 	HMODULE module_handle;
 
-	if ((module_handle = ::GetModuleHandle(
-		reinterpret_cast<LPCTSTR>(module_name))) == NULL) {
+	if ((module_handle = ::GetModuleHandleA(
+		reinterpret_cast<LPCSTR>(module_name))) == NULL) {
 		if (throw_if_not_loaded || (!module_name)) {
 			std::ostringstream o_str;
-			o_str << "Call to 'GetModuleHandle()' to determine the module "
+			o_str << "Call to 'GetModuleHandleA()' to determine the module "
 				"handle for ";
 			if (module_name)
 				o_str << "module name '" << module_name << "' failed";
 			else
 				o_str << "the module of the executable which created the .exe "
-					"process which invoked GetModuleHandle() (specified with a "
+					"process which invoked GetModuleHandleA() (specified with a "
 					"NULL module name parameter) failed";
 			MLB::Utility::ThrowSystemError(o_str.str());
 		}

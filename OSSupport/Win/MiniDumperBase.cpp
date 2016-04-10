@@ -414,7 +414,7 @@ void MiniDumperBase::EmitMiniDump(const std::string &file_name,
 			Hacked code from the Oleg Starodumov sample 'MaxiDump.cpp' on his
 			site www.debuginfo.com.
 		*/
-		HANDLE dump_handle = ::CreateFile(file_name.c_str(),
+		HANDLE dump_handle = ::CreateFileA(file_name.c_str(),
 			GENERIC_READ | GENERIC_WRITE,
 			0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 		if ((dump_handle == NULL ) || (dump_handle == INVALID_HANDLE_VALUE))

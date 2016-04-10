@@ -134,19 +134,19 @@ void OS_GetFileVersionInfo(const std::string &file_name, DWORD buffer_length,
 {
 	DWORD unknown_handle = NULL;
 
-	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetFileVersionInfo),
-		(LPTSTR, DWORD, DWORD, LPVOID));
-	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_VerQueryValue),
-		(const LPVOID, LPTSTR, LPVOID, PUINT));
+	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_GetFileVersionInfoA),
+		(LPSTR, DWORD, DWORD, LPVOID));
+	typedef COMPAT_FN_TYPE(BOOL (WINAPI *OS_FPtr_VerQueryValueA),
+		(const LPVOID, LPSTR, LPVOID, PUINT));
 
 	HMODULE module_handle = EnsureLoadedLibrary("version", true);
 
 #pragma warning(disable:4191)
-	OS_FPtr_GetFileVersionInfo get_info_proc_addr   =
-		reinterpret_cast<OS_FPtr_GetFileVersionInfo>(OS_GetProcAddress(
+	OS_FPtr_GetFileVersionInfoA get_info_proc_addr   =
+		reinterpret_cast<OS_FPtr_GetFileVersionInfoA>(OS_GetProcAddress(
 		module_handle, "GetFileVersionInfoA", true));
-	OS_FPtr_VerQueryValue      query_value_proc_addr =
-		reinterpret_cast<OS_FPtr_VerQueryValue>(OS_GetProcAddress(
+	OS_FPtr_VerQueryValueA      query_value_proc_addr =
+		reinterpret_cast<OS_FPtr_VerQueryValueA>(OS_GetProcAddress(
 		module_handle, "VerQueryValueA", true));
 #pragma warning(default:4191)
 
@@ -157,6 +157,7 @@ void OS_GetFileVersionInfo(const std::string &file_name, DWORD buffer_length,
 			MLB::Utility::AnyToString(buffer_length) + " failed");
 
 	VS_FIXEDFILEINFO tmp_version_info;
+
 	Extract_VS_FIXEDFILEINFO(buffer_length, buffer_ptr, tmp_version_info);
 
 	struct LANG_AND_CODEPAGE_INFO {

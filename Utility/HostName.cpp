@@ -61,9 +61,9 @@ char *GetHostName(char *host_name, unsigned int host_name_length)
 #ifdef _Windows
 	// Under Windows, the length must include space for the ASCII 0
 	unsigned int out_host_name_length = host_name_length + 1;
-	if (::GetComputerName(static_cast<LPTSTR>(host_name),
+	if (::GetComputerNameA(host_name,
 		reinterpret_cast<LPDWORD>(&out_host_name_length)) == 0)
-		ThrowSystemError("Invocation of 'GetComputerName()' failed");
+		ThrowSystemError("Invocation of 'GetComputerNameA()' failed");
 #else
 # ifndef __MSDOS__
 	if (::gethostname(host_name, static_cast<int>(host_name_length)) != 0)
@@ -99,8 +99,8 @@ void SetHostName(const std::string &host_name)
 void SetHostName(const char *host_name)
 {
 #ifdef _Windows
-	if (::SetComputerName(static_cast<LPCSTR>(host_name)) == 0)
-		ThrowSystemError("Invocation of 'SetComputerName()' failed");
+	if (::SetComputerNameA(host_name) == 0)
+		ThrowSystemError("Invocation of 'SetComputerNameA()' failed");
 #else
 # ifndef __MSDOS__
 	if (::sethostname(host_name, ::strlen(host_name)) != 0)

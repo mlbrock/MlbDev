@@ -45,7 +45,7 @@ HMODULE OS_LoadLibrary(const std::string &library_name)
 {
 	HMODULE library_handle;
 
- 	if ((library_handle = ::LoadLibrary(library_name.c_str())) == NULL)
+ 	if ((library_handle = ::LoadLibraryA(library_name.c_str())) == NULL)
 		MLB::Utility::ThrowSystemError("Call to 'LoadLibrary()' for file '" +
 			library_name + "' failed");
 

@@ -72,7 +72,7 @@ char *GetCurrentUserName(char *user_name, unsigned int user_name_length)
 	// Under Windows, the length must include space for the ASCII 0
 	unsigned int out_user_name_length = user_name_length + 1;
 
-	if (::GetUserName(static_cast<LPTSTR>(user_name),
+	if (::GetUserNameA(user_name,
 		reinterpret_cast<LPDWORD>(&out_user_name_length)) == 0)
 		ThrowSystemError("Invocation of 'GetUserName()' failed");
 #else

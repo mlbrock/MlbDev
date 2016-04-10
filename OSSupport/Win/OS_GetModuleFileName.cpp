@@ -45,9 +45,9 @@ namespace OSSupport {
 char *OS_GetModuleFileName(HMODULE module_handle, char *module_name,
 	DWORD module_name_length)
 {
-	if (::GetModuleFileName(module_handle,
-		reinterpret_cast<LPTSTR>(module_name), module_name_length) == 0)
-		MLB::Utility::ThrowSystemError("Call to 'GetModuleFileName()' for "
+	if (::GetModuleFileNameA(module_handle, module_name,
+		module_name_length) == 0)
+		MLB::Utility::ThrowSystemError("Call to 'GetModuleFileNameA()' for "
 			"module " + MLB::Utility::ValueToStringHex(module_handle) + " with a "
 			"module name buffer located at " +
 			MLB::Utility::ValueToStringHex(module_name) + " and a module name "

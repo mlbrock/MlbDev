@@ -318,7 +318,7 @@ void SimpleMMapFile::OpenFileInternal()
 	//	NOTE: In the case where the file doesn't already, there exists a
 	//			race condition between the call to GetFileAttributes() and
 	//			the call to CreateFile().
-	if (::GetFileAttributes(file_name_.c_str()) == INVALID_FILE_ATTRIBUTES) {
+	if (::GetFileAttributesA(file_name_.c_str()) == INVALID_FILE_ATTRIBUTES) {
 		if ((::GetLastError() != ERROR_FILE_NOT_FOUND) || IsReadOnly()) {
 			std::ostringstream error_text;
 			error_text << "Attempt to open file '" << file_name_ <<
@@ -330,7 +330,7 @@ void SimpleMMapFile::OpenFileInternal()
 	else
 		is_new_file_ = false;
 
-	if ((file_handle_ = ::CreateFile(file_name_.c_str(),
+	if ((file_handle_ = ::CreateFileA(file_name_.c_str(),
 		static_cast<DWORD>((is_read_only_) ? FILE_READ_DATA :
 			(FILE_READ_DATA | FILE_WRITE_DATA)),
 		FILE_SHARE_READ,

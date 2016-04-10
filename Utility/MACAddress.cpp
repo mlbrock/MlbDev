@@ -151,10 +151,10 @@ std::deque<MLB::Utility::MACAddress>
 
    /* Load the SNMP dll and get the addresses of the functions
        necessary */
-	m_hInst = LoadLibrary("inetmib1.dll");
+	m_hInst = LoadLibraryA("inetmib1.dll");
 	if (m_hInst == NULL)
 		MLB::Utility::ThrowSystemError("Unable to load DLL 'inetmib1.dll' with \
-'LoadLibrary()'");
+'LoadLibraryA()'");
 
 #if !defined(__MINGW32__)
 # pragma warning(disable:4191)

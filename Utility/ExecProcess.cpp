@@ -154,18 +154,18 @@ ExecProcessInfo ExecProcess(const ArgvList &argv_list,
 		envp_string += '\0';
 	}
 
-	STARTUPINFO         startup_info;
+	STARTUPINFOA        startup_info;
 	PROCESS_INFORMATION process_info;
 
-	::GetStartupInfo(&startup_info);
+	::GetStartupInfoA(&startup_info);
 
 	//	Must have a guaranteed non-const copy of the string because the
 	//	CreateProcess() function modifies the string.
 	char *tmp_argv_string = NULL;
 	tmp_argv_string = C_strdup(argv_string.str().c_str(),
-		"Temporary argv string for Windows 'CreateProcess()' function");
+		"Temporary argv string for Windows 'CreateProcessA()' function");
 
-	BOOL return_code = ::CreateProcess(NULL,
+	BOOL return_code = ::CreateProcessA(NULL,
 		tmp_argv_string,
 		NULL,
 		NULL,
@@ -182,7 +182,7 @@ ExecProcessInfo ExecProcess(const ArgvList &argv_list,
 	::free(tmp_argv_string);
 
 	if (!return_code)
-		ThrowSystemError("Attempt to use 'CreateProcess()' for command line '" +
+		ThrowSystemError("Attempt to use 'CreateProcessA()' for command line '" +
 			argv_string.str() + "' failed");
 
 	fork_process_info.process_id_     =

@@ -354,7 +354,7 @@ void OSFile::Open(const std::string &file_name, bool read_only_flag,
 
 	bool new_file_flag = false;
 
-	if (::GetFileAttributes(file_name.c_str()) == INVALID_FILE_ATTRIBUTES) {
+	if (::GetFileAttributesA(file_name.c_str()) == INVALID_FILE_ATTRIBUTES) {
 		if ((::GetLastError() != ERROR_FILE_NOT_FOUND) || read_only_flag)
 			MLB::Utility::ThrowSystemError("Attempt to open file '" + file_name +
 				"' failed --- GetFileAttributes() failed");
@@ -365,7 +365,7 @@ void OSFile::Open(const std::string &file_name, bool read_only_flag,
 		MLB::Utility::ThrowException("File '" + file_name +
 			"' does not already exist.");
 
-	if ((native_handle_ = ::CreateFile(file_name.c_str(),
+	if ((native_handle_ = ::CreateFileA(file_name.c_str(),
 		(read_only_flag) ? FILE_READ_DATA : (FILE_READ_DATA | FILE_WRITE_DATA),
 		FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL,
