@@ -156,5 +156,8 @@
     <ClCompile Include="..\..\..\..\OSSupport\ThrowNotSupported.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetModuleHandleEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetModuleFileName.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetModuleFileNameEx.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetModuleHandle.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetModuleHandleEx.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetProcAddress.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetProcessImageFileName.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetProcessIoCounters.cpp" />
