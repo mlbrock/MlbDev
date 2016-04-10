@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\lib\"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\90\$(ConfigurationName)\MultiByte\MlbTests\lib\"
 			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv7_2\include;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv"
+				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_54_0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;RAPIDXMLUTILS_DLL_EXPORTS"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -69,7 +69,7 @@
 				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib Utility_DLL.lib RapidXmlUtils_DLL.lib libtibrvcppmd.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"
+				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_54_0\lib\vc90\Win32"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)$(ProjectName).pdb"
@@ -108,7 +108,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\MlbTests\lib\"
+			OutputDirectory="..\..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\90\$(ConfigurationName)\MultiByte\MlbTests\lib\"
 			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="2"
 			CharacterSet="2"
@@ -132,7 +132,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
-				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\tibco\Rendezvous\Rv7_2\include;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv"
+				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_54_0"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;RAPIDXMLUTILS_DLL_EXPORTS"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -157,7 +157,7 @@
 				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib Utility_DLL.lib RapidXmlUtils_DLL.lib libtibrvcppmd.lib tibrv.lib tibrvcm.lib tibrvcmq.lib tibrvft.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_50\lib;&quot;\Vendor\tibco\Rendezvous\Rv7_2\lib&quot;"
+				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_54_0\lib\vc90\Win32"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)$(ProjectName).pdb"

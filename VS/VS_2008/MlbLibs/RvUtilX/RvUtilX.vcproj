@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\lib\"
+			OutputDirectory="..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\90\$(ConfigurationName)\MultiByte\lib\"
 			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_54_0;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -89,7 +89,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\900\$(ConfigurationName)\MultiByte\lib\"
+			OutputDirectory="..\..\..\..\TargetPlatform\$(OS)\6.1\Win32\msvs\90\$(ConfigurationName)\MultiByte\lib\"
 			IntermediateDirectory="$(OutDir)..\$(ProjectName)\obj"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -114,7 +114,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
-				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_50;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
+				AdditionalIncludeDirectories="..\..\..\..\include;\Vendor\Boost\boost_1_54_0;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include&quot;;&quot;\Vendor\tibco\Rendezvous\Rv7_2\include\tibrv&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;MB_LIB_STATIC"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
