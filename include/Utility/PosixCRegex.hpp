@@ -59,7 +59,7 @@ class MB_LIB_EXCEPTION_CLASS(API_UTILITY) PosixCRegexException :
 	public ExceptionGeneral {
 public:
 	PosixCRegexException(int regex_error_code,
-		const boost::regex_t *the_regex, const char *except_string = NULL);
+		const boost::regex_tA *the_regex, const char *except_string = NULL);
 
 	int whatcode() const;
 
@@ -69,7 +69,7 @@ protected:
 	int regex_error_code_;
 
 	static std::string FixupString(int regex_error_code,
-		const boost::regex_t *the_regex, const char *other_text = NULL);
+		const boost::regex_tA *the_regex, const char *other_text = NULL);
 };
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -95,12 +95,12 @@ public:
 		int search_flags = 0) const;
 
 private:
-	boost::regex_t this_regex_;
-	bool           ready_flag_;
+	boost::regex_tA this_regex_;
+	bool            ready_flag_;
 
 	void ConstructRegexThis(const char *regex_string, int regex_flags);
 	void DestroyRegex();
-	void ConstructRegex(const char *regex_string, boost::regex_t &in_regex,
+	void ConstructRegex(const char *regex_string, boost::regex_tA &in_regex,
 		int regex_flags);
 };
 //	////////////////////////////////////////////////////////////////////////////

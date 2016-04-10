@@ -40,7 +40,7 @@ namespace Utility {
 
 //	////////////////////////////////////////////////////////////////////////////
 PosixCRegexException::PosixCRegexException(int regex_error_code,
-	const boost::regex_t *the_regex, const char *except_string)
+	const boost::regex_tA *the_regex, const char *except_string)
 	:ExceptionGeneral(FixupString(regex_error_code, the_regex, except_string))
 	,regex_error_code_()
 {
@@ -67,11 +67,11 @@ void PosixCRegexException::Rethrow(const char *except_string) const
 
 //	////////////////////////////////////////////////////////////////////////////
 std::string PosixCRegexException::FixupString(int regex_error_code,
-	const boost::regex_t *the_regex, const char *other_text)
+	const boost::regex_tA *the_regex, const char *other_text)
 {
 	char error_text[255 + 1];
 
-	regerror(regex_error_code, the_regex, error_text, sizeof(error_text) - 1);
+	regerrorA(regex_error_code, the_regex, error_text, sizeof(error_text) - 1);
 
 	std::ostringstream status_string;
 
@@ -143,7 +143,7 @@ bool PosixCRegexWrapper::ClearRegex()
 //	////////////////////////////////////////////////////////////////////////////
 bool PosixCRegexWrapper::SetRegex(const char *regex_string, int regex_flags)
 {
-	boost::regex_t tmp_regex;
+	boost::regex_tA tmp_regex;
 
 	ConstructRegex(regex_string, tmp_regex, regex_flags);
 
@@ -176,12 +176,12 @@ bool PosixCRegexWrapper::RegexSearch(const char *target_string,
 
 	int regex_error;
 
-	if ((regex_error = boost::regexec(&this_regex_, target_string,
+	if ((regex_error = boost::regexecA(&this_regex_, target_string,
 		0, NULL, search_flags)) == 0)
 		return(true);
 	else if (regex_error != static_cast<int>(boost::REG_NOMATCH))
 		throw MLB::Utility::PosixCRegexException(regex_error, &this_regex_,
-			"Call to 'regexec()' failed");
+			"Call to 'regexecA()' failed");
 
 	return(false);
 }
@@ -209,7 +209,7 @@ void PosixCRegexWrapper::ConstructRegexThis(const char *regex_string,
 void PosixCRegexWrapper::DestroyRegex()
 {
 	if (ready_flag_)
-		boost::regfree(&this_regex_);
+		boost::regfreeA(&this_regex_);
 
 	ready_flag_ = false;
 }
@@ -217,17 +217,17 @@ void PosixCRegexWrapper::DestroyRegex()
 
 //	////////////////////////////////////////////////////////////////////////////
 void PosixCRegexWrapper::ConstructRegex(const char *regex_string,
-	boost::regex_t &in_regex, int regex_flags)
+	boost::regex_tA &in_regex, int regex_flags)
 {
 	if (regex_string == NULL)
 		MLB::Utility::ThrowInvalidArgument("Specified regex string is 'NULL'.");
 
 	try {
 		int regex_error;
-		if ((regex_error = boost::regcomp(&in_regex, regex_string,
+		if ((regex_error = boost::regcompA(&in_regex, regex_string,
 			regex_flags)) != 0)
 			throw MLB::Utility::PosixCRegexException(regex_error, &in_regex,
-				"Call to 'regcomp()' failed");
+				"Call to 'regcompA()' failed");
 	}
 	catch (const std::exception &except) {
 		MLB::Utility::Rethrow(except, "Unable to compile the regular "
