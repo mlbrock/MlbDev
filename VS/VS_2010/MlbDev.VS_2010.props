@@ -43,17 +43,17 @@
   <!-- ******************************************************************* -->
   <Choose>
     <When Condition="'$(ConfigurationType)'=='Application'">
-	  <PropertyGroup>
+	  <PropertyGroup Label="UserMacros">
 	    <Eq2Val_OutDir>$(Eq2Val_OutDirBin)</Eq2Val_OutDir>
 	  </PropertyGroup>
     </When>
     <When Condition="'$(ConfigurationType)'=='DynamicLibrary'">
-	  <PropertyGroup>
-	    <Eq2Val_OutDir>$(Eq2Val_OutDirBin)</Eq2Val_OutDir>
+	  <PropertyGroup Label="UserMacros">
+	    <Eq2Val_OutDir>$(Eq2Val_OutDirLib)</Eq2Val_OutDir>
 	  </PropertyGroup>
     </When>
     <When Condition="'$(ConfigurationType)'=='StaticLibrary'">
-	  <PropertyGroup>
+	  <PropertyGroup Label="UserMacros">
 	    <Eq2Val_OutDir>$(Eq2Val_OutDirLib)</Eq2Val_OutDir>
 	  </PropertyGroup>
     </When>
@@ -76,11 +76,9 @@
   </Choose>
   <!-- ******************************************************************* -->
   <PropertyGroup>
-    <OutDir>$(MlbDevVal_OutDir)</OutDir>
-  </PropertyGroup>
-  <PropertyGroup>
-    <IntDir>$(MlbDevVal_OutDir)..\obj\$(ProjectName)\</IntDir>
+    <IntDir>$(MlbDevVal_OutDirBasic)obj\$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(MlbDevVal_OutDir)</OutDir>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <BuildLogFile>$(IntDir)\..\$(MSBuildProjectName).log</BuildLogFile>

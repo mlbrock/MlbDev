@@ -30,87 +30,52 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\MlbDev.VS_2010.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\MlbDev.VS_2010.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\_bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Debug\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\_bin\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Release\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(MlbDevVal_OutDirBin)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(MlbDevVal_OutDirBin)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include;\Vendor\WpdPack\4.1.2\WpdPack\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;XML_LIBRARY;__MLB_NOT_XERCES_STATIC_LIBRARY;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <ProgramDataBaseFileName>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
-      <BrowseInformation>true</BrowseInformation>
-      <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;mpr.lib;Rpcrt4.lib;Ws2_32.lib;snmpapi.lib;netapi32.lib;Psapi.lib;Utility.lib;SocketIo.lib;SockLibX.lib;XercesUtils.lib;VFast.lib;xerces-c_3D.lib;wpcap.lib;packet.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib;\Vendor\WpdPack\4.1.2\WpdPack\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>Utility.lib;SocketIo.lib;SockLibX.lib;VFast.lib;XercesUtils.lib;LbmWrapper.lib;RvUtilX.lib;lbm.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;setargv.obj;mpr.lib;Rpcrt4.lib;Ws2_32.lib;snmpapi.lib;netapi32.lib;Psapi.lib</AdditionalDependencies>
     </Link>
-    <Bscmake>
-      <OutputFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).bsc</OutputFile>
-    </Bscmake>
+    <Bscmake />
+    <BuildLog />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\..\..\include;\Vendor\Boost\boost_1_50;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include;\Vendor\WpdPack\4.1.2\WpdPack\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;XML_LIBRARY;__MLB_NOT_XERCES_STATIC_LIBRARY;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <ProgramDataBaseFileName>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>setargv.obj;mpr.lib;Rpcrt4.lib;Ws2_32.lib;snmpapi.lib;netapi32.lib;Psapi.lib;Utility.lib;SocketIo.lib;SockLibX.lib;XercesUtils.lib;VFast.lib;xerces-c_3.lib;wpcap.lib;packet.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\_lib\$(Configuration);\Vendor\Boost\boost_1_50\lib;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\lib;\Vendor\WpdPack\4.1.2\WpdPack\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>Utility.lib;SocketIo.lib;SockLibX.lib;VFast.lib;XercesUtils.lib;LbmWrapper.lib;RvUtilX.lib;lbm.lib;libtibrvcpp.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;setargv.obj;mpr.lib;Rpcrt4.lib;Ws2_32.lib;snmpapi.lib;netapi32.lib;Psapi.lib</AdditionalDependencies>
     </Link>
-    <Bscmake>
-      <OutputFile>$(SolutionDir)..\_bin\$(Configuration)\$(ProjectName).bsc</OutputFile>
-    </Bscmake>
+    <Bscmake />
+    <BuildLog />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\MlbUtilities\PacketForwarder.cpp" />
