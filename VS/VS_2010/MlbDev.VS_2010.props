@@ -4,36 +4,42 @@
   <PropertyGroup Label="UserMacros">
     <MlbDevVal_SolutionDepth>..\..\..</MlbDevVal_SolutionDepth>
     <MlbDevVal_TargetPlatform>TargetPlatform\$(OS)\6.1\$(Platform)\msvs\$(PlatformToolsetVersion)\$(Configuration)\$(CharacterSet)</MlbDevVal_TargetPlatform>
-	<MlbDevVal_OutDirBasic>$(SolutionDir)$(MlbDevVal_SolutionDepth)\$(MlbDevVal_TargetPlatform)\</MlbDevVal_OutDirBasic>
-	<MlbDevVal_OutDirBin>$(MlbDevVal_OutDirBasic)bin\</MlbDevVal_OutDirBin>
-	<MlbDevVal_OutDirLib>$(MlbDevVal_OutDirBasic)lib\</MlbDevVal_OutDirLib>
-	<MlbDevVal_OutDirOther>$(MlbDevVal_OutDirBasic)other\</MlbDevVal_OutDirOther>
-    <MlbDevVal_OutDir>$(MlbDevVal_OutDirOther)</MlbDevVal_OutDir>
-	<MlbDevVal_RuntimeLib>MultiThreadedDebugDLL</MlbDevVal_RuntimeLib>
-	<MlbDevVal_LocalInc>$(MlbDevVal_SolutionDepth)\..\include\</MlbDevVal_LocalInc>
-	<MlbDevVal_LocalLib>$(MlbDevVal_OutDirLib)</MlbDevVal_LocalLib>
-	<MlbDevVal_3rdPartyDir>\Vendor\</MlbDevVal_3rdPartyDir>
-	<MlbDevVal_Boost>$(MlbDevVal_3rdPartyDir)Boost\boost_1_54_0\</MlbDevVal_Boost>
-	<MlbDevVal_BoostInc>$(MlbDevVal_Boost)</MlbDevVal_BoostInc>
-	<MlbDevVal_BoostLib>$(MlbDevVal_Boost)lib\vc$(PlatformToolsetVersion)\$(Platform)\</MlbDevVal_BoostLib>
-	<MlbDevVal_Lbm29West>$(MlbDevVal_3rdPartyDir)29West\32-bit\3.5.0\LBM_3.5ea3\Win2k-i386\</MlbDevVal_Lbm29West>
-	<MlbDevVal_Lbm29WestInc>$(MlbDevVal_Lbm29West)include\</MlbDevVal_Lbm29WestInc>
-	<MlbDevVal_Lbm29WestLib>$(MlbDevVal_Lbm29West)lib\</MlbDevVal_Lbm29WestLib>
-	<MlbDevVal_MsftDbgHelp>$(MlbDevVal_3rdPartyDir)Microsoft\MsvcDbgHelp\v6.7.5.1\</MlbDevVal_MsftDbgHelp>
-	<MlbDevVal_MsftDbgHelpInc>$(MlbDevVal_MsftDbgHelp)\include\</MlbDevVal_MsftDbgHelpInc>
-	<MlbDevVal_MsftDbgHelpLib>$(MlbDevVal_MsftDbgHelp)lib\</MlbDevVal_MsftDbgHelpLib>
-	<MlbDevVal_PlatformLsf>$(MlbDevVal_3rdPartyDir)Platform\LSF\5.1\</MlbDevVal_PlatformLsf>
-	<MlbDevVal_PlatformLsfInc>$(MlbDevVal_PlatformLsf)include\</MlbDevVal_PlatformLsfInc>
-	<MlbDevVal_PlatformLsfLib>$(MlbDevVal_PlatformLsf)NO_SUCH_DIR\</MlbDevVal_PlatformLsfLib>
-	<MlbDevVal_TibCoRv>$(MlbDevVal_3rdPartyDir)TibCo\Rendezvous\Rv6_9\</MlbDevVal_TibCoRv>
-	<MlbDevVal_TibCoRvInc>$(MlbDevVal_TibCoRv)include\;$(MlbDevVal_TibCoRv)include\tibrv\</MlbDevVal_TibCoRvInc>
-	<MlbDevVal_TibCoRvLib>$(MlbDevVal_TibCoRv)lib\</MlbDevVal_TibCoRvLib>
-	<MlbDevVal_WinPcap>$(MlbDevVal_3rdPartyDir)WpdPack\4.1.2\WpdPack\</MlbDevVal_WinPcap>
-	<MlbDevVal_WinPcapInc>$(MlbDevVal_WinPcap)Include\</MlbDevVal_WinPcapInc>
-	<MlbDevVal_WinPcapLib>$(MlbDevVal_WinPcap)Lib\</MlbDevVal_WinPcapLib>
-	<MlbDevVal_Xercesc>$(MlbDevVal_3rdPartyDir)Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\</MlbDevVal_Xercesc>
-	<MlbDevVal_XercescInc>$(MlbDevVal_Xercesc)include\</MlbDevVal_XercescInc>
-	<MlbDevVal_XercescLib>$(MlbDevVal_Xercesc)lib\</MlbDevVal_XercescLib>
+    <MlbDevVal_OutDirBasic>$(SolutionDir)$(MlbDevVal_SolutionDepth)\$(MlbDevVal_TargetPlatform)\</MlbDevVal_OutDirBasic>
+    <MlbDevVal_OutDirBin>$(MlbDevVal_OutDirBasic)bin\</MlbDevVal_OutDirBin>
+    <MlbDevVal_OutDirLib>$(MlbDevVal_OutDirBasic)lib\</MlbDevVal_OutDirLib>
+    <MlbDevVal_OutDirOther>$(MlbDevVal_OutDirBasic)other\</MlbDevVal_OutDirOther>
+    <MlbDevVal_OutDir>$(MlbDevVal_OutDirLib)</MlbDevVal_OutDir>
+    <MlbDevVal_RuntimeLib>MultiThreadedDebugDLL</MlbDevVal_RuntimeLib>
+    <MlbDevVal_LocalInc>$(MlbDevVal_SolutionDepth)\..\include\</MlbDevVal_LocalInc>
+    <MlbDevVal_LocalLib>$(MlbDevVal_OutDirLib)</MlbDevVal_LocalLib>
+    <MlbDevVal_3rdPartyDir>\Vendor\</MlbDevVal_3rdPartyDir>
+    <MlbDevVal_Boost>$(MlbDevVal_3rdPartyDir)Boost\boost_1_54_0\</MlbDevVal_Boost>
+    <MlbDevVal_BoostInc>$(MlbDevVal_Boost)</MlbDevVal_BoostInc>
+    <MlbDevVal_BoostLib>$(MlbDevVal_Boost)lib\vc$(PlatformToolsetVersion)\$(Platform)\</MlbDevVal_BoostLib>
+    <MlbDevVal_ExcelXllSdk>$(MlbDevVal_3rdPartyDir)Microsoft\ExcelXllSdk\14.0.4730.1010\</MlbDevVal_ExcelXllSdk>
+    <MlbDevVal_ExcelXllSdkInc>$(MlbDevVal_ExcelXllSdk)include\</MlbDevVal_ExcelXllSdkInc>
+    <MlbDevVal_ExcelXllSdkLib>$(MlbDevVal_ExcelXllSdk)lib\</MlbDevVal_ExcelXllSdkLib>
+    <MlbDevVal_Lbm29West>$(MlbDevVal_3rdPartyDir)29West\32-bit\3.5.0\LBM_3.5ea3\Win2k-i386\</MlbDevVal_Lbm29West>
+    <MlbDevVal_Lbm29WestInc>$(MlbDevVal_Lbm29West)include\</MlbDevVal_Lbm29WestInc>
+    <MlbDevVal_Lbm29WestLib>$(MlbDevVal_Lbm29West)lib\</MlbDevVal_Lbm29WestLib>
+    <MlbDevVal_LlvmClang>$(MlbDevVal_3rdPartyDir)Llvm\Clang\3.8.0\$(Platform)\</MlbDevVal_LlvmClang>
+    <MlbDevVal_LlvmClangInc>$(MlbDevVal_LlvmClang)include\</MlbDevVal_LlvmClangInc>
+    <MlbDevVal_LlvmClangLib>$(MlbDevVal_LlvmClang)lib\</MlbDevVal_LlvmClangLib>
+    <MlbDevVal_MsftDbgHelp>$(MlbDevVal_3rdPartyDir)Microsoft\MsvcDbgHelp\v6.7.5.1\</MlbDevVal_MsftDbgHelp>
+    <MlbDevVal_MsftDbgHelpInc>$(MlbDevVal_MsftDbgHelp)\include\</MlbDevVal_MsftDbgHelpInc>
+    <MlbDevVal_MsftDbgHelpLib>$(MlbDevVal_MsftDbgHelp)lib\</MlbDevVal_MsftDbgHelpLib>
+    <MlbDevVal_PlatformLsf>$(MlbDevVal_3rdPartyDir)Platform\LSF\5.1\</MlbDevVal_PlatformLsf>
+    <MlbDevVal_PlatformLsfInc>$(MlbDevVal_PlatformLsf)include\</MlbDevVal_PlatformLsfInc>
+    <MlbDevVal_PlatformLsfLib>$(MlbDevVal_PlatformLsf)NO_SUCH_DIR\</MlbDevVal_PlatformLsfLib>
+    <MlbDevVal_TibCoRv>$(MlbDevVal_3rdPartyDir)TibCo\Rendezvous\Rv6_9\</MlbDevVal_TibCoRv>
+    <MlbDevVal_TibCoRvInc>$(MlbDevVal_TibCoRv)include\;$(MlbDevVal_TibCoRv)include\tibrv\</MlbDevVal_TibCoRvInc>
+    <MlbDevVal_TibCoRvLib>$(MlbDevVal_TibCoRv)lib\</MlbDevVal_TibCoRvLib>
+    <MlbDevVal_WinPcap>$(MlbDevVal_3rdPartyDir)WpdPack\4.1.2\WpdPack\</MlbDevVal_WinPcap>
+    <MlbDevVal_WinPcapInc>$(MlbDevVal_WinPcap)Include\</MlbDevVal_WinPcapInc>
+    <MlbDevVal_WinPcapLib>$(MlbDevVal_WinPcap)Lib\</MlbDevVal_WinPcapLib>
+    <MlbDevVal_Xercesc>$(MlbDevVal_3rdPartyDir)Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\</MlbDevVal_Xercesc>
+    <MlbDevVal_XercescInc>$(MlbDevVal_Xercesc)include\</MlbDevVal_XercescInc>
+    <MlbDevVal_XercescLib>$(MlbDevVal_Xercesc)lib\</MlbDevVal_XercescLib>
     <MlbDevVal_AllInc>$(MlbDevVal_LocalInc);$(MlbDevVal_BoostInc);$(MlbDevVal_MsftDbgHelpInc);$(MlbDevVal_TibCoRvInc);$(MlbDevVal_Lbm29WestInc);$(MlbDevVal_XercescInc);$(MlbDevVal_WinPcapInc);$(MlbDevVal_PlatformLsfInc)</MlbDevVal_AllInc>
     <MlbDevVal_AllLib>$(MlbDevVal_LocalLib);$(MlbDevVal_BoostLib);$(MlbDevVal_MsftDbgHelpLib);$(MlbDevVal_TibCoRvLib);$(MlbDevVal_Lbm29WestLib);$(MlbDevVal_XercescLib);$(MlbDevVal_WinPcapLib);$(MlbDevVal_PlatformLsfLib)</MlbDevVal_AllLib>
   </PropertyGroup>
@@ -43,19 +49,13 @@
   <!-- ******************************************************************* -->
   <Choose>
     <When Condition="'$(ConfigurationType)'=='Application'">
-	  <PropertyGroup Label="UserMacros">
-	    <Eq2Val_OutDir>$(Eq2Val_OutDirBin)</Eq2Val_OutDir>
-	  </PropertyGroup>
+      <PropertyGroup Label="UserMacros" />
     </When>
     <When Condition="'$(ConfigurationType)'=='DynamicLibrary'">
-	  <PropertyGroup Label="UserMacros">
-	    <Eq2Val_OutDir>$(Eq2Val_OutDirLib)</Eq2Val_OutDir>
-	  </PropertyGroup>
+      <PropertyGroup Label="UserMacros" />
     </When>
     <When Condition="'$(ConfigurationType)'=='StaticLibrary'">
-	  <PropertyGroup Label="UserMacros">
-	    <Eq2Val_OutDir>$(Eq2Val_OutDirLib)</Eq2Val_OutDir>
-	  </PropertyGroup>
+      <PropertyGroup Label="UserMacros" />
     </When>
   </Choose>
   <!-- ******************************************************************* -->
@@ -64,14 +64,24 @@
   <!-- ******************************************************************* -->
   <Choose>
     <When Condition="'$(Configuration)'=='Debug'">
-	  <PropertyGroup>
-	    <Eq2Val_RuntimeLib>MultiThreadedDebugDLL</Eq2Val_RuntimeLib>
-	  </PropertyGroup>
+      <PropertyGroup />
     </When>
     <When Condition="'$(Configuration)'=='Release'">
-	  <PropertyGroup>
-	    <Eq2Val_RuntimeLib>MultiThreadedDLL</Eq2Val_RuntimeLib>
-	  </PropertyGroup>
+      <PropertyGroup />
+    </When>
+  </Choose>
+  <!-- ******************************************************************* -->
+  <!-- ******************************************************************* -->
+  <!-- Fix-up Excel library directory for 64-bit builds.                   -->
+  <!--                                                                     -->
+  <!-- Note that 64-bit versions of xlcall32.lib aren't available for      -->
+  <!-- older versions of the library...                                    -->
+  <!-- ******************************************************************* -->
+  <Choose>
+    <When Condition="'$(Platform)'=='x64'">
+      <PropertyGroup>
+        <MlbDevVal_3rdParty_ExcelXllSdkLib>$(MlbDevVal_3rdParty_ExcelXllSdkLib)x64\</MlbDevVal_3rdParty_ExcelXllSdkLib>
+      </PropertyGroup>
     </When>
   </Choose>
   <!-- ******************************************************************* -->
@@ -147,12 +157,12 @@
     <BuildMacro Include="MlbDevVal_LocalInc">
       <Value>$(MlbDevVal_LocalInc)</Value>
     </BuildMacro>
-	<BuildMacro Include="MlbDevVal_LocalLib">
-	  <Value>$(MlbDevVal_LocalLib)</Value>
-	</BuildMacro>
-	<BuildMacro Include="MlbDevVal_3rdPartyDir">
-	  <Value>$(MlbDevVal_3rdPartyDir)</Value>
-	</BuildMacro>
+    <BuildMacro Include="MlbDevVal_LocalLib">
+      <Value>$(MlbDevVal_LocalLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_3rdPartyDir">
+      <Value>$(MlbDevVal_3rdPartyDir)</Value>
+    </BuildMacro>
     <BuildMacro Include="MlbDevVal_Boost">
       <Value>$(MlbDevVal_Boost)</Value>
     </BuildMacro>
@@ -162,6 +172,15 @@
     <BuildMacro Include="MlbDevVal_BoostLib">
       <Value>$(MlbDevVal_BoostLib)</Value>
     </BuildMacro>
+    <BuildMacro Include="MlbDevVal_ExcelXllSdk">
+      <Value>$(MlbDevVal_ExcelXllSdk)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_ExcelXllSdkInc">
+      <Value>$(MlbDevVal_ExcelXllSdkInc)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_ExcelXllSdkLib">
+      <Value>$(MlbDevVal_ExcelXllSdkLib)</Value>
+    </BuildMacro>
     <BuildMacro Include="MlbDevVal_Lbm29West">
       <Value>$(MlbDevVal_Lbm29West)</Value>
     </BuildMacro>
@@ -170,6 +189,15 @@
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_Lbm29WestLib">
       <Value>$(MlbDevVal_Lbm29WestLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_LlvmClang">
+      <Value>$(MlbDevVal_LlvmClang)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_LlvmClangInc">
+      <Value>$(MlbDevVal_LlvmClangInc)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_LlvmClangLib">
+      <Value>$(MlbDevVal_LlvmClangLib)</Value>
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_MsftDbgHelp">
       <Value>$(MlbDevVal_MsftDbgHelp)</Value>
