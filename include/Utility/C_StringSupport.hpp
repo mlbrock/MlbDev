@@ -180,7 +180,7 @@ inline API_UTILITY std::string NullOrEmptyToStringWithColon(
 namespace {
 
 //	////////////////////////////////////////////////////////////////////////////
-inline API_UTILITY void ThrowIfSupport(const char *name_string,
+inline void ThrowIfSupport(const char *name_string,
 	const char *error_string)
 {
 	if ((name_string == NULL) || (!(*name_string)))
@@ -207,6 +207,17 @@ template <typename DatumType>
 
 //	////////////////////////////////////////////////////////////////////////////
 inline API_UTILITY const char *ThrowIfEmpty(const char *test_string,
+	const char *name_string = NULL)
+{
+	if (!(*test_string))
+		ThrowIfSupport(name_string, " is an empty string.");
+
+	return(test_string);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+inline API_UTILITY const wchar_t *ThrowIfEmpty(const wchar_t *test_string,
 	const char *name_string = NULL)
 {
 	if (!(*test_string))
