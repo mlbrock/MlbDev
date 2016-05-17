@@ -519,7 +519,9 @@ bool ParseCmdLineArg::ParseMainWaitMSecs(unsigned int &current_index, int argc,
 	char **argv, unsigned int &out_datum)
 {
 	return(ParseCmdLineDatum(RegexParamNameAdaptor(
-		"\\-MAIN(_*FUNC(TION)*)*_*SLEEP(_*((M(ILLI)*SEC(OND)*)S*))*(_*TIMES*)*$",
+//		"\\-MAIN(_*FUNC(TION)*)*_*SLEEP(_*((M(ILLI)*SEC(OND)*)S*))*(_*TIMES*)*$",
+		"^--?MAIN((-|_)?FUNC(TION)?)?(-|_)?SLEEP((-|_)?((M(ILLI)?SEC(OND)?)S?))?"
+			"((-|_)?TIMES?)?$",
 		current_index, argc, argv), current_index, argc, argv, out_datum));
 }
 // ////////////////////////////////////////////////////////////////////////////
