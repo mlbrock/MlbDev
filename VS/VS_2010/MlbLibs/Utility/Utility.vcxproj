@@ -71,6 +71,7 @@
     <BuildLog />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Utility\BackTrace.cpp" />
     <ClCompile Include="..\..\..\..\Utility\C_Memory.cpp" />
     <ClCompile Include="..\..\..\..\Utility\C_MemoryX.cpp" />
     <ClCompile Include="..\..\..\..\Utility\C_StdLib.cpp" />

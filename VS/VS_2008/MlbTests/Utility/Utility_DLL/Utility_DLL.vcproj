@@ -67,7 +67,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib dbghelp.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_54_0\lib\vc90\Win32"
@@ -156,7 +156,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib"
+				AdditionalDependencies="mpr.lib Rpcrt4.lib snmpapi.lib Ws2_32.lib dbghelp.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)..\lib;\Vendor\Boost\boost_1_54_0\lib\vc90\Win32"
@@ -207,6 +207,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\..\..\Utility\BackTrace.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\..\..\Utility\C_Memory.cpp"
 				>

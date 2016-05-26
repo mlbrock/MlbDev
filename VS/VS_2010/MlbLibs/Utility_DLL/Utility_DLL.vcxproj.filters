@@ -204,5 +204,8 @@
     <ClCompile Include="..\..\..\..\Utility\TabularReportSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Utility\BackTrace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
