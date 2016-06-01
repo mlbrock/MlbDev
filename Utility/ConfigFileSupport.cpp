@@ -33,6 +33,8 @@
 #include <Utility/ConfigFileSupport.hpp>
 #include <Utility/StringSupport.hpp>
 
+#include <algorithm>
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {

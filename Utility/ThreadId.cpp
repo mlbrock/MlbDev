@@ -31,6 +31,8 @@
 
 #include <Utility.hpp>
 
+#include <algorithm>
+
 #ifdef __MSDOS__
 #elif _Windows
 #elif defined(__linux__)

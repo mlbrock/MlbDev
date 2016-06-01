@@ -321,8 +321,8 @@
 #ifdef __cplusplus
 	/* If compiling under Windows and we need to protect min/max... */
 # ifdef HH__mbcompat_h__HH___Windows_MinMax_Guard
-	/* ...And using a version of of MS VC++ less than or equal MSVC 2010... */
-#  if _MSC_VER <= 1700
+	/* ...And using a version of of MS VC++ less than or equal MSVC 2015... */
+#  if _MSC_VER <= 1900
 #   pragma warning(push)
 #   pragma warning(disable:4018 4100 4146 4244 4245 4511 4512 4663)
     /*
@@ -364,7 +364,7 @@
 #    endif /* #    if _MSC_VER < 1300 */
 #   endif /* # ifdef _XUTILITY_ */
 #   pragma warning(pop)
-#  endif /* if _MSC_VER <= 1700 */
+#  endif /* if _MSC_VER <= 1900 */
 # endif /* #ifdef HH__mbcompat_h__HH___Windows_MinMax_Guard */
 #endif /* #ifdef __cplusplus */
 /*	***********************************************************************	*/

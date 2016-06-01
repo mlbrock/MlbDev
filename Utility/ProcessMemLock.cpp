@@ -80,6 +80,8 @@
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/Utility_Exception.hpp>
 
+#include <algorithm>
+
 #ifdef _Windows
 # include <iomanip>
 #else
