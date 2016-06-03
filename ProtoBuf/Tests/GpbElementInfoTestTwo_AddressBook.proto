@@ -1,0 +1,8 @@
+package GpbElementInfoTestTwo;
+
+import "GpbElementInfoTestTwo_Person.proto";
+
+message AddressBook {
+  repeated Person person = 1;
+}
+

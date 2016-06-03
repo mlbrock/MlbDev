@@ -1,0 +1,45 @@
+package GpbElementInfoTestThree;
+
+enum PhoneType {
+  MOBILE = 0;
+  HOME = 1;
+  WORK = 2;
+}
+
+message PhoneNumber {
+  required string number = 1;
+  optional PhoneType type = 2 [default = HOME];
+}
+
+message PersonOne {
+  required string name = 1;
+  required int32 id = 2;
+  optional string email = 3;
+
+  repeated PhoneNumber phone = 4;
+
+  optional int32 different_datum = 5;
+
+  optional int32 name_different_1 = 6;
+}
+
+message AddressBookOne {
+  repeated PersonOne person = 1;
+}
+
+message PersonTwo {
+  required string name = 1;
+  required int32 id = 2;
+  optional string email = 3;
+
+  repeated PhoneNumber phone = 4;
+
+  optional uint32 different_datum = 5;
+
+  optional int32 name_different_2 = 6;
+}
+
+message AddressBookTwo {
+  repeated PersonTwo person = 1;
+}
+

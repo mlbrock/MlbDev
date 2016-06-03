@@ -1,0 +1,9 @@
+package GpbElementInfoTestTwo;
+
+import "GpbElementInfoTestTwo_PhoneType.proto";
+
+message PhoneNumber {
+  required string number = 1;
+  optional PhoneType type = 2 [default = HOME];
+}
+
