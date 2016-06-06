@@ -169,6 +169,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\GetMessageNew.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\GetMessagePrototype.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\ProtoBuf\GpbElementInfo.cpp"
 				>
 			</File>

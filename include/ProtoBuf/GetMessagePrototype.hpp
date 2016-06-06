@@ -3,12 +3,12 @@
 //	MLB Google Protocol Buffers Support Library
 //	////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	GetMessageDescriptor.hpp
+	File Name			:	GetMessagePrototype.hpp
 
-	File Description	:	Include file for functions used to determine, given a
-								string, the Google ProtoBuf message descriptor.
+	File Description	:	Include file for logic to retrieve the prototype
+								instance of a Google ProtoBuf message by name.
 
-	Revision History	:	2016-06-05 --- Creation.
+	Revision History	:	2016-06-06 --- Creation.
 									Michael L. Brock
 
 		Copyright Michael L. Brock 2016 - 2016.
@@ -19,9 +19,9 @@
 */
 //	////////////////////////////////////////////////////////////////////////////
 
-#ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
+#ifndef HH___MLB__ProtoBuf__GetMessagePrototype_hpp___HH
 
-#define HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH	1
+#define HH___MLB__ProtoBuf__GetMessagePrototype_hpp___HH	1
 
 //	////////////////////////////////////////////////////////////////////////////
 //	////////////////////////////////////////////////////////////////////////////
@@ -50,17 +50,16 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
+const ::google::protobuf::Message *GetMessagePrototype(
 	const std::string &msg_name,
-	const ::google::protobuf::DescriptorPool *descriptor_pool,
-	bool throw_if_not_found = true);
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &msg_name, bool throw_if_not_found = true);
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+const ::google::protobuf::Message *GetMessagePrototype(
+	const std::string &msg_name);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
 
 } // namespace MLB
 
-#endif // #ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
+#endif // #ifndef HH___MLB__ProtoBuf__GetMessagePrototype_hpp___HH
 

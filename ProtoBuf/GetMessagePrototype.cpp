@@ -3,12 +3,12 @@
 //	MLB Google Protocol Buffers Support Library
 //	////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	GetMessageDescriptor.hpp
+	File Name			:	GetMessagePrototype.cpp
 
-	File Description	:	Include file for functions used to determine, given a
-								string, the Google ProtoBuf message descriptor.
+	File Description	:	Implementation of logic to retrieve the prototype
+								instance of a Google ProtoBuf message by name.
 
-	Revision History	:	2016-06-05 --- Creation.
+	Revision History	:	2016-06-06 --- Creation.
 									Michael L. Brock
 
 		Copyright Michael L. Brock 2016 - 2016.
@@ -19,29 +19,19 @@
 */
 //	////////////////////////////////////////////////////////////////////////////
 
-#ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
-
-#define HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH	1
-
 //	////////////////////////////////////////////////////////////////////////////
 //	////////////////////////////////////////////////////////////////////////////
 //	Include necessary header files...
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <Utility.hpp>
+#include <ProtoBuf/GetMessagePrototype.hpp>
+#include <ProtoBuf/GetMessageDescriptor.hpp>
 
-#include <string>
+#include <Utility/C_StringSupport.hpp>
 
-#ifdef _MSC_VER
-# pragma warning(push)
-# pragma warning(disable:4100 4512)
-#endif // #ifdef _MSC_VER
+#include <sstream>
 
-#include <google/protobuf/descriptor.pb.h>
-
-#ifdef _MSC_VER
-# pragma warning(pop)
-#endif // #ifdef _MSC_VER
+#include <boost/algorithm/string.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -50,17 +40,27 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
+const ::google::protobuf::Message *GetMessagePrototype(
 	const std::string &msg_name,
-	const ::google::protobuf::DescriptorPool *descriptor_pool,
-	bool throw_if_not_found = true);
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &msg_name, bool throw_if_not_found = true);
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(MLB::Utility::ThrowIfNull(((msg_factory_ptr) ? msg_factory_ptr :
+		::google::protobuf::MessageFactory::generated_factory())->
+		GetPrototype(GetMessageDescriptor(msg_name, true)),
+		"An instance of the MessageFactory class or one of its descendent "
+		"classes GetPrototype() method returned NULL."));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const ::google::protobuf::Message *GetMessagePrototype(
+	const std::string &msg_name)
+{
+	return(GetMessagePrototype(msg_name, NULL));
+}
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
 
 } // namespace MLB
-
-#endif // #ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
 

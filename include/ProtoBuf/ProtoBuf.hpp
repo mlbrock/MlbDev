@@ -3,12 +3,11 @@
 //	MLB Google Protocol Buffers Support Library
 //	////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	GetMessageDescriptor.hpp
+	File Name			:	ProtoBuf.hpp
 
-	File Description	:	Include file for functions used to determine, given a
-								string, the Google ProtoBuf message descriptor.
+	File Description	:	Basic MLB ProtoBuf include file.
 
-	Revision History	:	2016-06-05 --- Creation.
+	Revision History	:	2016-06-06 --- Creation.
 									Michael L. Brock
 
 		Copyright Michael L. Brock 2016 - 2016.
@@ -19,9 +18,9 @@
 */
 //	////////////////////////////////////////////////////////////////////////////
 
-#ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
+#ifndef HH___MLB__ProtoBuf__ProtoBuf_hpp___HH
 
-#define HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH	1
+#define HH___MLB__ProtoBuf__ProtoBuf_hpp___HH	1
 
 //	////////////////////////////////////////////////////////////////////////////
 //	////////////////////////////////////////////////////////////////////////////
@@ -30,18 +29,9 @@
 
 #include <Utility.hpp>
 
-#include <string>
+#include <google/protobuf/Message.h>
 
-#ifdef _MSC_VER
-# pragma warning(push)
-# pragma warning(disable:4100 4512)
-#endif // #ifdef _MSC_VER
-
-#include <google/protobuf/descriptor.pb.h>
-
-#ifdef _MSC_VER
-# pragma warning(pop)
-#endif // #ifdef _MSC_VER
+#include <boost/shared_ptr.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -50,17 +40,12 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &msg_name,
-	const ::google::protobuf::DescriptorPool *descriptor_pool,
-	bool throw_if_not_found = true);
-const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &msg_name, bool throw_if_not_found = true);
+typedef boost::shared_ptr< ::google::protobuf::Message > GpbMessageSPtr;
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
 
 } // namespace MLB
 
-#endif // #ifndef HH___MLB__ProtoBuf__GetMessageDescriptor_hpp___HH
+#endif // #ifndef HH___MLB__ProtoBuf__GpbElementInfo_hpp___HH
 

@@ -28,10 +28,8 @@
 
 #include <Utility/Utility_Exception.hpp>
 
-//#include <iomanip>
 #include <sstream>
 
-//#include <boost/io/ios_state.hpp>
 #include <boost/algorithm/string.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
@@ -42,7 +40,7 @@ namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &in_name,
+	const std::string &msg_name,
 	const ::google::protobuf::DescriptorPool *descriptor_pool,
 	bool throw_if_not_found)
 {
@@ -51,14 +49,14 @@ const ::google::protobuf::Descriptor *GetMessageDescriptor(
 			"protobuf::DescriptorPool' to be used is NULL.");
 
 	const ::google::protobuf::Descriptor *descriptor_ptr =
-		descriptor_pool->FindMessageTypeByName(in_name);
+		descriptor_pool->FindMessageTypeByName(msg_name);
 
 	if (!descriptor_ptr) {
 		std::string::size_type position;
-		if ((position = in_name.find_first_of(':')) !=
+		if ((position = msg_name.find_first_of(':')) !=
 			std::string::npos) {
-			std::string tmp_name((in_name.substr(0, 2) == "::") ?
-				in_name.substr(2) : in_name);
+			std::string tmp_name((msg_name.substr(0, 2) == "::") ?
+				msg_name.substr(2) : msg_name);
 			boost::replace_all(tmp_name, "::", ".");
 			descriptor_ptr = descriptor_pool->FindMessageTypeByName(tmp_name);
 		}
@@ -66,7 +64,7 @@ const ::google::protobuf::Descriptor *GetMessageDescriptor(
 
 	if ((!descriptor_ptr) && throw_if_not_found) {
 		std::ostringstream o_str;
-		o_str << "Unable to locate message name '" << in_name <<
+		o_str << "Unable to locate message name '" << msg_name <<
 			"' within the pool of " << ((descriptor_pool ==
 			::google::protobuf::DescriptorPool::generated_pool()) ? "generated " :
 			"") << "descriptors.";
@@ -79,9 +77,9 @@ const ::google::protobuf::Descriptor *GetMessageDescriptor(
 
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::Descriptor *GetMessageDescriptor(
-	const std::string &in_name, bool throw_if_not_found)
+	const std::string &msg_name, bool throw_if_not_found)
 {
-	return(GetMessageDescriptor(in_name,
+	return(GetMessageDescriptor(msg_name,
 		::google::protobuf::DescriptorPool::generated_pool(),
 		throw_if_not_found));
 }
