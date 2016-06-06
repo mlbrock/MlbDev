@@ -161,7 +161,7 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	if ((!descriptor) || (!descriptor->field_count()))
 		return;
 
-	member_list_.reserve(descriptor->field_count());
+	member_list_.reserve(static_cast<std::size_t>(descriptor->field_count()));
 
 	for (int count_1 = 0; count_1 < descriptor_->field_count(); ++count_1) {
 		const GPB_FieldDescriptor *this_field_descriptor =
@@ -397,7 +397,7 @@ GpbElementInfoVector SetOperationHelper(bool is_diff,
 		std::set_difference(out_lhs.begin(), out_lhs.end(),
 		out_rhs.begin(), out_rhs.end(), result.begin(), CompareByNameAndType()));
 
-	result.resize(iter_result - result.begin());
+	result.resize(static_cast<std::size_t>(iter_result - result.begin()));
 
 	return(result);
 }
@@ -562,7 +562,7 @@ void GpbElementInfo::TestFileName() const
 
 	{
 		std::ostringstream o_str;
-		o_str << std::setw(depth_ * 3) << "";
+		o_str << std::setw(static_cast<std::streamsize>(depth_ * 3)) << "";
 		pad = o_str.str();
 	}
 
@@ -593,7 +593,7 @@ std::string EmitTabularHelper(bool pad_flag, std::size_t pad_width,
 	std::ostringstream o_str;
 
 	if (pad_flag)
-		o_str << std::setw(pad_width) << "";
+		o_str << std::setw(static_cast<std::streamsize>(pad_width)) << "";
 
 	o_str << in_string;
 
@@ -602,13 +602,13 @@ std::string EmitTabularHelper(bool pad_flag, std::size_t pad_width,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-std::pair<std::size_t, std::size_t> GetEnumValueMaxLengths(
+std::pair<std::size_t, std::size_t> GetEnumValueMaxLengths_Helper(
 	const ::google::protobuf::EnumDescriptor &enum_descriptor)
 {
 	std::pair<std::size_t, std::size_t> max_lengths(0, 0);
 
 	for (int count_1 = 0; count_1 < enum_descriptor.value_count(); ++count_1) {
-		char buffer[(sizeof(int) * 2) + 1];
+		char buffer[1 + (sizeof(int) * 3) + 1];
 		::sprintf(buffer, "%d", enum_descriptor.value(count_1)->number());
 		max_lengths.first  = std::max(max_lengths.first,  ::strlen(buffer));
 		max_lengths.second = std::max(max_lengths.second,
@@ -620,12 +620,39 @@ std::pair<std::size_t, std::size_t> GetEnumValueMaxLengths(
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-std::pair<std::size_t, std::size_t> GetEnumValueMaxLengths(
+std::pair<std::size_t, std::size_t> GetEnumValueMaxLengths_Helper(
 	const GpbElementInfoDescriptors &descriptors)
 {
 	return((descriptors.enum_descriptor_) ?
-		GetEnumValueMaxLengths(*descriptors.enum_descriptor_) :
+		GetEnumValueMaxLengths_Helper(*descriptors.enum_descriptor_) :
 		std::pair<std::size_t, std::size_t>(0, 0));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename DatumType> std::pair<DatumType, DatumType>
+	GetEnumValueMaxLengths(
+		const ::google::protobuf::EnumDescriptor &enum_descriptor)
+{
+	std::pair<std::size_t, std::size_t> results(
+		GetEnumValueMaxLengths_Helper(enum_descriptor));
+
+	return(std::make_pair<DatumType, DatumType>(
+		static_cast<DatumType>(results.first),
+		static_cast<DatumType>(results.second)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename DatumType> std::pair<DatumType, DatumType>
+	GetEnumValueMaxLengths(const GpbElementInfoDescriptors &descriptors)
+{
+	std::pair<std::size_t, std::size_t> results(
+		GetEnumValueMaxLengths_Helper(descriptors));
+
+	return(std::make_pair<DatumType, DatumType>(
+		static_cast<DatumType>(results.first),
+		static_cast<DatumType>(results.second)));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -646,38 +673,38 @@ std::ostream &GpbElementInfo::EmitTabular(
 			std::setw(5)  << depth                  << " " <<
 			std::setw(5)  << GetMemberIndex() << " " <<
 			std::left  <<
-			std::setw(max_lengths[GpbElementInfoMaxLengths::LabelName])  <<
+			std::setw(max_lengths.width(GpbElementInfoMaxLengths::LabelName))  <<
 				GetLabelName()   << " " <<
-			std::setw(max_lengths[GpbElementInfoMaxLengths::TypeName])   <<
+			std::setw(max_lengths.width(GpbElementInfoMaxLengths::TypeName))   <<
 				EmitTabularHelper((emit_flags & GpbEmitFlags::IndentType) > 0,
 				depth_pad, GetTypeName())    << " " <<
-			std::setw(max_lengths[GpbElementInfoMaxLengths::MemberName]) <<
+			std::setw(max_lengths.width(GpbElementInfoMaxLengths::MemberName)) <<
 				EmitTabularHelper((emit_flags & GpbEmitFlags::IndentName) > 0,
 				depth_pad, GetMemberName());
 			if (emit_flags & GpbEmitFlags::FullName)
 				o_str << " " <<
-					std::setw(max_lengths[GpbElementInfoMaxLengths::NameFull]) <<
+					std::setw(max_lengths.width(GpbElementInfoMaxLengths::NameFull)) <<
 					GetNameFull();
 			if (emit_flags & GpbEmitFlags::TypeFileName)
-				o_str << " " << std::setw(max_lengths[
-					GpbElementInfoMaxLengths::TypeFileName]) <<
+				o_str << " " << std::setw(max_lengths.width(
+					GpbElementInfoMaxLengths::TypeFileName)) <<
 					GetTypeFileName();
 			if (emit_flags & GpbEmitFlags::MemberFileName)
-				o_str << " " << std::setw(max_lengths[
-					GpbElementInfoMaxLengths::MemberFileName]) <<
+				o_str << " " << std::setw(max_lengths.width(
+					GpbElementInfoMaxLengths::MemberFileName)) <<
 					GetMemberFileName();
 			o_str << std::endl;
 		if ((emit_flags & GpbEmitFlags::EnumValues) &&
 			(GetDatumType() == GpbDatumType_Enum)) {
-			const ::google::protobuf::EnumDescriptor &enum_descriptor(
+			const ::google::protobuf::EnumDescriptor    &enum_descriptor(
 				*GetDescriptors().enum_descriptor_);
-			std::pair<std::size_t, std::size_t>       enum_widths(
-				GetEnumValueMaxLengths(enum_descriptor));
+			std::pair<std::streamsize, std::streamsize>  enum_widths(
+				GetEnumValueMaxLengths<std::streamsize>(enum_descriptor));
 			for (int count_1 = 0; count_1 < enum_descriptor.value_count();
 				++count_1)
 				o_str <<
 					std::setw(5 + 1 + 5 + 1 +
-						max_lengths[GpbElementInfoMaxLengths::LabelName] + 1 + 3) <<
+						max_lengths.width(GpbElementInfoMaxLengths::LabelName) + 1 + 3) <<
 						"" << std::right << std::setw(enum_widths.first) <<
 						enum_descriptor.value(count_1)->number() << " = " <<
 						std::left << enum_descriptor.value(count_1)->name() <<
@@ -704,7 +731,7 @@ std::string EmitCsvHelper(bool pad_flag, std::size_t pad_width,
 	o_str << "\"";
 
 	if (pad_flag)
-		o_str << std::setw(pad_width) << "";
+		o_str << std::setw(static_cast<std::streamsize>(pad_width)) << "";
 
 	o_str << in_string << "\"";
 
@@ -757,10 +784,10 @@ std::ostream &GpbElementInfo::EmitCsv(bool /* disambiguation */,
 			o_str << std::endl;
 		if ((emit_flags & GpbEmitFlags::EnumValues) &&
 			(GetDatumType() == GpbDatumType_Enum)) {
-			const ::google::protobuf::EnumDescriptor &enum_descriptor(
+			const ::google::protobuf::EnumDescriptor    &enum_descriptor(
 				*GetDescriptors().enum_descriptor_);
-			std::pair<std::size_t, std::size_t>       enum_widths(
-				GetEnumValueMaxLengths(enum_descriptor));
+			std::pair<std::streamsize, std::streamsize>  enum_widths(
+				GetEnumValueMaxLengths<std::streamsize>(enum_descriptor));
 			for (int count_1 = 0; count_1 < enum_descriptor.value_count();
 				++count_1)
 				o_str <<
@@ -826,7 +853,8 @@ void GpbElementInfo::ClearSourceLocation(
 //	////////////////////////////////////////////////////////////////////////////
 std::ostream & operator << (std::ostream &o_str, const GpbElementInfo &datum)
 {
-	o_str << std::setw(datum.depth_ * 3) << "" << "{"
+	o_str << std::setw(static_cast<std::streamsize>(datum.depth_ * 3)) << "" <<
+		"{"
 		"Depth="                << datum.depth_              << ", "
 		"TypeNameFull="         << datum.GetTypeNameFull()   << ", "
 		"TypeName="             << datum.GetTypeName()       << ", "

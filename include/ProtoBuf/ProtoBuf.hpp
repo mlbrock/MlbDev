@@ -31,9 +31,10 @@
 
 #ifdef _MSC_VER
 # pragma warning(push)
-# pragma warning(disable:4100 4365 4512 4625 4626)
+# pragma warning(disable:4100 4127 4365 4512 4625 4626)
 #endif // #ifdef _MSC_VER
 
+#include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/Message.h>
 
 #ifdef _MSC_VER

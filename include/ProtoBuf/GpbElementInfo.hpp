@@ -27,20 +27,9 @@
 //	Include necessary header files...
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <Utility.hpp>
+#include <ProtoBuf/ProtoBuf.hpp>
 
 #include <iostream>	//	Needed by GpbElementInfo class methods decls.
-
-#ifdef _MSC_VER
-# pragma warning(push)
-# pragma warning(disable:4100 4365 4512 4625 4626)
-#endif // #ifdef _MSC_VER
-
-#include <google/protobuf/descriptor.pb.h>
-
-#ifdef _MSC_VER
-# pragma warning(pop)
-#endif // #ifdef _MSC_VER
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -145,6 +134,11 @@ struct GpbElementInfoMaxLengths {
 	std::size_t & operator [](MaxLengthsIndex idx)
 	{
 		return(max_length_[idx]);
+	}
+
+	std::streamsize width(MaxLengthsIndex idx) const
+	{
+		return(static_cast<std::streamsize>(max_length_[idx]));
 	}
 
 	std::size_t max_length_[Count];
