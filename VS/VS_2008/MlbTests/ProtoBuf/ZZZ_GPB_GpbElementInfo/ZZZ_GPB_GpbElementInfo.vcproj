@@ -223,6 +223,34 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<Filter
+			Name="TestMessages"
+			>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestOne.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestThree.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestTwo_AddressBook.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestTwo_Person.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestTwo_PhoneNumber.pb.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\Tests\CppOut\GpbElementInfoTestTwo_PhoneType.pb.cc"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
