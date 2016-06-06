@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SockLibX_DLL", "SockLibX_DL
 		{593C6D8E-D9FD-48EE-9172-BF3F7C60A74B} = {593C6D8E-D9FD-48EE-9172-BF3F7C60A74B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtoBuf", "ProtoBuf\ProtoBuf.vcproj", "{E41ED1DF-3E45-4E91-B128-BE7FA0DEA851}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -84,6 +86,10 @@ Global
 		{130C848F-29F8-412F-916E-AC316B68A594}.Debug|Win32.Build.0 = Debug|Win32
 		{130C848F-29F8-412F-916E-AC316B68A594}.Release|Win32.ActiveCfg = Release|Win32
 		{130C848F-29F8-412F-916E-AC316B68A594}.Release|Win32.Build.0 = Release|Win32
+		{E41ED1DF-3E45-4E91-B128-BE7FA0DEA851}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E41ED1DF-3E45-4E91-B128-BE7FA0DEA851}.Debug|Win32.Build.0 = Debug|Win32
+		{E41ED1DF-3E45-4E91-B128-BE7FA0DEA851}.Release|Win32.ActiveCfg = Release|Win32
+		{E41ED1DF-3E45-4E91-B128-BE7FA0DEA851}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
