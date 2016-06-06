@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProtoBuf", "ProtoBuf\ProtoBuf.vcproj", "{D2BF0D5E-DCD1-434E-A72C-FB9484624648}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_GPB_GpbElementInfo", "ZZZ_GPB_GpbElementInfo\ZZZ_GPB_GpbElementInfo.vcproj", "{74089CD0-D7FE-45EB-84A2-1A46EFBB768C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2BF0D5E-DCD1-434E-A72C-FB9484624648} = {D2BF0D5E-DCD1-434E-A72C-FB9484624648}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

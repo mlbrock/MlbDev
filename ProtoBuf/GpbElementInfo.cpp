@@ -24,6 +24,7 @@
 //	////////////////////////////////////////////////////////////////////////////
 
 #include <ProtoBuf/GpbElementInfo.hpp>
+#include <ProtoBuf/GetMessageDescriptor.hpp>
 
 #include <iomanip>
 #include <sstream>
@@ -96,27 +97,8 @@ GpbElementInfo::GpbElementInfo(const std::string &message_name)
 	,max_depth_(0)
 	,member_list_()
 {
-  const ::google::protobuf::Descriptor *descriptor =
-    ::google::protobuf::DescriptorPool::generated_pool()->
-		FindMessageTypeByName(message_name);
-
-	if (!descriptor) {
-		std::string::size_type position;
-		if ((position = message_name.find_first_of(':')) !=
-			std::string::npos) {
-			std::string tmp_name(message_name);
-			boost::replace_all(tmp_name, "::", ".");
-			descriptor = ::google::protobuf::DescriptorPool::generated_pool()->
-				FindMessageTypeByName(tmp_name);
-		}
-	}
-
-	if (!descriptor) {
-		std::ostringstream o_str;
-		o_str << "Unable to locate message name '" << message_name <<
-			"' within the pool of generated descriptors.";
-		throw std::invalid_argument(o_str.str());
-	}
+	const ::google::protobuf::Descriptor *descriptor =
+		GetMessageDescriptor(message_name, true);
 
 	GpbElementInfo tmp(descriptor, NULL, 0, -1);
 
