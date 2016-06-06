@@ -42,7 +42,7 @@ namespace {
 
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::FieldDescriptor::CppType InitialCppTypeValue =
-	static_cast<::google::protobuf::FieldDescriptor::CppType>(
+	static_cast< ::google::protobuf::FieldDescriptor::CppType >(
 	::google::protobuf::FieldDescriptor::MAX_CPPTYPE + 1);
 //	////////////////////////////////////////////////////////////////////////////
 
