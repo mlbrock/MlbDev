@@ -148,6 +148,9 @@ public:
 		return(member_list_);
 	}
 
+	const GpbElementInfo *FindMemberName(const std::string &name,
+		bool throw_if_not_found = false) const;
+
 	GpbElementInfoMaxLengths  GetMaxLengths() const;
 	GpbElementInfoMaxLengths &GetMaxLengths(
 		GpbElementInfoMaxLengths &max_lengths) const;

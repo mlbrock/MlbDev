@@ -26,6 +26,8 @@
 #include <ProtoBuf/GpbElementInfo.hpp>
 #include <ProtoBuf/GetMessageDescriptor.hpp>
 
+#include <Utility/Utility_Exception.hpp>
+
 #include <iomanip>
 #include <sstream>
 
@@ -308,6 +310,29 @@ GpbElementInfoDescriptors GpbElementInfo::GetDescriptors() const
 	out_descriptors.enum_descriptor_  = enum_descriptor_;
 
 	return(out_descriptors);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const GpbElementInfo *GpbElementInfo::FindMemberName(const std::string &name,
+	bool throw_if_not_found) const
+{
+	GpbElementInfoVectorIterC iter_b(member_list_.begin());
+	GpbElementInfoVectorIterC iter_e(member_list_.end());
+
+	for ( ; iter_b != iter_e; ++iter_b) {
+		if ((name == GetMemberName()) || (name == GetName()) ||
+			 (name == GetNameFull()))
+			return(&(*iter_b));
+	}
+
+	if (throw_if_not_found) {
+		std::ostringstream o_str;
+		o_str << "Member '" << name << "' not found.";
+		MLB::Utility::ThrowInvalidArgument(o_str.str());
+	}
+
+	return(NULL);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
