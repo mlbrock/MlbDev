@@ -16,9 +16,19 @@
     <MlbDevVal_Boost>$(MlbDevVal_3rdPartyDir)Boost\boost_1_54_0\</MlbDevVal_Boost>
     <MlbDevVal_BoostInc>$(MlbDevVal_Boost)</MlbDevVal_BoostInc>
     <MlbDevVal_BoostLib>$(MlbDevVal_Boost)lib\vc$(PlatformToolsetVersion)\$(Platform)\</MlbDevVal_BoostLib>
+    <MlbDevVal_ExcelXllSdkVer>14.0.4730.1010</MlbDevVal_ExcelXllSdkVer>
     <MlbDevVal_ExcelXllSdk>$(MlbDevVal_3rdPartyDir)Microsoft\ExcelXllSdk\14.0.4730.1010\</MlbDevVal_ExcelXllSdk>
     <MlbDevVal_ExcelXllSdkInc>$(MlbDevVal_ExcelXllSdk)include\</MlbDevVal_ExcelXllSdkInc>
     <MlbDevVal_ExcelXllSdkLib>$(MlbDevVal_ExcelXllSdk)lib\</MlbDevVal_ExcelXllSdkLib>
+    <MlbDevVal_GMock>$(MlbDevVal_3rdPartyDir)Google\GMock\1.7.0\</MlbDevVal_GMock>
+    <MlbDevVal_GMockInc>$(MlbDevVal_GMock)include\</MlbDevVal_GMockInc>
+    <MlbDevVal_GMockLib>$(MlbDevVal_GMock)$(MlbDevVal_TargetPlatform)\lib\</MlbDevVal_GMockLib>
+    <MlbDevVal_GProtoBuf>$(MlbDevVal_3rdPartyDir)Google\ProtoBuf\protobuf-2.6.1\</MlbDevVal_GProtoBuf>
+    <MlbDevVal_GProtoBufInc>$(MlbDevVal_GProtoBuf)src\</MlbDevVal_GProtoBufInc>
+    <MlbDevVal_GProtoBufLib>$(MlbDevVal_GProtoBuf)$(MlbDevVal_TargetPlatform)\lib\</MlbDevVal_GProtoBufLib>
+    <MlbDevVal_GTest>$(MlbDevVal_3rdPartyDir)Google\GTest\1.7.0\</MlbDevVal_GTest>
+    <MlbDevVal_GTestInc>$(MlbDevVal_GTest)include\</MlbDevVal_GTestInc>
+    <MlbDevVal_GTestLib>$(MlbDevVal_GTest)$(MlbDevVal_TargetPlatform)\lib\</MlbDevVal_GTestLib>
     <MlbDevVal_Lbm29West>$(MlbDevVal_3rdPartyDir)29West\32-bit\3.5.0\LBM_3.5ea3\Win2k-i386\</MlbDevVal_Lbm29West>
     <MlbDevVal_Lbm29WestInc>$(MlbDevVal_Lbm29West)include\</MlbDevVal_Lbm29WestInc>
     <MlbDevVal_Lbm29WestLib>$(MlbDevVal_Lbm29West)lib\</MlbDevVal_Lbm29WestLib>
@@ -40,36 +50,26 @@
     <MlbDevVal_Xercesc>$(MlbDevVal_3rdPartyDir)Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\</MlbDevVal_Xercesc>
     <MlbDevVal_XercescInc>$(MlbDevVal_Xercesc)include\</MlbDevVal_XercescInc>
     <MlbDevVal_XercescLib>$(MlbDevVal_Xercesc)lib\</MlbDevVal_XercescLib>
-    <MlbDevVal_AllInc>$(MlbDevVal_LocalInc);$(MlbDevVal_BoostInc);$(MlbDevVal_MsftDbgHelpInc);$(MlbDevVal_TibCoRvInc);$(MlbDevVal_Lbm29WestInc);$(MlbDevVal_XercescInc);$(MlbDevVal_WinPcapInc);$(MlbDevVal_PlatformLsfInc)</MlbDevVal_AllInc>
-    <MlbDevVal_AllLib>$(MlbDevVal_LocalLib);$(MlbDevVal_BoostLib);$(MlbDevVal_MsftDbgHelpLib);$(MlbDevVal_TibCoRvLib);$(MlbDevVal_Lbm29WestLib);$(MlbDevVal_XercescLib);$(MlbDevVal_WinPcapLib);$(MlbDevVal_PlatformLsfLib)</MlbDevVal_AllLib>
+    <MlbDevVal_AllInc>$(MlbDevVal_LocalInc);$(MlbDevVal_BoostInc);$(MlbDevVal_ExcelXllSdkInc);$(MlbDevVal_GMockInc);$(MlbDevVal_GProtoBufInc);$(MlbDevVal_GTestInc);$(MlbDevVal_MsftDbgHelpInc);$(MlbDevVal_TibCoRvInc);$(MlbDevVal_Lbm29WestInc);$(MlbDevVal_XercescInc);$(MlbDevVal_WinPcapInc);$(MlbDevVal_PlatformLsfInc)</MlbDevVal_AllInc>
+    <MlbDevVal_AllLib>$(MlbDevVal_LocalLib);$(MlbDevVal_BoostLib);$(MlbDevVal_ExcelXllSdkLib);$(MlbDevVal_GMockLib);$(MlbDevVal_GProtoBufLib);$(MlbDevVal_GTestLib);$(MlbDevVal_MsftDbgHelpLib);$(MlbDevVal_TibCoRvLib);$(MlbDevVal_Lbm29WestLib);$(MlbDevVal_XercescLib);$(MlbDevVal_WinPcapLib);$(MlbDevVal_PlatformLsfLib)</MlbDevVal_AllLib>
   </PropertyGroup>
   <!-- ******************************************************************* -->
   <!-- ******************************************************************* -->
   <!-- Make OutDir dependent upon the ConfigurationType...                 -->
   <!-- ******************************************************************* -->
-  <Choose>
-    <When Condition="'$(ConfigurationType)'=='Application'">
-      <PropertyGroup Label="UserMacros" />
-    </When>
-    <When Condition="'$(ConfigurationType)'=='DynamicLibrary'">
-      <PropertyGroup Label="UserMacros" />
-    </When>
-    <When Condition="'$(ConfigurationType)'=='StaticLibrary'">
-      <PropertyGroup Label="UserMacros" />
-    </When>
-  </Choose>
+  <PropertyGroup>
+    <MlbDevVal_OutDir Condition="'$(ConfigurationType)' == 'Application'">$(MlbDevVal_OutDirBin)</MlbDevVal_OutDir>
+    <MlbDevVal_OutDir Condition="'$(ConfigurationType)' == 'DynamicLibrary'">$(MlbDevVal_OutDirLib)</MlbDevVal_OutDir>
+    <MlbDevVal_OutDir Condition="'$(ConfigurationType)' == 'StaticLibrary'">$(MlbDevVal_OutDirLib)</MlbDevVal_OutDir>
+  </PropertyGroup>
   <!-- ******************************************************************* -->
   <!-- ******************************************************************* -->
   <!-- Make the run-time library used dependent upon the Configuration...  -->
   <!-- ******************************************************************* -->
-  <Choose>
-    <When Condition="'$(Configuration)'=='Debug'">
-      <PropertyGroup />
-    </When>
-    <When Condition="'$(Configuration)'=='Release'">
-      <PropertyGroup />
-    </When>
-  </Choose>
+  <PropertyGroup>
+    <MlbDevVal_RuntimeLib Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</MlbDevVal_RuntimeLib>
+    <MlbDevVal_RuntimeLib Condition="'$(Configuration)' == 'Release'">MultiThreadedDLL</MlbDevVal_RuntimeLib>
+  </PropertyGroup>
   <!-- ******************************************************************* -->
   <!-- ******************************************************************* -->
   <!-- Fix-up Excel library directory for 64-bit builds.                   -->
@@ -172,6 +172,9 @@
     <BuildMacro Include="MlbDevVal_BoostLib">
       <Value>$(MlbDevVal_BoostLib)</Value>
     </BuildMacro>
+    <BuildMacro Include="MlbDevVal_ExcelXllSdkVer">
+      <Value>$(MlbDevVal_ExcelXllSdkVer)</Value>
+    </BuildMacro>
     <BuildMacro Include="MlbDevVal_ExcelXllSdk">
       <Value>$(MlbDevVal_ExcelXllSdk)</Value>
     </BuildMacro>
@@ -180,6 +183,33 @@
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_ExcelXllSdkLib">
       <Value>$(MlbDevVal_ExcelXllSdkLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GMock">
+      <Value>$(MlbDevVal_GMock)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GMockInc">
+      <Value>$(MlbDevVal_GMockInc)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GMockLib">
+      <Value>$(MlbDevVal_GMockLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GProtoBuf">
+      <Value>$(MlbDevVal_GProtoBuf)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GProtoBufInc">
+      <Value>$(MlbDevVal_GProtoBufInc)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GProtoBufLib">
+      <Value>$(MlbDevVal_GProtoBufLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GTest">
+      <Value>$(MlbDevVal_GTest)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GTestInc">
+      <Value>$(MlbDevVal_GTestInc)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_GTestLib">
+      <Value>$(MlbDevVal_GTestLib)</Value>
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_Lbm29West">
       <Value>$(MlbDevVal_Lbm29West)</Value>

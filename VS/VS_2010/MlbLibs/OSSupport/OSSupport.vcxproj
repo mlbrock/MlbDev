@@ -72,7 +72,6 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Lib />
     <Bscmake />
@@ -85,7 +84,6 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BrowseInformation>false</BrowseInformation>
     </ClCompile>
     <Lib />
     <Bscmake />
@@ -96,7 +94,6 @@
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
       <BrowseInformationFile>
       </BrowseInformationFile>
     </ClCompile>
@@ -112,7 +109,6 @@
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
       <BrowseInformationFile>
       </BrowseInformationFile>
     </ClCompile>
