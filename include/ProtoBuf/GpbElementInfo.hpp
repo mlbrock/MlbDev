@@ -27,9 +27,7 @@
 //	Include necessary header files...
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <ProtoBuf/ProtoBuf.hpp>
-
-#include <iostream>	//	Needed by GpbElementInfo class methods decls.
+#include <ProtoBuf/GpbElementInfoMaxLengths.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -63,85 +61,6 @@ struct GpbElementInfoDescriptors {
 	const ::google::protobuf::FieldDescriptor *field_descriptor_;
 	const ::google::protobuf::FileDescriptor  *file_descriptor_;
 	const ::google::protobuf::EnumDescriptor  *enum_descriptor_;
-};
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-struct GpbEmitFlags {
-	enum EmitFlags {
-		None           = 0x0000,
-		Csv            = 0x0001,
-		IndentType     = 0x0002,
-		IndentName     = 0x0004,
-		EnumValues     = 0x0008,
-		FullName       = 0x0010,
-		TypeFileName   = 0x0020,
-		MemberFileName = 0x0040,
-		Maximum        = MemberFileName,
-		Default        = IndentType | IndentName,
-		Mask           = (Maximum | (Maximum - 1))
-	};
-
-	static inline EmitFlags SetFlag(EmitFlags flags, EmitFlags set_flag)
-	{
-		return(static_cast<EmitFlags>(flags | set_flag));
-	}
-
-	static inline EmitFlags ClearFlag(EmitFlags flags, EmitFlags clear_flag)
-	{
-		return(static_cast<EmitFlags>(flags & ~clear_flag));
-	}
-};
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-struct GpbElementInfoMaxLengths {
-	enum MaxLengthsIndex {
-		TypeNameFull,
-		TypeName,
-		MemberName,
-		Name,
-		NameFull,
-		TypeFileName,
-		MemberFileName,
-		FileName,
-		LabelName,
-		Count
-	};
-
-	GpbElementInfoMaxLengths()
-	{
-		::memset(&max_length_, '\0', sizeof(max_length_));
-	}
-
-	void FixMaxLengths(std::size_t max_depth,
-		GpbEmitFlags::EmitFlags emit_flags)
-	{
-		if (max_depth-- > 1) {
-			max_depth *= 3;
-			max_length_[TypeName]   +=
-				(emit_flags & GpbEmitFlags::IndentType) ? max_depth : 0;
-			max_length_[MemberName] +=
-				(emit_flags & GpbEmitFlags::IndentName) ? max_depth : 0;
-		}
-	}
-
-	const std::size_t & operator [](MaxLengthsIndex idx) const
-	{
-		return(max_length_[idx]);
-	}
-
-	std::size_t & operator [](MaxLengthsIndex idx)
-	{
-		return(max_length_[idx]);
-	}
-
-	std::streamsize width(MaxLengthsIndex idx) const
-	{
-		return(static_cast<std::streamsize>(max_length_[idx]));
-	}
-
-	std::size_t max_length_[Count];
 };
 //	////////////////////////////////////////////////////////////////////////////
 

@@ -180,6 +180,10 @@
 				RelativePath="..\..\..\..\ProtoBuf\GpbElementInfo.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\..\ProtoBuf\GpbElementInfoMaxLengths.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
