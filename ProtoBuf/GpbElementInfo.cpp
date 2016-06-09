@@ -321,8 +321,8 @@ const GpbElementInfo *GpbElementInfo::FindMemberName(const std::string &name,
 	GpbElementInfoVectorIterC iter_e(member_list_.end());
 
 	for ( ; iter_b != iter_e; ++iter_b) {
-		if ((name == GetMemberName()) || (name == GetName()) ||
-			 (name == GetNameFull()))
+		if ((name == iter_b->GetMemberName()) || (name == iter_b->GetName()) ||
+			 (name == iter_b->GetNameFull()))
 			return(&(*iter_b));
 	}
 
