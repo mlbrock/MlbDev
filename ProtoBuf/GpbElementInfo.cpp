@@ -159,15 +159,19 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 		else
 			datum_type_ = static_cast<GpbDatumType>(cpp_type_);
 	}
+	else if (descriptor_) {
+		cpp_type_   = ::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE;
+		datum_type_ = GpbDatumType_Message;
+	}
 
-	if ((!descriptor) || (!descriptor->field_count()))
+	if ((!descriptor_) || (!descriptor_->field_count()))
 		return;
 
-	member_list_.reserve(static_cast<std::size_t>(descriptor->field_count()));
+	member_list_.reserve(static_cast<std::size_t>(descriptor_->field_count()));
 
 	for (int count_1 = 0; count_1 < descriptor_->field_count(); ++count_1) {
 		const GPB_FieldDescriptor *this_field_descriptor =
-			descriptor->field(count_1);
+			descriptor_->field(count_1);
 		const GPB_Descriptor      *this_descriptor       =
 			this_field_descriptor->message_type();
 		GpbElementInfo new_field(this_descriptor, this_field_descriptor,
