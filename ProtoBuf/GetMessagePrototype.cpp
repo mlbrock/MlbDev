@@ -41,14 +41,24 @@ namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::Message *GetMessagePrototype(
-	const std::string &msg_name,
+	const ::google::protobuf::Descriptor *descriptor_ptr,
 	::google::protobuf::MessageFactory *msg_factory_ptr)
 {
 	return(MLB::Utility::ThrowIfNull(((msg_factory_ptr) ? msg_factory_ptr :
 		::google::protobuf::MessageFactory::generated_factory())->
-		GetPrototype(GetMessageDescriptor(msg_name, true)),
+		GetPrototype(descriptor_ptr),
 		"An instance of the MessageFactory class or one of its descendent "
 		"classes GetPrototype() method returned NULL."));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const ::google::protobuf::Message *GetMessagePrototype(
+	const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(GetMessagePrototype(GetMessageDescriptor(msg_name, true),
+		msg_factory_ptr));
 }
 //	////////////////////////////////////////////////////////////////////////////
 

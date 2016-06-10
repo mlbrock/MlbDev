@@ -40,9 +40,26 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-GpbMessageSPtr GetMessageNew(const std::string &msg_name,
+::google::protobuf::Message *GetMessageNewPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
 	::google::protobuf::MessageFactory *msg_factory_ptr);
-GpbMessageSPtr GetMessageNew(const std::string &msg_name);
+::google::protobuf::Message *GetMessageNewPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+::google::protobuf::Message *GetMessageNewPtr(const std::string &msg_name);
+
+GpbMessageSPtr GetMessageNewSPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+GpbMessageSPtr GetMessageNewSPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+GpbMessageSPtr GetMessageNewSPtr(const std::string &msg_name);
+
+GpbMessageUPtr GetMessageNewUPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+GpbMessageUPtr GetMessageNewUPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr);
+GpbMessageUPtr GetMessageNewUPtr(const std::string &msg_name);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf

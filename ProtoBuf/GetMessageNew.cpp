@@ -27,6 +27,7 @@
 
 #include <ProtoBuf/GetMessageNew.hpp>
 #include <ProtoBuf/GetMessagePrototype.hpp>
+#include <ProtoBuf/GetMessageDescriptor.hpp>
 
 #include <Utility/C_StringSupport.hpp>
 
@@ -39,33 +40,114 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-GpbMessageSPtr GetMessageNew(const std::string &msg_name,
+::google::protobuf::Message *GetMessageNewPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
 	::google::protobuf::MessageFactory *msg_factory_ptr)
 {
-	GpbMessageSPtr msg_sptr;
+	::google::protobuf::Message *msg_ptr = NULL;
 
 	try {
-		msg_sptr.reset(GetMessagePrototype(msg_name, msg_factory_ptr)->New());
+		msg_ptr = GetMessagePrototype(descriptor_ptr, msg_factory_ptr)->New();
 	}
 	catch (const std::exception &except) {
 		std::ostringstream o_str;
 		o_str << "Unable to create a new Google ProtoBuf message of type '" <<
-			msg_name << "' from its prototypical form: " << except.what();
+			descriptor_ptr->name() << "' from its prototypical form: " <<
+			except.what();
 		MLB::Utility::Rethrow(except, o_str.str());
 	}
 
-	return(msg_sptr);
+	return(msg_ptr);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-GpbMessageSPtr GetMessageNew(const std::string &msg_name)
+::google::protobuf::Message *GetMessageNewPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
 {
-	return(GetMessageNew(msg_name, NULL));
+	return(GetMessageNewPtr(GetMessageDescriptor(msg_name, true),
+		msg_factory_ptr));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+::google::protobuf::Message *GetMessageNewPtr(const std::string &msg_name)
+{
+	return(GetMessageNewPtr(msg_name, NULL));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageSPtr GetMessageNewSPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(GpbMessageSPtr(GetMessageNewPtr(descriptor_ptr, msg_factory_ptr)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageSPtr GetMessageNewSPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(GpbMessageSPtr(GetMessageNewPtr(msg_name, msg_factory_ptr)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageSPtr GetMessageNewSPtr(const std::string &msg_name)
+{
+	return(GpbMessageSPtr(GetMessageNewPtr(msg_name, NULL)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageUPtr GetMessageNewUPtr(
+	const ::google::protobuf::Descriptor *descriptor_ptr,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(GpbMessageUPtr(GetMessageNewPtr(descriptor_ptr, msg_factory_ptr)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageUPtr GetMessageNewUPtr(const std::string &msg_name,
+	::google::protobuf::MessageFactory *msg_factory_ptr)
+{
+	return(GpbMessageUPtr(GetMessageNewPtr(msg_name, msg_factory_ptr)));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+GpbMessageUPtr GetMessageNewUPtr(const std::string &msg_name)
+{
+	return(GpbMessageUPtr(GetMessageNewPtr(msg_name, NULL)));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
 
 } // namespace MLB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
