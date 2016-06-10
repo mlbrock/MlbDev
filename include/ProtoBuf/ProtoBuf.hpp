@@ -29,6 +29,8 @@
 
 #include <Utility.hpp>
 
+#include <memory>
+
 #ifdef _MSC_VER
 # pragma warning(push)
 # pragma warning(disable:4100 4127 4365 4512 4625 4626)
@@ -51,6 +53,14 @@ namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
 typedef boost::shared_ptr< ::google::protobuf::Message > GpbMessageSPtr;
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+#if (__cplusplus < 201103L)
+typedef std::auto_ptr< ::google::protobuf::Message >   GpbMessageUPtr;
+#else
+typedef std::unique_ptr< ::google::protobuf::Message > GpbMessageUPtr;
+#endif // #if (__cplusplus < 201103L)
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
