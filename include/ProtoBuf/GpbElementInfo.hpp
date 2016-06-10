@@ -71,6 +71,7 @@ class GpbElementInfo {
 	typedef ::google::protobuf::FileDescriptor  GPB_FileDescriptor;
 	typedef ::google::protobuf::EnumDescriptor  GPB_EnumDescriptor;
 	typedef ::google::protobuf::Reflection      GPB_Reflection;
+	typedef ::google::protobuf::Metadata        GPB_Metadata;
 public:
 	typedef std::vector<GpbElementInfo>               GpbElementInfoVector_I;
 	typedef std::pair<GpbElementInfo, GpbElementInfo> GpbElementInfoPair_I;
@@ -136,9 +137,24 @@ public:
 
 	::google::protobuf::SourceLocation GetSourceLocationMember() const;
 
+	const GPB_Descriptor *GetDescriptor() const
+	{
+		return(descriptor_);
+	}
+
 	const GPB_FieldDescriptor *GetFieldDescriptor() const
 	{
 		return(field_descriptor_);
+	}
+
+	const GPB_FileDescriptor *GetFileDescriptor() const
+	{
+		return(file_descriptor_);
+	}
+
+	const GPB_EnumDescriptor *GetEnumDescriptor() const
+	{
+		return(enum_descriptor_);
 	}
 
 	GpbElementInfoDescriptors GetDescriptors() const;
