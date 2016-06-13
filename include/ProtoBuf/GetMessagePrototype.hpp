@@ -44,9 +44,7 @@ const ::google::protobuf::Message *GetMessagePrototype(
 	::google::protobuf::MessageFactory *msg_factory_ptr = NULL);
 const ::google::protobuf::Message *GetMessagePrototype(
 	const std::string &msg_name,
-	::google::protobuf::MessageFactory *msg_factory_ptr);
-const ::google::protobuf::Message *GetMessagePrototype(
-	const std::string &msg_name);
+	::google::protobuf::MessageFactory *msg_factory_ptr = NULL);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf

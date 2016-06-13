@@ -44,6 +44,9 @@ const ::google::protobuf::Message *GetMessagePrototype(
 	const ::google::protobuf::Descriptor *descriptor_ptr,
 	::google::protobuf::MessageFactory *msg_factory_ptr)
 {
+	MLB::Utility::ThrowIfNull(descriptor_ptr, "The pointer to the '::google::"
+		"protobuf::Descriptor' passed to GetMessagePrototype() is NULL.");
+
 	return(MLB::Utility::ThrowIfNull(((msg_factory_ptr) ? msg_factory_ptr :
 		::google::protobuf::MessageFactory::generated_factory())->
 		GetPrototype(descriptor_ptr),
@@ -59,14 +62,6 @@ const ::google::protobuf::Message *GetMessagePrototype(
 {
 	return(GetMessagePrototype(GetMessageDescriptor(msg_name, true),
 		msg_factory_ptr));
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-const ::google::protobuf::Message *GetMessagePrototype(
-	const std::string &msg_name)
-{
-	return(GetMessagePrototype(msg_name, NULL));
 }
 //	////////////////////////////////////////////////////////////////////////////
 

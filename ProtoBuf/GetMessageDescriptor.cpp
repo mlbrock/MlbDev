@@ -41,15 +41,15 @@ namespace ProtoBuf {
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::Descriptor *GetMessageDescriptor(
 	const std::string &msg_name,
-	const ::google::protobuf::DescriptorPool *descriptor_pool,
+	const ::google::protobuf::DescriptorPool *descriptor_pool_ptr,
 	bool throw_if_not_found)
 {
-	if (!descriptor_pool)
+	if (!descriptor_pool_ptr)
 		MLB::Utility::ThrowInvalidArgument("The pointer to the '::google::"
 			"protobuf::DescriptorPool' to be used is NULL.");
 
 	const ::google::protobuf::Descriptor *descriptor_ptr =
-		descriptor_pool->FindMessageTypeByName(msg_name);
+		descriptor_pool_ptr->FindMessageTypeByName(msg_name);
 
 	if (!descriptor_ptr) {
 		std::string::size_type position;
@@ -58,14 +58,14 @@ const ::google::protobuf::Descriptor *GetMessageDescriptor(
 			std::string tmp_name((msg_name.substr(0, 2) == "::") ?
 				msg_name.substr(2) : msg_name);
 			boost::replace_all(tmp_name, "::", ".");
-			descriptor_ptr = descriptor_pool->FindMessageTypeByName(tmp_name);
+			descriptor_ptr = descriptor_pool_ptr->FindMessageTypeByName(tmp_name);
 		}
 	}
 
 	if ((!descriptor_ptr) && throw_if_not_found) {
 		std::ostringstream o_str;
 		o_str << "Unable to locate message name '" << msg_name <<
-			"' within the pool of " << ((descriptor_pool ==
+			"' within the pool of " << ((descriptor_pool_ptr ==
 			::google::protobuf::DescriptorPool::generated_pool()) ? "generated " :
 			"") << "descriptors.";
 		MLB::Utility::ThrowInvalidArgument(o_str.str());

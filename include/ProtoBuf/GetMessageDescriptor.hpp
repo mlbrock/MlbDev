@@ -41,7 +41,7 @@ namespace ProtoBuf {
 //	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::Descriptor *GetMessageDescriptor(
 	const std::string &msg_name,
-	const ::google::protobuf::DescriptorPool *descriptor_pool,
+	const ::google::protobuf::DescriptorPool *descriptor_pool_ptr,
 	bool throw_if_not_found = true);
 const ::google::protobuf::Descriptor *GetMessageDescriptor(
 	const std::string &msg_name, bool throw_if_not_found = true);
