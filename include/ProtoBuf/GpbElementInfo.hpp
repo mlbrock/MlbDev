@@ -73,6 +73,12 @@ class GpbElementInfo {
 	typedef ::google::protobuf::Reflection      GPB_Reflection;
 	typedef ::google::protobuf::Metadata        GPB_Metadata;
 public:
+	typedef boost::shared_ptr<GpbElementInfo>         GpbElementInfoSPtr_I;
+#if (__cplusplus < 201103L)
+	typedef std::auto_ptr<GpbElementInfo>             GpbElementInfoUPtr_I;
+#else
+	typedef std::unique_ptr<GpbElementInfo>           GpbElementInfoUPtr_I;
+#endif // #if (__cplusplus < 201103L)
 	typedef std::vector<GpbElementInfo>               GpbElementInfoVector_I;
 	typedef std::pair<GpbElementInfo, GpbElementInfo> GpbElementInfoPair_I;
 	typedef std::vector<GpbElementInfoPair_I>         GpbElementInfoPairVector_I;
@@ -187,10 +193,19 @@ public:
 	static std::string SourceLocationToString(
 		const ::google::protobuf::SourceLocation &datum);
 
-	template <typename DerivedMessageType>
-		static GpbElementInfo GetInstance()
+	template <typename MsgType> static GpbElementInfo GetInstance()
 	{
-		return(GpbElementInfo(DerivedMessageType::descriptor(), 0));
+		return(GpbElementInfo(MsgType::descriptor(), 0));
+	}
+
+	template <typename MsgType> static GpbElementInfoSPtr_I GetInstanceSPtr()
+	{
+		return(GpbElementInfoSPtr_I(new GpbElementInfo(GetInstance<MsgType>())));
+	}
+
+	template <typename MsgType> static GpbElementInfoUPtr_I GetInstanceUPtr()
+	{
+		return(GpbElementInfoUPtr_I(new GpbElementInfo(GetInstance<MsgType>())));
 	}
 
 	void TestFileName() const;
@@ -243,15 +258,8 @@ private:
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-typedef boost::shared_ptr<GpbElementInfo> GpbElementInfoSPtr;
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-#if (__cplusplus < 201103L)
-typedef std::auto_ptr<GpbElementInfo>   GpbElementInfoUPtr;
-#else
-typedef std::unique_ptr<GpbElementInfo> GpbElementInfoUPtr;
-#endif // #if (__cplusplus < 201103L)
+typedef GpbElementInfo::GpbElementInfoSPtr_I GpbElementInfoSPtr;
+typedef GpbElementInfo::GpbElementInfoUPtr_I GpbElementInfoUPtr;
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
