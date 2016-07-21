@@ -184,6 +184,10 @@
 				RelativePath="..\..\..\..\..\ProtoBuf\GpbElementInfoMaxLengths.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\IsGpbType.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

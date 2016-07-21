@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\..\..\ProtoBuf\GetMessagePrototype.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfo.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfoMaxLengths.cpp" />
+    <ClCompile Include="..\..\..\..\ProtoBuf\IsGpbType.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
