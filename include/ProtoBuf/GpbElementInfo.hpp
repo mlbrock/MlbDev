@@ -104,12 +104,13 @@ public:
 	const char *GetFileName() const;
 	const char *GetLabelName() const;
 
-	bool IsGpbTypeRepeatedPtr() const;
-	bool IsGpbTypeRepeatedSimple() const;
-	bool IsGpbTypeRepeatedScalar() const;
-	bool IsGpbTypeRepeated() const;
-	bool IsGpbTypeSimple() const;
 	bool IsGpbTypeScalar() const;
+	bool IsGpbTypeSimple() const;
+	bool IsGpbTypePtr() const;
+	bool IsGpbTypeRepeatedScalar() const;
+	bool IsGpbTypeRepeatedSimple() const;
+	bool IsGpbTypeRepeatedPtr() const;
+	bool IsGpbTypeRepeated() const;
 
 	::google::protobuf::FieldDescriptor::Label GetLabel() const;
 
