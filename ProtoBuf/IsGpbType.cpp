@@ -76,8 +76,7 @@ bool IsGpbTypeRepeatedPtr(const GpbElementInfo &msg_info)
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeRepeatedPtr(const GpbElementInfo *msg_info_ptr)
 {
-	return(IsGpbTypeRepeatedPtr((msg_info_ptr) ?
-		msg_info_ptr->GetFieldDescriptor() : false));
+	return((msg_info_ptr) ? IsGpbTypeRepeatedPtr(*msg_info_ptr) : false);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -147,8 +146,7 @@ bool IsGpbTypeRepeatedSimple(const GpbElementInfo &msg_info)
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeRepeatedSimple(const GpbElementInfo *msg_info_ptr)
 {
-	return(IsGpbTypeRepeatedSimple((msg_info_ptr) ?
-		msg_info_ptr->GetFieldDescriptor() : false));
+	return((msg_info_ptr) ? IsGpbTypeRepeatedSimple(*msg_info_ptr) : false);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -163,6 +161,75 @@ bool IsGpbTypeRepeatedSimple(const GpbElementInfoSPtr &msg_info_ptr)
 bool IsGpbTypeRepeatedSimple(const GpbElementInfoUPtr &msg_info_ptr)
 {
 	return(IsGpbTypeRepeatedSimple(msg_info_ptr.get()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(GpbDatumType datum_type)
+{
+	return(datum_type == GpbDatumType_Repeated);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(
+	::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label)
+{
+	return((label    == ::google::protobuf::FieldDescriptor::LABEL_REPEATED) &&
+			 (cpp_type != ::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(
+	const ::google::protobuf::FieldDescriptor &field_descriptor)
+{
+	return(IsGpbTypeRepeatedScalar(field_descriptor.cpp_type(),
+		field_descriptor.label()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(
+	const ::google::protobuf::FieldDescriptor *field_descriptor)
+{
+	return((field_descriptor) ? IsGpbTypeRepeatedScalar(*field_descriptor) :
+		false);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo &msg_info)
+{
+	return(IsGpbTypeRepeatedScalar(msg_info.GetFieldDescriptor()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo *msg_info_ptr)
+{
+	return((msg_info_ptr) ? IsGpbTypeRepeatedScalar(*msg_info_ptr) : false);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoSPtr &msg_info_ptr)
+{
+	return(IsGpbTypeRepeatedScalar(msg_info_ptr.get()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoUPtr &msg_info_ptr)
+{
+	return(IsGpbTypeRepeatedScalar(msg_info_ptr.get()));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -191,8 +258,8 @@ bool IsGpbTypeRepeated(
 //	////////////////////////////////////////////////////////////////////////////
 //	IMPLEMENTATION NOTE: For parallelism.
 bool IsGpbTypeRepeated(
-	::google::protobuf::FieldDescriptor::Label label,
-	::google::protobuf::FieldDescriptor::CppType /* cpp_type */)
+	::google::protobuf::FieldDescriptor::CppType /* cpp_type */,
+	::google::protobuf::FieldDescriptor::Label label)
 {
 	return(IsGpbTypeRepeated(label));
 }
@@ -210,8 +277,7 @@ bool IsGpbTypeRepeated(
 bool IsGpbTypeRepeated(
 	const ::google::protobuf::FieldDescriptor *field_descriptor)
 {
-	return((field_descriptor) ? IsGpbTypeRepeated(*field_descriptor) :
-		false);
+	return((field_descriptor) ? IsGpbTypeRepeated(*field_descriptor) : false);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -281,12 +347,20 @@ bool IsGpbTypeSimple(
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeSimple(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label)
+{
+	return((label != ::google::protobuf::FieldDescriptor::LABEL_REPEATED) &&
+		IsGpbTypeSimple(cpp_type));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeSimple(
 	const ::google::protobuf::FieldDescriptor &field_descriptor)
 {
-	return((field_descriptor.label() !=
-		::google::protobuf::FieldDescriptor::LABEL_REPEATED) &&
-		IsGpbTypeSimple(field_descriptor.cpp_type()));
+	return(IsGpbTypeSimple(field_descriptor.cpp_type(),
+		field_descriptor.label()));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -308,8 +382,7 @@ bool IsGpbTypeSimple(const GpbElementInfo &msg_info)
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeSimple(const GpbElementInfo *msg_info_ptr)
 {
-	return((msg_info_ptr) ?
-		IsGpbTypeSimple(msg_info_ptr->GetFieldDescriptor()) : false);
+	return((msg_info_ptr) ? IsGpbTypeSimple(*msg_info_ptr) : false);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -350,12 +423,20 @@ bool IsGpbTypeScalar(
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label)
+{
+	return((label != ::google::protobuf::FieldDescriptor::LABEL_REPEATED) &&
+		IsGpbTypeScalar(cpp_type));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeScalar(
 	const ::google::protobuf::FieldDescriptor &field_descriptor)
 {
-	return((field_descriptor.label() !=
-		::google::protobuf::FieldDescriptor::LABEL_REPEATED) &&
-		IsGpbTypeScalar(field_descriptor.cpp_type()));
+	return(IsGpbTypeScalar(field_descriptor.cpp_type(),
+		field_descriptor.label()));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -377,8 +458,7 @@ bool IsGpbTypeScalar(const GpbElementInfo &msg_info)
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeScalar(const GpbElementInfo *msg_info_ptr)
 {
-	return(IsGpbTypeScalar((msg_info_ptr) ? msg_info_ptr->GetFieldDescriptor() :
-		false));
+	return((msg_info_ptr) ? IsGpbTypeScalar(*msg_info_ptr) : false);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -428,11 +508,12 @@ void TEST_EmitElement(const MLB::ProtoBuf::GpbElementInfo &datum)
 	std::cout
 		<< std::setw(3) << datum.GetDepth() << " "
 		<< ((IsGpbTypeRepeatedPtr(datum))    ? "RP-" : "  -")
-		<< ((IsGpbTypeRepeatedSimple(datum)) ? "RS-" : "  -")
-		<< ((IsGpbTypeRepeated(datum))       ? "R-" : " -")
-		<< ((IsGpbTypeSimple(datum))         ? "s-" : " -")
-		<< ((IsGpbTypeScalar(datum))         ? "S-" : " -")
-		<< std::left
+		<< ((IsGpbTypeRepeatedSimple(datum)) ? "Rs-" : "  -")
+		<< ((IsGpbTypeRepeatedScalar(datum)) ? "RS-" : "  -")
+		<< ((IsGpbTypeRepeated(datum))       ? "R-"  : " -" )
+		<< ((IsGpbTypeSimple(datum))         ? "s-"  : " -" )
+		<< ((IsGpbTypeScalar(datum))         ? "S-"  : " -" )
+		<< std::left << " "
 		<< std::setw(20) << datum.GetTypeName() << " "
 		<< std::setw(20) << datum.GetName()     << std::right << "\n";
 
@@ -449,7 +530,6 @@ bool TEST_RunTestForMessage(int &return_code, const char *message_name)
 	TEST_EmitSep('=');
 	std::cout << "TEST for a message name ('" << message_name << "'):" <<
 		std::endl;
-	TEST_EmitSep('=');
 
 	bool test_passed = true;
 
