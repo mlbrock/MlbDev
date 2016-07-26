@@ -28,32 +28,13 @@
 //	////////////////////////////////////////////////////////////////////////////
 
 #include <ProtoBuf/GpbElementInfoMaxLengths.hpp>
+#include <ProtoBuf/GpbDatumType.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
 namespace ProtoBuf {
-
-//	////////////////////////////////////////////////////////////////////////////
-enum GpbDatumType {
-	GpbDatumType_SInt32      = ::google::protobuf::FieldDescriptor::CPPTYPE_INT32,
-	GpbDatumType_SInt64      = ::google::protobuf::FieldDescriptor::CPPTYPE_INT64,
-	GpbDatumType_UInt32      = ::google::protobuf::FieldDescriptor::CPPTYPE_UINT32,
-	GpbDatumType_UInt64      = ::google::protobuf::FieldDescriptor::CPPTYPE_UINT64,
-	GpbDatumType_Double      = ::google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE,
-	GpbDatumType_Float       = ::google::protobuf::FieldDescriptor::CPPTYPE_FLOAT,
-	GpbDatumType_Bool        = ::google::protobuf::FieldDescriptor::CPPTYPE_BOOL,
-	GpbDatumType_Enum        = ::google::protobuf::FieldDescriptor::CPPTYPE_ENUM,
-	GpbDatumType_String      = ::google::protobuf::FieldDescriptor::CPPTYPE_STRING,
-	GpbDatumType_Message     = ::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE,
-	GpbDatumType_Repeated    = ::google::protobuf::FieldDescriptor::MAX_CPPTYPE + 1,
-	GpbDatumType_RepeatedPtr,
-	GpbDatumType_Minimum     = GpbDatumType_SInt32,
-	GpbDatumType_Maximum     = GpbDatumType_RepeatedPtr,
-	GpbDatumType_Count       = (GpbDatumType_Maximum - GpbDatumType_Minimum) + 1
-};
-//	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 struct GpbElementInfoDescriptors {
@@ -114,22 +95,21 @@ public:
 	}
 
 	const char *GetTypeNameFull() const;
-
 	const char *GetTypeName() const;
-
 	const char *GetMemberName() const;
-
 	const char *GetName() const;
-
 	const char *GetNameFull() const;
-
 	const char *GetTypeFileName() const;
-
 	const char *GetMemberFileName() const;
-
 	const char *GetFileName() const;
-
 	const char *GetLabelName() const;
+
+	bool IsGpbTypeRepeatedPtr() const;
+	bool IsGpbTypeRepeatedSimple() const;
+	bool IsGpbTypeRepeatedScalar() const;
+	bool IsGpbTypeRepeated() const;
+	bool IsGpbTypeSimple() const;
+	bool IsGpbTypeScalar() const;
 
 	::google::protobuf::FieldDescriptor::Label GetLabel() const;
 

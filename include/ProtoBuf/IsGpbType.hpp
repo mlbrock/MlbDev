@@ -65,11 +65,27 @@ bool IsGpbTypeRepeatedSimple(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(GpbDatumType datum_type);
+bool IsGpbTypeRepeatedScalar(
+	::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeatedScalar(
+	const ::google::protobuf::FieldDescriptor &field_descriptor);
+bool IsGpbTypeRepeatedScalar(
+	const ::google::protobuf::FieldDescriptor *field_descriptor);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo &msg_info);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoUPtr &msg_info_ptr);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeRepeated(GpbDatumType datum_type);
 bool IsGpbTypeRepeated(::google::protobuf::FieldDescriptor::Label label);
 //	IMPLEMENTATION NOTE: For parallelism.
-bool IsGpbTypeRepeated(::google::protobuf::FieldDescriptor::Label label,
-	::google::protobuf::FieldDescriptor::CppType /* cpp_type */);
+bool IsGpbTypeRepeated(
+	::google::protobuf::FieldDescriptor::CppType /* cpp_type */,
+	::google::protobuf::FieldDescriptor::Label label);
 bool IsGpbTypeRepeated(
 	const ::google::protobuf::FieldDescriptor &field_descriptor);
 bool IsGpbTypeRepeated(
@@ -83,7 +99,8 @@ bool IsGpbTypeRepeated(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeSimple(GpbDatumType datum_type);
 bool IsGpbTypeSimple(::google::protobuf::FieldDescriptor::CppType cpp_type);
-
+bool IsGpbTypeSimple(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
 bool IsGpbTypeSimple(
 	const ::google::protobuf::FieldDescriptor &field_descriptor);
 bool IsGpbTypeSimple(
@@ -97,6 +114,8 @@ bool IsGpbTypeSimple(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 bool IsGpbTypeScalar(GpbDatumType datum_type);
 bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type);
+bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
 bool IsGpbTypeScalar(
 	const ::google::protobuf::FieldDescriptor &field_descriptor);
 bool IsGpbTypeScalar(
