@@ -36,64 +36,18 @@ namespace MLB {
 namespace ProtoBuf {
 
 //	////////////////////////////////////////////////////////////////////////////
-bool IsGpbTypeRepeatedPtr(GpbDatumType datum_type);
-bool IsGpbTypeRepeatedPtr(::google::protobuf::FieldDescriptor::CppType cpp_type,
+bool IsGpbTypeScalar(GpbDatumType datum_type);
+bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type);
+bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type,
 	::google::protobuf::FieldDescriptor::Label label);
-bool IsGpbTypeRepeatedPtr(
+bool IsGpbTypeScalar(
 	const ::google::protobuf::FieldDescriptor &field_descriptor);
-bool IsGpbTypeRepeatedPtr(
+bool IsGpbTypeScalar(
 	const ::google::protobuf::FieldDescriptor *field_descriptor);
-bool IsGpbTypeRepeatedPtr(const GpbElementInfo &msg_info);
-bool IsGpbTypeRepeatedPtr(const GpbElementInfo *msg_info_ptr);
-bool IsGpbTypeRepeatedPtr(const GpbElementInfoSPtr &msg_info_ptr);
-bool IsGpbTypeRepeatedPtr(const GpbElementInfoUPtr &msg_info_ptr);
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-bool IsGpbTypeRepeatedSimple(GpbDatumType datum_type);
-bool IsGpbTypeRepeatedSimple(
-	::google::protobuf::FieldDescriptor::CppType cpp_type,
-	::google::protobuf::FieldDescriptor::Label label);
-bool IsGpbTypeRepeatedSimple(
-	const ::google::protobuf::FieldDescriptor &field_descriptor);
-bool IsGpbTypeRepeatedSimple(
-	const ::google::protobuf::FieldDescriptor *field_descriptor);
-bool IsGpbTypeRepeatedSimple(const GpbElementInfo &msg_info);
-bool IsGpbTypeRepeatedSimple(const GpbElementInfo *msg_info_ptr);
-bool IsGpbTypeRepeatedSimple(const GpbElementInfoSPtr &msg_info_ptr);
-bool IsGpbTypeRepeatedSimple(const GpbElementInfoUPtr &msg_info_ptr);
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-bool IsGpbTypeRepeatedScalar(GpbDatumType datum_type);
-bool IsGpbTypeRepeatedScalar(
-	::google::protobuf::FieldDescriptor::CppType cpp_type,
-	::google::protobuf::FieldDescriptor::Label label);
-bool IsGpbTypeRepeatedScalar(
-	const ::google::protobuf::FieldDescriptor &field_descriptor);
-bool IsGpbTypeRepeatedScalar(
-	const ::google::protobuf::FieldDescriptor *field_descriptor);
-bool IsGpbTypeRepeatedScalar(const GpbElementInfo &msg_info);
-bool IsGpbTypeRepeatedScalar(const GpbElementInfo *msg_info_ptr);
-bool IsGpbTypeRepeatedScalar(const GpbElementInfoSPtr &msg_info_ptr);
-bool IsGpbTypeRepeatedScalar(const GpbElementInfoUPtr &msg_info_ptr);
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-bool IsGpbTypeRepeated(GpbDatumType datum_type);
-bool IsGpbTypeRepeated(::google::protobuf::FieldDescriptor::Label label);
-//	IMPLEMENTATION NOTE: For parallelism.
-bool IsGpbTypeRepeated(
-	::google::protobuf::FieldDescriptor::CppType /* cpp_type */,
-	::google::protobuf::FieldDescriptor::Label label);
-bool IsGpbTypeRepeated(
-	const ::google::protobuf::FieldDescriptor &field_descriptor);
-bool IsGpbTypeRepeated(
-	const ::google::protobuf::FieldDescriptor *field_descriptor);
-bool IsGpbTypeRepeated(const GpbElementInfo &msg_info);
-bool IsGpbTypeRepeated(const GpbElementInfo *msg_info_ptr);
-bool IsGpbTypeRepeated(const GpbElementInfoSPtr &msg_info_ptr);
-bool IsGpbTypeRepeated(const GpbElementInfoUPtr &msg_info_ptr);
+bool IsGpbTypeScalar(const GpbElementInfo &msg_info);
+bool IsGpbTypeScalar(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeScalar(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeScalar(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
@@ -112,18 +66,75 @@ bool IsGpbTypeSimple(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-bool IsGpbTypeScalar(GpbDatumType datum_type);
-bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type);
-bool IsGpbTypeScalar(::google::protobuf::FieldDescriptor::CppType cpp_type,
+bool IsGpbTypePtr(GpbDatumType datum_type);
+bool IsGpbTypePtr(::google::protobuf::FieldDescriptor::CppType cpp_type);
+bool IsGpbTypePtr(::google::protobuf::FieldDescriptor::CppType cpp_type,
 	::google::protobuf::FieldDescriptor::Label label);
-bool IsGpbTypeScalar(
+bool IsGpbTypePtr(const ::google::protobuf::FieldDescriptor &field_descriptor);
+bool IsGpbTypePtr(const ::google::protobuf::FieldDescriptor *field_descriptor);
+bool IsGpbTypePtr(const GpbElementInfo &msg_info);
+bool IsGpbTypePtr(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypePtr(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypePtr(const GpbElementInfoUPtr &msg_info_ptr);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedScalar(GpbDatumType datum_type);
+bool IsGpbTypeRepeatedScalar(
+	::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeatedScalar(
 	const ::google::protobuf::FieldDescriptor &field_descriptor);
-bool IsGpbTypeScalar(
+bool IsGpbTypeRepeatedScalar(
 	const ::google::protobuf::FieldDescriptor *field_descriptor);
-bool IsGpbTypeScalar(const GpbElementInfo &msg_info);
-bool IsGpbTypeScalar(const GpbElementInfo *msg_info_ptr);
-bool IsGpbTypeScalar(const GpbElementInfoSPtr &msg_info_ptr);
-bool IsGpbTypeScalar(const GpbElementInfoUPtr &msg_info_ptr);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo &msg_info);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeRepeatedScalar(const GpbElementInfoUPtr &msg_info_ptr);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedSimple(GpbDatumType datum_type);
+bool IsGpbTypeRepeatedSimple(
+	::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeatedSimple(
+	const ::google::protobuf::FieldDescriptor &field_descriptor);
+bool IsGpbTypeRepeatedSimple(
+	const ::google::protobuf::FieldDescriptor *field_descriptor);
+bool IsGpbTypeRepeatedSimple(const GpbElementInfo &msg_info);
+bool IsGpbTypeRepeatedSimple(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeRepeatedSimple(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeRepeatedSimple(const GpbElementInfoUPtr &msg_info_ptr);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeatedPtr(GpbDatumType datum_type);
+bool IsGpbTypeRepeatedPtr(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeatedPtr(
+	const ::google::protobuf::FieldDescriptor &field_descriptor);
+bool IsGpbTypeRepeatedPtr(
+	const ::google::protobuf::FieldDescriptor *field_descriptor);
+bool IsGpbTypeRepeatedPtr(const GpbElementInfo &msg_info);
+bool IsGpbTypeRepeatedPtr(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeRepeatedPtr(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeRepeatedPtr(const GpbElementInfoUPtr &msg_info_ptr);
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+bool IsGpbTypeRepeated(GpbDatumType datum_type);
+bool IsGpbTypeRepeated(::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeated(::google::protobuf::FieldDescriptor::CppType cpp_type,
+	::google::protobuf::FieldDescriptor::Label label);
+bool IsGpbTypeRepeated(
+	const ::google::protobuf::FieldDescriptor &field_descriptor);
+bool IsGpbTypeRepeated(
+	const ::google::protobuf::FieldDescriptor *field_descriptor);
+bool IsGpbTypeRepeated(const GpbElementInfo &msg_info);
+bool IsGpbTypeRepeated(const GpbElementInfo *msg_info_ptr);
+bool IsGpbTypeRepeated(const GpbElementInfoSPtr &msg_info_ptr);
+bool IsGpbTypeRepeated(const GpbElementInfoUPtr &msg_info_ptr);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace ProtoBuf
