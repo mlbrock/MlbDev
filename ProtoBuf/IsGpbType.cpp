@@ -574,6 +574,24 @@ void TEST_EmitSep(char sep_char, std::streamsize sep_width = 79,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+const char *TEST_MessageNameList[] = {
+	"GpbElementInfoTestOne::AddressBook",
+	"GpbElementInfoTestTwo::AddressBook",
+	"GpbElementInfoTestTwo::Person",
+	"GpbElementInfoTestTwo::PhoneNumber",
+	"GpbElementInfoTestThree::AddressBookOne",
+	"GpbElementInfoTestThree::AddressBookTwo",
+	"GpbElementInfoTestThree::PersonOne",
+	"GpbElementInfoTestThree::PersonTwo",
+	NULL
+};
+//	////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
+
+namespace TEST_IsGpbType {
+
+//	////////////////////////////////////////////////////////////////////////////
 void TEST_EmitElement(const MLB::ProtoBuf::GpbElementInfo &datum)
 {
 	std::cout
@@ -600,8 +618,8 @@ bool TEST_RunTestForMessage(int &return_code, const char *message_name)
 {
 	TEST_EmitSep('=');
 	TEST_EmitSep('=');
-	std::cout << "TEST for a message name ('" << message_name << "'):" <<
-		std::endl;
+
+	std::cout << "TEST_IsGpbType: " << message_name << ":" << std::endl;
 
 	bool test_passed = true;
 
@@ -626,21 +644,7 @@ bool TEST_RunTestForMessage(int &return_code, const char *message_name)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *TEST_MessageNameList[] = {
-	"GpbElementInfoTestOne::AddressBook",
-	"GpbElementInfoTestTwo::AddressBook",
-	"GpbElementInfoTestTwo::Person",
-	"GpbElementInfoTestTwo::PhoneNumber",
-	"GpbElementInfoTestThree::AddressBookOne",
-	"GpbElementInfoTestThree::AddressBookTwo",
-	"GpbElementInfoTestThree::PersonOne",
-	"GpbElementInfoTestThree::PersonTwo",
-	NULL
-};
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-void TEST_RunTest(int &return_code)
+void RunTest(int &return_code)
 {
 	for (const char **name_ptr = TEST_MessageNameList; *name_ptr != NULL;
 		++name_ptr)
@@ -648,7 +652,7 @@ void TEST_RunTest(int &return_code)
 }
 //	////////////////////////////////////////////////////////////////////////////
 
-} // Anonymous namespace
+} // namespace TEST_IsGpbType
 
 //	////////////////////////////////////////////////////////////////////////////
 int main()
@@ -656,7 +660,7 @@ int main()
 	int return_code = EXIT_SUCCESS;
 
 	try {
-		TEST_RunTest(return_code);
+		TEST_IsGpbType::RunTest(return_code);
 	}
 	catch (const std::exception &except) {
 		std::cerr << "ERROR: " << except.what() << std::endl;
@@ -668,20 +672,6 @@ int main()
 //	////////////////////////////////////////////////////////////////////////////
 
 #endif // #ifdef TEST_MAIN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

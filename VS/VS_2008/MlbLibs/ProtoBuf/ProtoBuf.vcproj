@@ -177,6 +177,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\ProtoBuf\GpbAccessor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\ProtoBuf\GpbElementInfo.cpp"
 				>
 			</File>
