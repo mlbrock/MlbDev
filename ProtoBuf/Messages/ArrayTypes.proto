@@ -1,0 +1,232 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Array Messages for the MlbDev/ProtoBuf library.
+// ////////////////////////////////////////////////////////////////////////////
+// 
+// Revision History  :  2016-06-26 --- Creation.
+//                         Michael L. Brock
+// 
+// ////////////////////////////////////////////////////////////////////////////
+
+package MLB.ProtoBuf;
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Array-of-simple types using the intuitive naming scheme...
+// ////////////////////////////////////////////////////////////////////////////
+
+message ArraySInt32  {
+	repeated int32  element = 1;
+}
+
+message ArrayInt32   {
+	repeated int32  element = 1;
+}
+
+message ArrayUInt32  {
+	repeated uint32 element = 1;
+}
+
+message ArraySInt64  {
+	repeated int64  element = 1;
+}
+
+message ArrayInt64   {
+	repeated int64  element = 1;
+}
+
+message ArrayUInt64  {
+	repeated uint64 element = 1;
+}
+
+message ArrayFloat32 {
+	repeated float  element = 1;
+}
+
+message ArrayFloat64 {
+	repeated double element = 1;
+}
+
+message ArrayFloat   {
+	repeated float  element = 1;
+}
+
+message ArrayDouble  {
+	repeated double element = 1;
+}
+
+message ArrayBool    {
+	repeated bool   element = 1;
+}
+
+message ArrayString  {
+	repeated string element = 1;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Array-of-arrays-of-simple types using the intuitive naming scheme...
+// ////////////////////////////////////////////////////////////////////////////
+
+message ArrayOfArraySInt32  {
+	repeated ArraySInt32  element = 1;
+}
+
+message ArrayOfArrayInt32   {
+	repeated ArrayInt32   element = 1;
+}
+
+message ArrayOfArrayUInt32  {
+	repeated ArrayUInt32  element = 1;
+}
+
+message ArrayOfArraySInt64  {
+	repeated ArraySInt64  element = 1;
+}
+
+message ArrayOfArrayInt64   {
+	repeated ArrayInt64   element = 1;
+}
+
+message ArrayOfArrayUInt64  {
+	repeated ArrayUInt64  element = 1;
+}
+
+message ArrayOfArrayFloat32 {
+	repeated ArrayFloat32 element = 1;
+}
+
+message ArrayOfArrayFloat64 {
+	repeated ArrayFloat64 element = 1;
+}
+
+message ArrayOfArrayFloat   {
+	repeated ArrayFloat   element = 1;
+}
+
+message ArrayOfArrayDouble  {
+	repeated ArrayDouble  element = 1;
+}
+
+message ArrayOfArrayBool    {
+	repeated ArrayBool    element = 1;
+}
+
+message ArrayOfArrayString  {
+	repeated ArrayString  element = 1;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Array-of-simple types using the canonical naming scheme...
+// ////////////////////////////////////////////////////////////////////////////
+
+message Array1SInt32  {
+	repeated int32  element = 1;
+}
+
+message Array1Int32   {
+	repeated int32  element = 1;
+}
+
+message Array1UInt32  {
+	repeated uint32 element = 1;
+}
+
+message Array1SInt64  {
+	repeated int64  element = 1;
+}
+
+message Array1Int64   {
+	repeated int64  element = 1;
+}
+
+message Array1UInt64  {
+	repeated uint64 element = 1;
+}
+
+message Array1Float32 {
+	repeated float  element = 1;
+}
+
+message Array1Float64 {
+	repeated double element = 1;
+}
+
+message Array1Float   {
+	repeated float  element = 1;
+}
+
+message Array1Double  {
+	repeated double element = 1;
+}
+
+message Array1Bool    {
+	repeated bool   element = 1;
+}
+
+message Array1String  {
+	repeated string element = 1;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Array-of-arrays-of-simple types using the canonical naming scheme...
+// ////////////////////////////////////////////////////////////////////////////
+
+message Array2SInt32  {
+	repeated Array1SInt32  element = 1;
+}
+
+message Array2Int32   {
+	repeated Array1Int32   element = 1;
+}
+
+message Array2UInt32  {
+	repeated Array1UInt32  element = 1;
+}
+
+message Array2SInt64  {
+	repeated Array1SInt64  element = 1;
+}
+
+message Array2Int64   {
+	repeated Array1Int64   element = 1;
+}
+
+message Array2UInt64  {
+	repeated Array1UInt64  element = 1;
+}
+
+message Array2Float32 {
+	repeated Array1Float32 element = 1;
+}
+
+message Array2Float64 {
+	repeated Array1Float64 element = 1;
+}
+
+message Array2Float   {
+	repeated Array1Float   element = 1;
+}
+
+message Array2Double  {
+	repeated Array1Double  element = 1;
+}
+
+message Array2Bool    {
+	repeated Array1Bool    element = 1;
+}
+
+message Array2String  {
+	repeated Array1String  element = 1;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+

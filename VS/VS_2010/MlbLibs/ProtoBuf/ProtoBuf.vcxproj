@@ -126,6 +126,18 @@
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfo.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfoMaxLengths.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\IsGpbType.cpp" />
+    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\ArrayTypes.pb.cc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\FieldTypeTest.pb.cc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/wd4018 /wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4267 /wd4365 /wd4512 /wd4514 /wd4548 /wd4625 /wd4626 /wd4710 /wd4738 /wd4820 /wd4986 /wd4996 </AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

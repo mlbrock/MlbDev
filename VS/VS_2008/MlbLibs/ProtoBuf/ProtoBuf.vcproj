@@ -209,6 +209,50 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<Filter
+			Name="MessageTypes"
+			>
+			<File
+				RelativePath="..\..\..\..\ProtoBuf\Messages\CppOut\ArrayTypes.pb.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4365 /wd4512 /wd4548 /wd4625 /wd4626 /wd4710 /wd4820 /wd4996"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4365 /wd4512 /wd4548 /wd4625 /wd4626 /wd4710 /wd4820 /wd4996"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\ProtoBuf\Messages\CppOut\FieldTypeTest.pb.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4365 /wd4512 /wd4548 /wd4625 /wd4626 /wd4710 /wd4820 /wd4996"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/wd4100 /wd4125 /wd4127 /wd4242 /wd4244 /wd4365 /wd4512 /wd4548 /wd4625 /wd4626 /wd4710 /wd4820 /wd4996"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

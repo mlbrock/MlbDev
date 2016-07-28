@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="MessageTypes">
+      <UniqueIdentifier>{ad2cecf6-c6a3-4bb5-a8ab-463ddd9a62e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProtoBuf\GetMessageDescriptor.cpp">
@@ -38,6 +41,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbAccessor.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\ArrayTypes.pb.cc">
+      <Filter>MessageTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\FieldTypeTest.pb.cc">
+      <Filter>MessageTypes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

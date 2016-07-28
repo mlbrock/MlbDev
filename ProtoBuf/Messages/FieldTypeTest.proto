@@ -1,0 +1,147 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Test message for the MlbDev/ProtoBuf library.
+// ////////////////////////////////////////////////////////////////////////////
+// 
+// Revision History  :  2016-06-07 --- Creation.
+//                         Michael L. Brock
+// 
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Package
+// ////////////////////////////////////////////////////////////////////////////
+
+package MLB.ProtoBuf;
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required imports...
+// ////////////////////////////////////////////////////////////////////////////
+
+import "ArrayTypes.proto";
+
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	From the MlbDev/ProtoBuf/Tests/GpbElementInfoTestThree.proto file.
+// ////////////////////////////////////////////////////////////////////////////
+
+enum PhoneType {
+	MOBILE = 0;
+	HOME   = 1;
+	WORK   = 2;
+}
+
+message PhoneNumber {
+	required string    number = 1;
+	optional PhoneType type   = 2 [default = HOME];
+}
+
+message PersonOne {
+	required string name            = 1;
+	required int32 id               = 2;
+	optional string email           = 3;
+	repeated PhoneNumber phone      = 4;
+	optional int32 different_datum  = 5;
+	optional int32 name_different_1 = 6;
+}
+
+message AddressBookOne {
+	repeated PersonOne person = 1;
+}
+
+message PersonTwo {
+	required string name             = 1;
+	required int32 id                = 2;
+	optional string email            = 3;
+	repeated PhoneNumber phone       = 4;
+	optional uint32 different_datum  = 5;
+	optional int32  name_different_2 = 6;
+}
+
+message AddressBookTwo {
+	repeated PersonTwo person = 1;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Contains different types for testing...
+// ////////////////////////////////////////////////////////////////////////////
+
+message FieldTypeTest {
+	enum BigCurrency {
+		USD = 1;
+		GBP = 2;
+		EUR = 3;
+		JPY = 4;
+	}
+
+	message BigCurrencyPosition {
+		required BigCurrency currency = 1;
+		optional double      position = 2 [default = 0.0];
+	}
+
+	required uint64              id                         =   1;
+
+	optional double              scalar_double              = 101;
+	optional float               scalar_float               = 102;
+	optional int32               scalar_int32               = 103;
+	optional int64               scalar_int64               = 104;
+	optional uint32              scalar_uint32              = 105;
+	optional uint64              scalar_uint64              = 106;
+	optional sint32              scalar_sint32              = 107;
+	optional sint64              scalar_sint64              = 108;
+	optional fixed32             scalar_fixed32             = 109;
+	optional fixed64             scalar_fixed64             = 110;
+	optional sfixed32            scalar_sfixed32            = 111;
+	optional sfixed64            scalar_sfixed64            = 112;
+	optional bool                scalar_bool                = 113;
+	optional string              scalar_string              = 114;
+	optional bytes               scalar_bytes               = 115;
+	optional BigCurrency         scalar_BigCurrency         = 116;
+	optional BigCurrencyPosition scalar_BigCurrencyPosition = 117;
+
+	repeated double              vector_double              = 201;
+	repeated float               vector_float               = 202;
+	repeated int32               vector_int32               = 203;
+	repeated int64               vector_int64               = 204;
+	repeated uint32              vector_uint32              = 205;
+	repeated uint64              vector_uint64              = 206;
+	repeated sint32              vector_sint32              = 207;
+	repeated sint64              vector_sint64              = 208;
+	repeated fixed32             vector_fixed32             = 209;
+	repeated fixed64             vector_fixed64             = 210;
+	repeated sfixed32            vector_sfixed32            = 211;
+	repeated sfixed64            vector_sfixed64            = 212;
+	repeated bool                vector_bool                = 213;
+	repeated string              vector_string              = 214;
+	repeated bytes               vector_bytes               = 215;
+	repeated BigCurrency         vector_BigCurrency         = 216;
+	repeated BigCurrencyPosition vector_BigCurrencyPosition = 217;
+
+	optional Array1Double        array1_double              = 301;
+	optional Array1Float         array1_float               = 302;
+	optional Array1Int32         array1_int32               = 303;
+	optional Array1Int64         array1_int64               = 304;
+	optional Array1UInt32        array1_uint32              = 305;
+	optional Array1UInt32        array1_uint64              = 306;
+	optional Array1Bool          array1_bool                = 313;
+	optional Array1String        array1_string              = 314;
+
+	optional Array2Double        array2_double              = 401;
+	optional Array2Float         array2_float               = 402;
+	optional Array2Int32         array2_int32               = 403;
+	optional Array2Int64         array2_int64               = 404;
+	optional Array2UInt32        array2_uint32              = 405;
+	optional Array2UInt32        array2_uint64              = 406;
+	optional Array2Bool          array2_bool                = 413;
+	optional Array2String        array2_string              = 414;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+
