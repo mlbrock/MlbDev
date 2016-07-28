@@ -33,5 +33,11 @@
     <ClCompile Include="..\..\..\..\ProtoBuf\IsGpbType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\ProtoBuf\AreGpbTypesCompatible.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProtoBuf\GpbAccessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

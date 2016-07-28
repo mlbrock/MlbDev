@@ -44,6 +44,9 @@ namespace ProtoBuf {
 	const ::google::protobuf::Descriptor *descriptor_ptr,
 	::google::protobuf::MessageFactory *msg_factory_ptr)
 {
+	MLB::Utility::ThrowIfNull(descriptor_ptr, "The pointer to the '::google::"
+		"protobuf::Descriptor' passed to GetMessageNewPtr() is NULL.");
+
 	::google::protobuf::Message *msg_ptr = NULL;
 
 	try {
@@ -107,4 +110,3 @@ GpbMessageUPtr GetMessageNewUPtr(const std::string &msg_name,
 } // namespace ProtoBuf
 
 } // namespace MLB
-

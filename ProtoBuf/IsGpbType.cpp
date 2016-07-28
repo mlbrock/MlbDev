@@ -555,6 +555,9 @@ bool IsGpbTypeRepeated(const GpbElementInfoUPtr &msg_info_ptr)
 
 #include <ProtoBuf/GpbElementInfo.hpp>
 
+#include <ProtoBuf/CppType2Type.hpp>
+#include <ProtoBuf/Type2CppType.hpp>
+
 #include <cstdlib>
 #include <iostream>
 
@@ -672,7 +675,4 @@ int main()
 //	////////////////////////////////////////////////////////////////////////////
 
 #endif // #ifdef TEST_MAIN
-
-
-
 

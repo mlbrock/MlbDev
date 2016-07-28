@@ -118,9 +118,11 @@
     <Bscmake />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\ProtoBuf\AreGpbTypesCompatible.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GetMessageDescriptor.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GetMessageNew.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GetMessagePrototype.cpp" />
+    <ClCompile Include="..\..\..\..\ProtoBuf\GpbAccessor.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfo.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbElementInfoMaxLengths.cpp" />
     <ClCompile Include="..\..\..\..\ProtoBuf\IsGpbType.cpp" />
