@@ -213,7 +213,7 @@
 			Name="MessageTypes"
 			>
 			<File
-				RelativePath="..\..\..\..\ProtoBuf\Messages\CppOut\ArrayTypes.pb.cc"
+				RelativePath="..\..\..\..\ProtoBuf\MessageTypes\CppOut\ArrayTypes.pb.cc"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -233,7 +233,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\..\..\ProtoBuf\Messages\CppOut\FieldTypeTest.pb.cc"
+				RelativePath="..\..\..\..\ProtoBuf\MessageTypes\CppOut\FieldTypeTest.pb.cc"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

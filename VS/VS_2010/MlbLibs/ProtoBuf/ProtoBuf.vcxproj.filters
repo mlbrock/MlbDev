@@ -42,10 +42,10 @@
     <ClCompile Include="..\..\..\..\ProtoBuf\GpbAccessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\ArrayTypes.pb.cc">
+    <ClCompile Include="..\..\..\..\ProtoBuf\MessageTypes\CppOut\FieldTypeTest.pb.cc">
       <Filter>MessageTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\ProtoBuf\Messages\CppOut\FieldTypeTest.pb.cc">
+    <ClCompile Include="..\..\..\..\ProtoBuf\MessageTypes\CppOut\ArrayTypes.pb.cc">
       <Filter>MessageTypes</Filter>
     </ClCompile>
   </ItemGroup>
