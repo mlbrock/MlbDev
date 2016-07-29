@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\ProtoBuf\GpbMessageTypes.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\ProtoBuf\IsGpbType.cpp"
 				>
 			</File>

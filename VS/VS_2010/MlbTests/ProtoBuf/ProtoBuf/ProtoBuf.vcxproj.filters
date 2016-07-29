@@ -48,5 +48,8 @@
     <ClCompile Include="..\..\..\..\..\ProtoBuf\MessageTypes\CppOut\ArrayTypes.pb.cc">
       <Filter>MessageTypes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\ProtoBuf\GpbMessageTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
