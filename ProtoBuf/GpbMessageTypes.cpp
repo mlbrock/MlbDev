@@ -130,7 +130,7 @@ std::vector<GpbMessageSPtr> GetGpbMessageTypesList()
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-std::vector<std::string> GetGpbMessageTypesNameList()
+std::vector<std::string> GetGpbMessageNamesList()
 {
 	return(Ensure_Mlb_ProtoBuf_Message_Types_Linked_INSTANCE.GetNamesList());
 }
