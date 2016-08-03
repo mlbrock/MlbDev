@@ -182,67 +182,6 @@ template <>
 */
 //	////////////////////////////////////////////////////////////////////////////
 
-//	////////////////////////////////////////////////////////////////////////////
-bool AreTypesCompatibleInfo(const GpbElementInfo &lhs_info,
-	const GpbElementInfo &rhs_info, bool &are_compatible)
-{
-	bool are_identical = true;
-
-	are_compatible = false;
-
-	if (lhs_info.GetCppType() != rhs_info.GetCppType())
-		return(false);
-
-	if ((lhs_info.GetLabel() != rhs_info.GetLabel()) &&
-		((lhs_info.GetLabel() == ::google::protobuf::FieldDescriptor::LABEL_REPEATED) ||
-		 (rhs_info.GetLabel() == ::google::protobuf::FieldDescriptor::LABEL_REPEATED)))
-		return(false);
-
-	if (lhs_info.GetCppType() ==
-		::google::protobuf::FieldDescriptor::CPPTYPE_ENUM) {
-		if (lhs_info.GetEnumDescriptor() == rhs_info.GetEnumDescriptor())
-			are_compatible = true;
-		else {
-			are_identical = false;
-			;	//	Check number and permissible values for compatibility.
-		}
-	}
-	else if (lhs_info.GetCppType() ==
-		::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-		if ((lhs_info.GetDescriptor() == rhs_info.GetDescriptor()) ||
-			 (lhs_info.GetTypeNameFull() == rhs_info.GetTypeNameFull()))
-			are_compatible = true;
-		else {
-			are_identical = false;
-			;	//	Check each member --- recursively for those different.
-		}
-	}
-
-	return(are_identical);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-bool AreTypesCompatible(const GpbElementInfo &lhs_info,
-	const GpbElementInfo &rhs_info)
-{
-	bool are_compatible;
-
-	return((AreTypesCompatibleInfo(lhs_info, rhs_info, are_compatible)) ?
-		true : are_compatible);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-bool AreTypesIdentical(const GpbElementInfo &lhs_info,
-	const GpbElementInfo &rhs_info)
-{
-	bool are_compatible;
-
-	return(AreTypesCompatibleInfo(lhs_info, rhs_info, are_compatible));
-}
-//	////////////////////////////////////////////////////////////////////////////
-
 } // namespace ProtoBuf
 
 } // namespace MLB
