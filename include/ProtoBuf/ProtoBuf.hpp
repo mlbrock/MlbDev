@@ -65,6 +65,12 @@ typedef std::unique_ptr< ::google::protobuf::Message > GpbMessageUPtr;
 #endif // #if (__cplusplus < 201103L)
 //	////////////////////////////////////////////////////////////////////////////
 
+//	////////////////////////////////////////////////////////////////////////////
+typedef std::vector<GpbMessageSPtr>          GpbMessageSPtrVector;
+typedef GpbMessageSPtrVector::iterator       GpbMessageSPtrVectorIter;
+typedef GpbMessageSPtrVector::const_iterator GpbMessageSPtrVectorIterC;
+//	////////////////////////////////////////////////////////////////////////////
+
 } // namespace ProtoBuf
 
 } // namespace MLB

@@ -250,6 +250,12 @@ typedef GpbElementInfoVector::const_iterator   GpbElementInfoVectorIterC;
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+typedef std::vector<GpbElementInfoSPtr>          GpbElementInfoSPtrVector;
+typedef GpbElementInfoSPtrVector::iterator       GpbElementInfoSPtrVectorIter;
+typedef GpbElementInfoSPtrVector::const_iterator GpbElementInfoSPtrVectorIterC;
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 typedef GpbElementInfo::GpbElementInfoPair_I     GpbElementInfoPair;
 typedef std::vector<GpbElementInfoPair>          GpbElementInfoPairVector;
 typedef GpbElementInfoPairVector::iterator       GpbElementInfoPairVectorIter;
