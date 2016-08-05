@@ -98,6 +98,8 @@ GpbElementInfo::GpbElementInfo(const std::string &message_name)
 	,depth_(0)
 	,member_index_(-1)
 	,max_depth_(0)
+	,cpp_name_full_()
+	,cpp_name_()
 	,member_list_()
 {
 	const ::google::protobuf::Descriptor *descriptor =
@@ -121,6 +123,8 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	,depth_(depth)
 	,member_index_(-1)
 	,max_depth_(depth_)
+	,cpp_name_full_()
+	,cpp_name_()
 	,member_list_()
 {
 	GpbElementInfo tmp(descriptor, NULL, depth, -1);
@@ -144,6 +148,8 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	,depth_(depth)
 	,member_index_(member_index)
 	,max_depth_(depth_)
+	,cpp_name_full_()
+	,cpp_name_()
 	,member_list_()
 {
 	using namespace ::google::protobuf;
@@ -165,6 +171,8 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 		datum_type_ = GpbDatumType_Message;
 	}
 
+	cpp_name_full_ = ExtractCppNameFull(GetTypeNameFull(), cpp_name_);
+
 	if ((!descriptor_) || (!descriptor_->field_count()))
 		return;
 
@@ -184,6 +192,15 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+const char *GpbElementInfo::GetTypeName() const
+{
+	return((enum_descriptor_) ? enum_descriptor_->name().c_str() :
+		((descriptor_) ? descriptor_->name().c_str() :
+		field_descriptor_->cpp_type_name()));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetTypeNameFull() const
 {
 	return((enum_descriptor_) ? enum_descriptor_->full_name().c_str() :
@@ -193,11 +210,16 @@ const char *GpbElementInfo::GetTypeNameFull() const
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetTypeName() const
+const char *GpbElementInfo::GetCppName() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->name().c_str() :
-		((descriptor_) ? descriptor_->name().c_str() :
-		field_descriptor_->cpp_type_name()));
+	return(cpp_name_.c_str());
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const char *GpbElementInfo::GetCppNameFull() const
+{
+	return(cpp_name_full_.c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -612,6 +634,35 @@ emit_flags = GpbEmitFlags::SetFlag(emit_flags, GpbEmitFlags::FullName);
 	o_str << std::endl;
 
 	return(EmitCsv(true, emit_flags, o_str));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+std::string GpbElementInfo::ExtractCppNameFull(const std::string &type_name,
+	std::string &cpp_name_short)
+{
+	std::string cpp_name_full(type_name);
+
+	if (!cpp_name_full.empty()) {
+		//	Logic included to handle some unlikely cases...
+		boost::replace_all(cpp_name_full, "..", ".");
+		if (cpp_name_full[0] == '.')
+			cpp_name_full = cpp_name_full.substr(1);
+		if ((!cpp_name_full.empty()) && (*cpp_name_full.rbegin() == '.'))
+			cpp_name_full = cpp_name_full.substr(0, cpp_name_full.size() - 1);
+		boost::replace_all(cpp_name_full, ".", "::");
+	}
+
+	if (cpp_name_full.empty())
+		MLB::Utility::ThrowInvalidArgument(std::string("Invalid ProtoBuf type") +
+			" name provided ('" + type_name + "').");
+
+	std::size_t last_sep = cpp_name_full.rfind(':');
+
+	cpp_name_short = (last_sep == std::string::npos) ? cpp_name_full :
+		cpp_name_full.substr(last_sep + 1);
+
+	return(cpp_name_full);
 }
 //	////////////////////////////////////////////////////////////////////////////
 

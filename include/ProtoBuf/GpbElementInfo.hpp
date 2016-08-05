@@ -94,8 +94,10 @@ public:
 		return(datum_type_);
 	}
 
-	const char *GetTypeNameFull() const;
 	const char *GetTypeName() const;
+	const char *GetTypeNameFull() const;
+	const char *GetCppName() const;
+	const char *GetCppNameFull() const;
 	const char *GetMemberName() const;
 	const char *GetName() const;
 	const char *GetNameFull() const;
@@ -171,6 +173,9 @@ public:
 		GpbEmitFlags::EmitFlags emit_flags = GpbEmitFlags::Default,
 		std::ostream &o_str = std::cout) const;
 
+	static std::string ExtractCppNameFull(const std::string &type_name,
+		std::string &cpp_name_short);
+
 	static std::string SourceLocationToString(
 		const ::google::protobuf::SourceLocation &datum);
 
@@ -201,6 +206,8 @@ private:
 	std::size_t                                   depth_;
 	int                                           member_index_;
 	std::size_t                                   max_depth_;
+	std::string                                   cpp_name_full_;
+	std::string                                   cpp_name_;
 	GpbElementInfoVector_I                        member_list_;
 
 	explicit GpbElementInfo(const GPB_Descriptor *descriptor,
