@@ -240,6 +240,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\Utility\DemangleCppName.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\Utility\EnvElement.cpp"
 				>
 			</File>
@@ -385,6 +389,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\..\Utility\Sleep.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\Utility\StringRadixOps.cpp"
 				>
 			</File>
 			<File

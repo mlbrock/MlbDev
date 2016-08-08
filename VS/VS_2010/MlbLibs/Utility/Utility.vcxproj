@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\..\..\Utility\CompiledAlignmentInfo.cpp" />
     <ClCompile Include="..\..\..\..\Utility\ConfigFileSupport.cpp" />
     <ClCompile Include="..\..\..\..\Utility\CriticalEventHandler.cpp" />
+    <ClCompile Include="..\..\..\..\Utility\DemangleCppName.cpp" />
     <ClCompile Include="..\..\..\..\Utility\EnvElement.cpp" />
     <ClCompile Include="..\..\..\..\Utility\ExecProcess.cpp" />
     <ClCompile Include="..\..\..\..\Utility\ExecProcessInfo.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="..\..\..\..\Utility\SignalHandler.cpp" />
     <ClCompile Include="..\..\..\..\Utility\SimpleMMapFile.cpp" />
     <ClCompile Include="..\..\..\..\Utility\Sleep.cpp" />
+    <ClCompile Include="..\..\..\..\Utility\StringRadixOps.cpp" />
     <ClCompile Include="..\..\..\..\Utility\StringSupport.cpp" />
     <ClCompile Include="..\..\..\..\Utility\SystemError.cpp" />
     <ClCompile Include="..\..\..\..\Utility\TabularReportSupport.cpp" />

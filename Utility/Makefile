@@ -40,6 +40,7 @@ SRCS		=	\
 			CompiledAlignmentInfo.cpp	\
 			ConfigFileSupport.cpp		\
 			CriticalEventHandler.cpp	\
+			DemangleCppName.cpp		\
 			EnvElement.cpp			\
 			ExecProcess.cpp			\
 			ExecProcessInfo.cpp		\
@@ -75,6 +76,7 @@ SRCS		=	\
 			RsrcUsage.cpp			\
 			SignalHandler.cpp		\
 			Sleep.cpp			\
+			StringRadixOps.cpp		\
 			StringSupport.cpp		\
 			SystemError.cpp			\
 			TabularReportSupport.cpp	\
