@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="ZZZ_RAPIDXMLUTILS_CompareWithXerces"
+	Name="ZZZ_RXML_CompareWithXerces"
 	ProjectGUID="{D0DBD559-184F-4ADD-A21E-C4433076EFBF}"
-	RootNamespace="ZZZ_RAPIDXMLUTILS_CompareWithXerces"
+	RootNamespace="ZZZ_RXML_CompareWithXerces"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="ZZZ_RAPIDXMLUTILS_XmlDomElement"
+	Name="ZZZ_RXML_XmlDomElement"
 	ProjectGUID="{BF37979C-6A77-4099-AD88-CA5501FACE45}"
-	RootNamespace="ZZZ_RAPIDXMLUTILS_XmlDomElement"
+	RootNamespace="ZZZ_RXML_XmlDomElement"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
