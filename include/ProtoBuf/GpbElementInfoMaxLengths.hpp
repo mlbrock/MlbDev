@@ -40,6 +40,8 @@ struct GpbElementInfoMaxLengths {
 	enum MaxLengthsIndex {
 		TypeNameFull,
 		TypeName,
+		CppNameFull,
+		CppName,
 		MemberName,
 		Name,
 		NameFull,

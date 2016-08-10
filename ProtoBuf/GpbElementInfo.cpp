@@ -510,6 +510,8 @@ typedef const char * (GpbElementInfo::*GpbElementInfoNameFunc)() const;
 GpbElementInfoNameFunc NameFuncList[GpbElementInfoMaxLengths::Count] = {
 	&GpbElementInfo::GetTypeNameFullPtr,
 	&GpbElementInfo::GetTypeNamePtr,
+	&GpbElementInfo::GetCppNameFullPtr,
+	&GpbElementInfo::GetCppNamePtr,
 	&GpbElementInfo::GetMemberNamePtr,
 	&GpbElementInfo::GetNamePtr,
 	&GpbElementInfo::GetNameFullPtr,
