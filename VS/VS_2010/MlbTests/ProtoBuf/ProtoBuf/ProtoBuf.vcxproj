@@ -73,12 +73,12 @@
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BrowseInformation>false</BrowseInformation>
       <Optimization>Disabled</Optimization>
-      <BrowseInformationFile>
-      </BrowseInformationFile>
     </ClCompile>
     <Lib />
+    <Xdcmake />
+    <Bscmake />
+    <BuildLog />
     <Xdcmake />
     <Bscmake />
     <BuildLog />
@@ -91,12 +91,12 @@
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <BrowseInformation>false</BrowseInformation>
       <Optimization>Disabled</Optimization>
-      <BrowseInformationFile>
-      </BrowseInformationFile>
     </ClCompile>
     <Lib />
+    <Xdcmake />
+    <Bscmake />
+    <BuildLog />
     <Xdcmake />
     <Bscmake />
     <BuildLog />
@@ -108,11 +108,11 @@
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>
-      </BrowseInformationFile>
     </ClCompile>
     <Lib />
+    <Xdcmake />
+    <Bscmake />
+    <BuildLog />
     <Xdcmake />
     <Bscmake />
     <BuildLog />
@@ -124,11 +124,11 @@
     <ClCompile>
       <AdditionalOptions>/Wall /wd4668 /wd4711 %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;MB_LIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>
-      </BrowseInformationFile>
     </ClCompile>
     <Lib />
+    <Xdcmake />
+    <Bscmake />
+    <BuildLog />
     <Xdcmake />
     <Bscmake />
     <BuildLog />
