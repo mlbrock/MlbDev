@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <MlbDevVal_SolutionDepth>..\..\..</MlbDevVal_SolutionDepth>
+    <MlbDevVal_SolutionDepth Condition="'$(MlbDevVal_SolutionDepth)' == ''">..\..\..</MlbDevVal_SolutionDepth>
     <MlbDevVal_TargetPlatform>TargetPlatform\$(OS)\6.1\$(Platform)\msvs\$(PlatformToolsetVersion)\$(Configuration)\$(CharacterSet)</MlbDevVal_TargetPlatform>
     <MlbDevVal_OutDirBasic>$(SolutionDir)$(MlbDevVal_SolutionDepth)\$(MlbDevVal_TargetPlatform)\</MlbDevVal_OutDirBasic>
     <MlbDevVal_OutDirBin>$(MlbDevVal_OutDirBasic)bin\</MlbDevVal_OutDirBin>
@@ -12,6 +12,7 @@
     <MlbDevVal_RuntimeLib>MultiThreadedDebugDLL</MlbDevVal_RuntimeLib>
     <MlbDevVal_LocalInc>$(MlbDevVal_SolutionDepth)\..\include\</MlbDevVal_LocalInc>
     <MlbDevVal_LocalLib>$(MlbDevVal_OutDirLib)</MlbDevVal_LocalLib>
+    <MlbDevVal_3rdPartyBase>\</MlbDevVal_3rdPartyBase>
     <MlbDevVal_3rdPartyDir>\Vendor\</MlbDevVal_3rdPartyDir>
     <MlbDevVal_Boost>$(MlbDevVal_3rdPartyDir)Boost\boost_1_54_0\</MlbDevVal_Boost>
     <MlbDevVal_BoostInc>$(MlbDevVal_Boost)</MlbDevVal_BoostInc>
@@ -70,20 +71,6 @@
     <MlbDevVal_RuntimeLib Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</MlbDevVal_RuntimeLib>
     <MlbDevVal_RuntimeLib Condition="'$(Configuration)' == 'Release'">MultiThreadedDLL</MlbDevVal_RuntimeLib>
   </PropertyGroup>
-  <!-- ******************************************************************* -->
-  <!-- ******************************************************************* -->
-  <!-- Fix-up Excel library directory for 64-bit builds.                   -->
-  <!--                                                                     -->
-  <!-- Note that 64-bit versions of xlcall32.lib aren't available for      -->
-  <!-- older versions of the library...                                    -->
-  <!-- ******************************************************************* -->
-  <Choose>
-    <When Condition="'$(Platform)'=='x64'">
-      <PropertyGroup>
-        <MlbDevVal_3rdParty_ExcelXllSdkLib>$(MlbDevVal_3rdParty_ExcelXllSdkLib)x64\</MlbDevVal_3rdParty_ExcelXllSdkLib>
-      </PropertyGroup>
-    </When>
-  </Choose>
   <!-- ******************************************************************* -->
   <PropertyGroup>
     <IntDir>$(MlbDevVal_OutDirBasic)obj\$(ProjectName)\</IntDir>
@@ -159,6 +146,9 @@
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_LocalLib">
       <Value>$(MlbDevVal_LocalLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MlbDevVal_3rdPartyBase">
+      <Value>$(MlbDevVal_3rdPartyBase)</Value>
     </BuildMacro>
     <BuildMacro Include="MlbDevVal_3rdPartyDir">
       <Value>$(MlbDevVal_3rdPartyDir)</Value>

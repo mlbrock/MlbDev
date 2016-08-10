@@ -46,22 +46,22 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\MlbDev.VS_2010.props" />
+    <Import Project="..\..\MlbDev.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\MlbDev.VS_2010.props" />
+    <Import Project="..\..\MlbDev.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\MlbDev.VS_2010.props" />
+    <Import Project="..\..\MlbDev.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
-    <Import Project="..\..\MlbDev.VS_2010.props" />
+    <Import Project="..\..\MlbDev.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -83,7 +83,6 @@
     <Link>
       <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <SubSystem>Windows</SubSystem>
     </Link>
     <Bscmake />
     <BuildLog />
@@ -101,7 +100,6 @@
     <Link>
       <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <SubSystem>Windows</SubSystem>
     </Link>
     <Bscmake />
     <BuildLog />
@@ -117,7 +115,6 @@
     <Link>
       <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
@@ -135,7 +132,6 @@
     <Link>
       <AdditionalDependencies>mpr.lib;Rpcrt4.lib;snmpapi.lib;Ws2_32.lib;Utility_DLL.lib;libtibrvcppmd.lib;tibrv.lib;tibrvcm.lib;tibrvcmq.lib;tibrvft.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>

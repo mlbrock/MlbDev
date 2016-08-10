@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+# Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SocketIo", "SocketIo\SocketIo.vcxproj", "{38989B30-E709-439C-8F05-C6B54511C6A2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_SOCKETIO_ResolveHost", "ZZZ_SOCKETIO_ResolveHost\ZZZ_SOCKETIO_ResolveHost.vcxproj", "{38915E09-4C93-4F49-8CE9-442998C37B99}"
@@ -8,17 +8,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|Win32.ActiveCfg = Debug|Win32
 		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|Win32.Build.0 = Debug|Win32
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|x64.ActiveCfg = Debug|x64
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Debug|x64.Build.0 = Debug|x64
 		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|Win32.ActiveCfg = Release|Win32
 		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|Win32.Build.0 = Release|Win32
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|x64.ActiveCfg = Release|x64
+		{38989B30-E709-439C-8F05-C6B54511C6A2}.Release|x64.Build.0 = Release|x64
 		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|Win32.ActiveCfg = Debug|Win32
 		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|Win32.Build.0 = Debug|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|x64.ActiveCfg = Debug|x64
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Debug|x64.Build.0 = Debug|x64
 		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|Win32.ActiveCfg = Release|Win32
 		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|Win32.Build.0 = Release|Win32
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|x64.ActiveCfg = Release|x64
+		{38915E09-4C93-4F49-8CE9-442998C37B99}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
