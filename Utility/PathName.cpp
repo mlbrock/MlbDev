@@ -1552,44 +1552,42 @@ void TEST_CheckNativeFileString(int &return_code)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-const char *CCNullPtr = NULL;
-
 typedef std::pair<const char *, const char *> TEST_ExtPair;
 
 const TEST_ExtPair TEST_ExtPairList[] = {
-	TEST_ExtPair(".No_Ext_Leading_Period",                                 nullptr),
-	TEST_ExtPair(".No_Ext_Leading_Period.",                                nullptr),
+	TEST_ExtPair(".No_Ext_Leading_Period",                                 static_cast<const char *>(NULL)),
+	TEST_ExtPair(".No_Ext_Leading_Period.",                                static_cast<const char *>(NULL)),
 	TEST_ExtPair(".Has_Ext_Leading_Period.ext",                            "ext"),
-	TEST_ExtPair(".Has_Ext_Leading_Period.ext.",                           nullptr),
-	TEST_ExtPair("No_Ext",                                                 nullptr),
-	TEST_ExtPair("No_Ext.",                                                nullptr),
+	TEST_ExtPair(".Has_Ext_Leading_Period.ext.",                           static_cast<const char *>(NULL)),
+	TEST_ExtPair("No_Ext",                                                 static_cast<const char *>(NULL)),
+	TEST_ExtPair("No_Ext.",                                                static_cast<const char *>(NULL)),
 	TEST_ExtPair("Has_Ext.ext",                                            "ext"),
-	TEST_ExtPair("Has_Ext.ext.",                                           nullptr),
+	TEST_ExtPair("Has_Ext.ext.",                                           static_cast<const char *>(NULL)),
 	TEST_ExtPair("Has.Ext.Multiple.Periods.ext",                           "ext"),
-	TEST_ExtPair("Has.Ext.Multiple.Periods.ext.",                          nullptr),
+	TEST_ExtPair("Has.Ext.Multiple.Periods.ext.",                          static_cast<const char *>(NULL)),
 	//	Unices and Windows...
-	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",          nullptr),
-	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",         nullptr),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",          static_cast<const char *>(NULL)),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",         static_cast<const char *>(NULL)),
 	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext",     "ext"),
-	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",    nullptr),
-	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext",                          nullptr),
-	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext.",                         nullptr),
+	TEST_ExtPair("/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",    static_cast<const char *>(NULL)),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext",                          static_cast<const char *>(NULL)),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_No_Ext.",                         static_cast<const char *>(NULL)),
 	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has_Ext.ext",                     "ext"),
-	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                    nullptr),
+	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                    static_cast<const char *>(NULL)),
 	TEST_ExtPair("/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext",    "ext")
 #ifdef WIN32
 	,
 	//	Just Windows...
-	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",        nullptr),
-	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",       nullptr),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period",        static_cast<const char *>(NULL)),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_No_Ext_Leading_Period.",       static_cast<const char *>(NULL)),
 	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext",   "ext"),
-	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",  nullptr),
-	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext",                        nullptr),
-	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext.",                       nullptr),
+	TEST_ExtPair("C:/Dir.1/Dir.2/.With_Path_Has_Ext_Leading_Period.ext.",  static_cast<const char *>(NULL)),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext",                        static_cast<const char *>(NULL)),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_No_Ext.",                       static_cast<const char *>(NULL)),
 	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has_Ext.ext",                   "ext"),
-	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                  nullptr),
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has_Ext.ext.",                  static_cast<const char *>(NULL)),
 	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext",  "ext"),
-	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext.", nullptr)
+	TEST_ExtPair("C:/Dir.1/Dir.2/With_Path_Has.Ext.Multiple.Periods.ext.", static_cast<const char *>(NULL))
 #endif // #ifdef WIN32
 };
 const std::size_t  TEST_ExtPairCount  =
