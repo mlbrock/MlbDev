@@ -94,6 +94,18 @@ public:
 		return(datum_type_);
 	}
 
+	const char *GetTypeNamePtr() const;
+	const char *GetTypeNameFullPtr() const;
+	const char *GetCppNamePtr() const;
+	const char *GetCppNameFullPtr() const;
+	const char *GetMemberNamePtr() const;
+	const char *GetNamePtr() const;
+	const char *GetNameFullPtr() const;
+	const char *GetTypeFileNamePtr() const;
+	const char *GetMemberFileNamePtr() const;
+	const char *GetFileNamePtr() const;
+	const char *GetLabelNamePtr() const;
+
 	const char *GetTypeName() const;
 	const char *GetTypeNameFull() const;
 	const char *GetCppName() const;
