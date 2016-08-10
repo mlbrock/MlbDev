@@ -247,7 +247,7 @@ void TEST_CreateMessageHelper(::google::protobuf::Message &msg,
 	const ::google::protobuf::FieldDescriptor *field_descriptor =
 		msg_info.GetFieldDescriptor();
 
-	if (*msg_info.GetMemberName() && field_descriptor) {
+	if (*msg_info.GetMemberNamePtr() && field_descriptor) {
 		double value_num = ::pow(10.0, 1.0 + msg_info.GetDepth()) + msg_info.GetMemberIndex();
 		parental_path += std::string(".") + msg_info.GetMemberName();
 		switch (msg_info.GetDatumType()) {

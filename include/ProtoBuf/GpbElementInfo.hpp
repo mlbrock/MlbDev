@@ -106,17 +106,17 @@ public:
 	const char *GetFileNamePtr() const;
 	const char *GetLabelNamePtr() const;
 
-	const char *GetTypeName() const;
-	const char *GetTypeNameFull() const;
-	const char *GetCppName() const;
-	const char *GetCppNameFull() const;
-	const char *GetMemberName() const;
-	const char *GetName() const;
-	const char *GetNameFull() const;
-	const char *GetTypeFileName() const;
-	const char *GetMemberFileName() const;
-	const char *GetFileName() const;
-	const char *GetLabelName() const;
+	const std::string &GetTypeName() const;
+	const std::string &GetTypeNameFull() const;
+	const std::string &GetCppName() const;
+	const std::string &GetCppNameFull() const;
+	const std::string &GetMemberName() const;
+	const std::string &GetName() const;
+	const std::string &GetNameFull() const;
+	const std::string &GetTypeFileName() const;
+	const std::string &GetMemberFileName() const;
+	const std::string &GetFileName() const;
+	const std::string &GetLabelName() const;
 
 	bool IsGpbTypeScalar() const;
 	bool IsGpbTypeSimple() const;
@@ -218,6 +218,7 @@ private:
 	std::size_t                                   depth_;
 	int                                           member_index_;
 	std::size_t                                   max_depth_;
+	std::string                                   cpp_type_name_;
 	std::string                                   cpp_name_full_;
 	std::string                                   cpp_name_;
 	GpbElementInfoVector_I                        member_list_;
@@ -246,7 +247,9 @@ private:
 		return((descriptor) ? descriptor->GetSourceLocation(&dst) : false);
 	}
 
-	static const char *GetLabelName(
+	static const char        *GetLabelNamePtr(
+		::google::protobuf::FieldDescriptor::Label label);
+	static const std::string &GetLabelName(
 		::google::protobuf::FieldDescriptor::Label label);
 
 	//	Really just to support debugging...

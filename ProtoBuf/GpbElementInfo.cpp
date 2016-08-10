@@ -44,6 +44,17 @@ namespace ProtoBuf {
 namespace {
 
 //	////////////////////////////////////////////////////////////////////////////
+const std::string MyEmptyStdString;
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const std::string LabelNameString_Optional("optional");
+const std::string LabelNameString_Required("required");
+const std::string LabelNameString_Repeated("repeated");
+const std::string LabelNameString_Invalid("INVALID");
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 const ::google::protobuf::FieldDescriptor::CppType InitialCppTypeValue =
 	static_cast< ::google::protobuf::FieldDescriptor::CppType >(
 	::google::protobuf::FieldDescriptor::MAX_CPPTYPE + 1);
@@ -98,6 +109,7 @@ GpbElementInfo::GpbElementInfo(const std::string &message_name)
 	,depth_(0)
 	,member_index_(-1)
 	,max_depth_(0)
+	,cpp_type_name_()
 	,cpp_name_full_()
 	,cpp_name_()
 	,member_list_()
@@ -123,6 +135,7 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	,depth_(depth)
 	,member_index_(-1)
 	,max_depth_(depth_)
+	,cpp_type_name_()
 	,cpp_name_full_()
 	,cpp_name_()
 	,member_list_()
@@ -148,6 +161,7 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	,depth_(depth)
 	,member_index_(member_index)
 	,max_depth_(depth_)
+	,cpp_type_name_()
 	,cpp_name_full_()
 	,cpp_name_()
 	,member_list_()
@@ -155,7 +169,8 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 	using namespace ::google::protobuf;
 
 	if (field_descriptor_) {
-		cpp_type_ = field_descriptor_->cpp_type();
+		cpp_type_      = field_descriptor_->cpp_type();
+		cpp_type_name_ = field_descriptor_->cpp_type_name();
 		if (field_descriptor_->label() == FieldDescriptor::LABEL_REPEATED) {
 			if ((cpp_type_ == FieldDescriptor::CPPTYPE_STRING) ||
 				 (cpp_type_ == FieldDescriptor::CPPTYPE_MESSAGE))
@@ -194,170 +209,159 @@ GpbElementInfo::GpbElementInfo(const GPB_Descriptor *descriptor,
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetTypeNamePtr() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->name().c_str() :
-		((descriptor_) ? descriptor_->name().c_str() :
-		field_descriptor_->cpp_type_name()));
+	return(GetTypeName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetTypeNameFullPtr() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->full_name().c_str() :
-		((descriptor_) ? descriptor_->full_name().c_str() :
-		field_descriptor_->cpp_type_name()));
+	return(GetTypeNameFull().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetCppNamePtr() const
 {
-	return(cpp_name_.c_str());
+	return(GetCppName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetCppNameFullPtr() const
 {
-	return(cpp_name_full_.c_str());
+	return(GetCppNameFull().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetMemberNamePtr() const
 {
-	return((field_descriptor_) ? field_descriptor_->name().c_str() : "");
+	return(GetMemberName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetNamePtr() const
 {
-	return((field_descriptor_) ? field_descriptor_->name().c_str() :
-		descriptor_->name().c_str());
+	return(GetName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetNameFullPtr() const
 {
-	return((field_descriptor_) ? field_descriptor_->full_name().c_str() :
-		descriptor_->full_name().c_str());
+	return(GetNameFull().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetTypeFileNamePtr() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->file()->name().c_str() :
-		((descriptor_) ? descriptor_->file()->name().c_str() : ""));
+	return(GetTypeFileName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetMemberFileNamePtr() const
 {
-	return((field_descriptor_) ? field_descriptor_->file()->name().c_str() :
-		"");
+	return(GetMemberFileName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetFileNamePtr() const
 {
-	return((field_descriptor_) ? field_descriptor_->file()->name().c_str() :
-		descriptor_->file()->name().c_str());
+	return(GetFileName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 const char *GpbElementInfo::GetLabelNamePtr() const
 {
-	return(GetLabelName(GetLabel()));
+	return(GetLabelName().c_str());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetTypeName() const
+const std::string &GpbElementInfo::GetTypeName() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->name().c_str() :
-		((descriptor_) ? descriptor_->name().c_str() :
-		field_descriptor_->cpp_type_name()));
+	return((enum_descriptor_) ? enum_descriptor_->name() :
+		((descriptor_) ? descriptor_->name() : cpp_type_name_));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetTypeNameFull() const
+const std::string &GpbElementInfo::GetTypeNameFull() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->full_name().c_str() :
-		((descriptor_) ? descriptor_->full_name().c_str() :
-		field_descriptor_->cpp_type_name()));
+	return((enum_descriptor_) ? enum_descriptor_->full_name() :
+		((descriptor_) ? descriptor_->full_name() : cpp_type_name_));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetCppName() const
+const std::string &GpbElementInfo::GetCppName() const
 {
-	return(cpp_name_.c_str());
+	return(cpp_name_);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetCppNameFull() const
+const std::string &GpbElementInfo::GetCppNameFull() const
 {
-	return(cpp_name_full_.c_str());
+	return(cpp_name_full_);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetMemberName() const
+const std::string &GpbElementInfo::GetMemberName() const
 {
-	return((field_descriptor_) ? field_descriptor_->name().c_str() : "");
+	return((field_descriptor_) ? field_descriptor_->name() : MyEmptyStdString);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetName() const
+const std::string &GpbElementInfo::GetName() const
 {
-	return((field_descriptor_) ? field_descriptor_->name().c_str() :
-		descriptor_->name().c_str());
+	return((field_descriptor_) ? field_descriptor_->name() :
+		descriptor_->name());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetNameFull() const
+const std::string &GpbElementInfo::GetNameFull() const
 {
-	return((field_descriptor_) ? field_descriptor_->full_name().c_str() :
-		descriptor_->full_name().c_str());
+	return((field_descriptor_) ? field_descriptor_->full_name() :
+		descriptor_->full_name());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetTypeFileName() const
+const std::string &GpbElementInfo::GetTypeFileName() const
 {
-	return((enum_descriptor_) ? enum_descriptor_->file()->name().c_str() :
-		((descriptor_) ? descriptor_->file()->name().c_str() : ""));
+	return((enum_descriptor_) ? enum_descriptor_->file()->name() :
+		((descriptor_) ? descriptor_->file()->name() : MyEmptyStdString));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetMemberFileName() const
+const std::string &GpbElementInfo::GetMemberFileName() const
 {
-	return((field_descriptor_) ? field_descriptor_->file()->name().c_str() :
-		"");
+	return((field_descriptor_) ? field_descriptor_->file()->name() :
+		MyEmptyStdString);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetFileName() const
+const std::string &GpbElementInfo::GetFileName() const
 {
-	return((field_descriptor_) ? field_descriptor_->file()->name().c_str() :
-		descriptor_->file()->name().c_str());
+	return((field_descriptor_) ? field_descriptor_->file()->name() :
+		descriptor_->file()->name());
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetLabelName() const
+const std::string &GpbElementInfo::GetLabelName() const
 {
 	return(GetLabelName(GetLabel()));
 }
@@ -504,15 +508,15 @@ const GpbElementInfo *GpbElementInfo::FindMemberName(const std::string &name,
 typedef const char * (GpbElementInfo::*GpbElementInfoNameFunc)() const;
 //	----------------------------------------------------------------------------
 GpbElementInfoNameFunc NameFuncList[GpbElementInfoMaxLengths::Count] = {
-	&GpbElementInfo::GetTypeNameFull,
-	&GpbElementInfo::GetTypeName,
-	&GpbElementInfo::GetMemberName,
-	&GpbElementInfo::GetName,
-	&GpbElementInfo::GetNameFull,
-	&GpbElementInfo::GetTypeFileName,
-	&GpbElementInfo::GetMemberFileName,
-	&GpbElementInfo::GetFileName,
-	&GpbElementInfo::GetLabelName
+	&GpbElementInfo::GetTypeNameFullPtr,
+	&GpbElementInfo::GetTypeNamePtr,
+	&GpbElementInfo::GetMemberNamePtr,
+	&GpbElementInfo::GetNamePtr,
+	&GpbElementInfo::GetNameFullPtr,
+	&GpbElementInfo::GetTypeFileNamePtr,
+	&GpbElementInfo::GetMemberFileNamePtr,
+	&GpbElementInfo::GetFileNamePtr,
+	&GpbElementInfo::GetLabelNamePtr
 };
 /*
 const std::size_t            NameFuncCount  =
@@ -557,8 +561,8 @@ struct CompareByNameAndType {
 	{
 		int cmp;
 
-		if ((cmp = ::strcmp(lhs.GetMemberName(), rhs.GetMemberName())) == 0)
-			cmp = ::strcmp(lhs.GetTypeNameFull(), rhs.GetTypeNameFull());
+		if ((cmp = ::strcmp(lhs.GetMemberNamePtr(), rhs.GetMemberNamePtr()))== 0)
+			cmp = ::strcmp(lhs.GetTypeNameFullPtr(), rhs.GetTypeNameFullPtr());
 
 		return(cmp < 0);
 	}
@@ -893,10 +897,10 @@ std::ostream &GpbElementInfo::EmitTabular(
 				GetLabelName()   << " " <<
 			std::setw(max_lengths.width(GpbElementInfoMaxLengths::TypeName))   <<
 				EmitTabularHelper((emit_flags & GpbEmitFlags::IndentType) > 0,
-				depth_pad, GetTypeName())    << " " <<
+				depth_pad, GetTypeNamePtr())    << " " <<
 			std::setw(max_lengths.width(GpbElementInfoMaxLengths::MemberName)) <<
 				EmitTabularHelper((emit_flags & GpbEmitFlags::IndentName) > 0,
-				depth_pad, GetMemberName());
+				depth_pad, GetMemberNamePtr());
 			if (emit_flags & GpbEmitFlags::FullName)
 				o_str << " " <<
 					std::setw(max_lengths.width(GpbElementInfoMaxLengths::NameFull)) <<
@@ -985,9 +989,9 @@ std::ostream &GpbElementInfo::EmitCsv(bool /* disambiguation */,
 			GetMemberIndex() << "," <<
 			EmitCsvHelper(GetLabelName())  << "," <<
 			EmitCsvHelper((emit_flags & GpbEmitFlags::IndentType) > 0,
-				depth_pad, GetTypeName())    << "," <<
+				depth_pad, GetTypeNamePtr())    << "," <<
 			EmitCsvHelper((emit_flags & GpbEmitFlags::IndentName) > 0,
-				depth_pad, GetMemberName());
+				depth_pad, GetMemberNamePtr());
 			if (emit_flags & GpbEmitFlags::FullName)
 				o_str << "," <<
 					EmitCsvHelper(GetNameFull());
@@ -1041,17 +1045,25 @@ const GpbElementInfo::GPB_FileDescriptor
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-const char *GpbElementInfo::GetLabelName(
+const char *GpbElementInfo::GetLabelNamePtr(
+	::google::protobuf::FieldDescriptor::Label label)
+{
+	return(GetLabelName(label).c_str());
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+const std::string &GpbElementInfo::GetLabelName(
 	::google::protobuf::FieldDescriptor::Label label)
 {
 	if (label == ::google::protobuf::FieldDescriptor::LABEL_OPTIONAL)
-		return("optional");
+		return(LabelNameString_Optional);
 	else if (label == ::google::protobuf::FieldDescriptor::LABEL_REQUIRED)
-		return("required");
+		return(LabelNameString_Required);
 	else if (label == ::google::protobuf::FieldDescriptor::LABEL_REPEATED)
-		return("repeated");
+		return(LabelNameString_Repeated);
 
-	return("INVALID");
+	return(LabelNameString_Invalid);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
