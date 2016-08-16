@@ -143,9 +143,12 @@
     <ClCompile Include="..\..\..\..\OSSupport\Win\LocateDllByVersionPredicate.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\LocateDllPredicate.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\MiniDumperBase.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_CompareString.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumProcesses.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumProcessModules.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumThreadWindows.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_FreeLibrary.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetClassName.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetDirectory.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetFileVersionInfo.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetFileVersionInfoSize.cpp" />
@@ -160,6 +163,7 @@
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetProcessMemoryInfo.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetProcessTimes.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetSystemInfo.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetWindowText.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GlobalMemoryStatusEx.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_LoadLibrary.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\OSFileHandle.cpp" />

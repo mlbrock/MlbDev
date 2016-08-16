@@ -51,24 +51,52 @@ namespace MLB {
 namespace Utility {
 
 namespace {
+
 // ////////////////////////////////////////////////////////////////////////////
 template <bool IsSignedFlag> struct IsSignedType {
 };
 template <> struct IsSignedType<false> {
+	static const bool value = false;
 	template <typename SomeType>
-	static bool IsNegative(const SomeType &)
+		static bool IsNegative(const SomeType &)
 	{
 		return(false);
 	}
+
+	template <typename SomeType>
+		static SomeType GetValueNegated(const SomeType &in_value)
+	{
+		return(in_value);
+	}
+
+	template <typename SomeType>
+		static SomeType GetValueAbsolute(const SomeType &in_value)
+	{
+		return(in_value);
+	}
 };
 template <> struct IsSignedType<true> {
+	static const bool value = true;
 	template <typename SomeType>
-	static bool IsNegative(const SomeType &in_value)
+		static bool IsNegative(const SomeType &in_value)
 	{
 		return(in_value < static_cast<SomeType>(0));
 	}
+
+	template <typename SomeType>
+		static SomeType GetValueNegated(const SomeType &in_value)
+	{
+		return(-in_value);
+	}
+
+	template <typename SomeType>
+		static SomeType GetValueAbsolute(const SomeType &in_value)
+	{
+		return((IsNegative(in_value)) ? (-in_value) : in_value);
+	}
 };
 // ////////////////////////////////////////////////////////////////////////////
+
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -77,6 +105,24 @@ template <typename PodType>
 {
 	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
 		IsNegative(in_value));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename PodType>
+	PodType GetValueNegated(const PodType &in_value)
+{
+	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
+		GetValueNegated(in_value));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename PodType>
+	PodType GetValueAbsolute(const PodType &in_value)
+{
+	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
+		GetValueAbsolute(in_value));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

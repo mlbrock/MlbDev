@@ -57,6 +57,11 @@
 
 #include <OSSupport/OSSupport.hpp>
 
+#include <OSSupport/Win/OS_CompareString.hpp>
+#include <OSSupport/Win/OS_EnumThreadWindows.hpp>
+#include <OSSupport/Win/OS_GetClassName.hpp>
+#include <OSSupport/Win/OS_GetWindowText.hpp>
+
 #include <map>
 
 #include <psapi.h>

@@ -1,0 +1,53 @@
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	MLB Operating System Support (OSSupport) Library Include File
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	File Name  			:	OS_GetClassName.hpp
+
+	File Description	:	Include file for the operating system support library
+								for the Windows function GetClassName.
+
+	Revision History	:	2016-08-16 --- Creation.
+									Michael L. Brock
+
+		Copyright Michael L. Brock 2016 - 2016.
+		Distributed under the Boost Software License, Version 1.0.
+		(See accompanying file LICENSE_1_0.txt or copy at
+		http://www.boost.org/LICENSE_1_0.txt)
+
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
+#ifndef HH___MLB__OSSupport__OS_GetClassName_hpp___HH
+
+#define HH___MLB__OSSupport__OS_GetClassName_hpp___HH	1
+
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+//	Required include files...
+// ////////////////////////////////////////////////////////////////////////////
+
+#include <OSSupport/OSSupport.hpp>
+
+// ////////////////////////////////////////////////////////////////////////////
+
+namespace MLB {
+
+namespace OSSupport {
+
+// ////////////////////////////////////////////////////////////////////////////
+int          OS_GetClassName(HWND window_handle, LPTSTR class_name_ptr,
+	int class_name_length);
+int          OS_GetClassName(HWND window_handle, char *class_name_ptr,
+	std::size_t class_name_length);
+std::string &OS_GetClassName(HWND window_handle, std::string &class_name);
+std::string  OS_GetClassName(HWND window_handle);
+// ////////////////////////////////////////////////////////////////////////////
+
+} // namespace OSSupport
+
+} // namespace MLB
+
+#endif // #ifndef HH___MLB__OSSupport__OS_GetClassName_hpp___HH
+

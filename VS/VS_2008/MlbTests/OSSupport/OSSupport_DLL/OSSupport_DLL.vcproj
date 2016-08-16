@@ -296,6 +296,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_CompareString.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\OSSupport\Win\OS_EnumProcesses.cpp"
 				>
 			</File>
@@ -304,7 +308,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_EnumThreadWindows.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\OSSupport\Win\OS_FreeLibrary.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_GetClassName.cpp"
 				>
 			</File>
 			<File
@@ -361,6 +373,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\..\OSSupport\Win\OS_GetSystemInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_GetWindowText.cpp"
 				>
 			</File>
 			<File

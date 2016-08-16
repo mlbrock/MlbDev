@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_OSS_OS_GetProcAddress",
 		{F380405F-78CD-4DF6-AF2A-DAF65AD13B0B} = {F380405F-78CD-4DF6-AF2A-DAF65AD13B0B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_OSS_OS_EnumThreadWindows", "ZZZ_OSS_OS_EnumThreadWindows\ZZZ_OSS_OS_EnumThreadWindows.vcproj", "{DBCE9686-0920-48AA-A856-517AFDD92F4F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F380405F-78CD-4DF6-AF2A-DAF65AD13B0B} = {F380405F-78CD-4DF6-AF2A-DAF65AD13B0B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -46,6 +51,10 @@ Global
 		{2BB1FE93-3EDA-4174-942D-47683696F936}.Debug|Win32.Build.0 = Debug|Win32
 		{2BB1FE93-3EDA-4174-942D-47683696F936}.Release|Win32.ActiveCfg = Release|Win32
 		{2BB1FE93-3EDA-4174-942D-47683696F936}.Release|Win32.Build.0 = Release|Win32
+		{DBCE9686-0920-48AA-A856-517AFDD92F4F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DBCE9686-0920-48AA-A856-517AFDD92F4F}.Debug|Win32.Build.0 = Debug|Win32
+		{DBCE9686-0920-48AA-A856-517AFDD92F4F}.Release|Win32.ActiveCfg = Release|Win32
+		{DBCE9686-0920-48AA-A856-517AFDD92F4F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
