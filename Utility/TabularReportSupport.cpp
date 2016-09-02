@@ -26,6 +26,7 @@
 #include <Utility/TabularReportSupport.hpp>
 #include <Utility/Utility_Exception.hpp>
 
+#include <algorithm>
 #include <iosfwd>
 
 #include <boost/io/ios_state.hpp>

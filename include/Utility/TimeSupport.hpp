@@ -59,11 +59,13 @@
 # if !defined(__MINGW32__)
 #  pragma warning(pop)
 # endif // #if !defined(__MINGW32__)
-// No struct timespec in Windows
+// No struct timespec in earlier Windows / MSVC++ releases...
+# if defined(_MSC_VER) && (_MSC_VER < 1900)
 struct timespec {
 	time_t tv_sec;
 	long   tv_nsec;
 };
+# endif // # if defined(_MSC_VER) && (_MSC_VER < 1900)
 #else
 # include <time.h>
 # include <unistd.h>

@@ -36,6 +36,7 @@
 #include <Utility/Utility_Exception.hpp>
 #include <Utility/InlineContainer.hpp>
 
+#include <algorithm>
 #include <memory.h>
 
 #ifdef _MSC_VER
