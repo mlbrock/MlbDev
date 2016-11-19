@@ -1,6 +1,17 @@
 // ////////////////////////////////////////////////////////////////////////////
 
+#include <Utility.hpp>
+
+#include <RapidXmlUtils/RapidXmlContext.hpp>
+#include <RapidXmlUtils/XmlDomElement.hpp>
+
 #include <mbtypes.h>
+
+#include <Utility/ParseCmdLineArg.hpp>
+
+//#include <set>
+//#include <string>
+//#include <vector>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -186,6 +197,9 @@ typedef InsItem::InsItemVec_I InsItemVec;
 // ////////////////////////////////////////////////////////////////////////////
 class MessageSchema {
 public:
+
+	void swap(MessageSchema &other);
+
 	static MessageSchema &ParseXmlFile(const std::string &file_name,
 		MessageSchema &out_schema);
 	static MessageSchema  ParseXmlFile(const std::string &file_name);
@@ -199,9 +213,8 @@ private:
 	Native_SInt32 version;
 	bool          byteOrder;
 
-	static MessageSchema &ParseXmlElement(
-		const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-		MessageSchema &out_schema);
+	         MessageSchema();
+	explicit MessageSchema(const MLB::RapidXmlUtils::XmlDomElement &src);
 };
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -234,23 +247,24 @@ std::string ParseXmlAttributeValue(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-template <typename DataType> DataType &ParseXmlAttribute(
+template <typename DataType, typename DefaultType>
+	DataType &ParseXmlAttributeHelper(
 	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element,
 	const std::string &attribute_name, DataType &dst,
-	const DataType *default_value)
+	const DefaultType *default_value)
 {
 	using namespace MLB::RapidXmlUtils;
 
 	try {
-		XmlDomAttribute attr_info(GetAttributeValue(src_xml_element,
+		XmlDomAttribute attr_info(src_xml_element.GetAttribute(
 			attribute_name, (default_value) ? false : true));
 		if (!attr_info.first.empty())
 			MLB::Utility::ParseCmdLineArg::ParseCmdLineDatum(
 				ParseXmlAttributeValue(attr_info), dst);
 		else
-			dst = *default_value;
+			dst = DataType(*default_value);
 	}
-	catch (const std::string &except) {
+	catch (const std::exception &except) {
 		std::ostringstream o_str;
 		o_str << "Unable to get attribute '" << attribute_name << "' value from "
 			"element '" << src_xml_element.element_name_ << "': " <<
@@ -265,12 +279,37 @@ template <typename DataType> DataType &ParseXmlAttribute(
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-template <typename DataType> DataType &ParseXmlAttribute(
+void AppendXmlNamespaces(
+	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element,
+	std::map<std::string, std::string> &xml_ns_map)
+{
+	using namespace MLB::RapidXmlUtils;
+
+	XmlDomElementAttrMapIterC &iter_b(src_xml_element.attribute_map_.begin());
+	XmlDomElementAttrMapIterC &iter_e(src_xml_element.attribute_map_.end());
+
+	for ( ; iter_b != iter_e; ++iter_b) {
+		std::size_t attr_name_len = iter_b->first.size();
+		if ((attr_name_len < 5) || ::memcmp(iter_b->first.c_str(), "xlmns", 5))
+			continue;
+		if (attr_name_len == 5)
+			xml_ns_map[""] = iter_b->second;
+		else if (iter_b->first[5] != ':')
+			continue;
+		else if (attr_name_len == 6)
+			MLB::Utility::ThrowLogicError("Empty xlmns prefix encountered.");
+		xml_ns_map[iter_b->first.c_str() + 6] = iter_b->second;
+	}
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename DataType, typename DefaultType> DataType &ParseXmlAttribute(
 	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element,
 	const std::string &attribute_name, DataType &dst,
-	const DataType &default_value)
+	const DefaultType &default_value)
 {
-	return(ParseXmlAttribute(src_xml_element, dst, attribute_name, dst,
+	return(ParseXmlAttributeHelper(src_xml_element, attribute_name, dst,
 		&default_value));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -280,7 +319,7 @@ template <typename DataType> DataType &ParseXmlAttribute(
 	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element,
 	const std::string &attribute_name, DataType &dst)
 {
-	return(ParseXmlAttribute(src_xml_element, dst, attribute_name, dst, NULL));
+	return(ParseXmlAttribute(src_xml_element, attribute_name, dst, NULL));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -302,23 +341,34 @@ template <typename DataType> DataType ParseXmlAttribute(
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-MessageSchema &MessageSchema::ParseXmlElement(
-	const MLB::RapidXmlUtils::XmlDomElement &xml_element,
-	MessageSchema &out_schema)
+void MessageSchema::swap(MessageSchema &other)
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+MessageSchema::MessageSchema()
+//	CODE NOTE: Memberwise-initialization here.
+{
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+MessageSchema::MessageSchema(
+	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element)
+//	CODE NOTE: Memberwise-initialization here.
 {
 	using namespace MLB::RapidXmlUtils;
 
-	MessageSchema tmp_schema;
-
 	try {
-		if ((xml_element.node_type_ != XmlDomElement::NodeType_Unknown) ||
-			(xml_element.element_name_ != "messageSchema")) {
+		if ((src_xml_element.node_type_ != XmlDomElement::NodeType_Unknown) ||
+			(src_xml_element.element_name_ != "messageSchema")) {
 			std::ostringstream o_str;
 			o_str << "Expected the major node in XML input for SBE to have the "
 				"name 'messageSchema' and the node type " <<
 				XmlDomElement::NodeType_Unknown << " , but its actual name is '" << 
-				xml_element.element_name_ << "' and the node type is " <<
-				xml_element.node_type_ << ".";
+				src_xml_element.element_name_ << "' and the node type is " <<
+				src_xml_element.node_type_ << ".";
 			MLB::Utility::ThrowLogicError(o_str.str());
 		}
 
@@ -330,9 +380,9 @@ MessageSchema &MessageSchema::ParseXmlElement(
 		ParseXmlAttribute(src_xml_element, "description",     description,     "");
 		ParseXmlAttribute(src_xml_element, "headerType",      headerType,      "messageHeader");
 
-		for (std::size_t count_1 = 0; count_1 < xml_element.child_list_.size();
+		for (std::size_t count_1 = 0; count_1 < src_xml_element.child_list_.size();
 			++count_1) {
-			const XmlDomElement &this_element(xml_element.child_list_[count_1]);
+			const XmlDomElement &this_element(src_xml_element.child_list_[count_1]);
 			try {
 				if (this_element.node_type_ != XmlDomElement::NodeType_Element) {
 					std::ostringstream o_str;
@@ -341,10 +391,10 @@ MessageSchema &MessageSchema::ParseXmlElement(
 						").";
 					MLB::Utility::ThrowLogicError(o_str.str());
 				}
-				else if (xml_element.element_name_ == "types") {
+				else if (src_xml_element.element_name_ == "types") {
 std::cout << "ELEMENT: types\n";
 				}
-				else if (xml_element.element_name_ == "message") {
+				else if (src_xml_element.element_name_ == "message") {
 std::cout << "ELEMENT: message\n";
 				}
 				else
@@ -366,23 +416,21 @@ std::cout << "ELEMENT: message\n";
 			except.what();
 		MLB::Utility::Rethrow(except, o_str.str());
 	}
-
-	out_schema.swap(tmp_schema);
-
-	return(out_schema);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-MessageSchema &MessageSchema::ParseXmlFile(const std::string &file_name,
-	MessageSchema &out_schema)
+MessageSchema MessageSchema::ParseXmlFile(const std::string &file_name)
 {
-	MLB::RapidXmlUtils::RapidXmlContext xml_context;
-	MLB::RapidXmlUtils::XmlDomElement   xml_element;
+	using namespace MLB::RapidXmlUtils;
+
+	MessageSchema   dst_schema;
+	RapidXmlContext xml_context;
+	XmlDomElement   xml_element;
 
 	try {
 		MLB::RapidXmlUtils::XmlDomElement::ParseXmlFile(file_name, xml_element);
-		ParseXmlElement(xml_element, out_schema);
+		MessageSchema(xml_element).swap(dst_schema);
 	}
 	catch (const std::exception &except) {
 		std::ostringstream o_str;
@@ -391,16 +439,7 @@ MessageSchema &MessageSchema::ParseXmlFile(const std::string &file_name,
 		MLB::Utility::Rethrow(except, o_str.str());
 	}
 
-	return(out_schema);
-}
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
-MessageSchema MessageSchema::ParseXmlFile(const std::string &file_name)
-{
-	MessageSchema out_schema;
-
-	return(ParseXmlFile(file_name, out_schema));
+	return(dst_schema);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -411,6 +450,7 @@ void TEST_RunTest(const char *file_name, int &return_code)
 {
 	try {
 		std::cout << "File '" << file_name << "': " << std::flush;
+		MessageSchema my_schema(MessageSchema::ParseXmlFile(file_name));
 	}
 	catch (const std::exception &except) {
 		return_code = EXIT_FAILURE;
