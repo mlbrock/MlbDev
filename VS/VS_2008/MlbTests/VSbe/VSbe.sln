@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vsbe", "Vsbe\Vsbe.vcproj", "{78471A11-84D8-4313-B213-A1563685EA1D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_VSBE_MessageSchema", "ZZZ_VSBE_MessageSchema\ZZZ_VSBE_MessageSchema.vcproj", "{E5009B09-DC3E-4843-9FC2-1CF57ACA8373}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78471A11-84D8-4313-B213-A1563685EA1D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78471A11-84D8-4313-B213-A1563685EA1D}.Debug|Win32.Build.0 = Debug|Win32
+		{78471A11-84D8-4313-B213-A1563685EA1D}.Release|Win32.ActiveCfg = Release|Win32
+		{78471A11-84D8-4313-B213-A1563685EA1D}.Release|Win32.Build.0 = Release|Win32
+		{E5009B09-DC3E-4843-9FC2-1CF57ACA8373}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E5009B09-DC3E-4843-9FC2-1CF57ACA8373}.Debug|Win32.Build.0 = Debug|Win32
+		{E5009B09-DC3E-4843-9FC2-1CF57ACA8373}.Release|Win32.ActiveCfg = Release|Win32
+		{E5009B09-DC3E-4843-9FC2-1CF57ACA8373}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
