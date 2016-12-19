@@ -53,10 +53,10 @@ ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_MACH	:=	${shell uname -m}
 	endif
 	ifeq (${MASCaPS_SPEC_CPP} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPP	:=	gcc
+		MASCaPS_SPEC_CPP	:=	${shell ${CC} --version | head -1 | cut -d ' ' -f 1 | cut -d '-' -f 1}
 	endif
 	ifeq (${MASCaPS_SPEC_CPPVER} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPPVER	:=	${shell ${MASCaPS_SPEC_CPP} --version | head -1 | perl -e '$$_=<>;$$_=~s/\(.+?\)/\(\-\)/g;$$_=~s/\[.+?\]/\[\-\]/g;$$_=~s/\<.+?\>/\<\-\>/g;$$_=~s/\{.+?\}/\{\-\}/g;print $$_' | cut -d ' ' -f 3 | cut -d '-' -f 1}
+		MASCaPS_SPEC_CPPVER	:=	${shell ${CC} --version | head -1 | perl -e '$$_=<>;$$_=~s/\(.+?\)/\(\-\)/g;$$_=~s/\[.+?\]/\[\-\]/g;$$_=~s/\<.+?\>/\<\-\>/g;$$_=~s/\{.+?\}/\{\-\}/g;print $$_;' | cut -d ' ' -f 3 | cut -d '-' -f 1}
 	endif
 	ifeq (${MASCaPS_SPEC_BUILD} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_BUILD	:=	debug
