@@ -53,7 +53,13 @@ ifeq (${MASCaPS_SPEC_DIR} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_MACH	:=	${shell uname -m}
 	endif
 	ifeq (${MASCaPS_SPEC_CPP} , ${MASCaPS_EMPTY_STRING})
-		MASCaPS_SPEC_CPP	:=	${shell ${CC} --version | head -1 | cut -d ' ' -f 1 | cut -d '-' -f 1}
+		TMP_CC_VERSION	:=	${shell ${CC} --version | head -1}
+		TMP_GCC_NAME	:=	${or ${findstring GCC,${TMP_CC_VERSION}},${findstring Gcc,${TMP_CC_VERSION}},${findstring gcc,${TMP_CC_VERSION}}}
+		ifneq (,${TMP_GCC_NAME})
+			MASCaPS_SPEC_CPP	:=	gcc
+		else
+			MASCaPS_SPEC_CPP	:=	${shell ${CC} --version | head -1 | cut -d ' ' -f 1 | cut -d '-' -f 1 | cut -d '.' -f 1}
+		endif
 	endif
 	ifeq (${MASCaPS_SPEC_CPPVER} , ${MASCaPS_EMPTY_STRING})
 		MASCaPS_SPEC_CPPVER	:=	${shell ${CC} --version | head -1 | perl -e '$$_=<>;$$_=~s/\(.+?\)/\(\-\)/g;$$_=~s/\[.+?\]/\[\-\]/g;$$_=~s/\<.+?\>/\<\-\>/g;$$_=~s/\{.+?\}/\{\-\}/g;print $$_;' | cut -d ' ' -f 3 | cut -d '-' -f 1}
