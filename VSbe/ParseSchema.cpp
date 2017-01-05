@@ -279,6 +279,33 @@ template <typename DataType, typename DefaultType>
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
+struct XmlNamespaceScoped {
+	typedef std::pair<std::string, std::string> MyNameSpaceElement;
+	typedef std::map<std::string, std::string>  MyNameSpaceMap;
+	typedef std::vector<MyNameSpaceElement>     MyNameSpaceList;
+
+	XmlNamespaceScoped(const MLB::RapidXmlUtils::XmlDomElement &xml_element)
+		:xml_element_(xml_element)
+		,namespace_list_()
+	{
+	}
+
+	~XmlNamespaceScoped()
+	{
+	}
+
+	Add(const std::string &name, const std::string &value)
+	{
+		namespace_list_.push_back(MyNameSpaceElement(name, value));
+	}
+
+	const MLB::RapidXmlUtils::XmlDomElement &xml_element_;
+	MyNameSpaceMap                           namespace_map_;
+	MyNameSpaceList                          namespace_list_;
+};
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 void AppendXmlNamespaces(
 	const MLB::RapidXmlUtils::XmlDomElement &src_xml_element,
 	std::map<std::string, std::string> &xml_ns_map)
