@@ -199,7 +199,7 @@ ifeq (${TEST_SRC_LIST} , ${MASCaPS_EMPTY_STRING})
 	TEST_BASE_NAMES_CMD	=
 else
 	TEST_BASE_NAMES_CMD	=	\
-	grep TEST_MAIN ${TEST_SRC_LIST} | \
+	grep -H TEST_MAIN ${TEST_SRC_LIST} | \
 	perl -e \
 		'while (<>) { \
 			chop; \
