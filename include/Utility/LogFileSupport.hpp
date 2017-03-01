@@ -57,6 +57,37 @@ std::string AppendToFileNameBase(const std::string &in_file_name_base,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+struct LogFileConfigArg {
+	LogFileConfigArg(const std::string &arg_string = "",
+		unsigned int arg_index = 0, unsigned int arg_elements = 0)
+		:arg_string_(arg_string)
+		,arg_index_(arg_index)
+		,arg_elements_(arg_elements)
+	{
+	}
+
+	void Set(const std::string &arg_string = "", unsigned int arg_index = 0,
+		unsigned int arg_elements = 0)
+	{
+		arg_string_   = arg_string;
+		arg_index_    = arg_index;
+		arg_elements_ = arg_elements;
+	}
+
+	void swap(LogFileConfigArg &other)
+	{
+		arg_string_.swap(other.arg_string_);
+		std::swap(arg_index_, other.arg_index_);
+		std::swap(arg_elements_, other.arg_elements_);
+	}
+
+	std::string  arg_string_;
+	unsigned int arg_index_;
+	unsigned int arg_elements_;
+};
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 class LogFilePreConfigureParse {
 public:
 	LogFilePreConfigureParse(int argc, char **argv, const char *log_dir_regex =
@@ -65,10 +96,20 @@ public:
 		const char *domain_regex = NULL, const char *ext_regex = NULL);
 	virtual ~LogFilePreConfigureParse();
 
-	std::string log_dir_;
-	std::string env_name_;
-	std::string domain_name_;
-	std::string ext_name_;
+	int                original_argc_;
+	char             **original_argv_;
+	std::string        log_dir_regex_copy_;
+	std::string        env_regex_copy_;
+	std::string        domain_regex_copy_;
+	std::string        ext_regex_copy_;
+	std::string        log_dir_;
+	std::string        env_name_;
+	std::string        domain_name_;
+	std::string        ext_name_;
+	LogFileConfigArg   log_dir_arg_;
+	LogFileConfigArg   env_name_arg_;
+	LogFileConfigArg   domain_name_arg_;
+	LogFileConfigArg   ext_name_arg_;
 };
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -85,6 +126,12 @@ public:
 
 	void swap(LogFilePreConfigure &other);
 
+	int                      original_argc_;
+	char                   **original_argv_;
+	std::string              log_dir_regex_copy_;
+	std::string              env_regex_copy_;
+	std::string              domain_regex_copy_;
+	std::string              ext_regex_copy_;
 	TimeSpec                 start_time_;
 	std::string              file_name_base_;
 	std::vector<std::string> argv_;
@@ -94,6 +141,10 @@ public:
 	std::string              domain_name_;
 	std::string              base_name_;
 	std::string              ext_name_;
+	LogFileConfigArg         log_dir_arg_;
+	LogFileConfigArg         env_name_arg_;
+	LogFileConfigArg         domain_name_arg_;
+	LogFileConfigArg         ext_name_arg_;
 	std::string              log_file_name_;
 	bool                     log_file_is_open_;
 };

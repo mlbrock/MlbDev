@@ -148,34 +148,58 @@ std::string AppendToFileNameBase(const std::string &in_file_name_base,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 LogFilePreConfigureParse::LogFilePreConfigureParse(int argc, char **argv,
 	const char *log_dir_regex, const char *env_regex, const char *domain_regex,
 	const char *ext_regex)
-	:log_dir_("./")
+	:original_argc_(argc)
+	,original_argv_(argv)
+	,log_dir_regex_copy_(NullToString(log_dir_regex))
+	,env_regex_copy_(NullToString(env_regex))
+	,domain_regex_copy_(NullToString(domain_regex))
+	,ext_regex_copy_(NullToString(ext_regex))
+	,log_dir_("./")
 	,env_name_()
 	,domain_name_()
 	,ext_name_()
+	,log_dir_arg_()
+	,env_name_arg_()
+	,domain_name_arg_()
+	,ext_name_arg_()
 {
 	try {
 		for (unsigned int count_1 = 1; count_1 < static_cast<unsigned int>(argc);
 			++count_1) {
+			unsigned int arg_index = count_1;
 			if ((log_dir_regex != NULL) &&
 				(ParseCmdLineArg::ParseDirectory(RegexParamNameAdaptor(
 				log_dir_regex, argv[count_1]), count_1, argc, argv, log_dir_,
 				"", false)))
-				;
+				log_dir_arg_.Set(argv[arg_index], arg_index,
+					(count_1 - arg_index) + 1);
 			else if ((env_regex != NULL) &&
 				(ParseCmdLineArg::ParseCmdLineDatum(RegexParamNameAdaptor(
-				env_regex, argv[count_1]), count_1, argc, argv, env_name_)))
+				env_regex, argv[count_1]), count_1, argc, argv, env_name_))) {
+				env_name_arg_.Set(argv[arg_index], arg_index,
+					(count_1 - arg_index) + 1);
 				CheckFileNameBaseSegment(env_name_, "The environment name", true);
+			}
 			else if ((domain_regex != NULL) &&
 				(ParseCmdLineArg::ParseCmdLineDatum(RegexParamNameAdaptor(
-				domain_regex, argv[count_1]), count_1, argc, argv, domain_name_)))
+				domain_regex, argv[count_1]), count_1, argc, argv, domain_name_))){
+				domain_name_arg_.Set(argv[arg_index], arg_index,
+					(count_1 - arg_index) + 1);
 				CheckFileNameBaseSegment(domain_name_, "The domain name", true);
+			}
 			else if ((ext_regex != NULL) &&
 				(ParseCmdLineArg::ParseCmdLineDatum(RegexParamNameAdaptor(
-				ext_regex, argv[count_1]), count_1, argc, argv, ext_name_)))
+				ext_regex, argv[count_1]), count_1, argc, argv, ext_name_))) {
+				ext_name_arg_.Set(argv[arg_index], arg_index,
+					(count_1 - arg_index) + 1);
 				CheckFileNameBaseSegment(ext_name_, "The extended name", true);
+			}
 		}
 		if (domain_regex != NULL)
 			CheckFileNameBaseSegment(domain_name_, "The domain name", true);
@@ -200,7 +224,13 @@ LogFilePreConfigure::LogFilePreConfigure(LogManager &log_manager, int argc,
 	char **argv, const std::string &base_name, const std::string &ext_name,
 	const char *log_dir_regex, const char *env_regex, const char *domain_regex,
 	const char *ext_regex)
-	:start_time_()
+	:original_argc_(argc)
+	,original_argv_(argv)
+	,log_dir_regex_copy_(NullToString(log_dir_regex))
+	,env_regex_copy_(NullToString(env_regex))
+	,domain_regex_copy_(NullToString(domain_regex))
+	,ext_regex_copy_(NullToString(ext_regex))
+	,start_time_()
 	,file_name_base_()
 	,argv_(argv, argv + argc)
 	,start_dir_(GetCurrentPath())
@@ -211,6 +241,10 @@ LogFilePreConfigure::LogFilePreConfigure(LogManager &log_manager, int argc,
 	,ext_name_(ext_name)
 	,log_file_name_()
 	,log_file_is_open_(false)
+	,log_dir_arg_()
+	,env_name_arg_()
+	,domain_name_arg_()
+	,ext_name_arg_()
 {
 	try {
 		{
@@ -224,6 +258,16 @@ LogFilePreConfigure::LogFilePreConfigure(LogManager &log_manager, int argc,
 				domain_name_.swap(parse_cmd_line.domain_name_);
 			if (!parse_cmd_line.ext_name_.empty())
 				ext_name_.swap(parse_cmd_line.ext_name_);
+			original_argc_        = parse_cmd_line.original_argc_;
+			original_argv_        = parse_cmd_line.original_argv_;
+			log_dir_regex_copy_   = parse_cmd_line.log_dir_regex_copy_;
+			env_regex_copy_       = parse_cmd_line.env_regex_copy_;
+			domain_regex_copy_    = parse_cmd_line.domain_regex_copy_;
+			ext_regex_copy_       = parse_cmd_line.ext_regex_copy_;
+			log_dir_arg_          = parse_cmd_line.log_dir_arg_;
+			env_name_arg_         = parse_cmd_line.env_name_arg_;
+			domain_name_arg_      = parse_cmd_line.domain_name_arg_;
+			ext_name_arg_         = parse_cmd_line.ext_name_arg_;
 		}
 		{
 			//	CODE NOTE: Test for directory existence...
@@ -276,6 +320,12 @@ LogFilePreConfigure::~LogFilePreConfigure()
 // ////////////////////////////////////////////////////////////////////////////
 void LogFilePreConfigure::swap(LogFilePreConfigure &other)
 {
+	std::swap(original_argc_, other.original_argc_);
+	std::swap(original_argv_, other.original_argv_);
+	log_dir_regex_copy_.swap(other.log_dir_regex_copy_);
+	env_regex_copy_.swap(other.env_regex_copy_);
+	domain_regex_copy_.swap(other.domain_regex_copy_);
+	ext_regex_copy_.swap(other.ext_regex_copy_);
 	start_time_.swap(other.start_time_);
 	file_name_base_.swap(other.file_name_base_);
 	argv_.swap(other.argv_);
@@ -287,6 +337,10 @@ void LogFilePreConfigure::swap(LogFilePreConfigure &other)
 	ext_name_.swap(other.ext_name_);
 	log_file_name_.swap(other.log_file_name_);
 	std::swap(log_file_is_open_, other.log_file_is_open_);
+	log_dir_arg_.swap(other.log_dir_arg_);
+	env_name_arg_.swap(other.env_name_arg_);
+	domain_name_arg_.swap(other.domain_name_arg_);
+	ext_name_arg_.swap(other.ext_name_arg_);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
