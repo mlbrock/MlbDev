@@ -87,17 +87,20 @@ std::string ConstructFileNameBase(const std::string &dir_name,
 				tmp_dir_name = PathNameToGeneric(
 					CanonicalizePathNameSlashes(tmp_dir_name) + "/");
 		}
-		CheckFileNameBaseSegment(env_name, "The environment name", true);
+		CheckFileNameBaseSegment(env_name, "The environment name", false);
 		CheckFileNameBaseSegment(domain_name, "The domain name", false);
-		CheckFileNameBaseSegment(base_name, "The base name", true);
+		CheckFileNameBaseSegment(base_name, "The base name", false);
 		CheckFileNameBaseSegment(ext_name, "The extended name", false);
 		CheckFileNameBaseSegment(host_name, "The host name", true);
 		CheckFileNameBaseSegment(user_name, "The user name", true);
 		std::ostringstream o_str;
-		o_str << tmp_dir_name << env_name << ".";
+		o_str << tmp_dir_name;
+		if (!env_name.empty())
+			o_str << env_name << ".";
 		if (!domain_name.empty())
 			o_str << domain_name << ".";
-		o_str << base_name << ".";
+		if (!base_name.empty())
+			o_str << base_name << ".";
 		if (!ext_name.empty())
 			o_str << ext_name << ".";
 		char tmp_buffer[MLB::Utility::Length_TimeSpec + 1];
@@ -145,9 +148,6 @@ std::string AppendToFileNameBase(const std::string &in_file_name_base,
 
 	return(out_file_name_base);
 }
-// ////////////////////////////////////////////////////////////////////////////
-
-// ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -287,7 +287,7 @@ LogFilePreConfigure::LogFilePreConfigure(LogManager &log_manager, int argc,
 				log_dir_ = GetCanonicalNativePath(tmp_log_dir +
 					PathNameSeparatorCanonical_String);
 			else
-				log_dir_.swap(tmp_log_dir);
+				log_dir_ = GetCanonicalNativePath(tmp_log_dir);
 		}
 		file_name_base_ = ConstructFileNameBase("", env_name_, domain_name_,
 			base_name_, ext_name_, start_time_);
@@ -367,8 +367,9 @@ int main(int argc, char **argv)
 
 	try {
 		try {
-			LogFilePreConfigure log_pre(MyLogManager, argc, argv,
-				"BaseName1", "ExtName1");
+LogFilePreConfigure log_pre(MyLogManager, argc, argv);
+//			LogFilePreConfigure log_pre(MyLogManager, argc, argv,
+//				"BaseName1", "ExtName1");
 			std::cout << "TEST 1 RESULTS: " << log_pre.log_file_name_ << std::endl;
 		}
 		catch (const std::exception &except) {

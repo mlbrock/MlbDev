@@ -117,7 +117,7 @@ public:
 class LogFilePreConfigure {
 public:
 	LogFilePreConfigure(LogManager &log_manager, int argc, char **argv,
-		const std::string &base_name, const std::string &ext_name,
+		const std::string &base_name = "", const std::string &ext_name = "",
 		const char *log_dir_regex =
 			"^\\-\\-*LOG(GING)*_*((DIR(ECTORY)*)|(PATH))(_*NAME)*$",
 		const char *env_regex = "^\\-\\-*ENV(IRON(MENT)*)*_*(NAME)*$",
