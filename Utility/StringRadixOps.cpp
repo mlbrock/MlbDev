@@ -30,6 +30,7 @@
 #include <Utility/StringRadixOps.hpp>
 
 #include <cstring>
+#include <stdexcept>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -51,22 +52,43 @@ template <typename DstType, DstType SrcRadix>
 
 	DstType old_dst_value = 0;
 	DstType dst_value     = 0;
+	DstType tmp_value     = 0;
 
 	while (curr_ptr < end_ptr) {
 		old_dst_value  = dst_value;
 		dst_value     *= static_cast<DstType>(SrcRadix);
 		if (::isdigit(*curr_ptr))
-			dst_value += *curr_ptr - '0';
+			tmp_value += *curr_ptr - '0';
 		else if (::isupper(*curr_ptr))
-			dst_value += (*curr_ptr - 'A') + 10;
+			tmp_value += (*curr_ptr - 'A') + 10;
 		else if (::islower(*curr_ptr))
-			dst_value += (*curr_ptr - 'a') + 10 + 26;
+			tmp_value += (*curr_ptr - 'a') + 10 + 26;
 		else
 			break;
-		if (dst_value < old_dst_value) {
-			//	We over-flowed. Caller detects because *last_ptr is a valid char.
-			dst_value = old_dst_value;
+		if (tmp_value >= SrcRadix)
 			break;
+		dst_value += tmp_value;
+		if (dst_value < old_dst_value) {
+			/*
+				We over-flowed.
+
+				If last_ptr is not NULL, we'll set it to point to the offending
+				character. Caller detects the overflow because that character is
+				a valid character for the radix.
+
+				Otherwise, we throw.
+			*/
+			if (last_ptr) {
+				dst_value = old_dst_value;
+				break;
+			}
+			std::ostringstream o_str;
+			o_str << "Conversion of the string '" <<
+				std::string(begin_ptr, end_ptr) << "' failed at index " <<
+				(curr_ptr - begin_ptr) << " ('" << *curr_ptr << " = ASCII " <<
+				static_cast<unsigned int>(static_cast<unsigned char>(*curr_ptr)) <<
+				").";
+			throw std::overflow_error(o_str.str());
 		}
 		++curr_ptr;
 	}
