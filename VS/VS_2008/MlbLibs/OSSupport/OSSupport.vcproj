@@ -269,6 +269,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\OSSupport\Win\OS_EnumWindows.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\OSSupport\Win\OS_FreeLibrary.cpp"
 				>
 			</File>

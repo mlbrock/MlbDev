@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumProcesses.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumProcessModules.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumThreadWindows.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_EnumWindows.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_FreeLibrary.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetClassName.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\OS_GetDirectory.cpp" />
