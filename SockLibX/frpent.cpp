@@ -17,7 +17,7 @@
 	Revision History	:	1993-04-12 --- Creation
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1993 - 2016.
+		Copyright Michael L. Brock 1993 - 2017.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -68,7 +68,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2016 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2017 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeProtoEnt
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeProtoEnt
@@ -137,7 +137,7 @@ void NPSL_FreeProtoEnt(NPSL_PROTOENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2016 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2017 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_FreeProtoEntList
 						Memory Free Functions:Network Programming Support Functions:NPSL_FreeProtoEntList
