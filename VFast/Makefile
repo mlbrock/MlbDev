@@ -55,7 +55,7 @@ SRCS		=	\
 
 #LDFLAGS		+=	-L$(IBASE)/lib -L/usr/lib64/boost-1.38.0/lib 
 
-LINK_STATIC	=	${LINK_STATIC_STD}
+#LINK_STATIC	=	${LINK_STATIC_STD}
 
 # Only the libraries below are needed for TEST_MAIN unit tests in this library.
 MLB_LIB_NAMES	=	VFast XercesUtils SocketIo Utility
