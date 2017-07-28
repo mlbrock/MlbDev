@@ -64,6 +64,7 @@ protected:
 	std::string             packet_file_name_;
 	PacketFormat            packet_format_;
 	std::vector<SocketSpec> mc_spec_list_;
+	std::string             mc_interface_;
 	unsigned int            delay_usecs_;
 	unsigned long long      spin_sleep_;
 	int                     time_to_live_;
@@ -79,6 +80,7 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
 	:packet_file_name_()
 	,packet_format_(PacketFormat_Raw)
 	,mc_spec_list_()
+	,mc_interface_()
 	,delay_usecs_(1000)
 	,spin_sleep_(0)
 	,time_to_live_(-1)
@@ -93,6 +95,7 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
 			"-packet_file <packet-file> " <<
 			"[ -packet_format <packet-format> ] " <<
 			"[ -multicast_address <ip-address>/<ip-port>[/<host-interface>] ] " <<
+			"[ -interface_address <host-interface> ] " <<
 			"[ -delay <microseconds-between-packets> ( = " << delay_usecs_ <<
 				" ) ] " <<
 			"[ -spin_sleep <spin-cycles-between-packets> ( = " << spin_sleep_ <<
@@ -144,6 +147,8 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
       with the '-packet-format' parameter equal to 'IPSOURCE', 'TIMEIPSOURCE',\n\
       or 'IPSOURCETLEN'. In those cases, canned data packets will be sent on\n\
       the multicast address on which each packet was originally received.\n\n\
+   -host_interface <host-interface>\n\
+      Specifies the interface on which canned data packets are to be sent.\n\n\
    -delay <microsecond-between-packets>\n\
       Specifies the time in microseconds to delay between packet sends.\n\n\
       If not specified, this parameter defaults to " << delay_usecs_ <<
@@ -202,6 +207,18 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
 		else if (SocketIoParseCmdLineArg::ParseCmdLineMCAddressList(count_1,
 			argc, argv, mc_spec_list_))
 			;
+ 		else if (SocketIoParseCmdLineArg::ParseCmdLineDatum<std::string>(
+			MLB::Utility::RegexParamNameAdaptor(
+				"^--?(HOST(-|_)?)?INTERFACE(-|_)?(ADDR(ESS)?)?$",
+			count_1, argc, argv), count_1, argc, argv, mc_interface_)) {
+			try {
+				StringToIpAddress(mc_interface_);
+			}
+			catch (const std::exception &except) {
+				MLB::Utility::Rethrow(except,
+					std::string("Invalid host interface: ") + except.what());
+			}
+		}
 		else if (SocketIoParseCmdLineArg::ParseCmdLineDatumSpec(
 			MLB::Utility::MakeInlineVector<std::string>
 			("-DELAY_MICROSECONDS")
@@ -298,10 +315,15 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
 		((packet_format_ == PacketFormat_IpSource) ||
 		 (packet_format_ == PacketFormat_TimeIpSource) ||
 		 (packet_format_ == PacketFormat_IpSourceTLen)))
-		std::cerr << "Packet format is " << packet_format_ << ", but the IP "
-			"addresses in the file will not be used. Instead, all packets will "
-			"be sent on " << mc_spec_list_[0] << ", which was specified on the "
-			"command line." << std::endl;
+		std::cerr << "WARNING: Packet format is " << packet_format_ << ", but "
+			"the IP addresses in the file will not be used. Instead, all packets "
+			"will be sent on " << mc_spec_list_[0] << ", which was specified on "
+			"the command line." << std::endl;
+	else if ((!mc_spec_list_.empty()) && (!mc_interface_.empty()))
+		std::cerr << "A multicast group was specified on the command line as "
+			"the packet destination (" << mc_spec_list_[0] << "), but an "
+			"interface (" << mc_interface_ << ") was specified separately and "
+			"will be ignored." << std::endl;
 
 	if (spin_sleep_)
 		delay_usecs_ = 0;
@@ -375,6 +397,8 @@ void CannedPacketSend::RunInternal()
 	std::cout << "Packet Format: " << packet_format_ << std::endl;
 	std::cout << "MGroup Info  : " << ((mc_spec_list_.empty()) ?
 		"??? (specified by packet)" : mc_spec_list_[0].ToString()) << std::endl;
+	std::cout << "Interface    : " <<
+		((mc_interface_.empty()) ? "* DEFAULT *" : mc_interface_) << std::endl;
 	std::cout << "Time-to-Live : " <<
 		((time_to_live_ == -1) ? "DEFAULT" :
 		MLB::Utility::AnyToString(time_to_live_)) << std::endl;
@@ -406,7 +430,7 @@ void CannedPacketSend::RunInternal()
 				if (sender_mc_sptr_.get() != NULL)
 					sender_mc_sptr_->SendTo(packet_length, packet_ptr);
 				else {
-					SocketSpec tmp_spec(ip_address, ip_port);
+					SocketSpec tmp_spec(ip_address, ip_port, mc_interface_);
 					PacketSenderMCSPtrMap::const_iterator iter_f(
 						sender_mc_map_.find(tmp_spec));
 					if (iter_f != sender_mc_map_.end())
