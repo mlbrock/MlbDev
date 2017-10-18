@@ -90,45 +90,37 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	dst[1].reserve(src_length);
 	dst[2].reserve(src_length);
 
-	std::size_t curr_length = src_length;
-	std::size_t curr_index  = 0;
-	std::size_t next_rule   = 10 + (start_offset % 10);
-
-	const char *c_seq_ptr;
+	std::size_t  curr_index = 0;
+	std::size_t  next_rule  = 10 + (start_offset % 10);
+	const char  *c_seq_ptr;
 
 	while (curr_index < src_length) {
 		if (curr_index == next_rule) {
 			std::ostringstream o_str;
 			o_str << ((next_rule < 100000000) ? "" : "?") <<
 				(next_rule % 100000000);
-			std::size_t rule_length = o_str.str().size();
-			std::size_t dst_1_pad   = (dst[0].size() - dst[1].size()) - 1;
-			std::size_t dst_2_pad   = (dst[0].size() - dst[2].size()) -
+			std::size_t dst_1_pad = (dst[0].size() - dst[1].size()) - 1;
+			std::size_t dst_2_pad = (dst[0].size() - dst[2].size()) -
 				((o_str.str().size() / 2) + 1);
-			dst[1]      += std::string(dst_1_pad, ' ') + '|';
-			dst[2]      += std::string(dst_2_pad, ' ') + o_str.str();
-			next_rule   += 10;
+			dst[1]    += std::string(dst_1_pad, ' ') + '|';
+			dst[2]    += std::string(dst_2_pad, ' ') + o_str.str();
+			next_rule += 10;
 		}
-		if (::isprint(*src_ptr)) {
-			dst[0]     += *src_ptr;
-		}
+		if (::isprint(*src_ptr))
+			dst[0] += *src_ptr;
 		else if (use_c_sequences &&
 			((c_seq_ptr = ::strchr(MyCSequenceSrc, *src_ptr)) != NULL)) {
-			dst[0]     += '\\';
-			dst[0]     += MyCSequenceDst[c_seq_ptr - MyCSequenceSrc];
+			dst[0] += '\\';
+			dst[0] += MyCSequenceDst[c_seq_ptr - MyCSequenceSrc];
 		}
-		else if ((!(*src_ptr)) && use_simple_nul) {
-			dst[0]     += "\\0";
-		}
-		else if (use_8bit_ascii && (*src_ptr > '~')) {
-			dst[0]     += *src_ptr;
-		}
+		else if ((!(*src_ptr)) && use_simple_nul)
+			dst[0] += "\\0";
+		else if (use_8bit_ascii && (*src_ptr > '~'))
+			dst[0] += *src_ptr;
 		else {
-			dst[0]     += '\\';
-			dst[0]     += '0';
-			dst[0]     += 'x';
-			dst[0]     += MyHexDigitList[(*src_ptr >> 4) & 0x0f];
-			dst[0]     += MyHexDigitList[*src_ptr & 0x0f];
+			dst[0] += "\\x";
+			dst[0] += MyHexDigitList[(*src_ptr >> 4) & 0x0f];
+			dst[0] += MyHexDigitList[*src_ptr & 0x0f];
 		}
 		++src_ptr;
 		++curr_index;
@@ -211,9 +203,7 @@ int main(int argc, char **argv)
 	std::cout << "Test routine for 'EmitRuledBuffer()'" << std::endl;
 	std::cout << "---- ------- --- -------------------" << std::endl;
 
-	int          return_code   = EXIT_SUCCESS;
-	unsigned int fork_depth    = 5;
-	unsigned int sleep_seconds = 0;
+	int return_code = EXIT_SUCCESS;
 
 	if (ParseCmdLineArg::HasCmdLineHelp(argc, argv, 1)) {
 		std::cout << "USAGE: " << std::endl <<
