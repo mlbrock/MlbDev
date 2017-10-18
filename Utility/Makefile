@@ -41,6 +41,7 @@ SRCS		=	\
 			ConfigFileSupport.cpp		\
 			CriticalEventHandler.cpp	\
 			DemangleCppName.cpp		\
+			EmitRuledBuffer.cpp		\
 			EnvElement.cpp			\
 			ExecProcess.cpp			\
 			ExecProcessInfo.cpp		\
@@ -97,7 +98,7 @@ SRCS		=	\
 			WaitProcessInfo.cpp		\
 			WideChar.cpp
 
-LINK_STATIC	=	${LINK_STATIC_BIN}
+#LINK_STATIC	=	${LINK_STATIC_BIN}
 
 # Only the libraries below are needed for TEST_MAIN unit tests in this library.
 MLB_LIB_NAMES	=	Utility

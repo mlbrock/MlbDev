@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\..\..\Utility\ConfigFileSupport.cpp" />
     <ClCompile Include="..\..\..\..\Utility\CriticalEventHandler.cpp" />
     <ClCompile Include="..\..\..\..\Utility\DemangleCppName.cpp" />
+    <ClCompile Include="..\..\..\..\Utility\EmitRuledBuffer.cpp" />
     <ClCompile Include="..\..\..\..\Utility\EnvElement.cpp" />
     <ClCompile Include="..\..\..\..\Utility\ExecProcess.cpp" />
     <ClCompile Include="..\..\..\..\Utility\ExecProcessInfo.cpp" />

@@ -5,7 +5,7 @@
 /*
 	File Name  			:	EmitRuledBuffer.cpp
 
-	File Description	:	
+	File Description	:	Logic to emit a ruled buffer.
 
 	Revision History	:	2017-10-13 --- Creation
 									Michael L. Brock
@@ -23,15 +23,10 @@
 //	Required include files...
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <Utility/C_StringSupport.hpp>
-#include <Utility/ExecProcess.hpp>
-#include <Utility/Utility_Exception.hpp>
+#include <Utility.hpp>
 
-#include <algorithm>
-
-#if defined(__unix__) && defined(__GNUC__)
-# include <unistd.h>
-#endif // #if defined(__unix__) && defined(__GNUC__)
+#include <cstdio>
+#include <cstring>
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -40,8 +35,16 @@ namespace MLB {
 namespace Utility {
 
 //	////////////////////////////////////////////////////////////////////////////
+//	CODE NOTE: To be moved int MlbDev/include/Utility/EmitRuledBuffer.hpp .
 std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	const char *src_ptr, std::size_t start_offset = 0,
+	bool use_c_sequences = true, bool use_simple_nul = true,
+	bool use_8bit_ascii = false);
+std::vector<std::string> EmitRuledBuffer(const char *src_ptr,
+	std::size_t start_offset = 0, bool use_c_sequences = true,
+	bool use_simple_nul = true, bool use_8bit_ascii = false);
+std::vector<std::string> EmitRuledBuffer(const char *begin_ptr,
+	const char *end_ptr, std::size_t start_offset = 0,
 	bool use_c_sequences = true, bool use_simple_nul = true,
 	bool use_8bit_ascii = false);
 std::vector<std::string> EmitRuledBuffer(const std::string &src,
@@ -53,6 +56,11 @@ std::vector<std::string> EmitRuledBuffer(const std::string &src,
 
 } // namespace MLB
 
+//	////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+//	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
@@ -65,6 +73,28 @@ const char *MyCSequenceSrc = "\a\b\t\n\v\f\r";
 const char *MyCSequenceDst = "abtnvfr";
 
 const char *MyHexDigitList = "0123456789abcdef";
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+void HandleRule(std::vector<std::string> &dst, std::size_t curr_index,
+	std::size_t &next_rule)
+{
+	if (curr_index != next_rule)
+		return;
+
+	char rule_buffer[1 + 8 + 1];
+
+	::sprintf(rule_buffer, "%s%lu",
+		(next_rule < 100000000) ? "" : "?", next_rule % 100000000);
+
+	std::size_t dst_1_pad = (dst[0].size() - dst[1].size()) - 1;
+	std::size_t dst_2_pad = (dst[0].size() - dst[2].size()) -
+		((::strlen(rule_buffer) / 2) + 1);
+
+	dst[1]    += std::string(dst_1_pad, ' ') + '|';
+	dst[2]    += std::string(dst_2_pad, ' ') + rule_buffer;
+	next_rule += 10;
+}
 //	////////////////////////////////////////////////////////////////////////////
 
 } // Anonymous namespace
@@ -95,17 +125,8 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	const char  *c_seq_ptr;
 
 	while (curr_index < src_length) {
-		if (curr_index == next_rule) {
-			std::ostringstream o_str;
-			o_str << ((next_rule < 100000000) ? "" : "?") <<
-				(next_rule % 100000000);
-			std::size_t dst_1_pad = (dst[0].size() - dst[1].size()) - 1;
-			std::size_t dst_2_pad = (dst[0].size() - dst[2].size()) -
-				((o_str.str().size() / 2) + 1);
-			dst[1]    += std::string(dst_1_pad, ' ') + '|';
-			dst[2]    += std::string(dst_2_pad, ' ') + o_str.str();
-			next_rule += 10;
-		}
+		if (curr_index == next_rule)
+			HandleRule(dst, curr_index, next_rule);
 		if (::isprint(*src_ptr))
 			dst[0] += *src_ptr;
 		else if (use_c_sequences &&
@@ -126,7 +147,31 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 		++curr_index;
 	}
 
+	if (curr_index == next_rule)
+		HandleRule(dst, curr_index, next_rule);
+
 	return(dst);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+std::vector<std::string> EmitRuledBuffer(const char *src_ptr,
+	std::size_t start_offset, bool use_c_sequences, bool use_simple_nul,
+	bool use_8bit_ascii)
+{
+	return(EmitRuledBuffer(::strlen(src_ptr), src_ptr, start_offset,
+		use_c_sequences, use_simple_nul, use_8bit_ascii));
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+std::vector<std::string> EmitRuledBuffer(const char *begin_ptr,
+	const char *end_ptr, std::size_t start_offset, bool use_c_sequences,
+	bool use_simple_nul, bool use_8bit_ascii)
+{
+	return(EmitRuledBuffer((end_ptr > begin_ptr) ?
+		static_cast<std::size_t>(end_ptr - begin_ptr) : 0, begin_ptr,
+		start_offset, use_c_sequences, use_simple_nul, use_8bit_ascii));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -143,6 +188,12 @@ std::vector<std::string> EmitRuledBuffer(const std::string &src,
 } // namespace Utility
 
 } // namespace MLB
+
+//	////////////////////////////////////////////////////////////////////////////
+//	****************************************************************************
+//	****************************************************************************
+//	****************************************************************************
+//	////////////////////////////////////////////////////////////////////////////
 
 #ifdef TEST_MAIN
 
