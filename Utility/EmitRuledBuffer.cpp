@@ -91,7 +91,6 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	dst[2].reserve(src_length);
 
 	std::size_t curr_length = src_length;
-std::size_t start_index = 0;
 	std::size_t curr_index  = 0;
 	std::size_t next_rule   = 10 + (start_offset % 10);
 
@@ -105,31 +104,24 @@ std::size_t start_index = 0;
 			std::size_t rule_length = o_str.str().size();
 			std::size_t dst_1_pad   = (dst[0].size() - dst[1].size()) - 1;
 			std::size_t dst_2_pad   = (dst[0].size() - dst[2].size()) -
-				(o_str.str().size() / 2);
-start_index  = curr_index;
-//			dst[1]      += std::string((dst[0].size() - dst[1].size()) - 1, ' ')
-//			dst[1]      += '|';
+				((o_str.str().size() / 2) + 1);
 			dst[1]      += std::string(dst_1_pad, ' ') + '|';
 			dst[2]      += std::string(dst_2_pad, ' ') + o_str.str();
 			next_rule   += 10;
 		}
 		if (::isprint(*src_ptr)) {
 			dst[0]     += *src_ptr;
-			rule_chars += 1;
 		}
 		else if (use_c_sequences &&
 			((c_seq_ptr = ::strchr(MyCSequenceSrc, *src_ptr)) != NULL)) {
-			dst[0]     += '\\'
+			dst[0]     += '\\';
 			dst[0]     += MyCSequenceDst[c_seq_ptr - MyCSequenceSrc];
-			rule_chars += 2;
 		}
 		else if ((!(*src_ptr)) && use_simple_nul) {
-			dst[0]     += "\\0"
-			rule_chars += 2;
+			dst[0]     += "\\0";
 		}
 		else if (use_8bit_ascii && (*src_ptr > '~')) {
 			dst[0]     += *src_ptr;
-			rule_chars += 1;
 		}
 		else {
 			dst[0]     += '\\';
@@ -137,8 +129,9 @@ start_index  = curr_index;
 			dst[0]     += 'x';
 			dst[0]     += MyHexDigitList[(*src_ptr >> 4) & 0x0f];
 			dst[0]     += MyHexDigitList[*src_ptr & 0x0f];
-			rule_chars += 5;
 		}
+		++src_ptr;
+		++curr_index;
 	}
 
 	return(dst);
@@ -161,7 +154,6 @@ std::vector<std::string> EmitRuledBuffer(const std::string &src,
 
 #ifdef TEST_MAIN
 
-#include <Utility/ReadFile.hpp>
 #include <Utility/Sleep.hpp>
 #include <Utility/ParseCmdLineArg.hpp>
 
@@ -184,14 +176,32 @@ void TEST_EmitStringContents(const std::string &src)
 //	////////////////////////////////////////////////////////////////////////////
 void TEST_EmitFileContents(const std::string &file_name)
 {
-	std::string &file_data(ReadFileData(file_name));
+	std::string file_data(ReadFileData(file_name));
+
+	TEST_EmitStringContents(file_data);
 }
 //	////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+//	////////////////////////////////////////////////////////////////////////////
+const char *TEST_DoStandAloneTestsList[] = {
+	"A line\nFollowed by another line.",
+	"A line\nAnother line with embedded \x7f"" high-ASCII \xff characters.",
+	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
+	NULL
+};
+//	////////////////////////////////////////////////////////////////////////////
+
+} // Anonymous namespace
 
 //	////////////////////////////////////////////////////////////////////////////
 void TEST_DoStandAloneTests()
 {
-	TEST_EmitStringContents("A line\nFollowed by another line.");
+	const char **list_ptr = TEST_DoStandAloneTestsList;
+
+	while (*list_ptr)
+		TEST_EmitStringContents(*list_ptr++);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
