@@ -23,50 +23,12 @@
 //	Required include files...
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <Utility.hpp>
+#include <Utility/EmitRuledBuffer.hpp>
 
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
 
-//	////////////////////////////////////////////////////////////////////////////
-
-namespace MLB {
-
-namespace Utility {
-
-//	////////////////////////////////////////////////////////////////////////////
-const int ErbFlag_None         = 0x00;
-const int ErbFlag_NoCEscSeqs   = 0x01;
-const int ErbFlag_UseHexNul    = 0x02;
-const int ErbFlag_Use8BitAscii = 0x04;
-const int ErbFlag_HexRule      = 0x08;
-const int ErbFlag_RuleOnTop    = 0x10;
-const int ErbFlag_Default      = ErbFlag_None;
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-//	CODE NOTE: To be moved int MlbDev/include/Utility/EmitRuledBuffer.hpp .
-std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
-	const char *src_ptr, unsigned long long start_offset = 0,
-	int flags = ErbFlag_Default);
-std::vector<std::string> EmitRuledBuffer(const char *src_ptr,
-	unsigned long long start_offset = 0, int flags = ErbFlag_Default);
-std::vector<std::string> EmitRuledBuffer(const char *begin_ptr,
-	const char *end_ptr, unsigned long long start_offset = 0,
-	int flags = ErbFlag_Default);
-std::vector<std::string> EmitRuledBuffer(const std::string &src,
-	unsigned long long start_offset = 0, int flags = ErbFlag_Default);
-//	////////////////////////////////////////////////////////////////////////////
-
-} // namespace Utility
-
-} // namespace MLB
-
-//	////////////////////////////////////////////////////////////////////////////
-//	****************************************************************************
-//	****************************************************************************
-//	****************************************************************************
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
