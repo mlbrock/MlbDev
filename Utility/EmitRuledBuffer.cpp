@@ -25,6 +25,7 @@
 
 #include <Utility.hpp>
 
+#include <algorithm>
 #include <cstdio>
 #include <cstring>
 
@@ -35,21 +36,27 @@ namespace MLB {
 namespace Utility {
 
 //	////////////////////////////////////////////////////////////////////////////
+const int ErbFlag_None         = 0x00;
+const int ErbFlag_NoCEscSeqs   = 0x01;
+const int ErbFlag_UseHexNul    = 0x02;
+const int ErbFlag_Use8BitAscii = 0x04;
+const int ErbFlag_HexRule      = 0x08;
+const int ErbFlag_RuleOnTop    = 0x10;
+const int ErbFlag_Default      = ErbFlag_None;
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 //	CODE NOTE: To be moved int MlbDev/include/Utility/EmitRuledBuffer.hpp .
 std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	const char *src_ptr, std::size_t start_offset = 0,
-	bool use_c_sequences = true, bool use_simple_nul = true,
-	bool use_8bit_ascii = false);
+	int flags = ErbFlag_Default);
 std::vector<std::string> EmitRuledBuffer(const char *src_ptr,
-	std::size_t start_offset = 0, bool use_c_sequences = true,
-	bool use_simple_nul = true, bool use_8bit_ascii = false);
+	std::size_t start_offset = 0, int flags = ErbFlag_Default);
 std::vector<std::string> EmitRuledBuffer(const char *begin_ptr,
 	const char *end_ptr, std::size_t start_offset = 0,
-	bool use_c_sequences = true, bool use_simple_nul = true,
-	bool use_8bit_ascii = false);
+	int flags = ErbFlag_Default);
 std::vector<std::string> EmitRuledBuffer(const std::string &src,
-	std::size_t start_offset = 0, bool use_c_sequences = true,
-	bool use_simple_nul = true, bool use_8bit_ascii = false);
+	std::size_t start_offset = 0, int flags = ErbFlag_Default);
 //	////////////////////////////////////////////////////////////////////////////
 
 } // namespace Utility
@@ -77,18 +84,21 @@ const char *MyHexDigitList = "0123456789abcdef";
 
 //	////////////////////////////////////////////////////////////////////////////
 void HandleRule(std::vector<std::string> &dst, std::size_t curr_index,
-	std::size_t rule_adj, std::size_t &next_rule, std::size_t start_offset)
+	std::size_t &next_rule, std::size_t start_offset, int flags)
 {
 	if (curr_index != next_rule)
 		return;
 
-//	std::size_t rule_fixed = start_offset + next_rule;
-//	std::size_t rule_fixed = start_offset + (next_rule - rule_adj);
-std::size_t rule_fixed = start_offset + next_rule;
-	char        rule_buffer[1 + 8 + 1];
+	unsigned long long rule_fixed = start_offset + static_cast<unsigned long long>(next_rule);
+	char               rule_buffer[1 + 8 + 1];
 
-	::sprintf(rule_buffer, "%s%lu",
-		(rule_fixed < 100000000) ? "" : "?", rule_fixed % 100000000);
+	if (!(flags & ErbFlag_HexRule))
+		::sprintf(rule_buffer, "%s%llu",
+			(rule_fixed < 100000000) ? "" : "?", rule_fixed % 100000000);
+	else if (rule_fixed < 0x100000000)
+		::sprintf(rule_buffer, "%llx", rule_fixed);
+	else
+		::sprintf(rule_buffer, "?%-08.08llx", rule_fixed % 0x100000000);
 
 	std::size_t dst_1_pad = (dst[0].size() - dst[1].size()) - 1;
 	std::size_t dst_2_pad = (dst[0].size() - dst[2].size()) -
@@ -111,26 +121,29 @@ std::size_t rule_fixed = start_offset + next_rule;
 */
 //	////////////////////////////////////////////////////////////////////////////
 std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
-	const char *src_ptr, std::size_t start_offset, bool use_c_sequences,
-	bool use_simple_nul, bool use_8bit_ascii)
+	const char *src_ptr, std::size_t start_offset, int flags)
 {
 	std::vector <std::string> dst(3);
 
 	if (src_length < 1)
 		return(dst);
 
+	bool use_c_sequences = !(flags & ErbFlag_NoCEscSeqs);
+	bool use_simple_nul  = !(flags & ErbFlag_UseHexNul);
+	bool use_8bit_ascii  = ((flags & ErbFlag_Use8BitAscii) != 0);
+
 	dst[0].reserve(src_length);
 	dst[1].reserve(src_length);
 	dst[2].reserve(src_length);
 
 	std::size_t  curr_index = 0;
-	std::size_t  rule_adj   = (start_offset % 10);
+	std::size_t  rule_adj   = (start_offset % 10ULL);
 	std::size_t  next_rule  = 10 + ((rule_adj) ? (10 - rule_adj) : 0);
 	const char  *c_seq_ptr;
 
 	while (curr_index < src_length) {
 		if (curr_index == next_rule)
-			HandleRule(dst, curr_index, rule_adj, next_rule, start_offset);
+			HandleRule(dst, curr_index, next_rule, start_offset, flags);
 		if (::isprint(*src_ptr))
 			dst[0] += *src_ptr;
 		else if (use_c_sequences &&
@@ -152,7 +165,10 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	}
 
 	if (curr_index == next_rule)
-		HandleRule(dst, curr_index, rule_adj, next_rule, start_offset);
+		HandleRule(dst, curr_index, next_rule, start_offset, flags);
+
+	if (flags & ErbFlag_RuleOnTop)
+		std::reverse(dst.begin(), dst.end());
 
 	return(dst);
 }
@@ -160,32 +176,27 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 
 //	////////////////////////////////////////////////////////////////////////////
 std::vector<std::string> EmitRuledBuffer(const char *src_ptr,
-	std::size_t start_offset, bool use_c_sequences, bool use_simple_nul,
-	bool use_8bit_ascii)
+	std::size_t start_offset, int flags)
 {
-	return(EmitRuledBuffer(::strlen(src_ptr), src_ptr, start_offset,
-		use_c_sequences, use_simple_nul, use_8bit_ascii));
+	return(EmitRuledBuffer(::strlen(src_ptr), src_ptr, start_offset, flags));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 std::vector<std::string> EmitRuledBuffer(const char *begin_ptr,
-	const char *end_ptr, std::size_t start_offset, bool use_c_sequences,
-	bool use_simple_nul, bool use_8bit_ascii)
+	const char *end_ptr, std::size_t start_offset, int flags)
 {
 	return(EmitRuledBuffer((end_ptr > begin_ptr) ?
 		static_cast<std::size_t>(end_ptr - begin_ptr) : 0, begin_ptr,
-		start_offset, use_c_sequences, use_simple_nul, use_8bit_ascii));
+		start_offset, flags));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
 std::vector<std::string> EmitRuledBuffer(const std::string &src,
-	std::size_t start_offset, bool use_c_sequences, bool use_simple_nul,
-	bool use_8bit_ascii)
+	std::size_t start_offset, int flags)
 {
-	return(EmitRuledBuffer(src.size(), src.c_str(), start_offset,
-		use_c_sequences, use_simple_nul, use_8bit_ascii));
+	return(EmitRuledBuffer(src.size(), src.c_str(), start_offset, flags));
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -210,9 +221,9 @@ using namespace MLB::Utility;
 
 //	////////////////////////////////////////////////////////////////////////////
 void TEST_EmitStringContents(const std::string &src,
-	std::size_t start_offset = 0)
+	std::size_t start_offset = 0, int flags = ErbFlag_Default)
 {
-	std::vector<std::string> dst(EmitRuledBuffer(src, start_offset));
+	std::vector<std::string> dst(EmitRuledBuffer(src, start_offset, flags));
 
 	for (std::size_t count_1 = 0; count_1 < dst.size(); ++count_1) 
 		std::cout << dst[count_1] << '\n';
@@ -222,11 +233,12 @@ void TEST_EmitStringContents(const std::string &src,
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-void TEST_EmitFileContents(const std::string &file_name)
+void TEST_EmitFileContents(const std::string &file_name,
+	std::size_t start_offset = 0, int flags = ErbFlag_Default)
 {
 	std::string file_data(ReadFileData(file_name));
 
-	TEST_EmitStringContents(file_data);
+	TEST_EmitStringContents(file_data, start_offset, flags);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -260,15 +272,26 @@ void TEST_DoStandAloneTests()
 	const char **list_ptr = TEST_DoStandAloneTestsList;
 
 	while (*list_ptr++) {
+TEST_EmitStringContents(list_ptr[-1], 0xfffffffe);
+TEST_EmitStringContents(list_ptr[-1], 0xfffffffe, ErbFlag_HexRule);
 		TEST_EmitStringContents(list_ptr[-1],   0);
-		TEST_EmitStringContents(list_ptr[-1],   1);
-		TEST_EmitStringContents(list_ptr[-1],   2);
-		TEST_EmitStringContents(list_ptr[-1],   3);
-		TEST_EmitStringContents(list_ptr[-1],   4);
+		TEST_EmitStringContents(list_ptr[-1],   0, ErbFlag_HexRule);
+		TEST_EmitStringContents(list_ptr[-1],   0, ErbFlag_RuleOnTop);
+//		TEST_EmitStringContents(list_ptr[-1],   1);
+//		TEST_EmitStringContents(list_ptr[-1],   2);
+//		TEST_EmitStringContents(list_ptr[-1],   3);
+//		TEST_EmitStringContents(list_ptr[-1],   4);
 		TEST_EmitStringContents(list_ptr[-1],   5);
+		TEST_EmitStringContents(list_ptr[-1],   5, ErbFlag_HexRule);
+		TEST_EmitStringContents(list_ptr[-1],   5, ErbFlag_RuleOnTop);
 		TEST_EmitStringContents(list_ptr[-1], 100);
-		TEST_EmitStringContents(list_ptr[-1], 101);
-		TEST_EmitStringContents(list_ptr[-1], 105);
+		TEST_EmitStringContents(list_ptr[-1], 100, ErbFlag_HexRule);
+		TEST_EmitStringContents(list_ptr[-1], 100, ErbFlag_RuleOnTop);
+		TEST_EmitStringContents(list_ptr[-1], 0xfffffffe);
+		TEST_EmitStringContents(list_ptr[-1], 0xfffffffe, ErbFlag_HexRule);
+//		TEST_EmitStringContents(list_ptr[-1], 0xfffffffe, ErbFlag_RuleOnTop);
+//		TEST_EmitStringContents(list_ptr[-1], 101);
+//		TEST_EmitStringContents(list_ptr[-1], 105);
 	}
 }
 //	////////////////////////////////////////////////////////////////////////////
