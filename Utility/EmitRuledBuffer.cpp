@@ -77,15 +77,18 @@ const char *MyHexDigitList = "0123456789abcdef";
 
 //	////////////////////////////////////////////////////////////////////////////
 void HandleRule(std::vector<std::string> &dst, std::size_t curr_index,
-	std::size_t &next_rule)
+	std::size_t rule_adj, std::size_t &next_rule, std::size_t start_offset)
 {
 	if (curr_index != next_rule)
 		return;
 
-	char rule_buffer[1 + 8 + 1];
+//	std::size_t rule_fixed = start_offset + next_rule;
+//	std::size_t rule_fixed = start_offset + (next_rule - rule_adj);
+std::size_t rule_fixed = start_offset + next_rule;
+	char        rule_buffer[1 + 8 + 1];
 
 	::sprintf(rule_buffer, "%s%lu",
-		(next_rule < 100000000) ? "" : "?", next_rule % 100000000);
+		(rule_fixed < 100000000) ? "" : "?", rule_fixed % 100000000);
 
 	std::size_t dst_1_pad = (dst[0].size() - dst[1].size()) - 1;
 	std::size_t dst_2_pad = (dst[0].size() - dst[2].size()) -
@@ -111,7 +114,7 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	const char *src_ptr, std::size_t start_offset, bool use_c_sequences,
 	bool use_simple_nul, bool use_8bit_ascii)
 {
-	std::vector<std::string> dst(3);
+	std::vector <std::string> dst(3);
 
 	if (src_length < 1)
 		return(dst);
@@ -121,12 +124,13 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	dst[2].reserve(src_length);
 
 	std::size_t  curr_index = 0;
-	std::size_t  next_rule  = 10 + (start_offset % 10);
+	std::size_t  rule_adj   = (start_offset % 10);
+	std::size_t  next_rule  = 10 + ((rule_adj) ? (10 - rule_adj) : 0);
 	const char  *c_seq_ptr;
 
 	while (curr_index < src_length) {
 		if (curr_index == next_rule)
-			HandleRule(dst, curr_index, next_rule);
+			HandleRule(dst, curr_index, rule_adj, next_rule, start_offset);
 		if (::isprint(*src_ptr))
 			dst[0] += *src_ptr;
 		else if (use_c_sequences &&
@@ -148,7 +152,7 @@ std::vector<std::string> EmitRuledBuffer(std::size_t src_length,
 	}
 
 	if (curr_index == next_rule)
-		HandleRule(dst, curr_index, next_rule);
+		HandleRule(dst, curr_index, rule_adj, next_rule, start_offset);
 
 	return(dst);
 }
@@ -205,9 +209,10 @@ std::vector<std::string> EmitRuledBuffer(const std::string &src,
 using namespace MLB::Utility;
 
 //	////////////////////////////////////////////////////////////////////////////
-void TEST_EmitStringContents(const std::string &src)
+void TEST_EmitStringContents(const std::string &src,
+	std::size_t start_offset = 0)
 {
-	std::vector<std::string> dst(EmitRuledBuffer(src));
+	std::vector<std::string> dst(EmitRuledBuffer(src, start_offset));
 
 	for (std::size_t count_1 = 0; count_1 < dst.size(); ++count_1) 
 		std::cout << dst[count_1] << '\n';
@@ -228,6 +233,17 @@ void TEST_EmitFileContents(const std::string &file_name)
 namespace {
 
 //	////////////////////////////////////////////////////////////////////////////
+/*
+A line\nFollowed by another line.
+          |         |         |
+         10        20        30
+A line\nAnother line with embedded \x7f high-ASCII \xff characters.
+          |         |         |            |            |         |
+         10        20        30           40           50        60
+12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+         |         |         |         |         |         |         |         |         |         |         |
+        10        20        30        40        50        60        70        80        90        100       110
+*/
 const char *TEST_DoStandAloneTestsList[] = {
 	"A line\nFollowed by another line.",
 	"A line\nAnother line with embedded \x7f"" high-ASCII \xff characters.",
@@ -243,8 +259,17 @@ void TEST_DoStandAloneTests()
 {
 	const char **list_ptr = TEST_DoStandAloneTestsList;
 
-	while (*list_ptr)
-		TEST_EmitStringContents(*list_ptr++);
+	while (*list_ptr++) {
+		TEST_EmitStringContents(list_ptr[-1],   0);
+		TEST_EmitStringContents(list_ptr[-1],   1);
+		TEST_EmitStringContents(list_ptr[-1],   2);
+		TEST_EmitStringContents(list_ptr[-1],   3);
+		TEST_EmitStringContents(list_ptr[-1],   4);
+		TEST_EmitStringContents(list_ptr[-1],   5);
+		TEST_EmitStringContents(list_ptr[-1], 100);
+		TEST_EmitStringContents(list_ptr[-1], 101);
+		TEST_EmitStringContents(list_ptr[-1], 105);
+	}
 }
 //	////////////////////////////////////////////////////////////////////////////
 
