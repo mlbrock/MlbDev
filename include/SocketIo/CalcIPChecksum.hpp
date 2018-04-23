@@ -51,7 +51,7 @@
 		This code is a modification from TCP/IP Illustrated Vol. 2 by
 		Gary R. Wright and W. Richard Stevens.
 
-		Portions Copyright Michael L. Brock 2011 - 2016.
+		Portions Copyright Michael L. Brock 2011 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)

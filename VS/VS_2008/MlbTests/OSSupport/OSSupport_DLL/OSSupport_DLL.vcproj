@@ -312,6 +312,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_EnumWindows.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\OSSupport\Win\OS_FreeLibrary.cpp"
 				>
 			</File>
@@ -385,6 +389,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\..\OSSupport\Win\OS_LoadLibrary.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\OSSupport\Win\OS_SetWindowText.cpp"
 				>
 			</File>
 			<File

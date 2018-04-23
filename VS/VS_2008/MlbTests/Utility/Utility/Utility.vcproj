@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\..\Utility\EmitRuledBuffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\..\Utility\EnvElement.cpp"
 				>
 			</File>

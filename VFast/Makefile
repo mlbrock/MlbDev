@@ -13,7 +13,7 @@
 #                   2015-03-29 --- Modified for use with MASCaPS Version 3.
 #                       Michael L. Brock
 #
-#       Copyright Michael L. Brock 2008 - 2016.
+#       Copyright Michael L. Brock 2008 - 2018.
 #
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
@@ -55,7 +55,7 @@ SRCS		=	\
 
 #LDFLAGS		+=	-L$(IBASE)/lib -L/usr/lib64/boost-1.38.0/lib 
 
-LINK_STATIC	=	${LINK_STATIC_STD}
+#LINK_STATIC	=	${LINK_STATIC_STD}
 
 # Only the libraries below are needed for TEST_MAIN unit tests in this library.
 MLB_LIB_NAMES	=	VFast XercesUtils SocketIo Utility

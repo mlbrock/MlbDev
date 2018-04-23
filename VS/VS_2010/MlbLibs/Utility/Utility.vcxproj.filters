@@ -213,5 +213,8 @@
     <ClCompile Include="..\..\..\..\Utility\StringRadixOps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Utility\EmitRuledBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

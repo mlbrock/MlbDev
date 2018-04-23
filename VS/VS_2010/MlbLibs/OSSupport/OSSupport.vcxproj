@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\..\OSSupport\OSFileHandle.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\ProcessIdToName.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\ProcessNameToId.cpp" />
+    <ClCompile Include="..\..\..\..\OSSupport\Win\OS_SetWindowText.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\Win\ResolveProcessIdToOther.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\ResolveProcessSpecifier.cpp" />
     <ClCompile Include="..\..\..\..\OSSupport\RsrcUsage.cpp" />
