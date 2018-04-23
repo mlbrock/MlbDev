@@ -20,7 +20,7 @@
 								Ported from the MLB Strfuncs library source modules
 								ltrim.c, rtrim.c and trim.c.
 
-		Copyright Michael L. Brock 1986 - 2017.
+		Copyright Michael L. Brock 1986 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -86,7 +86,7 @@ namespace Utility {
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2017 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2018 Michael L. Brock
 
    OUTPUT INDEX:  ltrim
 						String Justification Functions:ltrim
@@ -164,7 +164,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2017 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2018 Michael L. Brock
 
    OUTPUT INDEX:  rtrim
 						String Justification Functions:rtrim
@@ -240,7 +240,7 @@ char *in_text;
 
    AUTHOR      :  Michael L. Brock
 
-   COPYRIGHT   :  Copyright 1986 - 2017 Michael L. Brock
+   COPYRIGHT   :  Copyright 1986 - 2018 Michael L. Brock
 
    OUTPUT INDEX:  trim
 						String Justification Functions:trim

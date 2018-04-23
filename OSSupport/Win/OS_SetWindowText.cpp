@@ -8,10 +8,10 @@
 	File Description	:	Implementation of wrappers to the Windows function
 								SetWindowText().
 
-	Revision History	:	2016-04-16 --- Creation.
+	Revision History	:	2017-04-16 --- Creation.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 2017 - 2017.
+		Copyright Michael L. Brock 2017 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)

@@ -8,13 +8,13 @@
 	File Description	:	Implementation of the new, yet-to-be-fully-implemented,
 								string <---> integer radix functions.
 
-	Revision History	:	1995-10-10 --- Portions of original logic from
+	Revision History	:	1993-10-10 --- Portions of original logic from
 													MlbDev/Utility/IntToString.cpp.
 									Michael L. Brock
 								2016-08-07 --- Base-62 specific logic first-cut.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1996 - 2017.
+		Copyright Michael L. Brock 1993 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)

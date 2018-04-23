@@ -17,7 +17,7 @@
 	Revision History	:	1993-04-12 --- Creation
 									Michael L. Brock
 
-		Copyright Michael L. Brock 1993 - 2017.
+		Copyright Michael L. Brock 1993 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
@@ -69,7 +69,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2017 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEnt
@@ -132,7 +132,7 @@ void NPSL_InitHostEnt(NPSL_HOSTENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2017 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEntList

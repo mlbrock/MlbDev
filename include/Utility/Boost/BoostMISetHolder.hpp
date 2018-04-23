@@ -10,11 +10,11 @@
 	Revision History	:	2015-07-14 --- Creation as the file
 													MlbDev/include/VFix/VFixMISetHolder.hpp.
 									Michael L. Brock
-	Revision History	:	2016-08-06 --- Copied into MlbDev/include/Utility as
+								2016-08-06 --- Copied into MlbDev/include/Utility as
 													file BoostMISetHolder.hpp.
 									Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2017.
+		Copyright Michael L. Brock 2015 - 2018.
 		Distributed under the Boost Software License, Version 1.0.
 		(See accompanying file LICENSE_1_0.txt or copy at
 		http://www.boost.org/LICENSE_1_0.txt)
