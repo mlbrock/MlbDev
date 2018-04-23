@@ -29,7 +29,7 @@ TARGET_BINS	=	\
 
 SRCS		=
 
-LINK_STATIC	=	${LINK_STATIC_STD}
+#LINK_STATIC	=	${LINK_STATIC_STD}
 
 # Only the MLB libraries below are needed for the executables in this Makefile.
 MLB_LIB_NAMES	=	SocketIo Utility
