@@ -476,7 +476,7 @@ int main()
 			UniqueId::FromString(request_id.ToString()) << std::endl;
 #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
 		unsigned char *uuid_string;
-		UuidToString(&request_id.id_, &uuid_string);
+		UuidToStringA(&request_id.id_, &uuid_string);
 		std::cout << "UUID Win32     : " <<
 			uuid_string << std::endl;
 #endif // #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
@@ -495,7 +495,7 @@ int main()
 				std::endl << std::endl;
 			return_code = EXIT_FAILURE;
 		}
-		RpcStringFree(&uuid_string);
+		RpcStringFreeA(&uuid_string);
 #endif // #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
 	}
 	catch (const std::exception &except) {
