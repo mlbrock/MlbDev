@@ -35,11 +35,43 @@
 
 // ////////////////////////////////////////////////////////////////////////////
 
+// ////////////////////////////////////////////////////////////////////////////
+/*
+	<xcast-src-info> := <total-length><src-ip4><src-port>
+
+	<bridge-spec> := <src>[,<src> ...]=<dst>[,<dst> ...]
+
+	For <src-type> TCP ---> <dst-type> TCP:
+		We accept on each src separately.
+		Each src acceptance results in a connect to the dst.
+
+	For <src-type> TCP ---> <dst-type> XCAST:
+		*** Not sure how this should work yet ***
+
+	For <src-type> XCAST ---> <dst-type> XCAST:
+		Each received src packet is re-broadcast on all dst.
+		??? Perhaps optional specification to prepend <xcast-src-info> ???
+
+	For <src-type> XCAST ---> <dst-type> TCP:
+		Each received src packet is sent on all dst with <xcast-src-info>.
+
+	UDP broadcasts work as if IP multicasts
+*/
+// ////////////////////////////////////////////////////////////////////////////
+
 namespace MLB {
 
 namespace SocketIo {
 
 namespace {
+
+// ////////////////////////////////////////////////////////////////////////////
+enum BridgeSideType {
+	BridgeSideType_TCP = 0,
+	BridgeSideType_IPM = 1,
+	BridgeSideType_UDP = 2
+};
+// ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 typedef std::pair<SocketSpec, SocketSpec>   SocketBridgeSrcDstPair;
@@ -48,7 +80,7 @@ typedef std::set<SocketBridgeSrcDstPair>    SocketBridgeSrcDstPairSet;
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-class CannedPacketSendBase {
+class SocketBridgeBase {
 #ifdef _MSC_VER
 	typedef volatile unsigned __int32   MyVolatileValue;
 #elif defined(__linux__)
@@ -58,8 +90,8 @@ class CannedPacketSendBase {
 #endif // #ifdef _MSC_VER
 
 protected:
-	CannedPacketSendBase(int argc, char **argv);
-	virtual ~CannedPacketSendBase();
+	SocketBridgeBase(int argc, char **argv);
+	virtual ~SocketBridgeBase();
 
 	std::string             capture_file_name_;
 	PacketFormat            packet_format_;
@@ -114,11 +146,13 @@ SocketBridgeSrcDstPair MyParamsSocketIoParseCmdLineArg::ParseSrcDstPair(
 			in_src_dst_pair << "' : " << error_text << ": " << except.what();
 		MLB::Utility::Rethrow(except, o_str.str());
 	}
+
+	return(out_src_dst_pair);
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
+SocketBridgeBase::SocketBridgeBase(int argc, char **argv)
 	:capture_file_name_()
 	,packet_format_(PacketFormat_Raw)
 	,mc_spec_list_()
@@ -259,17 +293,17 @@ CannedPacketSendBase::CannedPacketSendBase(int argc, char **argv)
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-CannedPacketSendBase::~CannedPacketSendBase()
+SocketBridgeBase::~SocketBridgeBase()
 {
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-class CannedPacketSend : public CannedPacketSendBase {
+class SocketBridge : public SocketBridgeBase {
 	typedef boost::shared_ptr<PacketSenderMC>        PacketSenderMCSPtr;
 	typedef std::map<SocketSpec, PacketSenderMCSPtr> PacketSenderMCSPtrMap;
 public:
-	CannedPacketSend(int argc, char **argv, boost::asio::io_service &io_service);
+	SocketBridge(int argc, char **argv, boost::asio::io_service &io_service);
 
 	void Run();
 
@@ -281,38 +315,40 @@ private:
 
 	void RunInternal();
 
-	CannedPacketSend(const CannedPacketSend &other);
-	CannedPacketSend operator = (const CannedPacketSend &other);
+	SocketBridge(const SocketBridge &other);
+	SocketBridge operator = (const SocketBridge &other);
 };
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-CannedPacketSend::CannedPacketSend(int argc, char **argv,
+SocketBridge::SocketBridge(int argc, char **argv,
 	boost::asio::io_service &io_service)
-	:CannedPacketSendBase(argc, argv)
+	:SocketBridgeBase(argc, argv)
 	,io_service_(io_service)
 	,packet_file_reader_(capture_file_name_, packet_format_)
 	,sender_mc_sptr_()
 	,sender_mc_map_()
 {
+/*
 	if (!mc_spec_list_.empty()) {
 		sender_mc_sptr_.reset(
 			new PacketSenderMC(io_service_, mc_spec_list_[0]));
 		if (time_to_live_ > -1)
 			SetSockOpt_TimeToLive(sender_mc_sptr_->socket_, time_to_live_);
 	}
+*/
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void CannedPacketSend::Run()
+void SocketBridge::Run()
 {
 	RunInternal();
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void CannedPacketSend::RunInternal()
+void SocketBridge::RunInternal()
 {
 	unsigned int count_1;
 	unsigned int packet_count = 0;
@@ -415,7 +451,7 @@ int main(int argc, char **argv)
 
 	try {
 		boost::asio::io_service io_service;
-		CannedPacketSend        canned_packet_send(argc, argv, io_service);
+		SocketBridge            canned_packet_send(argc, argv, io_service);
 		canned_packet_send.Run();
 	}
 	catch (const std::exception &except) {
