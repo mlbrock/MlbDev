@@ -83,6 +83,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_EmitRuledBuffer", 
 		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZZZ_UTIL_StringRadixOps", "ZZZ_UTIL_StringRadixOps\ZZZ_UTIL_StringRadixOps.vcxproj", "{FA5560C0-1786-4EA4-A792-CBA94048D1E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E839BA9-3D31-4F36-B582-34D0E0DE2CA2} = {7E839BA9-3D31-4F36-B582-34D0E0DE2CA2}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -395,6 +400,13 @@ Global
 		{CE2274D5-D678-492D-937B-DA0742BFC337}.Release|Win32.Build.0 = Release|Win32
 		{CE2274D5-D678-492D-937B-DA0742BFC337}.Release|x64.ActiveCfg = Release|x64
 		{CE2274D5-D678-492D-937B-DA0742BFC337}.Release|x64.Build.0 = Release|x64
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Debug|Win32.Build.0 = Debug|Win32
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Debug|x64.ActiveCfg = Debug|x64
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Debug|x64.Build.0 = Debug|x64
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Release|Win32.ActiveCfg = Release|Win32
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Release|Win32.Build.0 = Release|Win32
+		{FA5560C0-1786-4EA4-A792-CBA94048D1E8}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
