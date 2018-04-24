@@ -51,20 +51,29 @@ namespace MLB {
 namespace Utility {
 
 // ////////////////////////////////////////////////////////////////////////////
+void GetCharMapRadixSafe64(std::size_t &low_index, std::size_t &high_index,
+	const unsigned char *&char_map);
+void GetCharMapRadixPem64(std::size_t &low_index, std::size_t &high_index,
+	const unsigned char *&char_map);
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
 Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
 	const char *end_ptr, const char **last_ptr = NULL,
-	std::size_t low_index = 0, std::size_t high_index = 0,
-	const unsigned char *char_map = NULL);
+	bool *overflow_flag = NULL, std::size_t low_index = 0,
+	std::size_t high_index = 0, const unsigned char *char_map = NULL);
 Native_UInt64 StringToUIntRadix(std::size_t radix, std::size_t src_len,
 	const char *src_ptr, const char **last_ptr = NULL,
+	bool *overflow_flag = NULL, std::size_t low_index = 0,
+	std::size_t high_index = 0, const unsigned char *char_map = NULL);
+Native_UInt64 StringToUIntRadix(std::size_t radix, const char *src_ptr,
+	const char **last_ptr = NULL, bool *overflow_flag = NULL,
 	std::size_t low_index = 0, std::size_t high_index = 0,
 	const unsigned char *char_map = NULL);
-Native_UInt64 StringToUIntRadix(std::size_t radix, const char *src_ptr,
-	const char **last_ptr = NULL, std::size_t low_index = 0,
-	std::size_t high_index = 0, const unsigned char *char_map = NULL);
 Native_UInt64 StringToUIntRadix(std::size_t radix, const std::string &src,
-	std::size_t *last_offset = NULL, std::size_t low_index = 0,
-	std::size_t high_index = 0, const unsigned char *char_map = NULL);
+	std::size_t *last_offset = NULL, bool *overflow_flag = NULL,
+	std::size_t low_index = 0, std::size_t high_index = 0,
+	const unsigned char *char_map = NULL);
 // ////////////////////////////////////////////////////////////////////////////
 
 } // namespace Utility

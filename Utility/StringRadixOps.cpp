@@ -103,7 +103,7 @@ const unsigned char MyCharMap_Pem64__MapData[] = {
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-void GetCharMapSafe64(std::size_t &low_index, std::size_t &high_index,
+void GetCharMapRadixSafe64(std::size_t &low_index, std::size_t &high_index,
 	const unsigned char *&char_map)
 {
 	low_index  = MyCharMap_Safe64__CharLow;
@@ -113,7 +113,7 @@ void GetCharMapSafe64(std::size_t &low_index, std::size_t &high_index,
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
-void GetCharMapPem64(std::size_t &low_index, std::size_t &high_index,
+void GetCharMapRadixPem64(std::size_t &low_index, std::size_t &high_index,
 	const unsigned char *&char_map)
 {
 	low_index  = MyCharMap_Pem64__CharLow;
@@ -124,13 +124,13 @@ void GetCharMapPem64(std::size_t &low_index, std::size_t &high_index,
 
 // ////////////////////////////////////////////////////////////////////////////
 Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
-	const char *end_ptr, const char **last_ptr, std::size_t low_index,
-	std::size_t high_index, const unsigned char *char_map)
+	const char *end_ptr, const char **last_ptr, bool *overflow_flag,
+	std::size_t low_index, std::size_t high_index, const unsigned char *char_map)
 {
 	if (radix < 2)
 		throw std::invalid_argument("Radix value is less than 2.");
 	else if ((radix < 65) && (!low_index) && (!high_index) && (!char_map))
-		GetCharMapSafe64(low_index, high_index, char_map);
+		GetCharMapRadixSafe64(low_index, high_index, char_map);
 	else if (low_index >= high_index)
 		throw std::invalid_argument("The low character index is not less than "
 			"the high character index.");
@@ -153,6 +153,9 @@ Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
 
 	Native_UInt64 old_dst_value = 0;
 	Native_UInt64 dst_value     = 0;
+
+	if (overflow_flag)
+		*overflow_flag = false;
 
 	while (curr_ptr < end_ptr) {
 		if ((static_cast<unsigned char>(*curr_ptr) < low_index) ||
@@ -179,8 +182,9 @@ Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
 
 				Otherwise, we throw.
 			*/
-			if (last_ptr) {
-				dst_value = old_dst_value;
+			dst_value = old_dst_value;
+			if (overflow_flag) {
+				*overflow_flag = true;
 				break;
 			}
 			std::ostringstream o_str;
@@ -203,32 +207,33 @@ Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
 
 // ////////////////////////////////////////////////////////////////////////////
 Native_UInt64 StringToUIntRadix(std::size_t radix, std::size_t src_len,
-	const char *src_ptr, const char **last_ptr, std::size_t low_index,
-	std::size_t high_index, const unsigned char *char_map)
+	const char *src_ptr, const char **last_ptr, bool *overflow_flag,
+	std::size_t low_index, std::size_t high_index, const unsigned char *char_map)
 {
 	return(StringToUIntRadix(radix, src_ptr, src_ptr + src_len, last_ptr,
-		low_index, high_index, char_map));
+		overflow_flag, low_index, high_index, char_map));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 Native_UInt64 StringToUIntRadix(std::size_t radix, const char *src_ptr,
-	const char **last_ptr, std::size_t low_index, std::size_t high_index,
-	const unsigned char *char_map)
+	const char **last_ptr, bool *overflow_flag, std::size_t low_index,
+	std::size_t high_index, const unsigned char *char_map)
 {
 	return(StringToUIntRadix(radix, ::strlen(src_ptr), src_ptr, last_ptr,
-		low_index, high_index, char_map));
+		overflow_flag, low_index, high_index, char_map));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 Native_UInt64 StringToUIntRadix(std::size_t radix, const std::string &src,
-	std::size_t *last_offset, std::size_t low_index, std::size_t high_index,
-	const unsigned char *char_map)
+	std::size_t *last_offset, bool *overflow_flag, std::size_t low_index,
+	std::size_t high_index, const unsigned char *char_map)
 {
 	const char    *last_ptr;
 	Native_UInt64  return_value = StringToUIntRadix(radix, src.size(),
-		src.c_str(), &last_ptr, low_index, high_index, char_map);
+		src.c_str(), &last_ptr, overflow_flag, low_index, high_index,
+		char_map);
 
 	if (last_offset)
 		*last_offset = static_cast<std::size_t>(last_ptr - src.c_str());
@@ -257,12 +262,14 @@ using namespace MLB::Utility;
 void TEST_RunTestHelper(std::size_t radix, const char *src_ptr)
 {
 	const char *last_ptr;
+	bool        overflow_flag;
 
 	std::cout << std::right << std::setw(3) << radix << " " << std::left <<
 		std::setw(64) << src_ptr << "=";
-	Native_UInt64 result = StringToUIntRadix(radix, src_ptr, &last_ptr);
+	Native_UInt64 result =
+		StringToUIntRadix(radix, src_ptr, &last_ptr, &overflow_flag);
 	std::cout << std::right << std::setw(20) << result << '[' << last_ptr <<
-		']' << std::endl;
+		']' << ((overflow_flag) ? " (overflowed)" : "") << std::endl;
 }
 // ////////////////////////////////////////////////////////////////////////////
 
