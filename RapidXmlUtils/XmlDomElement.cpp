@@ -172,7 +172,8 @@ XmlDomElement::XmlDomElement(
 	//	Get the list of attributes...
 	rapidxml::xml_attribute<> *attr_ptr = element_ptr->first_attribute();
 	while (attr_ptr) {
-		attribute_map_[attr_ptr->name()] = attr_ptr->value();
+		attribute_map_[MLB::RapidXmlUtils::XmlStringToString(attr_ptr->name())] =
+			MLB::RapidXmlUtils::XmlStringToString(attr_ptr->value());
 		attr_ptr = attr_ptr->next_attribute();
 	}
 }
