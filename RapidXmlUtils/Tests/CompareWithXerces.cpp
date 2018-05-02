@@ -175,7 +175,7 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 			++line_index, ++iter_x_b, ++iter_r_b) {
 			if (*iter_x_b != *iter_r_b)
 				std::cout << std::setw(8) << line_index << ": [" <<
-					*iter_x_b << "] ---> [" << *iter_r_b << "]" << std::endl;
+					*iter_x_b << "]\n          [" << *iter_r_b << "]" << std::endl;
 		}
 		if ((iter_x_b != iter_x_e) || (iter_r_b != iter_r_e)) {
 			StringVectorIterC iter_b;
@@ -191,11 +191,11 @@ void RunComparisonVisAVisXercesUtils(int argc, char **argv)
 			for ( ; iter_b != iter_e; ++line_index, ++iter_b) {
 				std::cout << std::setw(8) << line_index << ": ";
 				if (iter_x_b != iter_x_e)
-					std::cout << "[" << *iter_b << "] ---> ***NON-EXISTENT***" <<
-						std::endl;
+					std::cout << "[" << *iter_b <<
+						"]\n          ***NON-EXISTENT***" << std::endl;
 				else
-					std::cout << "***NON-EXISTENT*** ---> [" << *iter_b << "]" <<
-						std::endl;
+					std::cout << "***NON-EXISTENT***\n          [" <<
+						*iter_b << "]" << std::endl;
 			}
 		}
 		EmitSep('=');
