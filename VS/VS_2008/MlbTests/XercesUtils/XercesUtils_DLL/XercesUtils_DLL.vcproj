@@ -44,7 +44,7 @@
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_54_0;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XERCESUTILS_DLL_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XERCESCUTILS_DLL_EXPORTS"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -79,7 +79,7 @@
 				SubSystem="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).lib"
+				ImportLibrary="$(OutDir)$(ProjectName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -133,7 +133,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall /wd4668 /wd4711"
 				AdditionalIncludeDirectories="..\..\..\..\..\include;\Vendor\Boost\boost_1_54_0;&quot;\Vendor\Xercesc\xerces-c-3.0.1-x86-windows-vc-9.0\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XERCESUTILS_DLL_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XERCESCUTILS_DLL_EXPORTS"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -169,7 +169,7 @@
 				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary="$(SolutionDir)..\_lib\$(ConfigurationName)\$(ProjectName).lib"
+				ImportLibrary="$(OutDir)$(ProjectName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
