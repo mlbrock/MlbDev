@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\..\..\Utility\LogHandlerFileMMap.cpp" />
     <ClCompile Include="..\..\..\..\Utility\LogManager.cpp" />
     <ClCompile Include="..\..\..\..\Utility\MACAddress.cpp" />
+    <ClCompile Include="..\..\..\..\Utility\MapUtf8ToAscii.cpp" />
     <ClCompile Include="..\..\..\..\Utility\nstrcat.cpp" />
     <ClCompile Include="..\..\..\..\Utility\nstrcpy.cpp" />
     <ClCompile Include="..\..\..\..\Utility\OSFileSupport.cpp" />

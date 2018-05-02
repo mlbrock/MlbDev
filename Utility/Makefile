@@ -61,6 +61,7 @@ SRCS		=	\
 			LogHandlerFileMMap.cpp		\
 			LogManager.cpp			\
 			MACAddress.cpp			\
+			MapUtf8ToAscii.cpp		\
 			nstrcat.cpp			\
 			nstrcpy.cpp			\
 			OStreamMultiplexer.cpp		\
