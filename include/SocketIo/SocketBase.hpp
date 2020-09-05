@@ -159,7 +159,16 @@ public:
 	}
 	virtual SocketTypeNative GetSocketNative()
 	{
+/*
+		MLB 2020-09-05:
+		The native() member function was deprecated beginning in Boost 1.47.0.
+		It was subsequently been removed in Boost 1.66.0.
+*/
+#if (BOOST_VERSION < 104700)
 		return(static_cast<SocketTypeNative>(GetSocket().native()));
+#else
+		return(static_cast<SocketTypeNative>(GetSocket().native_handle()));
+#endif // #if (BOOST_VERSION < 104700)
 	}
 	virtual EndpointType &GetEndPoint()
 	{
