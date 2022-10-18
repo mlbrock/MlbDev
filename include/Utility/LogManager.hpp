@@ -165,7 +165,7 @@ struct API_UTILITY LogEmitControl {
 		IntToString(tid_string,
 			static_cast<Native_UInt32>(CurrentThreadId() % 0xFFFFFFFF), 10, " ");
 		memcpy(line_leader_ + Length_TimeSpec + 1 + LogLevelTextMaxLength + 1,
-			tid_string, 10);
+			tid_string + (IntToString_MaxLen_Unsigned_10 - 10), 10);
 		line_leader_[Length_TimeSpec + 1 + LogLevelTextMaxLength + 1 + 10] = ':';
 		line_leader_[Length_TimeSpec + 1 + LogLevelTextMaxLength + 1 + 11] = ' ';
 		line_leader_[Length_TimeSpec + 1 + LogLevelTextMaxLength + 1 + 12] = '\0';
