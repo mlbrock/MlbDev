@@ -926,6 +926,7 @@ void TEST_MultiLineOperation()
 			std::setfill(' ') << std::endl;
 		LogEmitControl emit_control(Default, LogFlag_Mask, LogFlag_Mask,
 			TimeSpec(), LogLevel_Info, LogFlag_Info, test_string);
+		emit_control.UpdateTime();
 		unsigned int  line_length;
 		const char   *line_ptr;
 		while ((line_ptr = emit_control.GetNextLine(line_length)) != NULL) {
