@@ -35,7 +35,7 @@
 # include <boost/regex.hpp>
 #endif // #ifdef __linux__
 
-#include <boost/scoped_array.hpp>
+#include <boost/scoped_ptr.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
