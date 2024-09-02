@@ -239,12 +239,12 @@ LogFilePreConfigure::LogFilePreConfigure(LogManager &log_manager, int argc,
 	,domain_name_()
 	,base_name_(base_name)
 	,ext_name_(ext_name)
-	,log_file_name_()
-	,log_file_is_open_(false)
 	,log_dir_arg_()
 	,env_name_arg_()
 	,domain_name_arg_()
 	,ext_name_arg_()
+	,log_file_name_()
+	,log_file_is_open_(false)
 {
 	try {
 		{
