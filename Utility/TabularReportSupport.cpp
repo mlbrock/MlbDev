@@ -473,7 +473,7 @@ void TEST_RunTest()
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
-int main(int argc, char **argv)
+int main()
 {
 	int return_code = EXIT_SUCCESS;
 

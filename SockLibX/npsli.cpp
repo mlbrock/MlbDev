@@ -433,8 +433,8 @@ char *nocontrl(text)
 char *text;
 #endif /* #ifndef NARGS */
 {
-	register char *temp_ptr_1 = text;
-	register char *temp_ptr_2 = text;
+	char *temp_ptr_1 = text;
+	char *temp_ptr_2 = text;
 
 	while (*temp_ptr_1) {
 		if (isprint(*temp_ptr_1))

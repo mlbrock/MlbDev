@@ -154,9 +154,10 @@ void LogHandlerXFile::OpenFileImpl(const char *file_name)
 //	CODE NOTE: LogFileHandler buffering test code. To be removed.
 std::streambuf *new_buffer_ptr =
 	tmp_file_ptr->rdbuf()->pubsetbuf(TestFileBuffer, sizeof(TestFileBuffer));
-if (new_buffer_ptr == NULL)
+if (new_buffer_ptr == NULL) {
 	ThrowErrno("Attempt to set the log file buffer size to " +
 		AnyToString(sizeof(TestFileBuffer)) + " bytes failed.");
+}
 
 	{
 		std::string               tmp_file_name(file_name);
