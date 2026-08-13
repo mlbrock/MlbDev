@@ -58,6 +58,10 @@
 
 #include <boost/filesystem/path.hpp>
 
+#if (BOOST_VERSION >= 107200)
+# include <boost/filesystem/directory.hpp>
+#endif // #if (BOOST_VERSION < 107200)
+
 #if defined(_Windows) && !defined(__MINGW32__)
 # pragma warning(pop)
 #endif // #if defined(_Windows) && !defined(__MINGW32__)

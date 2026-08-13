@@ -643,7 +643,11 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 						false, true, false);
 					boost::filesystem::path tmp_base(
 						BoostFs_ConstructNativePath(tmp_base_path));
+#if (BOOST_VERSION < 108500)
 					tmp_path = boost::filesystem::complete(tmp_path, tmp_base);
+#else
+					tmp_path = boost::filesystem::absolute(tmp_path, tmp_base);
+#endif // #if (BOOST_VERSION < 10.85.00)
 				}
 				catch (const std::exception &except) {
 					Rethrow(except, "Unable to resolve the specified base path: " +
@@ -919,8 +923,17 @@ void GetPathElementList(const std::string &in_path_name,
 	for ( ; ; ) {
 		boost::filesystem::path tmp_path(
 			BoostFs_ConstructNativePath(tmp_path_name));
+/*
+	I'm not sure when has_leaf() was removed from the path class, but this
+	code certainly compiled in Boost 1.83.0.
+*/
+#if (BOOST_VERSION < 108300)
 		if (!tmp_path.has_leaf())
 			break;
+#else
+		if (!tmp_path.has_stem())
+			break;
+#endif // #if (BOOST_VERSION < 108500)
 		std::string             last_leaf(BoostFs_GetPathLeafString(tmp_path));
 		boost::filesystem::path leaf_path(BoostFs_ConstructNativePath(last_leaf));
 		tmp_element_list.push_back(BoostFs_GetNativeFileString(leaf_path));
