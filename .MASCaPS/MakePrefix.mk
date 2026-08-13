@@ -117,8 +117,10 @@ BOOST_LIBS	=	\
 			${LIB_BOOST_DIR}/libboost_filesystem.a   \
 			${LIB_BOOST_DIR}/libboost_date_time.a \
 			${LIB_BOOST_DIR}/libboost_thread.a \
-			${LIB_BOOST_DIR}/libboost_regex.a \
-			${LIB_BOOST_DIR}/libboost_system.a
+			${LIB_BOOST_DIR}/libboost_regex.a
+
+# Header-only in recent Boost releases. Add back in for older versions.
+#BOOST_LIBS	+=      ${LIB_BOOST_DIR}/libboost_system.a
 
 TIBRV_LIB	=	\
 			${LIB_TIBRV_DIR}/libtibrvcmq64.a	\
