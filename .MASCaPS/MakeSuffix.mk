@@ -28,12 +28,14 @@
 # -----------------------------------------------------------------------------
 OBJS		:=	${SRCS:.c=.o}
 OBJS		:=	${OBJS:.cpp=.o}
+OBJS		:=	${OBJS:.cc=.o}
 OBJS	   	:= 	${addprefix ${MASCaPS_TARGET_OBJ}/,${OBJS}}
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 DEPS		:=	${SRCS:.c=.dep}
 DEPS		:=	${DEPS:.cpp=.dep}
+DEPS		:=	${DEPS:.cc=.dep}
 DEPS	   	:= 	${addprefix ${MASCaPS_TARGET_DEP}/,${DEPS}}
 # -----------------------------------------------------------------------------
 
@@ -68,12 +70,25 @@ ${MASCaPS_TARGET_OBJ}/%.o	:	%.cpp ${MASCaPS_TARGET_DEP}/%.dep
 	@mkdir -p ${@D}
 	${COMPILE.cc} -o $@ $<
 
+${MASCaPS_TARGET_OBJ}/%.o	:	%.cc ${MASCaPS_TARGET_DEP}/%.dep
+	@mkdir -p ${@D}
+	${COMPILE.cc} -o $@ $<
+
 ${TARGET_BINS}		:	${MLB_LIB_FULL}
 
 ${TARGET_BINS_DST}	:	${TARGET_BINS}
 	@cp -p ${TARGET_BINS} ${MASCaPS_TARGET_BIN}/.
 
 ${MASCaPS_TARGET_DEP}/%.dep	:	%.cpp
+	@mkdir -p ${@D}
+	$(COMPILE.cc) -MD -o $@ $<
+	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
+		sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+		-e '/^$$/ d' -e 's/$$/ :/' < ${MASCaPS_TARGET_DEP}/$*.d >> \
+		${MASCaPS_TARGET_DEP}/$*.dep; \
+		rm -f ${MASCaPS_TARGET_DEP}/$*.d
+
+${MASCaPS_TARGET_DEP}/%.dep	:	%.cc
 	@mkdir -p ${@D}
 	$(COMPILE.cc) -MD -o $@ $<
 	@cp ${MASCaPS_TARGET_DEP}/$*.d ${MASCaPS_TARGET_DEP}/$*.dep; \
