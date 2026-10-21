@@ -213,3 +213,54 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# #############################################################################
+# #############################################################################
+# From the usual .gitignore
+# #############################################################################
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Various test executable artifacts
+test_*
+testpurify_*
+testquantify_*
+testcoverage_*
+
+# The target platform directory
+TargetPlatform/
+
+# Build results logs
+BuildResults.*.log
+# #############################################################################
+
