@@ -37,6 +37,8 @@
 
 #include <Utility/TimeSupport.hpp>
 
+#include <boost/asio/deadline_timer.hpp>
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
