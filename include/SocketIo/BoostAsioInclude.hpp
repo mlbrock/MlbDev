@@ -34,7 +34,7 @@
 //	Include necessary header files . . .
 //	////////////////////////////////////////////////////////////////////////////
 
-#include <mbcompat.h>
+#include <SocketIo.hpp>
 
 #define _WIN32_WINNT	0x0501
 
@@ -51,8 +51,6 @@
 #ifdef _MSC_VER
 # pragma warning(pop)
 #endif // #ifdef _MSC_VER
-
-#include <SocketIo.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
