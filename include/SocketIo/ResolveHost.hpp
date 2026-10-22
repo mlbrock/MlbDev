@@ -35,6 +35,8 @@
 
 #include <SocketIo/BoostAsioInclude.hpp>
 
+#include <boost/shared_ptr.hpp>
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
