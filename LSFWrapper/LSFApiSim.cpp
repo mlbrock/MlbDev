@@ -229,7 +229,7 @@ char **ls_placereq(char * /* PARAM_NOT_USED resreq */, int *num,
 		SAVED_ls_placereq.Append(LSF_HostInfoList[count_1].hostName);
 	}
 
-	if (*num != NULL)
+	if (num != NULL)
 		*num = SAVED_ls_placereq.GetCount();
 
 	return(SAVED_ls_placereq.GetList());
