@@ -391,7 +391,8 @@ bool RvAdvisoryControl::MyTransportInfo::AddListener(TibrvQueue *queue_ptr,
 	boost::shared_ptr<TibrvListener> listener_sptr(new TibrvListener);
 
 	CreateListener(*queue_ptr, *callback_ptr, *transport_ptr_, *listener_sptr,
-		map_ref.advisory_subject_, map_ref.get_adv_text_func_);
+		map_ref.advisory_subject_,
+		reinterpret_cast<const void *>(map_ref.get_adv_text_func_));
 
 	listener_list_.insert(MyListenerInfo(map_ref.advisory_type_,
 		map_ref.advisory_flag_, listener_sptr));
