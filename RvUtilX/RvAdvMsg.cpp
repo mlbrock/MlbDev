@@ -50,6 +50,14 @@ const TibrvMsgDateTime EmptyTibRvDateTimeField;
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
+void ClearTibRvDateTime(TibrvMsgDateTime &dst)
+{
+	static_cast<tibrvMsgDateTime &>(dst) =
+		static_cast<const tibrvMsgDateTime &>(EmptyTibRvDateTimeField);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
 const RvAdvFlagsMap RvAdvisoryMapList[] = {
 	//	Basic advisories...
 	RvAdvFlagsMap(RvAdvFlagType_Rv,	Rv_SlowConsumer,             RvAdvMsg::SlowConsumer2,               RvAdvMsg::SlowConsumerToString2,               "_RV.ERROR.SYSTEM.CLIENT.SLOWCONSUMER"),
@@ -714,7 +722,8 @@ void RvAdvMsg::Clear()
 	waiting_                         = 0;
 	dropped_                         = 0;
 	bytes_dropped_                   = 0;
-	expiretime_                      = EmptyTibRvDateTimeField;
+//	expiretime_                      = EmptyTibRvDateTimeField;
+	ClearTibRvDateTime(expiretime_);
 	license_expired_                 = false;
 	dataloss_outbound_               = false;
 	dataloss_ptp_                    = false;
@@ -745,7 +754,8 @@ void RvAdvMsg::Clear()
 	pm_                              = 0;
 	hsaddr_                          = 0;
 	hsport_                          = 0;
-	hstatus_time_                    = EmptyTibRvDateTimeField;
+//	hstatus_time_                    = EmptyTibRvDateTimeField;
+	ClearTibRvDateTime(hstatus_time_);
 	idl_                             = 0;
 	odl_                             = 0;
 	ipport_                          = 0;
