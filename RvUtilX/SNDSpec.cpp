@@ -32,6 +32,7 @@
 #include <RvUtilX/RvParseCmdLineArg.hpp>
 
 #include <Utility/StringSupport.hpp>
+#include <Utility/C_StringSupport.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -369,8 +370,9 @@ int SNDSpec::CompareServiceAndNetwork(const std::string &service,
 {
 	int cmp;
 
-	if ((cmp = stricmp(service_.c_str(), service.c_str())) == 0)
-		cmp = stricmp(network_.c_str(), network.c_str());
+	if ((cmp = MLB::Utility::Utility_stricmp(service_.c_str(),
+		service.c_str())) == 0)
+		cmp = MLB::Utility::Utility_stricmp(network_.c_str(), network.c_str());
 
 	return(cmp);
 }
