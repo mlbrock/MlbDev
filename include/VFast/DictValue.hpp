@@ -335,7 +335,7 @@ template <>
 template <>
 	inline Type_SInt32 *DictValue::GetDatumPtr<Type_SInt32>()
 {
-	return(const_cast<Type_SInt32 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_SInt32 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_SInt32>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -344,7 +344,7 @@ template <>
 template <>
 	inline Type_UInt32 *DictValue::GetDatumPtr<Type_UInt32>()
 {
-	return(const_cast<Type_UInt32 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_UInt32 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_UInt32>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -353,7 +353,7 @@ template <>
 template <>
 	inline Type_SInt64 *DictValue::GetDatumPtr<Type_SInt64>()
 {
-	return(const_cast<Type_SInt64 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_SInt64 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_SInt64>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -362,7 +362,7 @@ template <>
 template <>
 	inline Type_UInt64 *DictValue::GetDatumPtr<Type_UInt64>()
 {
-	return(const_cast<Type_UInt64 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_UInt64 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_UInt64>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -371,7 +371,7 @@ template <>
 template <>
 	inline Type_Decimal *DictValue::GetDatumPtr<Type_Decimal>()
 {
-	return(const_cast<Type_Decimal *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_Decimal *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_Decimal>()));
 }
 // ////////////////////////////////////////////////////////////////////////////

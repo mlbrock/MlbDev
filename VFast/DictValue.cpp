@@ -541,7 +541,7 @@ void *DictValue::GetPtrToDatumRaw()
 {
 	// Rather than duplicate the code in the const overload...
 	return(const_cast<void *>(
-		const_cast<const DictValue * const>(this)->GetPtrToDatumRaw()));
+		const_cast<const DictValue *>(this)->GetPtrToDatumRaw()));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
