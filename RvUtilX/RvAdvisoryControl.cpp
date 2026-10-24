@@ -114,7 +114,7 @@ RvAdvAction::~RvAdvAction()
 //	////////////////////////////////////////////////////////////////////////////
 void RvAdvAction::ProcessRvAdvisory(TibrvListener *listener_ptr,
 	const TibrvMsg &msg_recv, const char *subject_ptr,
-	const char *msg_class_name, bool msg_class_known,
+	const char * /* msg_class_name */, bool  /* msg_class_known */,
 	MLB::Utility::LogLevel msg_class_log)
 {
 try {
@@ -151,7 +151,7 @@ std::cout << RvMsgToString(msg_recv, RvMsgToStringFlags_Mask) << std::endl;
 //	////////////////////////////////////////////////////////////////////////////
 std::string RvAdvAction::CreateAdvisoryDescription(
 	TibrvListener *listener_ptr, const TibrvMsg &msg_recv,
-	const char *subject_ptr)
+	const char * /* subject_ptr */)
 {
 	std::string out_text;
 
@@ -368,7 +368,7 @@ bool RvAdvisoryControl::MyTransportInfo::operator < (
 //	////////////////////////////////////////////////////////////////////////////
 void RvAdvisoryControl::MyTransportInfo::SubscribeToAdvisories(
 	unsigned int flags, const RvAdvFlagsMapList &map_list, TibrvQueue *queue_ptr,
-	TibrvCallback *callback_ptr, TibrvTransport *transport_ptr)
+	TibrvCallback *callback_ptr, TibrvTransport * /* transport_ptr */)
 {
 	if (flags) {
 		unsigned int count_1;
