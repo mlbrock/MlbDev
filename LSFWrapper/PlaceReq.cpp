@@ -60,8 +60,9 @@ char **LSF_placereq(const char *resreq, unsigned int *num,
 			number_text << *num;
 		std::ostringstream error_text;
 		error_text << "Platform/LSF function 'ls_placereq()' indicates that " <<
-			number_text << " hosts were returned, but the pointer to that array "
-			"of structures is " << ((result == NULL) ? "" : "not ") << "'NULL'.";
+			number_text.str() << " hosts were returned, but the pointer to that "
+			"array of structures is " << ((result == NULL) ? "" : "not ") <<
+			"'NULL'.";
 		throw LSFException(error_text);
 	}
 
