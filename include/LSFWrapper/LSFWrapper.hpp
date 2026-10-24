@@ -640,7 +640,7 @@ struct API_LSFWRAPPER LSFParseCmdLineArg :
 				("-REXPORT"),
 			current_index, argc, argv, tmp_string))
 			return(false);
-			return(ParseCmdLineNumeric<unsigned int>(tmp_string, out_datum, 1));
+		return(ParseCmdLineNumeric<unsigned int>(tmp_string, out_datum, 1));
 	}
 	static bool ParseCmdLineDoneRex(unsigned int &current_index, int argc,
 		char **argv, bool &out_datum) {
