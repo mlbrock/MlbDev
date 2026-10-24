@@ -152,7 +152,7 @@ std::string MsgFieldTypeToString(tibrv_u8 msg_field_type)
 				(msg_field_type <= TIBRVMSG_USER_LAST)) {
 #else
 			if (msg_field_type >= TIBRVMSG_USER_FIRST) {
-#endif // #if (TIBRVMSG_USER_LAST < std::numeric_types<tibrv_u8>::max())
+#endif // #if (TIBRVMSG_USER_LAST < UCHAR_MAX)
 				tmp_string << "*User-defined TibRv Msg field type=" <<
 					static_cast<unsigned int>(msg_field_type) << "*";
 				out_string = tmp_string.str();
