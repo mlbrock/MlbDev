@@ -35,6 +35,7 @@
 
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/StringSupport.hpp>
+#include <Utility/C_StringSupport.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -357,7 +358,8 @@ bool StringToRvAdvMsgFlagsAppend(const std::string &in_string,
 	unsigned int count_1;
 
 	for (count_1 = 0; count_1 < strings_count; ++count_1) {
-		if (!stricmp(in_string.c_str(), strings_list[count_1].advisory_string_)){
+		if (!MLB::Utility::Utility_stricmp(in_string.c_str(),
+			strings_list[count_1].advisory_string_)){
 			if (strings_list[count_1].advisory_type_ == RvAdvFlagType_Rv)
 				rv_flags = static_cast<RvAdvFlags>(rv_flags |
 					strings_list[count_1].advisory_flag_);
@@ -1062,7 +1064,7 @@ RvAdvMsg &RvAdvMsg::FastProducer(const TibrvMsg &msg)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::NoMemory(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::NoMemory(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
@@ -1108,14 +1110,14 @@ RvAdvMsg &RvAdvMsg::Dataloss(const TibrvMsg &msg)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::RvdDisconnected(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::RvdDisconnected(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::RvdConnected(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::RvdConnected(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
@@ -1151,7 +1153,7 @@ RvAdvMsg &RvAdvMsg::DispatcherThreadExited(const TibrvMsg &msg)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::VcConnected(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::VcConnected(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
@@ -1621,7 +1623,7 @@ RvAdvMsg &RvAdvMsg::CmQueueSchedulerInactive(const TibrvMsg &msg)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::FtParamMismatch(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::FtParamMismatch(const TibrvMsg & /* msg */)
 {
 	CheckAdvDesc();
 
@@ -1643,21 +1645,21 @@ RvAdvMsg &RvAdvMsg::FtParamMismatch(const TibrvMsg &msg)
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::FtDisablingMember(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::FtDisablingMember(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::FtTooManyActive(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::FtTooManyActive(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
 //	////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-RvAdvMsg &RvAdvMsg::FtTooFewActive(const TibrvMsg &msg)
+RvAdvMsg &RvAdvMsg::FtTooFewActive(const TibrvMsg & /* msg */)
 {
 	return(*this);
 }
