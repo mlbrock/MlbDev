@@ -353,8 +353,8 @@ template <typename ContainerType>
 		length_list = static_cast<unsigned int *>(
 			MLB::Utility::C_calloc(in_count + 1, sizeof(unsigned int)));
 		length_list[0] = in_count;
-		ContainerType::const_iterator iter_b(container.begin());
-		ContainerType::const_iterator iter_e(container.end());
+		typename ContainerType::const_iterator iter_b(container.begin());
+		typename ContainerType::const_iterator iter_e(container.end());
 		count_1 = 0;
 		while (iter_b != iter_e) {
 			length_list[count_1 + 1]  = static_cast<unsigned int>(iter_b->size());
