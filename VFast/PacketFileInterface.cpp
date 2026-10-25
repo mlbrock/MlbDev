@@ -568,6 +568,8 @@ unsigned int this_msg_count = 0;
 			const StreamDatum            *begin_ptr       = NULL;
 			const StreamDatum            *end_ptr         = NULL;
 			unsigned long long            packet_offset;
+			// Avoid g++ -Wunused-but-set-variable on debugging variable.
+			(void) use_previous_id;
 			packet_offset = msg_packet_file.GetFileOffset();
 			if (!msg_packet_file.GetPacketTyped(begin_ptr, end_ptr,
 				pfi_state.ip_address_, pfi_state.ip_port_, pfi_state.time_secs_,
@@ -682,6 +684,8 @@ unsigned int this_msg_count = 0;
 				ExcResults exc_results;
 				bool       core_parse_done   = false;
 				bool       debug_header_done = false;
+				// Avoid g++ -Wunused-but-set-variable on debugging variable.
+				(void) debug_header_done;
 				try {
 					pfi_state.msg_begin_ptr_ = begin_ptr;
 					pfi_state.msg_end_ptr_   = end_ptr;

@@ -44,7 +44,7 @@ TibrvListener &CreateListener(TibrvQueue &queue_ref,
 	const void *closure)
 {
 	try {
-		SubjectNameWork::SubjectNameWork(subject_name);
+		SubjectNameWork check_subject_name(subject_name);
 		RvUtilX_THROW_TIBRV_STATUS_IF(listener_ref.create,
 			(&queue_ref, &callback_ref, &transport_ref, subject_name, closure));
 	}

@@ -114,7 +114,7 @@ RvAdvAction::~RvAdvAction()
 //	////////////////////////////////////////////////////////////////////////////
 void RvAdvAction::ProcessRvAdvisory(TibrvListener *listener_ptr,
 	const TibrvMsg &msg_recv, const char *subject_ptr,
-	const char *msg_class_name, bool msg_class_known,
+	const char * /* msg_class_name */, bool  /* msg_class_known */,
 	MLB::Utility::LogLevel msg_class_log)
 {
 try {
@@ -151,7 +151,7 @@ std::cout << RvMsgToString(msg_recv, RvMsgToStringFlags_Mask) << std::endl;
 //	////////////////////////////////////////////////////////////////////////////
 std::string RvAdvAction::CreateAdvisoryDescription(
 	TibrvListener *listener_ptr, const TibrvMsg &msg_recv,
-	const char *subject_ptr)
+	const char * /* subject_ptr */)
 {
 	std::string out_text;
 
@@ -368,7 +368,7 @@ bool RvAdvisoryControl::MyTransportInfo::operator < (
 //	////////////////////////////////////////////////////////////////////////////
 void RvAdvisoryControl::MyTransportInfo::SubscribeToAdvisories(
 	unsigned int flags, const RvAdvFlagsMapList &map_list, TibrvQueue *queue_ptr,
-	TibrvCallback *callback_ptr, TibrvTransport *transport_ptr)
+	TibrvCallback *callback_ptr, TibrvTransport * /* transport_ptr */)
 {
 	if (flags) {
 		unsigned int count_1;
@@ -391,7 +391,8 @@ bool RvAdvisoryControl::MyTransportInfo::AddListener(TibrvQueue *queue_ptr,
 	boost::shared_ptr<TibrvListener> listener_sptr(new TibrvListener);
 
 	CreateListener(*queue_ptr, *callback_ptr, *transport_ptr_, *listener_sptr,
-		map_ref.advisory_subject_, map_ref.get_adv_text_func_);
+		map_ref.advisory_subject_,
+		reinterpret_cast<const void *>(map_ref.get_adv_text_func_));
 
 	listener_list_.insert(MyListenerInfo(map_ref.advisory_type_,
 		map_ref.advisory_flag_, listener_sptr));

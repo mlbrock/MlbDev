@@ -356,58 +356,6 @@ template <typename EnumType> bool GetRvFieldEnum(const TibrvMsg &msg,
 
 //	////////////////////////////////////////////////////////////////////////////
 template <typename ContainerType>
-	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, ContainerType &container)
-{
-	try {
-		GetRvFieldPackedList(false, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in GetRvFieldStringList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
-	ContainerType &container)
-{
-	GetRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, ContainerType &container)
-{
-	try {
-		GetRvFieldPackedList(true, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in GetRvFieldXmlList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
-	ContainerType &container)
-{
-	GetRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
 	void GetRvFieldPackedList(bool is_xml_field, TibrvMsg &msg,
 	const char *field_name_count, const char *field_name_data,
 	ContainerType &container)
@@ -455,6 +403,58 @@ template <typename ContainerType>
 			std::string((is_xml_field) ? "XML" : "string") +
 			" list from an Rv message: " + std::string(except.what()));
 	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, ContainerType &container)
+{
+	try {
+		GetRvFieldPackedList(false, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in GetRvFieldStringList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
+	ContainerType &container)
+{
+	GetRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, ContainerType &container)
+{
+	try {
+		GetRvFieldPackedList(true, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in GetRvFieldXmlList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
+	ContainerType &container)
+{
+	GetRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
 }
 //	////////////////////////////////////////////////////////////////////////////
 

@@ -735,7 +735,7 @@ struct RvAdvMsg {
 		bool throw_if_no_match = true);
 
 private:
-	static const RvAdvFlagsMap *RvAdvMsg::SubjectToMapPtrInternal(
+	static const RvAdvFlagsMap *SubjectToMapPtrInternal(
 		const SubjectNameFlat subject, unsigned int map_count,
 		const RvAdvFlagsMap *map_list);
 
@@ -761,8 +761,8 @@ struct API_RVUTILX RvAdvMsgParseCmdLineArg : public RvParseCmdLineArg {
 		static bool ParseCmdLineAdvMsgFlagsSpec(const ContainerType &spec_cont,
 		unsigned int &current_index, int argc, char **argv,
 		RvAdvFlags &rv_flags, CmAdvFlags &cm_flags, FtAdvFlags &ft_flags) {
-		ContainerType::const_iterator iter_b(spec_cont.begin());
-		ContainerType::const_iterator iter_e(spec_cont.end());
+		typename ContainerType::const_iterator iter_b(spec_cont.begin());
+		typename ContainerType::const_iterator iter_e(spec_cont.end());
 		while (iter_b != iter_e) {
 			if (ParseCmdLineAdvMsgFlags(*iter_b, current_index, argc, argv,
 				rv_flags, cm_flags, ft_flags))

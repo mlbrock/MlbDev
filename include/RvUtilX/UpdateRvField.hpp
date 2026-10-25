@@ -285,58 +285,6 @@ template <typename EnumType> void UpdateRvFieldEnum(TibrvMsg &msg,
 // ////////////////////////////////////////////////////////////////////////////
 
 //	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void UpdateRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, const ContainerType &container)
-{
-	try {
-		UpdateRvFieldPackedList(false, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in UpdateRvFieldStringList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void UpdateRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
-	const ContainerType &container)
-{
-	UpdateRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void UpdateRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, const ContainerType &container)
-{
-	try {
-		UpdateRvFieldPackedList(true, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in UpdateRvFieldXmlList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void UpdateRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
-	const ContainerType &container)
-{
-	UpdateRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
 //	Not using boost::shared_array<> to avoid bringing in the includes...
 template <typename ContainerType>
 	void UpdateRvFieldPackedList(bool is_xml_field, TibrvMsg &msg,
@@ -353,8 +301,8 @@ template <typename ContainerType>
 		length_list = static_cast<unsigned int *>(
 			MLB::Utility::C_calloc(in_count + 1, sizeof(unsigned int)));
 		length_list[0] = in_count;
-		ContainerType::const_iterator iter_b(container.begin());
-		ContainerType::const_iterator iter_e(container.end());
+		typename ContainerType::const_iterator iter_b(container.begin());
+		typename ContainerType::const_iterator iter_e(container.end());
 		count_1 = 0;
 		while (iter_b != iter_e) {
 			length_list[count_1 + 1]  = static_cast<unsigned int>(iter_b->size());
@@ -404,6 +352,58 @@ template <typename ContainerType>
 			std::string((is_xml_field) ? "XML" : "string") +
 			" list into an Rv message: " + std::string(except.what()));
 	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void UpdateRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, const ContainerType &container)
+{
+	try {
+		UpdateRvFieldPackedList(false, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in UpdateRvFieldStringList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void UpdateRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
+	const ContainerType &container)
+{
+	UpdateRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void UpdateRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, const ContainerType &container)
+{
+	try {
+		UpdateRvFieldPackedList(true, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in UpdateRvFieldXmlList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void UpdateRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
+	const ContainerType &container)
+{
+	UpdateRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
 }
 //	////////////////////////////////////////////////////////////////////////////
 

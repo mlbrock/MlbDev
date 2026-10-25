@@ -126,7 +126,7 @@ bool GetRvField(const TibrvMsg &msg, const char *field_name,
 		no_conversion_flag))
 		return(false);
 
-	out_datum = TibrvMsgDateTime(c_out_datum);
+	static_cast<tibrvMsgDateTime &>(out_datum) = c_out_datum;
 
 	return(true);
 }

@@ -51,7 +51,7 @@ int NPSL_SetSockOpt(NPSL_SOCKET_HANDLE socket_handle, int opt_level,
 	int return_code;
 
 	if (setsockopt(socket_handle, opt_level, opt_name,
-		((const NPSL_NATIVE_SocketOptionValueType) opt_value), opt_length) !=
+		((NPSL_NATIVE_SocketOptionValueType) opt_value), opt_length) !=
 		NPSL_SOCKET_OK) {
 		if (error_text != NULL)
 			NPSL_AppendLastErrorString(0, NPSL_MAX_ERROR_TEXT,

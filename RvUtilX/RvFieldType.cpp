@@ -147,8 +147,12 @@ std::string MsgFieldTypeToString(tibrv_u8 msg_field_type)
 			break;
 		default						:
 			std::ostringstream tmp_string;
+#if (TIBRVMSG_USER_LAST < UCHAR_MAX)
 			if ((msg_field_type >= TIBRVMSG_USER_FIRST) &&
 				(msg_field_type <= TIBRVMSG_USER_LAST)) {
+#else
+			if (msg_field_type >= TIBRVMSG_USER_FIRST) {
+#endif // #if (TIBRVMSG_USER_LAST < UCHAR_MAX)
 				tmp_string << "*User-defined TibRv Msg field type=" <<
 					static_cast<unsigned int>(msg_field_type) << "*";
 				out_string = tmp_string.str();

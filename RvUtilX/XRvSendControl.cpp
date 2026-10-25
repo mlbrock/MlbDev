@@ -145,7 +145,7 @@ void XRvSendControl::ParseCmdLine(int argc, char **argv)
 	std::string  tmp_field_type;
 	std::string  tmp_string;
 	bool         field_data_specified = false;
-	bool         trailing_count       = 0;
+	std::size_t  trailing_count       = 0;
 
 	my_name_ = MLB::Utility::GetFileNamePortion(argv[0]);
 

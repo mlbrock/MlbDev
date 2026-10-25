@@ -976,6 +976,12 @@ void InsItem::ParseElement_Decimal(const InsCtxInfo &ins_ctx_info,
 	std::size_t  mantissa_index = 0;
 
 	// //////////////////////////////////////////////////////////////////////
+	// Avoid g++ -Wunused-but-set-variable on debugging variable.
+	(void) exponent_index;
+	(void) mantissa_index;
+	// //////////////////////////////////////////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////
 	//	Find or construct the exponent...
 	child_count = xml_element.CountChildren("exponent");
 	if (child_count) {
@@ -1197,6 +1203,11 @@ void InsItem::ParseElement_String(const InsCtxInfo &ins_ctx_info,
 	std::size_t  length_index = 0;
 
 	// //////////////////////////////////////////////////////////////////////
+	// Avoid g++ -Wunused-but-set-variable on debugging variable.
+	(void) length_index;
+	// //////////////////////////////////////////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////
 	//	Find or construct the length for Unicode strings...
 	child_count = xml_element.CountChildren("length");
 	if (child_count) {
@@ -1322,6 +1333,11 @@ void InsItem::ParseElement_ByteVector(const InsCtxInfo &ins_ctx_info,
 
 	unsigned int child_count;
 	std::size_t  length_index = 0;
+
+	// //////////////////////////////////////////////////////////////////////
+	// Avoid g++ -Wunused-but-set-variable on debugging variable.
+	(void) length_index;
+	// //////////////////////////////////////////////////////////////////////
 
 	// //////////////////////////////////////////////////////////////////////
 	//	Find or construct the length for byte vectors...

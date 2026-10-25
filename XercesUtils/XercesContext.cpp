@@ -72,8 +72,10 @@ void XercesContext_Initialization()
 		catch (const xercesc::XMLException &except) {
 			std::ostringstream o_str;
 			o_str << "xercesc::XMLException: [getType() = " <<
-				except.getType() << "][getCode() = " << except.getCode() <<
-				"][getMessage = " << except.getMessage() << "][getSrcFile() = " <<
+				XmlStringToString(except.getType()) << "][getCode() = " <<
+				except.getCode() <<
+				"][getMessage = " << XmlStringToString(except.getMessage()) <<
+				"][getSrcFile() = " <<
 				except.getSrcFile() << "][getSrcLine() = " <<
 				except.getSrcLine() << "][getErrorType() = " <<
 				except.getErrorType() << "]" << std::endl;

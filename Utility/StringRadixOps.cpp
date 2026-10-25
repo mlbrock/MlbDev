@@ -139,7 +139,8 @@ Native_UInt64 StringToUIntRadix(std::size_t radix, const char *begin_ptr,
 
 	std::size_t map_size = (high_index - low_index) + 1;
 
-	if (map_size > (std::numeric_limits<unsigned char>::max() + 1))
+	if (map_size > (static_cast<std::size_t>(
+		std::numeric_limits<unsigned char>::max()) + 1))
 		throw std::invalid_argument("The size of the character map exceeds the "
 			"number of distinct unsigned char values.");
 	else if (radix > map_size)

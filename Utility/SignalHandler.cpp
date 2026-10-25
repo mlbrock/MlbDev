@@ -239,11 +239,9 @@ void SignalEventClear(int signal_id)
 // ////////////////////////////////////////////////////////////////////////////
 void SignalEventClearAll()
 {
-	unsigned int              count_1;
-	const SignalDef_Internal *sig_ptr;
+	unsigned int count_1;
 
-	for (count_1 = 0, sig_ptr = SignalDefList_Internal;
-		count_1 < SignalDefCount_Internal; ++count_1, ++sig_ptr)
+	for (count_1 = 0; count_1 < SignalDefCount_Internal; ++count_1)
 		AtomicFlagClear(SignalEventList + count_1);
 }
 // ////////////////////////////////////////////////////////////////////////////

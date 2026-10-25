@@ -43,6 +43,15 @@
 
 #include <Utility/Utility_Exception.hpp>
 
+#ifdef BOOST_ASIO_NO_DEPRECATED
+# undef BOOST_ASIO_NO_DEPRECATED
+#endif // #ifdef BOOST_ASIO_NO_DEPRECATED
+
+#if defined(__GNUC__) && (!defined(BOOST_BIND_GLOBAL_PLACEHOLDERS))
+# define BOOST_BIND_GLOBAL_PLACEHOLDERS					1
+# define BOOST_BIND_GLOBAL_PLACEHOLDERS___LOCAL_DEF	1
+#endif // #if defined(__GNUC__) && (!defined(BOOST_BIND_GLOBAL_PLACEHOLDERS))
+
 #ifdef MLB__LIB__SocketIo
 # ifdef SOCKETIO_DLL_EXPORTS
 #  define API_SOCKETIO		MB_LIB_EXPORT

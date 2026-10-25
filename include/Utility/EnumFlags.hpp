@@ -37,6 +37,7 @@
 #include <Utility/StringSupport.hpp>
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/Utility_Exception.hpp>
+#include <Utility/ParseCmdLineArg.hpp>
 
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -53,7 +54,7 @@ const unsigned int EnumFlagNameCount    = 2;
 // ////////////////////////////////////////////////////////////////////////////
 template <typename ThisEnumType>
 	struct EnumFlagDatum {
-	typedef typename ThisEnumType EnumType;
+	typedef ThisEnumType EnumType;
 	EnumFlagDatum(ThisEnumType enum_value, const std::string &enum_name,
 		const std::string &short_name)
 		:enum_value_(enum_value)

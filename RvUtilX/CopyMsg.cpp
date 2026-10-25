@@ -31,7 +31,7 @@
 
 #include <RvUtilX/RvMsg.hpp>
 
-#include <Utility/stringSupport.hpp>
+#include <Utility/StringSupport.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
