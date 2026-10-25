@@ -98,6 +98,13 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 	catch (const std::exception &) {
 		using namespace boost::asio;
 		//	Didn't succeed. Try to resolve it as a host name...
+#if (BOOST_VERSION <= 104601)
+/*
+		ASIO version 1.5.0 removed the resolver query and iterator types.
+
+		The last Boost version which contained the removed elements was Boost
+		version 1.46.1 / ASIO version 1.4.9.
+*/
 		ip::tcp::resolver           resolver(socket_.get_io_service());
 		ip::tcp::resolver::query    query(ip_address, ip_port);
 		ip::tcp::resolver::iterator iter_b(resolver.resolve(query));
@@ -106,6 +113,32 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 			MLB::Utility::ThrowLogicError("Attempt to resolve hostname '" +
 				std::string(ip_address) + "' failed.");
 		EndpointType tmp_endpoint(*iter_b);
+#else
+# if (BOOST_VERSION <= 106900)
+		/*
+			The get_io_service() method was removed after Boost version 1.69.0 /
+			ASIO version 1.12.2 ...
+		*/
+		ip::tcp::resolver               resolver(socket_.get_io_service());
+# else
+		// ... So if after that, use get_executor() instead.
+		ip::tcp::resolver               resolver(socket_.get_executor());
+# endif // # if (BOOST_VERSION <= 106900)
+		ip::tcp::resolver::results_type results;
+		try {
+			results = resolver.resolve(ip_address, ip_port);
+		}
+		catch (const std::exception &except) {
+			MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+				std::string(ip_address) + "' with service/port '" +
+				std::string(ip_port) + "' failed: " + std::string(except.what()));
+      }
+		if (results.empty())
+			MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+				std::string(ip_address) + "' with service/port '" +
+				std::string(ip_port) + "' failed.");
+		EndpointType tmp_endpoint(*results.begin());
+#endif // #if (BOOST_VERSION <= 104601)
 		tmp_ip_address = tmp_endpoint.address();
 		tmp_ip_port    = tmp_endpoint.port();
 	}
