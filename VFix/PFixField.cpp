@@ -424,7 +424,7 @@ bool PFixField::FixUpSet(PFixFieldSet &in_set,
 
 	iter_b = tag_idx.begin();
 
-	for (std::size_t count_1 = 0 ; iter_b != iter_e; ++iter_b, ++count_1) {
+	for ( ; iter_b != iter_e; ++iter_b) {
 		try {
 			if (iter_b->tag_ < 1) {
 				std::ostringstream o_str;
