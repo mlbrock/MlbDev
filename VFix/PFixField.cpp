@@ -628,7 +628,8 @@ using namespace MLB::VFix;
 namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
+void TEST_RunTest(const char *field_file_name,
+	const char * /* data_type_file_name */)
 {
 	PFixFieldSet element_set(PFixField::ParseXmlFile(field_file_name));
 
