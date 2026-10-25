@@ -558,10 +558,7 @@ unsigned int InsContext::GetMaxTemplateId() const
 // ////////////////////////////////////////////////////////////////////////////
 bool InsContext::CheckContext(std::vector<std::string> &error_list) const
 {
-	typedef std::map<unsigned int, unsigned int>  DVMap;
-	typedef DVMap::iterator                       DVMapIter;
-	typedef DVMap::const_iterator                 DVMapIterC;
-	typedef std::pair<unsigned int, unsigned int> DVMapPair;
+	typedef std::map<unsigned int, unsigned int> DVMap;
 
 	unsigned int ins_item_count   =
 		static_cast<unsigned int>(ins_item_list_.size());
