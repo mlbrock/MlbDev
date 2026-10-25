@@ -31,6 +31,7 @@
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/MulticastIP.hpp>
+#include <SocketIo/IpAddressGeneric.hpp>
 
 #include <Utility/Utility_Exception.hpp>
 
@@ -88,7 +89,11 @@ bool IsMulticastIP(const boost::asio::ip::address &ip_address)
 // ////////////////////////////////////////////////////////////////////////////
 bool IsMulticastIP(const char *ip_address)
 {
+/*
+	CODE NOTE: Obsoleted. To be removed.
 	return(IsMulticastIP(boost::asio::ip::address::from_string(ip_address)));
+*/
+	return(IsMulticastIP(AddressFromString(ip_address)));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
