@@ -56,7 +56,18 @@ public:
 	virtual ~StreamAcceptor();
 
 	void Accept(SocketBase<boost::asio::ip::tcp::socket> &peer_socket);
+
+	/*
+		ASIO version 1.33.0 removed socket_base::max_connections.
+
+		The replacement support (socket_base::max_listen_connections) was added
+		in Boost version 1.69.0 / ASIO version 1.12.2.
+	*/
+#if (BOOST_VERSION < 106900)
 	void Listen(int backlog = boost::asio::socket_base::max_connections);
+#else
+	void Listen(int backlog = boost::asio::socket_base::max_listen_connections);
+#endif // #if (BOOST_VERSION < 106900)
 
 private:
 	StreamAcceptor(const StreamAcceptor &other);
