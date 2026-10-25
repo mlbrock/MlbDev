@@ -33,6 +33,8 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
+#include <SocketIo/BoostAsioInclude.hpp>
+
 #include <SocketIo/SocketSpec.hpp>
 #include <SocketIo/StringToIpAddress.hpp>
 #include <SocketIo/ResolveHost.hpp>
@@ -176,7 +178,16 @@ public:
 	}
 	virtual boost::asio::io_service &GetIoService()
 	{
+#if (BOOST_VERSION <= 106900)
+		/*
+			The get_io_service() method was removed after Boost version 1.69.0 /
+			ASIO version 1.12.2 ...
+		*/
 		return(socket_.get_io_service());
+#else
+		return(static_cast<boost::asio::io_context &>(
+			socket_.get_executor().context()));
+#endif // #if (BOOST_VERSION <= 106900)
 	}
 
 	/**
