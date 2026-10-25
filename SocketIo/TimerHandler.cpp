@@ -208,7 +208,15 @@ if (asio_code)
 			std::cout << MLB::Utility::TimeSpec() <<
 				" " << "Test2: Stopping I/O service." << std::endl; 
 			try {
+#if (BOOST_VERSION <= 106900)
+				/*
+					The get_io_service() method was removed after Boost version
+					1.69.0 / ASIO version 1.12.2 ...
+				*/
 				timer_.get_io_service().stop();
+#else
+				timer_.get_executor().context();
+#endif // #if (BOOST_VERSION <= 106900)
 				std::cout << MLB::Utility::TimeSpec() <<
 					" " << "Test2: Stop of I/O service succeeded." <<
 					std::endl; 

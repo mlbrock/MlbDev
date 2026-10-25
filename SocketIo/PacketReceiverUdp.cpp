@@ -93,6 +93,7 @@ namespace {
 // ////////////////////////////////////////////////////////////////////////////
 std::string GetThisHostIpAddress()
 {
+/*
 	using namespace boost::asio;
 
 	io_service               io_service;
@@ -103,6 +104,43 @@ std::string GetThisHostIpAddress()
 	ip::udp::endpoint receiver_endpoint = *resolver.resolve(query);
 
 	return(receiver_endpoint.address().to_string());
+*/
+	using namespace boost::asio;
+
+	io_service               io_service;
+	ip::udp::resolver        resolver(io_service);
+#if (BOOST_VERSION <= 104601)
+	/*
+		ASIO version 1.5.0 removed the resolver query and iterator types.
+
+		The last Boost version which contained the removed elements was Boost
+		version 1.46.1 / ASIO version 1.4.9.
+	*/
+	ip::udp::resolver::query query(ip::udp::v4(), MLB::Utility::GetHostName(),
+		"", ip::udp::resolver::query::passive |
+		ip::udp::resolver::query::address_configured);
+	ip::udp::endpoint receiver_endpoint = *resolver.resolve(query);
+
+	return(receiver_endpoint.address().to_string());
+#else
+	ip::udp::resolver::results_type results;
+	std::string                     ip_address(MLB::Utility::GetHostName());
+	std::string                     ip_port("12345");
+	try {
+		results = resolver.resolve(ip_address.c_str(), ip_port.c_str());
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+			ip_address + "' with service/port '" +
+			ip_port + "' failed: " + std::string(except.what()));
+	}
+	if (results.empty())
+		MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+			ip_address + "' with service/port '" +
+			ip_port + "' failed.");
+	auto tmp_endpoint(*results.begin());
+	return(tmp_endpoint.endpoint().address().to_string());
+#endif // #if (BOOST_VERSION <= 104601)
 }
 // ////////////////////////////////////////////////////////////////////////////
 

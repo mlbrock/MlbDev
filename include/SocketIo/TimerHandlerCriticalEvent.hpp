@@ -60,7 +60,15 @@ protected:
 	{
 		if (MLB::Utility::CriticalEventTest()) {
 			try {
+#if (BOOST_VERSION <= 106900)
+				/*
+					The get_io_service() method was removed after Boost version
+					1.69.0 / ASIO version 1.12.2 ...
+				*/
 				timer_.get_io_service().stop();
+#else
+				timer_.get_executor().context();
+#endif // #if (BOOST_VERSION <= 106900)
 			}
 			catch (std::exception &) {
 				throw;
