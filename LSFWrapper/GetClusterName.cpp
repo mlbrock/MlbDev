@@ -64,6 +64,8 @@ std::string GetClusterName()
 
 } // namespace MLB
 
+#include <Utility/Sleep.hpp>
+
 #include <iomanip>
 
 #ifdef TEST_MAIN
@@ -93,7 +95,8 @@ int main()
 		return_code = EXIT_FAILURE;
 	}
 
-	Sleep(10000);
+	MLB::Utility::SleepMilliSecs(10000);
+
 	return(return_code);
 }
 //	////////////////////////////////////////////////////////////////////////////
