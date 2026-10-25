@@ -127,7 +127,21 @@ boost::asio::io_service &PacketReceiverMC::GetIoService()
 // ////////////////////////////////////////////////////////////////////////////
 IpAddressType PacketReceiverMC::GetIpAddress() const
 {
+	/*
+		The address_v4::to_ulong() function has existed since ASIO was first
+		added to Boost (Boost version 1.36.0 / ASIO 1.11.0)
+
+		It was deprecated in Boost version 1.82.0 / ASIO 1.28.0, and removed
+		in Boost version 1.86.0 / ASIO version 1.32.0.
+
+		The replacement function address_v4::to_uint() function was added in
+		Boost version 1.66.0 / ASIO version 1.12.0.
+	*/
+#if (BOOST_VERSION < 106600)
 	return(my_address_.to_v4().to_ulong());
+#else
+	return(my_address_.to_v4().to_uint());
+#endif // #if (BOOST_VERSION < 106600)
 }
 // ////////////////////////////////////////////////////////////////////////////
 
