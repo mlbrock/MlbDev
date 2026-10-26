@@ -39,6 +39,8 @@
 #include <Utility/StringSupport.hpp>
 #include <Utility/RegexParamNameAdaptor.hpp>
 
+#include <map>
+
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
