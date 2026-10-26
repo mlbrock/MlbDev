@@ -54,7 +54,7 @@ IpAddressGeneric AddressFromString(const char *src)
 		ASIO version 1.12.0.
 	*/
 #if (BOOST_VERSION < 106600)
-	return(IpAddressGeneric::from_string(in_string));
+	return(IpAddressGeneric::from_string(src));
 #else
 	return(boost::asio::ip::make_address(src));
 #endif // #if (BOOST_VERSION < 106600)
