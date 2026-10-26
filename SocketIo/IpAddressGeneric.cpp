@@ -82,12 +82,13 @@ IpAddressGeneric ParseIpAddressFromString(const char *in_string, bool ipv6_ok,
 //		tmp_datum = IpAddressGeneric::from_string(in_string);
 		tmp_datum = AddressFromString(in_string);
 		/*
-			ASIO version 1.4.5 updated the way it converts ipv6 to ipv4.
+			ASIO version 1.11.0 deprecated the way ASIO converts ipv6 to ipv4,
+			along with some other address-related logic.
 
-			The updated support was added in Boost version 1.43.0 /
-			ASIO version 1.4.5.
+			The updated support was added in Boost version 1.66.0 /
+			ASIO version 1.12.0.
 		*/
-#if (BOOST_VERSION < 104300)
+#if (BOOST_VERSION < 106600)
 		if ((!ipv6_ok) && tmp_datum.is_v6()) {
 			if (!tmp_datum.to_v6().is_v4_compatible())
 				MLB::Utility::ThrowInvalidArgument("The address is an IPv6 "
@@ -100,7 +101,7 @@ IpAddressGeneric ParseIpAddressFromString(const char *in_string, bool ipv6_ok,
 			tmp_datum = boost::asio::ip::make_address_v4(
 				boost::asio::ip::v4_mapped, tmp_datum.to_v6());
 		}
-#endif // #if (BOOST_VERSION < 104300)
+#endif // #if (BOOST_VERSION < 106600)
 		if ((!mc_ok) && IsMulticastIP(tmp_datum))
 			MLB::Utility::ThrowInvalidArgument("The address is a multicast group "
 				"which was not specified as desireable in this context.");

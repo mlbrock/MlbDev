@@ -98,13 +98,14 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 	catch (const std::exception &) {
 		using namespace boost::asio;
 		//	Didn't succeed. Try to resolve it as a host name...
-#if (BOOST_VERSION <= 104601)
-/*
-		ASIO version 1.5.0 removed the resolver query and iterator types.
+		/*
+			ASIO version 1.33.0 removed the resolver query and iterator types.
+			This became effective in Boost 1.87.0.
 
-		The last Boost version which contained the removed elements was Boost
-		version 1.46.1 / ASIO version 1.4.9.
-*/
+			The last Boost version which contained the removed elements was
+			Boost version 1.86.0 / ASIO version 1.32.0.
+		*/
+#if (BOOST_VERSION <= 108600)
 		ip::tcp::resolver           resolver(socket_.get_io_service());
 		ip::tcp::resolver::query    query(ip_address, ip_port);
 		ip::tcp::resolver::iterator iter_b(resolver.resolve(query));
@@ -138,7 +139,7 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 				std::string(ip_address) + "' with service/port '" +
 				std::string(ip_port) + "' failed.");
 		EndpointType tmp_endpoint(*results.begin());
-#endif // #if (BOOST_VERSION <= 104601)
+#endif // #if (BOOST_VERSION <= 108600)
 		tmp_ip_address = tmp_endpoint.address();
 		tmp_ip_port    = tmp_endpoint.port();
 	}
