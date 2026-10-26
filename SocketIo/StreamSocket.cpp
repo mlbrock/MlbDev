@@ -97,7 +97,16 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 	}
 	catch (const std::exception &) {
 		using namespace boost::asio;
-		//	Didn't succeed. Try to resolve it as a host name...
+		/*
+			The get_io_service() method was removed after Boost version 1.69.0 /
+			ASIO version 1.12.2 ...
+		*/
+# if (BOOST_VERSION <= 106900)
+		ip::tcp::resolver resolver(socket_.get_io_service());
+# else
+		// ... So if after that, use get_executor() instead.
+		ip::tcp::resolver resolver(socket_.get_executor());
+# endif // # if (BOOST_VERSION <= 106900)
 		/*
 			ASIO version 1.33.0 removed the resolver query and iterator types.
 			This became effective in Boost 1.87.0.
@@ -106,7 +115,6 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 			Boost version 1.86.0 / ASIO version 1.32.0.
 		*/
 #if (BOOST_VERSION <= 108600)
-		ip::tcp::resolver           resolver(socket_.get_io_service());
 		ip::tcp::resolver::query    query(ip_address, ip_port);
 		ip::tcp::resolver::iterator iter_b(resolver.resolve(query));
 		ip::tcp::resolver::iterator iter_e;
@@ -115,16 +123,6 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 				std::string(ip_address) + "' failed.");
 		EndpointType tmp_endpoint(*iter_b);
 #else
-# if (BOOST_VERSION <= 106900)
-		/*
-			The get_io_service() method was removed after Boost version 1.69.0 /
-			ASIO version 1.12.2 ...
-		*/
-		ip::tcp::resolver               resolver(socket_.get_io_service());
-# else
-		// ... So if after that, use get_executor() instead.
-		ip::tcp::resolver               resolver(socket_.get_executor());
-# endif // # if (BOOST_VERSION <= 106900)
 		ip::tcp::resolver::results_type results;
 		try {
 			results = resolver.resolve(ip_address, ip_port);
