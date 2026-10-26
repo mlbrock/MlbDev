@@ -33,6 +33,8 @@
 //	Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
+#include <SocketIo/BoostAsioInclude.hpp>
+
 #include <SocketIo/SocketSpec.hpp>
 #include <SocketIo/StringToIpAddress.hpp>
 #include <SocketIo/ResolveHost.hpp>
@@ -176,7 +178,16 @@ public:
 	}
 	virtual boost::asio::io_service &GetIoService()
 	{
+#if (BOOST_VERSION <= 106900)
+		/*
+			The get_io_service() method was removed after Boost version 1.69.0 /
+			ASIO version 1.12.2 ...
+		*/
 		return(socket_.get_io_service());
+#else
+		return(static_cast<boost::asio::io_context &>(
+			socket_.get_executor().context()));
+#endif // #if (BOOST_VERSION <= 106900)
 	}
 
 	/**
@@ -186,7 +197,21 @@ public:
 	*/
 	virtual IpAddressType GetIpAddress() const
 	{
+	/*
+		The address_v4::to_ulong() function has existed since ASIO was first
+		added to Boost (Boost version 1.36.0 / ASIO 1.11.0)
+
+		It was deprecated in Boost version 1.82.0 / ASIO 1.28.0, and removed
+		in Boost version 1.86.0 / ASIO version 1.32.0.
+
+		The replacement function address_v4::to_uint() function was added in
+		Boost version 1.66.0 / ASIO version 1.12.0.
+	*/
+#if (BOOST_VERSION < 106600)
 		return(endpoint_.address().to_v4().to_ulong());
+#else
+		return(endpoint_.address().to_v4().to_uint());
+#endif // #if (BOOST_VERSION < 106600)
 	}
 	/**
 		Determine the port of the multicast group in host order.

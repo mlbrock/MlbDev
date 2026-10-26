@@ -36,6 +36,8 @@
 
 #include <Utility/ParseCmdLineArg.hpp>
 
+#include <boost/shared_ptr.hpp>
+
 //	////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {

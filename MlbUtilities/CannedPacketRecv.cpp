@@ -210,7 +210,11 @@ class CannedPacketRecv : public CannedPacketRecvBase {
 		CannedPacketRecv &dst_ref_;
 
 	private:
+#if defined(BOOST_CXX_VERSION) && (BOOST_CXX_VERSION < 201103L)
 		RecvMCFwd & operator = (const RecvMCFwd &other);
+#else
+		RecvMCFwd & operator = (const RecvMCFwd &other) = delete;
+#endif // #if defined(BOOST_CXX_VERSION) && (BOOST_CXX_VERSION < 201103L)
 	};
 
 	typedef boost::shared_ptr<MyRecvMCType>     MyRecvMCTypeSPtr;

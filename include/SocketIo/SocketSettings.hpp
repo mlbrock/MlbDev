@@ -35,6 +35,8 @@
 
 #include <SocketIo/BoostAsioInclude.hpp>
 
+#include <boost/version.hpp>
+
 // ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
@@ -47,8 +49,15 @@ template <typename SocketType>
 	void SetNonBlockingMode(SocketType &socket_ref, bool blocking_mode)
 {
 	try {
+#if (BOOST_VERSION <= 106501)
+		/* The non_blocking_io type has been removed.
+			It was last present in Boost 1.65.1 / ASIO 1.10.10
+		*/
 		boost::asio::socket_base::non_blocking_io this_command(blocking_mode);
 		socket_ref.io_control(this_command);
+#else
+		socket_ref.non_blocking(blocking_mode);
+#endif // #if (BOOST_VERSION < 106501)
 	}
 	catch (const std::exception &except) {
 		MLB::Utility::Rethrow(except, "Attempt to set the socket non-blocking "

@@ -169,8 +169,23 @@ public:
 			exc_results.LookupValueAt(streamAddr,
 				lookup_streamAddr.first_, tmp_string, true,
 				sizeof(tmp_string) - 1);
+			/*
+				The address_v4::to_ulong() function has existed since ASIO was
+				first added to Boost (Boost version 1.36.0 / ASIO 1.11.0)
+
+				It was deprecated in Boost version 1.82.0 / ASIO 1.28.0, and
+				removed in Boost version 1.86.0 / ASIO version 1.32.0.
+
+				The replacement function address_v4::to_uint() function was added
+				in Boost version 1.66.0 / ASIO version 1.12.0.
+			*/
+#if (BOOST_VERSION < 106600)
 			tmp_stream.streamAddr =
 				boost::asio::ip::address_v4::from_string(tmp_string).to_ulong();
+#else
+			tmp_stream.streamAddr =
+				MLB::SocketIo::AddressFromString(tmp_string).to_v4().to_uint();
+#endif // #if (BOOST_VERSION < 106600)
 			exc_results.LookupValueAt(streamPort,
 				lookup_streamPort.first_, tmp_stream.streamPort, true);
 			exc_results.LookupValueAt(mktDpth,
