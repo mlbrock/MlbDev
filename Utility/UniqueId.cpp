@@ -72,17 +72,16 @@ UniqueId::UniqueId(bool generate_uuid_flag)
 {
 	if (generate_uuid_flag)
 		id_ = GetSystemUUID();
-	else
+	else {
 #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
 		id_ = boost::uuids::nil_uuid();
 #else
-//		memset(&id_, '\0', sizeof(id_));
-		const char   *tmp_ptr = reinterpret_cast<const char *>(this);
+		char         *tmp_ptr = reinterpret_cast<char *>(this);
 		unsigned int  count_1 = sizeof(*this);
 		while (count_1--)
 			*tmp_ptr++ = '\0';
-	}
 #endif // #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
+	}
 }
 //	////////////////////////////////////////////////////////////////////////////
 
