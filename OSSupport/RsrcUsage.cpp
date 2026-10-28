@@ -1,39 +1,33 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Module File
+// MLB Operating System Support (OSSupport) Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  RsrcUsage.cpp
 
-	File Version      :	%I%
+   File Description  :  Implementation of the RsrcUsage class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1992-10-11 --- Initial genfuncs C library logic.
+                           Michael L. Brock
+                        1998-04-08 --- Modified for C++.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the RsrcUsage class.
-
-	Revision History	:	1992-10-11 --- Initial genfuncs C library logic.
-									Michael L. Brock
-								1998-04-08 --- Modified for C++.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1992 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1992 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 //#include <OSSupport/OSSupport_RsrcUsage.h>
 
-//	CODE NOTE: To be removed.
+// CODE NOTE: To be removed.
 #include <OSSupport/OSSupport.hpp>
 
 #include <Utility/StringSupport.hpp>
@@ -53,7 +47,7 @@
 #endif // #ifdef __SVR4
 
 
-//	CPP only.
+// CPP only.
 #include <map>
 
 // ////////////////////////////////////////////////////////////////////////////

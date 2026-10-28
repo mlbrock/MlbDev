@@ -1,27 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Module File
+// MLB Operating System Support (OSSupport) Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	OS_EnumThreadWindows.cpp
+   File Name         :  OS_EnumThreadWindows.cpp
 
-	File Description	:	Implementation of wrappers to the Windows function
-								EnumThreadWindows().
+   File Description  :  Implementation of wrappers to the Windows function
+                        EnumThreadWindows().
 
-	Revision History	:	2016-08-16 --- Creation.
-									Michael L. Brock
+   Revision History  :  2016-08-16 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2016 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2016 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <OSSupport/Win/OS_EnumThreadWindows.hpp>
