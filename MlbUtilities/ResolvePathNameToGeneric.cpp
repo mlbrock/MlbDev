@@ -1,33 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Program
+// MLB Utility Program
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  ResolvePathNameToGeneric.cpp
 
-	File Version		:	%I%
+   File Description  :  Resolves path names specified on the command line to
+                        their generic equivalents.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-17 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Resolves path names specified on the command line to
-								their generic equivalents.
-
-	Revision History	:	2001-10-17 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/PathName.hpp>
