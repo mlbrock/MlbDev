@@ -1,48 +1,41 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RsrcUsage.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the RsrcUsage class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1992-10-11 --- Initial genfuncs C library logic.
+                           Michael L. Brock
+                        1998-04-08 --- Modified for C++.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the RsrcUsage class.
-
-	Revision History	:	1992-10-11 --- Initial genfuncs C library logic.
-									Michael L. Brock
-								1998-04-08 --- Modified for C++.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1992 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1992 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__RsrcUsage_hpp__HH
 
-#define HH__MLB__Utility__RsrcUsage_hpp__HH	1
+#define HH__MLB__Utility__RsrcUsage_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file RsrcUsage.hpp
+   \file RsrcUsage.hpp
 
-	\brief	The RsrcUsage header file.
+   \brief   The RsrcUsage header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/TimeSupport.hpp>

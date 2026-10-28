@@ -1,30 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXmlUtils Utilities Include File
+// MLB RapidXmlUtils Utilities Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	XmlDomElement.hpp
+   File Name         :  XmlDomElement.hpp
 
-	File Description	:	Definition of the XmlDomElement class.
+   File Description  :  Definition of the XmlDomElement class.
 
-	Revision History	:	2015-03-21 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-03-21 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RapidXmlUtils__XmlDomElement_hpp__HH
 
-#define HH__MLB__RapidXmlUtils__XmlDomElement_hpp__HH	1
+#define HH__MLB__RapidXmlUtils__XmlDomElement_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/C_StringSupport.hpp>

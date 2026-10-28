@@ -1,36 +1,31 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Include File
+// SocketIo Portable Socket Library Include File.
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  StreamAcceptor.hpp
 
-	File Version		:	%I%
 
-	Last Extracted		:	%D%	%T%
+   File Description  :  Definition of the StreamAcceptor class.
 
-	Last Updated		:	%E%	%U%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	File Description	:	Definition of the StreamAcceptor class.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SocketIo__StreamAcceptor_hpp__HH
 
-#define HH__MLB__SocketIo__StreamAcceptor_hpp__HH	1
+#define HH__MLB__SocketIo__StreamAcceptor_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/SocketBase.hpp>

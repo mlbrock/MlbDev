@@ -1,40 +1,40 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	MapUtf8ToAscii.hpp
+   File Name         :  MapUtf8ToAscii.hpp
 
-	File Description	:	Include file for the logic to map UTF-8 sequences
-								within strings to single characters.
+   File Description  :  Include file for the logic to map UTF-8 sequences
+                        within strings to single characters.
 
-	Revision History	:	2018-05-02 --- Creation.
-									Michael L. Brock
+   Revision History  :  2018-05-02 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2018 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2018 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__Utility__MapUtf8ToAscii_hpp__HH
 
-#define HH__MLB__Utility__MapUtf8ToAscii_hpp__HH	1
+#define HH__MLB__Utility__MapUtf8ToAscii_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file 	MapUtf8ToAscii.hpp
+   \file    MapUtf8ToAscii.hpp
 
-	\brief	UTF-8 mapping support.
+   \brief   UTF-8 mapping support.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

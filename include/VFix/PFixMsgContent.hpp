@@ -1,39 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	PFixMsgContent.hpp
+   File Name         :  PFixMsgContent.hpp
 
-	File Description	:	Definition of the PFixMsgContent class.
+   File Description  :  Definition of the PFixMsgContent class.
 
-	Revision History	:	2015-07-19 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-19 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__PFixMsgContent_hpp__HH
 
-#define HH__MLB__VFix__PFixMsgContent_hpp__HH	1
+#define HH__MLB__VFix__PFixMsgContent_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file PFixMsgContent.hpp
+   \file PFixMsgContent.hpp
 
-	\brief	The VFix header file containing the definition of the
-	PFixMsgContent class.
+   \brief   The VFix header file containing the definition of the
+   PFixMsgContent class.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFixXPortType.hpp>

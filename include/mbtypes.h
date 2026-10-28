@@ -1,43 +1,37 @@
-/*	***********************************************************************	*/
-/*	***********************************************************************	*/
-/*	Primitive Types Include File															*/
-/*	***********************************************************************	*/
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* Primitive Types Include File                                            */
+/* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  mbtypes.h
 
-	File Version      :	%I%
+   File Description  :  Primitive data type include file.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1990-03-13 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Primitive data type include file.
-
-	Revision History	:	1990-03-13 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1990 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1990 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-/*	***********************************************************************	*/
+/* *********************************************************************** */
 
 #ifndef HH__mbtypes_h__HH
 
-#define HH__mbtypes_h__HH					1
+#define HH__mbtypes_h__HH              1
 
-/*	***********************************************************************	*/
-/*	***********************************************************************	*/
-/*	Required include files...																*/
-/*	***********************************************************************	*/
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* Required include files...                                               */
+/* *********************************************************************** */
 
 #if defined(__linux__)
 # include <sys/types.h>
 #endif // #if defined(__linux__)
 
-/*	***********************************************************************	*/
+/* *********************************************************************** */
 
 /*	***********************************************************************	*/
 /**

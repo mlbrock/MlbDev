@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Include File
+// SocketIo Portable Socket Library Include File.
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  PacketSenderUdp.hpp
 
-	File Version		:	%I%
+   File Description  :  Definition of the PacketSenderUdp class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Definition of the PacketSenderUdp class.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SocketIo__PacketSenderUdp_hpp__HH
 
-#define HH__MLB__SocketIo__PacketSenderUdp_hpp__HH	1
+#define HH__MLB__SocketIo__PacketSenderUdp_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/PacketSender.hpp>
@@ -44,23 +38,23 @@ namespace SocketIo {
 // ////////////////////////////////////////////////////////////////////////////
 class PacketSenderUdp : public PacketSender {
 public:
-	PacketSenderUdp(boost::asio::io_service &io_service,
-		const std::string &socket_address, IpPortType ip_port,
-		const std::string &host_interface = "");
-	PacketSenderUdp(boost::asio::io_service &io_service,
-		const std::string &socket_address, const std::string &ip_port,
-		const std::string &host_interface = "");
-	PacketSenderUdp(boost::asio::io_service &io_service,
-		const SocketSpec &socket_spec);
+   PacketSenderUdp(boost::asio::io_service &io_service,
+      const std::string &socket_address, IpPortType ip_port,
+      const std::string &host_interface = "");
+   PacketSenderUdp(boost::asio::io_service &io_service,
+      const std::string &socket_address, const std::string &ip_port,
+      const std::string &host_interface = "");
+   PacketSenderUdp(boost::asio::io_service &io_service,
+      const SocketSpec &socket_spec);
 
-	virtual ~PacketSenderUdp();
+   virtual ~PacketSenderUdp();
 
 protected:
-	virtual void FixUpConstruction();
+   virtual void FixUpConstruction();
 
 private:
-	PacketSenderUdp(const PacketSenderUdp &other);
-	PacketSenderUdp & operator = (const PacketSenderUdp &other);
+   PacketSenderUdp(const PacketSenderUdp &other);
+   PacketSenderUdp & operator = (const PacketSenderUdp &other);
 };
 // ////////////////////////////////////////////////////////////////////////////
 

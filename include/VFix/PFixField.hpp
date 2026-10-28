@@ -1,39 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	PFixField.hpp
+   File Name         :  PFixField.hpp
 
-	File Description	:	Definition of the PFixField class.
+   File Description  :  Definition of the PFixField class.
 
-	Revision History	:	2015-07-03 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-03 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__PFixField_hpp__HH
 
-#define HH__MLB__VFix__PFixField_hpp__HH	1
+#define HH__MLB__VFix__PFixField_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file PFixField.hpp
+   \file PFixField.hpp
 
-	\brief	The VFix header file containing the definition of the PFixField
-	class.
+   \brief   The VFix header file containing the definition of the PFixField
+   class.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/PFixFieldType.hpp>

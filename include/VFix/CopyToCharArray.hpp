@@ -1,38 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	CopyToCharArray.hpp
+   File Name         :  CopyToCharArray.hpp
 
-	File Description	:	Include file for CopyToCharArray() function prototypes.
+   File Description  :  Include file for CopyToCharArray() function prototypes.
 
-	Revision History	:	2015-07-01 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-01 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__CopyToCharArray_hpp__HH
 
-#define HH__MLB__VFix__CopyToCharArray_hpp__HH	1
+#define HH__MLB__VFix__CopyToCharArray_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file CopyToCharArray.hpp
+   \file CopyToCharArray.hpp
 
-	\brief	Include file for CopyToCharArray() function prototypes.
+   \brief   Include file for CopyToCharArray() function prototypes.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFix.hpp>

@@ -1,51 +1,44 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  OSSocketLibraryContext.hpp
 
-	File Version		:	%I%
+   File Description  :  Ensures that the operating system socket library has
+                        been initialized.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1992-09-13 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Ensures that the operating system socket library has
-								been initialized.
-
-	Revision History	:	1992-09-13 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1992 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1992 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__OSSocketLibraryContext_hpp__HH
 
-#define HH__MLB__Utility__OSSocketLibraryContext_hpp__HH	1
+#define HH__MLB__Utility__OSSocketLibraryContext_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file 	OSSocketLibraryContext.hpp
+   \file    OSSocketLibraryContext.hpp
 
-	\brief	Logic to ensure that the operating system socket library has been
-				initialized for use by the application.
+   \brief   Logic to ensure that the operating system socket library has been
+            initialized for use by the application.
 
-	\note		Note that it is the application programmer's responsibility to
-				include the correct Winsock include file before this include file.
+   \note    Note that it is the application programmer's responsibility to
+            include the correct Winsock include file before this include file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/Utility_Exception.hpp>

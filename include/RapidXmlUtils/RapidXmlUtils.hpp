@@ -1,30 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXmlUtils Utilities Include File
+// MLB RapidXmlUtils Utilities Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	RapidXmlUtils.hpp
+   File Name         :  RapidXmlUtils.hpp
 
-	File Description	:	RapidXml include file.
+   File Description  :  RapidXml include file.
 
-	Revision History	:	2015-03-21 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-03-21 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RapidXmlUtils__RapidXmlUtils_hpp__HH
 
-#define HH__MLB__RapidXmlUtils__RapidXmlUtils_hpp__HH	1
+#define HH__MLB__RapidXmlUtils__RapidXmlUtils_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
@@ -45,10 +45,10 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	Setup for static or dynamic linking.
+   Setup for static or dynamic linking.
 
-	Define MLB__LIB__SO_RapidXmlUtils if the library is to be built (or linked)
-	dynamically.
+   Define MLB__LIB__SO_RapidXmlUtils if the library is to be built (or linked)
+   dynamically.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -56,19 +56,19 @@
 
 #ifdef MLB__LIB__SO_RapidXmlUtils
 # ifdef RAPIDXMLUTILS_DLL_EXPORTS
-#  define API_RAPIDXMLUTILS		MB_LIB_EXPORT
+#  define API_RAPIDXMLUTILS      MB_LIB_EXPORT
 # else
-#  define API_RAPIDXMLUTILS		MB_LIB_IMPORT
+#  define API_RAPIDXMLUTILS      MB_LIB_IMPORT
 # endif // #ifdef RAPIDXMLUTILS_DLL_EXPORTS
 #else
 #  define API_RAPIDXMLUTILS
 #endif // #ifdef MLB__LIB__RapidXmlUtils
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE			API_RAPIDXMLUTILS
+#define MB_LIB_THIS_SIDE         API_RAPIDXMLUTILS
 
 // ////////////////////////////////////////////////////////////////////////////
 

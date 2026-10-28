@@ -1,38 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	VFixXPortType.hpp
+   File Name         :  VFixXPortType.hpp
 
-	File Description	:	Include file for VFixXPortType enumeration support.
+   File Description  :  Include file for VFixXPortType enumeration support.
 
-	Revision History	:	2015-06-28 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-06-28 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__VFixXPortType_hpp__HH
 
-#define HH__MLB__VFix__VFixXPortType_hpp__HH	1
+#define HH__MLB__VFix__VFixXPortType_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file VFixXPortType.hpp
+   \file VFixXPortType.hpp
 
-	\brief	The VFix header file containing VFixXPortType enumeration support.
+   \brief   The VFix header file containing VFixXPortType enumeration support.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFix.hpp>

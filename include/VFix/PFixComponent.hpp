@@ -1,39 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	PFixComponent.hpp
+   File Name         :  PFixComponent.hpp
 
-	File Description	:	Definition of the PFixComponent class.
+   File Description  :  Definition of the PFixComponent class.
 
-	Revision History	:	2015-07-19 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-19 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__PFixComponent_hpp__HH
 
-#define HH__MLB__VFix__PFixComponent_hpp__HH	1
+#define HH__MLB__VFix__PFixComponent_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file PFixComponent.hpp
+   \file PFixComponent.hpp
 
-	\brief	The VFix header file containing the definition of the
-	PFixComponent class.
+   \brief   The VFix header file containing the definition of the
+   PFixComponent class.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFixXPortType.hpp>

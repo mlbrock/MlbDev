@@ -1,46 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  UniqueId.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the UniqueId class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the UniqueId class.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__UniqueId_hpp__HH
 
-#define HH__MLB__Utility__UniqueId_hpp__HH	1
+#define HH__MLB__Utility__UniqueId_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file UniqueId.hpp
+   \file UniqueId.hpp
 
-	\brief	The MLB UniqueId header file.
+   \brief   The MLB UniqueId header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/IntToString.hpp>
@@ -53,7 +46,7 @@
 # if BOOST_VERSION < 104200
 #  error "Manifest constant MLB_UNIQUEID_FORCE_BOOST_UUID is defined, but Boost version is less that 1.42!"
 # else
-#  define MLB_UNIQUE_ID_USES_BOOST_UUID	1
+#  define MLB_UNIQUE_ID_USES_BOOST_UUID   1
 # endif // # if BOOST_VERSION < 104200
 #endif // #ifdef MLB_UNIQUEID_FORCE_BOOST_UUID
 
@@ -63,10 +56,10 @@
 # ifdef _MSC_VER
 #  include <Rpc.h>
 # elif BOOST_VERSION >= 104200
-#  define MLB_UNIQUE_ID_USES_BOOST_UUID	1
+#  define MLB_UNIQUE_ID_USES_BOOST_UUID   1
 #  include <boost/uuid/uuid.hpp>
 # else
-	//	Else we default to Theodore Ts'o's implmentation.
+   // Else we default to Theodore Ts'o's implmentation.
 #  include <uuid/uuid.h>
 # endif // #ifndef _MSC_VER
 #endif // #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID

@@ -1,30 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	EmitRuledBuffer.hpp
+   File Name         :  EmitRuledBuffer.hpp
 
-	File Description	:	Header file for the EmitRuledBuffer functions.
+   File Description  :  Header file for the EmitRuledBuffer functions.
 
-	Revision History	:	2017-10-13 --- Creation
-									Michael L. Brock
+   Revision History  :  2017-10-13 --- Creation
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2017 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2017 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__Utility__EmitRuledBuffer_hpp__HH
 
-#define HH__MLB__Utility__EmitRuledBuffer_hpp__HH	1
+#define HH__MLB__Utility__EmitRuledBuffer_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

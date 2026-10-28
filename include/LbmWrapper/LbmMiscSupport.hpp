@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	29 West LBM API Wrapper Library Include File
+// 29 West LBM API Wrapper Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  LbmMiscSupport.hpp
 
-	File Version		:	%I%
+   File Description  :  Header file for miscellaneous LBM wrapper logic.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-08-16 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Header file for miscellaneous LBM wrapper logic.
-
-	Revision History	:	2008-08-16 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__LbmWrapper__LbmMiscSupport_hpp__HH
 
-#define HH__MLB__LbmWrapper__LbmMiscSupport_hpp__HH	1
+#define HH__MLB__LbmWrapper__LbmMiscSupport_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <LbmWrapper/LbmWrapper.hpp>

@@ -1,44 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Include File
+// VFast Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  CmePacketHeader.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for VFast CME Fix/FAST 2.0 packet headers.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2010-02-07 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for VFast CME Fix/FAST 2.0 packet headers.
-
-	Revision History	:	2010-02-07 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2010 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2010 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFast__CmePacketHeader_hpp__HH
 
-#define HH__MLB__VFast__CmePacketHeader_hpp__HH	1
+#define HH__MLB__VFast__CmePacketHeader_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file CmePacketHeader.hpp
+   \file CmePacketHeader.hpp
 
-/	\brief Support for CME packet headers introduced with CME Fix/FAST 2.0.
+/  \brief Support for CME packet headers introduced with CME Fix/FAST 2.0.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/VFast.hpp>

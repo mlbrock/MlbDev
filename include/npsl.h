@@ -1,37 +1,31 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Internal Include File			*/
+/* Network Programming Support Library (NPSL) Internal Include File        */
 /* *********************************************************************** */
 /*
-	File Name			:	%M%
+   File Name         :  npsl.h
 
-	File Version		:	%I%
+   File Description  :  Include file for the Network Programming Support
+                        Library (NPSL).
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1996-04-10 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the Network Programming Support
-								Library (NPSL).
-
-	Revision History	:	1996-04-10 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1996 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1996 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */
 
 #ifndef h__NPSL_H__h
 
-#define h__NPSL_H__h					1
+#define h__NPSL_H__h             1
 
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*		Include necessary header files . . .											*/
+/*    Include necessary header files . . .                                 */
 /* *********************************************************************** */
 
 #ifdef _Windows
@@ -52,7 +46,7 @@
 #   pragma warning(disable:4115 4201 4214 4514)
 #   include <windows.h>
 #   pragma warning(default:4115 4201 4214)
-# 	endif /* #  if _MSC_VER >= 1200 */
+#  endif /* #  if _MSC_VER >= 1200 */
 # else
 #  include <windows.h>
 # endif /* # ifdef _MSC_VER */

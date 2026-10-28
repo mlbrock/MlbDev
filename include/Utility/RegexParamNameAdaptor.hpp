@@ -1,45 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RegexParamNameAdaptor.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for functions which provide regex-based
+                        adaptors for command line parameter parsing.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2006-10-25 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for functions which provide regex-based
-								adaptors for command line parameter parsing.
-
-	Revision History	:	2006-10-25 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2006 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2006 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility_RegexParamNameAdaptor_hpp__HH
 
-#define HH__MLB__Utility_RegexParamNameAdaptor_hpp__HH	1
+#define HH__MLB__Utility_RegexParamNameAdaptor_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file RegexParamNameAdaptor.hpp
+   \file RegexParamNameAdaptor.hpp
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
