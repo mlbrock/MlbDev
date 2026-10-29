@@ -1,25 +1,19 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Source Module						*/
+/* Network Programming Support Library (NPSL) Source Module                */
 /* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  support.cpp
 
-	File Version      :	%I%
+   File Description  :  Miscellaneous support for the library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2002-01-26 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Miscellaneous support for the library.
-
-	Revision History	:	2002-01-26 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2002 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2002 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */

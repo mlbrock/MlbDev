@@ -1,41 +1,35 @@
-/*	***********************************************************************	*/
-/*	***********************************************************************	*/
-/*	Network Programming Support Library (NPSL) Source Module						*/
-/*	***********************************************************************	*/
+/* *********************************************************************** */
+/* *********************************************************************** */
+/* Network Programming Support Library (NPSL) Source Module                */
+/* *********************************************************************** */
 /*
-	File Name			:	%M%
+   File Name         :  getmac.cpp
 
-	File Version		:	%I%
+   File Description  :  Determines the machine Ethernet Media Access Control
+                        (MAC) address.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1994-02-25 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Determines the machine Ethernet Media Access Control
-								(MAC) address.
-
-	Revision History	:	1994-02-25 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1994 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1994 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-/*	***********************************************************************	*/
+/* *********************************************************************** */
 
-/*	***********************************************************************	*/
-/*	***********************************************************************	*/
-/*		Necessary include files . . .														*/
-/*	***********************************************************************	*/
+/* *********************************************************************** */
+/* *********************************************************************** */
+/*    Necessary include files . . .                                        */
+/* *********************************************************************** */
 
 #include <Utility/C_StringSupport.hpp>
 #include <Utility/MACAddress.hpp>
 
 #include "npsli.h"
 
-/*	***********************************************************************	*/
+/* *********************************************************************** */
 
 /*	***********************************************************************	*/
 int NPSL_GetMAC(NPSL_ADDR_MAC *ethernet_address, char *error_text)

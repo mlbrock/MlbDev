@@ -1,34 +1,28 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Internal Module File			*/
+/* Network Programming Support Library (NPSL) Internal Module File         */
 /* *********************************************************************** */
 /*
-	File Name			:	%M%
+   File Name         :  npsli.cpp
 
-	File Version		:	%I%
+   File Description  :  Shim file needed to support NPSL code which old MLB
+                        logic from the obsolete C libraries strfuncs and
+                        genfuncs.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1996-04-10 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Shim file needed to support NPSL code which old MLB
-								logic from the obsolete C libraries strfuncs and
-								genfuncs.
-
-	Revision History	:	1996-04-10 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1996 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1996 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */
 
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*		Include necessary header files . . .											*/
+/*    Include necessary header files . . .                                 */
 /* *********************************************************************** */
 
 #include "npsli.h"
