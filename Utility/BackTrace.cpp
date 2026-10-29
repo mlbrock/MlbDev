@@ -1,19 +1,19 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
+// MLB Utility Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	BackTrace.cpp
+   File Name         :  BackTrace.cpp
 
-	File Description	:	Lightweight stack trace facility.
+   File Description  :  Lightweight stack trace facility.
 
-	Revision History	:	2015-07-20 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-20 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/BackTrace.hpp>

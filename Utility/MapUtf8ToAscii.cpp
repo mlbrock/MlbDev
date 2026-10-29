@@ -1,27 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
+// MLB Utility Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	MapUtf8ToAscii.cpp
+   File Name         :  MapUtf8ToAscii.cpp
 
- 	File Description	:	Logic for mapping UTF-8 sequences within strings to
-								single characters.
+   File Description  :  Logic for mapping UTF-8 sequences within strings to
+                        single characters.
 
-	Revision History	:	2018-05-02 --- Creation.
-									Michael L. Brock
+   Revision History  :  2018-05-02 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2018 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2018 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/MapUtf8ToAscii.hpp>
