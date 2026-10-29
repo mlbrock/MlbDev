@@ -5,12 +5,6 @@
 /*
    File Name         :  TimerHandler.hpp
 
-   File Version      :  %I%
-
-   Last Extracted    :  %D%   %T%
-
-   Last Updated      :  %E%   %U%
-
    File Description  :  Include file for class TimerHandler.
 
    Revision History  :  2002-01-26 --- Creation
