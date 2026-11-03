@@ -40,12 +40,13 @@ test_*
 testpurify_*
 testquantify_*
 testcoverage_*
+TEST_MAIN*
 
 # The target platform directory
 TargetPlatform/
 
 # Build results logs
-BuildResults.*.log
+BuildResults*.log
 
 # ----- MSVC++ files extensions to be ignored:
 *.bsc
