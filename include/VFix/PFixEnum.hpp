@@ -1,39 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	PFixEnum.hpp
+   File Name         :  PFixEnum.hpp
 
-	File Description	:	Definition of the PFixEnum class.
+   File Description  :  Definition of the PFixEnum class.
 
-	Revision History	:	2015-08-02 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-08-02 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__PFixEnum_hpp__HH
 
-#define HH__MLB__VFix__PFixEnum_hpp__HH	1
+#define HH__MLB__VFix__PFixEnum_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file PFixEnum.hpp
+   \file PFixEnum.hpp
 
-	\brief	The VFix header file containing the definition of the PFixEnum
-	class.
+   \brief   The VFix header file containing the definition of the PFixEnum
+   class.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/VFix.hpp>

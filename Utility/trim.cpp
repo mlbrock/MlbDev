@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
+// MLB Utility Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  trim.cpp
 
-	File Version      :	%I%
+   File Description  :  Removes white-space from the left, right or both sides
+                        of a string.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1986-10-27 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
+                        Ported from the MLB Strfuncs library source modules
+                        ltrim.c, rtrim.c and trim.c.
 
-	File Description	:	Removes white-space from the left, right or both sides
-								of a string.
-
-	Revision History	:	1986-10-27 --- Creation
-									Michael L. Brock
-
-								Ported from the MLB Strfuncs library source modules
-								ltrim.c, rtrim.c and trim.c.
-
-		Copyright Michael L. Brock 1986 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1986 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Include necessary header files . . .
+// Include necessary header files . . .
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

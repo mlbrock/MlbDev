@@ -1,30 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	EmitterSep.hpp
+   File Name         :  EmitterSep.hpp
 
-	File Description	:	Definition of the EmitterSep class.
+   File Description  :  Definition of the EmitterSep class.
 
-	Revision History	:	2016-02-18 --- Creation.
-									Michael L. Brock
+   Revision History  :  2016-02-18 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2016 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2016 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__Utility__EmitterSep_hpp__HH
 
-#define HH__MLB__Utility__EmitterSep_hpp__HH	1
+#define HH__MLB__Utility__EmitterSep_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

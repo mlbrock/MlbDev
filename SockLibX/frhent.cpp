@@ -1,26 +1,20 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Source Module						*/
+/* Network Programming Support Library (NPSL) Source Module                */
 /* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  frhent.cpp
 
-	File Version      :	%I%
+   File Description  :  Frees the memory associated with 'NPSL_HOSTENT'
+                        ('struct hostent') structure.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-04-12 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Frees the memory associated with 'NPSL_HOSTENT'
-								('struct hostent') structure.
-
-	Revision History	:	1993-04-12 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */

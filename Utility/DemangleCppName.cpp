@@ -1,30 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
+// MLB Utility Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	DemangleCppName.cpp
+   File Name         :  DemangleCppName.cpp
 
-	File Description	:	Implementation of the portable path name functions.
+   File Description  :  Implementation of the portable path name functions.
 
-	Revision History	:	2015-07-20 --- Original logic implemented in file
-													MlbDev/Utility/BackTrace.cpp.
-									Michael L. Brock
-								2016-08-07 --- Separated implementation into file
-													DemangleCppName.cpp.
-									Michael L. Brock
+   Revision History  :  2015-07-20 --- Original logic implemented in file
+                                       MlbDev/Utility/BackTrace.cpp.
+                           Michael L. Brock
+                        2016-08-07 --- Separated implementation into file
+                                       DemangleCppName.cpp.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/DemangleCppName.hpp>

@@ -1,46 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  HRTimeStamp.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the HRTimeStamp class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-10-02 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the HRTimeStamp class.
-
-	Revision History	:	1993-10-02 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__HRTimeStamp_hpp__HH
 
-#define HH__MLB__Utility__HRTimeStamp_hpp__HH	1
+#define HH__MLB__Utility__HRTimeStamp_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file HRTimeStamp.hpp
+   \file HRTimeStamp.hpp
 
-	\brief	The MLB HRTimeStamp header file.
+   \brief   The MLB HRTimeStamp header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/HRTimer.hpp>

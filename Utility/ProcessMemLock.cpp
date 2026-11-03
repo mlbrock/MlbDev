@@ -1,81 +1,75 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// MLB Utility Library Module File
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  ProcessMemLock.cpp
 
-	File Version      :	%I%
+   File Description  :  Implementation of portable process page locking.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-10-02 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
+                        What is a trivial wrapper function when implemented
+                        for the various Unixes becomes a bit hairy when ported
+                        to Windows.
 
-	File Description	:	Implementation of portable process page locking.
+                        There is no page locking as such using the documented
+                        Windows APIs. What one can do is specify that pages are
+                        locked within the working set for a process --- which
+                        is a guarantee that the page will be resident in RAM
+                        only while some thread of the process is running. At
+                        any time no threads of a process are running, no
+                        guarantees concerning the memory residency of a page
+                        are made by the Windows.
 
-	Revision History	:	1993-10-02 --- Creation
-									Michael L. Brock
+                        An option would be to gate to the kernel-mode function
+                        MmProbeAndLockPages()... But if you use that and don't
+                        unlock before exiting the process, you blue-screen the
+                        machine.
 
-								What is a trivial wrapper function when implemented
-								for the various Unixes becomes a bit hairy when ported
-								to Windows.
+                        Users of this interface shouldn't bother using the
+                        unlock facility (MemUnlockProcess) under Windows.
+                        Because there's no wasy way to determine whether a
+                        particular section has been locked, the function
+                        (rather simplistically, I'll admit) invokes
+                        VirtualUnlock() on every section which would have met
+                        the criteria for being locked (see the N.B., below).
+                        If there are pages in a section which have not been
+                        locked by a previous call to VirtualLock(), the call to
+                        VirtualUnlock() will remove them from the working set.
+                        Which result may not be what one intended. Not
+                        unlocking matters very little, as the pages will be
+                        unlocked at the end-of-life of the working set (that
+                        is, when the process exits).
 
-								There is no page locking as such using the documented
-								Windows APIs. What one can do is specify that pages are
-								locked within the working set for a process --- which
-								is a guarantee that the page will be resident in RAM
-								only while some thread of the process is running. At
-								any time no threads of a process are running, no
-								guarantees concerning the memory residency of a page
-								are made by the Windows.
+                        Nota Bene:
+                           According to the MSDN documentation, only committed
+                           pages (MEM_COMMIT = 0x1000) which are not marked as
+                           as inaccessible (PAGE_NOACCESS = 0x01) can be locked.
 
-								An option would be to gate to the kernel-mode function
-								MmProbeAndLockPages()... But if you use that and don't
-								unlock before exiting the process, you blue-screen the
-								machine.
+                           Some experimentation (Windows 2000) has shown there
+                           are additonal section types which also can't be
+                           locked:
 
-								Users of this interface shouldn't bother using the
-								unlock facility (MemUnlockProcess) under Windows.
-								Because there's no wasy way to determine whether a
-								particular section has been locked, the function
-								(rather simplistically, I'll admit) invokes
-								VirtualUnlock() on every section which would have met
-								the criteria for being locked (see the N.B., below).
-								If there are pages in a section which have not been
-								locked by a previous call to VirtualLock(), the call to
-								VirtualUnlock() will remove them from the working set.
-								Which result may not be what one intended. Not
-								unlocking matters very little, as the pages will be
-								unlocked at the end-of-life of the working set (that
-								is, when the process exits).
+                              1) Guard pages (PAGE_GUARD = 0x100)
 
-								Nota Bene:
-									According to the MSDN documentation, only committed
-									pages (MEM_COMMIT = 0x1000) which are not marked as
-									as inaccessible (PAGE_NOACCESS = 0x01) can be locked.
+                              2) Pages with read-only protection set on
+                                 (PAGE_READONLY = 0x02) which are also private
+                                 (MEM_PRIVATE = 0x20000).
 
-									Some experimentation (Windows 2000) has shown there
-									are additonal section types which also can't be
-									locked:
-
-										1) Guard pages (PAGE_GUARD = 0x100)
-
-										2) Pages with read-only protection set on
-											(PAGE_READONLY = 0x02) which are also private
-											(MEM_PRIVATE = 0x20000).
-
-		Copyright Michael L. Brock 1993 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
  
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Required include files...
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Required include files...
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/ValueToStringRadix.hpp>
 #include <Utility/Utility_Exception.hpp>
@@ -88,7 +82,7 @@
 # include <mman.h>
 #endif // ifdef _Windows
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 

@@ -3,18 +3,12 @@
 # MLB Utility Boost Python Interface Module Test Script
 # #############################################################################
 #
-#	File Name			:	%M%
+#   File Name           :   TestScript_MLBRvUtilXPython.py
 #
-#	File Version		:	%I%
+#   File Description    :   Test file for the MLB::Utility Python interface.
 #
-#	Last Extracted		:	%D%	%T%
-#
-#	Last Updated		:	%E%	%U%
-#
-#	File Description	:	Test file for the MLB::Utility Python interface.
-#
-#	Revision History	:	2007-10-19 --- Creation.
-#    							Michael L. Brock
+#   Revision History    :   2007-10-19 --- Creation.
+#                               Michael L. Brock
 #
 #       Copyright Michael L. Brock 2007 - 2026.
 #       Distributed under the Boost Software License, Version 1.0.

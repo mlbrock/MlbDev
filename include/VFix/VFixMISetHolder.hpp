@@ -1,39 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Include File
+// VFix Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	VFixMISetHolder.hpp
+   File Name         :  VFixMISetHolder.hpp
 
-	File Description	:	Definition of the VFixMISetHolder class template.
+   File Description  :  Definition of the VFixMISetHolder class template.
 
-	Revision History	:	2015-07-14 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-14 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFix__VFixMISetHolder_hpp__HH
 
-#define HH__MLB__VFix__VFixMISetHolder_hpp__HH	1
+#define HH__MLB__VFix__VFixMISetHolder_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file VFixMISetHolder.hpp
+   \file VFixMISetHolder.hpp
 
-	\brief	The VFix header file containing the definition and implementation
-	of the VFixMISetHolder class template.
+   \brief   The VFix header file containing the definition and implementation
+   of the VFixMISetHolder class template.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <cstddef>

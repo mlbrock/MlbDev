@@ -1,56 +1,50 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// MLB Utility Library Include File
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  FloatingPointSupport.hpp
 
-	File Version      :	%I%
+   File Description  :  Include file for some generic floating-point support
+                        functionality.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2010-10-23 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
+      Copyright (c) 1998-2000 Theodore C. Belding
+      University of Michigan Center for the Study of Complex Systems
+      <mailto:Ted.Belding@umich.edu>
+      <http://www-personal.umich.edu/~streak/>     
 
-	File Description	:	Include file for some generic floating-point support
-								functionality.
+      This file is part of the fcmp distribution. fcmp is free software;
+      you can redistribute and modify it under the terms of the GNU Library
+      General Public License (LGPL), version 2 or later.  This software
+      comes with absolutely no warranty. See the file COPYING for details
+      and terms of copying.
 
-	Revision History	:	2010-10-23 --- Creation.
-									Michael L. Brock
-
-		Copyright (c) 1998-2000 Theodore C. Belding
-		University of Michigan Center for the Study of Complex Systems
-		<mailto:Ted.Belding@umich.edu>
-		<http://www-personal.umich.edu/~streak/>		
-
-		This file is part of the fcmp distribution. fcmp is free software;
-		you can redistribute and modify it under the terms of the GNU Library
-		General Public License (LGPL), version 2 or later.  This software
-		comes with absolutely no warranty. See the file COPYING for details
-		and terms of copying.
-
-		Portions Copyright Michael L. Brock 2010 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Portions Copyright Michael L. Brock 2010 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
  
 #ifndef HH__MLB__Utility__FloatingPointSupport_hpp__HH
 
-#define HH__MLB__Utility__FloatingPointSupport_hpp__HH	1
+#define HH__MLB__Utility__FloatingPointSupport_hpp__HH   1
 
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Required include files...
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Required include files...
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <mbcompat.h>
 
 #include <cmath>
 #include <limits>
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 

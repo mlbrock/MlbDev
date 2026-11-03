@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Xerces-C Utilities Include File
+// MLB Xerces-C Utilities Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  XercesUtils.hpp
 
-	File Version		:	%I%
+   File Description  :  Xerces-C include file.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2005-01-07 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Xerces-C include file.
-
-	Revision History	:	2005-01-07 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2005 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2005 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__XercesUtils__XercesUtils_hpp__HH
 
-#define HH__MLB__XercesUtils__XercesUtils_hpp__HH	1
+#define HH__MLB__XercesUtils__XercesUtils_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
@@ -51,10 +45,10 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	Setup for static or dynamic linking.
+   Setup for static or dynamic linking.
 
-	Define MLB__LIB__SO_XercesUtils if the library is to be built (or linked)
-	dynamically.
+   Define MLB__LIB__SO_XercesUtils if the library is to be built (or linked)
+   dynamically.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -62,19 +56,19 @@
 
 #ifdef MLB__LIB__SO_XercesUtils
 # ifdef XERCESCUTILS_DLL_EXPORTS
-#  define API_XERCESUTILS		MB_LIB_EXPORT
+#  define API_XERCESUTILS     MB_LIB_EXPORT
 # else
-#  define API_XERCESUTILS		MB_LIB_IMPORT
+#  define API_XERCESUTILS     MB_LIB_IMPORT
 # endif // #ifdef XERCESCUTILS_DLL_EXPORTS
 #else
 #  define API_XERCESUTILS
 #endif // #ifdef MLB__LIB__XercesUtils
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE	API_XERCESUTILS
+#define MB_LIB_THIS_SIDE   API_XERCESUTILS
 
 // ////////////////////////////////////////////////////////////////////////////
 

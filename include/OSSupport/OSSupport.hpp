@@ -3,13 +3,7 @@
 //	MLB Operating System Support (OSSupport) Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
-
-	File Version		:	%I%
-
-	Last Extracted		:	%D%	%T%
-
-	Last Updated		:	%E%	%U%
+	File Name			:	OSSupport.hpp
 
 	File Description	:	Include file for the operating system support library.
 

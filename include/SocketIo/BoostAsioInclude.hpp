@@ -1,42 +1,36 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	SocketIo Portable Socket Library Include File.
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// SocketIo Portable Socket Library Include File.
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  BoostAsioInclude.hpp
 
-	File Version      :	%I%
+   File Description  :  Include file which manages the include of the Boost
+                        asio include files.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2002-01-26 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file which manages the include of the Boost
-								asio include files.
-
-	Revision History	:	2002-01-26 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2002 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2002 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SocketIo__BoostAsioInclude_hpp__HH
 
-#define HH__MLB__SocketIo__BoostAsioInclude_hpp__HH		1
+#define HH__MLB__SocketIo__BoostAsioInclude_hpp__HH      1
 
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Include necessary header files . . .
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Include necessary header files . . .
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo.hpp>
 
-#define _WIN32_WINNT	0x0501
+#define _WIN32_WINNT 0x0501
 
 #ifdef _MSC_VER
 # pragma warning(push)
@@ -54,21 +48,21 @@
 # pragma warning(pop)
 #endif // #ifdef _MSC_VER
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	ASIO version 1.33.0 removed many types and functions which had previously
-	been deprecated.
+   ASIO version 1.33.0 removed many types and functions which had previously
+   been deprecated.
 
-	The last Boost version which contained the removed elements was Boost
-	version 1.86.0 / ASIO version 1.32.0.
+   The last Boost version which contained the removed elements was Boost
+   version 1.86.0 / ASIO version 1.32.0.
 
-	Beginning with Boost version 1.87.0 / ASIO 1.34.0 we need to shim the use
-	of the following removed elements:
-		o io_service
-		o const_buffers_1
-		o mutable_buffers_1
+   Beginning with Boost version 1.87.0 / ASIO 1.34.0 we need to shim the use
+   of the following removed elements:
+      o io_service
+      o const_buffers_1
+      o mutable_buffers_1
 */
 #if (BOOST_VERSION > 108600)
 # include <boost/asio/io_context.hpp>
@@ -85,7 +79,7 @@ typedef mutable_buffer mutable_buffers_1;
 } // namespace asio
 } // namespace boost
 #endif // #if (BOOST_VERSION > 108600)
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 #endif // #ifndef HH__MLB__SocketIo__BoostAsioInclude_hpp__HH
 

@@ -1,48 +1,41 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  IntToString.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for formatting integral values as strings
+                        in radices from 2 to 64.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1995-10-10 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for formatting integral values as strings
-								in radices from 2 to 64.
-
-	Revision History	:	1995-10-10 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1995 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1995 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__IntToString_hpp__HH
 
-#define HH__MLB__Utility__IntToString_hpp__HH	1
+#define HH__MLB__Utility__IntToString_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file 	IntToString.hpp
+   \file    IntToString.hpp
 
-	\brief	Logic to support formatting of integral values as strings in
-				radices from 2 to 64.
+   \brief   Logic to support formatting of integral values as strings in
+            radices from 2 to 64.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/ValueTraits.hpp>

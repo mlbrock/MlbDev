@@ -1,46 +1,40 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  HostByteOrder.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for generic host byte order manipulation
+                        logic.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for generic host byte order manipulation
-								logic.
-
-	Revision History	:	1998-04-08 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__Utility__HostByteOrder_hpp__HH
 
-#define HH__MLB__Utility__HostByteOrder_hpp__HH	1
+#define HH__MLB__Utility__HostByteOrder_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file HostByteOrder.hpp
+   \file HostByteOrder.hpp
 
-	\brief	The HostByteOrder header file.
+   \brief   The HostByteOrder header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

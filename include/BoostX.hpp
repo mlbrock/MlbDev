@@ -1,62 +1,55 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB BoostX Library Include File
+// MLB BoostX Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  BoostX.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the Boost support library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2005-08-23 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the Boost support library.
-
-	Revision History	:	2005-08-23 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2005 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2005 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__BoostX_hpp__HH
 
-#define HH__MLB__BoostX_hpp__HH	1
+#define HH__MLB__BoostX_hpp__HH  1
 
 #define MLB__LIB__BoostX
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/TimeSupport.hpp>
 #include <Utility/Utility_Exception.hpp>
 
-//	Needed for DoubleScopedLockBase
+// Needed for DoubleScopedLockBase
 #include <Utility/ValueToStringRadix.hpp>
 
 #ifdef MLB__LIB__BoostX
 # ifdef BOOSTX_DLL_EXPORTS
-#  define API_BOOSTX		MB_LIB_EXPORT
+#  define API_BOOSTX    MB_LIB_EXPORT
 # else
-#  define API_BOOSTX		MB_LIB_IMPORT
+#  define API_BOOSTX    MB_LIB_IMPORT
 # endif // #ifdef BOOSTX_DLL_EXPORTS
 #else
 #  define API_BOOSTX
 #endif // #ifdef MLB__LIB__BoostX
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE	API_BOOSTX
+#define MB_LIB_THIS_SIDE   API_BOOSTX
 
 #ifdef _MSC_VER
 # pragma warning(push)
@@ -72,9 +65,9 @@
 
 #if BOOST_VERSION < 105000
 namespace boost {
-	enum xtime_compat {
-		TIME_UTC_ = TIME_UTC
-	};
+   enum xtime_compat {
+      TIME_UTC_ = TIME_UTC
+   };
 }
 #endif // #if BOOST_VERSION < 105000
 

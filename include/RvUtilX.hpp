@@ -1,38 +1,32 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Include File
+// TibCo/Rendezvous Support Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RvUtilX.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for TibCo/Rendezvous 6 and above.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-01 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for TibCo/Rendezvous 6 and above.
-
-	Revision History	:	2001-10-01 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RvUtilX_hpp__HH
 
-#define HH__MLB__RvUtilX_hpp__HH	1
+#define HH__MLB__RvUtilX_hpp__HH 1
 
 #define MLB__LIB__RvUtilX
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/TimeSupport.hpp>
@@ -42,29 +36,29 @@
 
 #ifdef MLB__LIB__RvUtilX
 # ifdef RVUTILX_DLL_EXPORTS
-#  define API_RVUTILX		MB_LIB_EXPORT
+#  define API_RVUTILX      MB_LIB_EXPORT
 # else
-#  define API_RVUTILX		MB_LIB_IMPORT
+#  define API_RVUTILX      MB_LIB_IMPORT
 # endif // #ifdef RVUTILX_DLL_EXPORTS
 #else
 #  define API_RVUTILX
 #endif // #ifdef MLB__LIB__RvUtilX
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE	API_RVUTILX
+#define MB_LIB_THIS_SIDE   API_RVUTILX
 
-//	We use the same header file as that used to compile the RV C++ library to
-//	to prevent problems (such as that between:
+// We use the same header file as that used to compile the RV C++ library to
+// to prevent problems (such as that between:
 //
-//		tibrv/tibrvcpp.h:
-//			const TibrvListener::TibrvTransport*  getTransport() const
-//	and:
-//		src/tibrvcpp.h:	
-//			const TibrvListener::TibrvTransport*  getTransport() const
-//		
+//    tibrv/tibrvcpp.h:
+//       const TibrvListener::TibrvTransport*  getTransport() const
+// and:
+//    src/tibrvcpp.h:   
+//       const TibrvListener::TibrvTransport*  getTransport() const
+//    
 //#include "tibrv/tibrvcpp.h"
 #include "tibrvcpp.h"
 #include "ftcpp.h"

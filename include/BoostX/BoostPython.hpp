@@ -1,37 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB BoostX Python Library Include File
+// MLB BoostX Python Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  BoostPython.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the Boost Python support library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2005-08-23 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the Boost Python support library.
-
-	Revision History	:	2005-08-23 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2005 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2005 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH_MLB_BoostX_BoostPython_hpp_HH
 
-#define HH_MLB_BoostX_BoostPython_hpp_HH	1
+#define HH_MLB_BoostX_BoostPython_hpp_HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <BoostX.hpp>

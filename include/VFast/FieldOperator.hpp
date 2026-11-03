@@ -1,47 +1,41 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Include File
+// VFast Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  FieldOperator.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for FieldOperator enumeration support.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-11-15 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for FieldOperator enumeration support.
-
-	Revision History	:	2008-11-15 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFast__FieldOperator_hpp__HH
 
-#define HH__MLB__VFast__FieldOperator_hpp__HH	1
+#define HH__MLB__VFast__FieldOperator_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file FieldOperator.hpp
+   \file FieldOperator.hpp
 
-	\brief	The VFast field operator header file.
+   \brief   The VFast field operator header file.
 
-	Contains definitions and logic required for FieldOperator enumeration
-		support.
+   Contains definitions and logic required for FieldOperator enumeration
+      support.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/VFast.hpp>

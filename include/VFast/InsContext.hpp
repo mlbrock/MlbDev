@@ -1,44 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Include File
+// VFast Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  InsContext.hpp
 
-	File Version		:	%I%
+   File Description  :  Definition of the InsContext class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-11-22 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Definition of the InsContext class.
-
-	Revision History	:	2008-11-22 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFast__InsContext_hpp__HH
 
-#define HH__MLB__VFast__InsContext_hpp__HH	1
+#define HH__MLB__VFast__InsContext_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file InsContext.hpp
+   \file InsContext.hpp
 
-	\brief	Definition of the InsContext instruction context class.
+   \brief   Definition of the InsContext instruction context class.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/InsItem.hpp>

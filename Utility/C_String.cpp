@@ -1,26 +1,20 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File for C Language Support (string.h)
+// MLB Utility Library Module File for C Language Support (string.h)
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  C_String.cpp
 
-	File Version		:	%I%
+   File Description  :  String functions source module for the C language
+                        support library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	String functions source module for the C language
-								support library.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
@@ -28,7 +22,7 @@
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/C_StringSupport.hpp>

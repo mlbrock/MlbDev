@@ -1,61 +1,55 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	SockLibX Portable Socket Library Include File.
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// SockLibX Portable Socket Library Include File.
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  SockLibX.hpp
 
-	File Version      :	%I%
+   File Description  :  Include file for SockLibX support.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2002-01-26 --- Creation
+                           Michael L. Brock
+                        1996-04-10 --- Based upon the portable Network
+                                       Programming Suppoprt Library (NPSL).
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for SockLibX support.
-
-	Revision History	:	2002-01-26 --- Creation
-									Michael L. Brock
-								1996-04-10 --- Based upon the portable Network
-													Programming Suppoprt Library (NPSL).
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2002 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2002 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SockLibX__SockLibX_hpp__HH
 
-#define HH__MLB__SockLibX__SockLibX_hpp__HH		1
+#define HH__MLB__SockLibX__SockLibX_hpp__HH     1
 
 #define MLB__LIB__SockLibX
 
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Include necessary header files . . .
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Include necessary header files . . .
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/TimeSupport.hpp>
 #include <Utility/Utility_Exception.hpp>
 
 #ifdef MLB__LIB__SockLibX
 # ifdef SOCKLIBX_DLL_EXPORTS
-#  define API_SOCKLIBX		MB_LIB_EXPORT
+#  define API_SOCKLIBX     MB_LIB_EXPORT
 # else
-#  define API_SOCKLIBX		MB_LIB_IMPORT
+#  define API_SOCKLIBX     MB_LIB_IMPORT
 # endif // #ifdef SOCKLIBX_DLL_EXPORTS
 #else
 #  define API_SOCKLIBX
 #endif // #ifdef MLB__LIB__SockLibX
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE	API_SOCKLIBX
+#define MB_LIB_THIS_SIDE   API_SOCKLIBX
 
 #ifdef _Windows
 #else
@@ -64,7 +58,7 @@
 
 #include "npsl.h"
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 

@@ -1,27 +1,21 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Source Module						*/
+/* Network Programming Support Library (NPSL) Source Module                */
 /* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  lenshent.cpp
 
-	File Version      :	%I%
+   File Description  :  Determines the number and length of 'NPSL_HOSTENT'
+                        ('struct hostent') structure 'h_aliases'
+                        and 'h_addr_list' members.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-04-12 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Determines the number and length of 'NPSL_HOSTENT'
-								('struct hostent') structure 'h_aliases'
-								and 'h_addr_list' members.
-
-	Revision History	:	1993-04-12 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */

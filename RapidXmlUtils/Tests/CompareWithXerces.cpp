@@ -1,27 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXmlUtils Test Module File
+// MLB RapidXmlUtils Test Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	CompareWithXerces.cpp
+   File Name         :  CompareWithXerces.cpp
 
-	File Description	:	Compare parsing of XML files with the RapidXmlUtils
-								library with the XercesUtils library.
+   File Description  :  Compare parsing of XML files with the RapidXmlUtils
+                        library with the XercesUtils library.
 
-	Revision History	:	2015-03-22 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-03-22 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RapidXmlUtils/RapidXmlContext.hpp>

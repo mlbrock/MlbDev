@@ -1,25 +1,19 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Include File
+// MLB Operating System Support (OSSupport) Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  OSSupport_CoreDumperBase.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the operating system support library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the operating system support library.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
@@ -27,21 +21,21 @@
 
 #ifndef HH___MLB__OSSupport__CoreDumperBase_hpp___HH
 
-#define HH___MLB__OSSupport__CoreDumperBase_hpp___HH	1
+#define HH___MLB__OSSupport__CoreDumperBase_hpp___HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file OSSupport_CoreDumperBase.hpp
+   \file OSSupport_CoreDumperBase.hpp
 
-	\brief	The MLB Operating System Support header file for managing core
-	dumps.
+   \brief   The MLB Operating System Support header file for managing core
+   dumps.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <OSSupport/OSSupport.hpp>

@@ -1,26 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Executable Module Source File
+// MLB Executable Module Source File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	SocketBridge.cpp
+   File Name         :  SocketBridge.cpp
 
-	File Description	:	Bridges INET protocol family sockets.
+   File Description  :  Bridges INET protocol family sockets.
 
-	Revision History	:	2017-08-03 --- Creation.
-									Michael L. Brock
+   Revision History  :  2017-08-03 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2017 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2017 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/PacketSenderMC.hpp>
@@ -37,25 +37,25 @@
 
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	<xcast-src-info> := <total-length><src-ip4><src-port>
+   <xcast-src-info> := <total-length><src-ip4><src-port>
 
-	<bridge-spec> := <src>[,<src> ...]=<dst>[,<dst> ...]
+   <bridge-spec> := <src>[,<src> ...]=<dst>[,<dst> ...]
 
-	For <src-type> TCP ---> <dst-type> TCP:
-		We accept on each src separately.
-		Each src acceptance results in a connect to the dst.
+   For <src-type> TCP ---> <dst-type> TCP:
+      We accept on each src separately.
+      Each src acceptance results in a connect to the dst.
 
-	For <src-type> TCP ---> <dst-type> XCAST:
-		*** Not sure how this should work yet ***
+   For <src-type> TCP ---> <dst-type> XCAST:
+      *** Not sure how this should work yet ***
 
-	For <src-type> XCAST ---> <dst-type> XCAST:
-		Each received src packet is re-broadcast on all dst.
-		??? Perhaps optional specification to prepend <xcast-src-info> ???
+   For <src-type> XCAST ---> <dst-type> XCAST:
+      Each received src packet is re-broadcast on all dst.
+      ??? Perhaps optional specification to prepend <xcast-src-info> ???
 
-	For <src-type> XCAST ---> <dst-type> TCP:
-		Each received src packet is sent on all dst with <xcast-src-info>.
+   For <src-type> XCAST ---> <dst-type> TCP:
+      Each received src packet is sent on all dst with <xcast-src-info>.
 
-	UDP broadcasts work as if IP multicasts
+   UDP broadcasts work as if IP multicasts
 */
 // ////////////////////////////////////////////////////////////////////////////
 

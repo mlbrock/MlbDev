@@ -1,26 +1,20 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  BoostSerialization.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for boost serialization support for
+                        class and structures in the Utility library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2005-02-18 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for boost serialization support for
-								class and structures in the Utility library.
-
-	Revision History	:	2005-02-18 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2005 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2005 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
@@ -28,11 +22,11 @@
 
 #ifndef HH__MLB__Utility__Utility_BoostSerialization_hpp__HH
 
-#define HH__MLB__Utility__Utility_BoostSerialization_hpp__HH	1
+#define HH__MLB__Utility__Utility_BoostSerialization_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/CompiledAlignmentInfo.hpp>
@@ -51,9 +45,9 @@
 # pragma warning(disable: 4061 4100 4267 4511 4512 4625 4626 4640 4668)
 #endif // #ifdef _Windows
 
-	//	Needed to handle std::vector<std::string> serialization.
+   // Needed to handle std::vector<std::string> serialization.
 #include <boost/config.hpp>
-#define BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP	1
+#define BOOST_NO_ARGUMENT_DEPENDENT_LOOKUP   1
 
 #include <boost/archive/basic_archive.hpp>
 
@@ -63,13 +57,13 @@
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 
-	//	Need this for split save/load methods.
+   // Need this for split save/load methods.
 #include <boost/serialization/split_member.hpp>
 
-	// Need this for split save/load free functions.
+   // Need this for split save/load free functions.
 #include <boost/serialization/split_free.hpp>
 
-	//	Need these for exception definitions.
+   // Need these for exception definitions.
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/basic_xml_archive.hpp>
 

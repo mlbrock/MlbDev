@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Boost Python Library Module File
+// MLB Utility Boost Python Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  MLBUtilityPython.cpp
 
-	File Version		:	%I%
+   File Description  :  Main implementation file for the MLB Utility Python
+                        interface.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2007-10-19 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
+   Notes             :  Sample code for use if this interface may be found in
+                        MLB/Utility/Boost/Python/Test_MLBUtilityPython.py
 
-	File Description	:	Main implementation file for the MLB Utility Python
-								interface.
-
-	Revision History	:	2007-10-19 --- Creation.
-									Michael L. Brock
-
-	Notes					:	Sample code for use if this interface may be found in
-								MLB/Utility/Boost/Python/Test_MLBUtilityPython.py
-
-		Copyright Michael L. Brock 2007 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2007 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <BoostX/BoostPython.hpp>

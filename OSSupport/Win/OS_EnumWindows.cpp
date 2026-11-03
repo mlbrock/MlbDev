@@ -1,27 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Module File
+// MLB Operating System Support (OSSupport) Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	OS_EnumWindows.cpp
+   File Name         :  OS_EnumWindows.cpp
 
-	File Description	:	Implementation of wrappers to the Windows function
-								EnumWindows().
+   File Description  :  Implementation of wrappers to the Windows function
+                        EnumWindows().
 
-	Revision History	:	2017-04-08 --- Creation.
-									Michael L. Brock
+   Revision History  :  2017-04-08 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2017 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2017 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <OSSupport/Win/OS_EnumWindows.hpp>

@@ -1,31 +1,31 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Include File
+// MLB Operating System Support (OSSupport) Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	OS_EnumWindows.hpp
+   File Name         :  OS_EnumWindows.hpp
 
-	File Description	:	Include file for the operating system support library
-								for the Windows function EnumWindows.
+   File Description  :  Include file for the operating system support library
+                        for the Windows function EnumWindows.
 
-	Revision History	:	2017-04-08 --- Creation.
-									Michael L. Brock
+   Revision History  :  2017-04-08 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2017 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2017 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH___MLB__OSSupport__OS_EnumWindows_hpp___HH
 
-#define HH___MLB__OSSupport__OS_EnumWindows_hpp___HH	1
+#define HH___MLB__OSSupport__OS_EnumWindows_hpp___HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <OSSupport/OSSupport.hpp>

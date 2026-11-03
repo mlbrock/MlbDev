@@ -1,46 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  MACAddress.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the MACAddress class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the MACAddress class.
-
-	Revision History	:	1998-04-08 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__MACAddress_hpp__HH
 
-#define HH__MLB__Utility__MACAddress_hpp__HH	1
+#define HH__MLB__Utility__MACAddress_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file MACAddress.hpp
+   \file MACAddress.hpp
 
-	\brief	The MACAddress header file.
+   \brief   The MACAddress header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>

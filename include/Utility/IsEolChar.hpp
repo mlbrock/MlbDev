@@ -1,34 +1,33 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	IsEolChar.hpp
+   File Name         :  IsEolChar.hpp
 
-	File Description	:	Include file for end-of-line determination.
+   File Description  :  Include file for end-of-line determination.
 
-	Revision History	:	2016-05-09 --- Modified for C++.
-									Michael L. Brock
-								1986-10-27 --- Original C language version from
-													strfuncs library.
-									Michael L. Brock
+   Revision History  :  2016-05-09 --- Modified for C++.
+                           Michael L. Brock
+                        1986-10-27 --- Original C language version from
+                                       strfuncs library.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2016 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2016 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH___MLB__Utility__IsEolChar_hpp___HH
 
-#define HH___MLB__Utility__IsEolChar_hpp___HH	1
+#define HH___MLB__Utility__IsEolChar_hpp___HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <cstddef>

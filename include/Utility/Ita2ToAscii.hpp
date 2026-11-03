@@ -1,46 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  Ita2ToAscii.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the ITA2-to-ASCII support logic.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-11-08 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the ITA2-to-ASCII support logic.
-
-	Revision History	:	2008-11-08 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__Ita2ToAscii_hpp__HH
 
-#define HH__MLB__Utility__Ita2ToAscii_hpp__HH	1
+#define HH__MLB__Utility__Ita2ToAscii_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file		Ita2ToAscii.hpp
+   \file    Ita2ToAscii.hpp
 
-	\brief	Include file for the ITA2-to-ASCII support logic.
+   \brief   Include file for the ITA2-to-ASCII support logic.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
@@ -53,7 +46,7 @@ namespace Utility {
 
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	From http://www.kekatos.com/teletype/gil/docs/smith--teletype-codes.txt
+   From http://www.kekatos.com/teletype/gil/docs/smith--teletype-codes.txt
 
           USTTY                         ASCII translation
 ---------------------------           ---------------------

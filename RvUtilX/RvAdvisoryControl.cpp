@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Include File
+// TibCo/Rendezvous Support Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RvAdvisoryControl.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the Rv advisory control logic.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-01 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the RvUtilX callback template classes.
-
-	Revision History	:	2001-10-01 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RvUtilX_RvAdvisory_h__HH
 
-#define HH__MLB__RvUtilX_RvAdvisory_h__HH	1
+#define HH__MLB__RvUtilX_RvAdvisory_h__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <BoostX.hpp>
@@ -50,7 +44,7 @@
 # pragma warning(default:4217 4668)
 #endif // #ifdef _Windows
 
-//	CODE NOTE: Needed only for the GetRvField() functions. To be removed.
+// CODE NOTE: Needed only for the GetRvField() functions. To be removed.
 #include <RvUtilX/GetRvField.hpp>
 
 // CODE NOTE: Needed only within the cpp... To be removed.

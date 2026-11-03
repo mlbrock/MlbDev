@@ -1,33 +1,27 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Module File
+// MLB Operating System Support (OSSupport) Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  FileTimeToTimeSpec.cpp
 
-	File Version      :	%I%
+   File Description  :  Converts from Windows 'FILETIME' structures to
+                        'MLB::Utility::TimeSpec' structures.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Converts from Windows 'FILETIME' structures to
-								'MLB::Utility::TimeSpec' structures.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2026.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <OSSupport/Win/OSSupport_Win.hpp>
