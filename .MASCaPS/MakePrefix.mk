@@ -76,17 +76,17 @@ CPPFLAGS	+=	\
 			-D__STDC_FORMAT_MACROS \
 			${DEF_CELOX_CPP} \
 			${CPP_BUILD_TYPE} \
-			-I ./ \
-			-I ${INC_BASIC_DIR} \
-			-I ../include \
+			-I./ \
+			-I${INC_BASIC_DIR} \
+			-I../include \
 			${CPPFLAGS_ADDED} \
-			-I ${INC_OTHER_DIR} \
-			-I ${INC_LBM_DIR} \
-			-I ${INC_TIBRV_DIR} \
-			-I ${INC_BOOST_DIR} \
-			-I ${INC_CELOX_DIR} \
-			-I ${INC_PCAP_DIR} \
-			-I ${INC_XERCES_DIR} \
+			-I${INC_OTHER_DIR} \
+			-I${INC_LBM_DIR} \
+			-I${INC_TIBRV_DIR} \
+			-I${INC_BOOST_DIR} \
+			-I${INC_CELOX_DIR} \
+			-I${INC_PCAP_DIR} \
+			-I${INC_XERCES_DIR} \
 			-D_POSIX_PTHREAD_SEMANTICS \
 			-Wall \
 			-W \
@@ -163,11 +163,11 @@ LDFLAGS		+=	\
 			-lpthread		\
 			-lm			\
 			-lrt			\
-			-L /usr/lib64		\
-			-L ${MASCaPS_TARGET_LIB}\
-			-L ${LIB_PCAP_DIR}	\
-			-L ${LIB_BOOST_DIR}	\
-			-L ${LIB_XERCES_DIR}
+			-L/usr/lib64		\
+			-L${MASCaPS_TARGET_LIB}	\
+			-L${LIB_PCAP_DIR}	\
+			-L${LIB_BOOST_DIR}	\
+			-L${LIB_XERCES_DIR}
 
 TARGET_LIBS	=
 
