@@ -65,6 +65,25 @@ LIB_LBM_DIR	=	/home/brockm/Downloads/29West/UMS_5.0/Linux-glibc-2.5-x86_64/lib
 LIB_XERCES_DIR	=	${LIB_BASE}
 LIB_PCAP_DIR	=	${LIB_BASE}
 
+# -----------------------------------------------------------------------------
+MLB_LIB_NAMES     =       Utility
+USE_XLIBS_FLAG    = 0
+ifeq (${USE_XLIBS_FLAG}, 1)
+   XLIB_BASE     := ${shell dirname ${MASCaPS_DIR_PARENT}}
+   XLIB_LIST      = ${patsubst Utility,UtilityOld,${MLB_LIB_NAMES}}
+   XLIB_DIR_BASE  = ${addprefix ${XLIB_BASE}/,${XLIB_LIST}}
+   XLIB_INC_DIR   = ${addsuffix /include,${XLIB_DIR_BASE}}
+   XLIB_LIB_DIR   = ${addsuffix /TargetPlatform/${MASCaPS_SPEC_DIR}/lib,${XLIB_DIR_BASE}}
+   XLIB_INC_DIR_I = ${addprefix -I,${XLIB_INC_DIR}}
+   XLIB_LIB_DIR_L = ${addprefix -L,${XLIB_LIB_DIR}}
+   XLIB_LIB_FULL  = ${addsuffix .a,${join ${XLIB_LIB_DIR},${addprefix /lib,${MLB_LIB_NAMES}}}}
+   XLIB_LIB_LIST  = ${addprefix -l,${MLB_LIB_NAMES}}
+   MLB_LIB_FULL   = ${XLIB_LIB_FULL}
+else
+   MLB_LIB_FULL   = ${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB}/lib,${MLB_LIB_NAMES}}}
+endif
+# -----------------------------------------------------------------------------
+
 # Not supported in g++ 4.1.
 #			-Woverlength-strings \
 
@@ -79,6 +98,7 @@ CPPFLAGS	+=	\
 			-I./ \
 			-I${INC_BASIC_DIR} \
 			-I../include \
+			${XLIB_INC_DIR_I} \
 			${CPPFLAGS_ADDED} \
 			-I${INC_OTHER_DIR} \
 			-I${INC_LBM_DIR} \
@@ -139,12 +159,6 @@ TIBRV_LIB	=	\
 LBM_LIBS	=	\
 			liblbm.a
 
-MLB_LIB_NAMES	=	\
-			Utility
-
-MLB_LIB_FULL	=	\
-			${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB}/lib,${MLB_LIB_NAMES}}}
-
 LDLIBS		=	\
 			-Bstatic	\
 			${addprefix -l,${MLB_LIB_NAMES}}	\
@@ -165,6 +179,7 @@ LDFLAGS		+=	\
 			-lrt			\
 			-L/usr/lib64		\
 			-L${MASCaPS_TARGET_LIB}	\
+			${XLIB_LIB_DIR_L}	\
 			-L${LIB_PCAP_DIR}	\
 			-L${LIB_BOOST_DIR}	\
 			-L${LIB_XERCES_DIR}
