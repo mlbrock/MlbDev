@@ -6,7 +6,7 @@
 #
 # File Name       : LSFWrapper/Makefile
 #
-# File Description: Tib/Rendezvous wrapper library make file.
+# File Description: Platform LSF / IBM Spectrum LSF wrapper library make file.
 #
 # Revision History: 1998-04-08 --- Creation.
 #                       Michael L. Brock
