@@ -21,26 +21,7 @@
 # #############################################################################
 
 # #############################################################################
-# ##### This is the complete list, which I'm not building at present.
-MY_DIR_LIST="\
-Utility \
-SockLibX \
-SocketIo \
-XercesUtils \
-RapidXmlUtils \
-VFast \
-VFix \
-OSSupport \
-OdbcWrapper \
-RvUtilX \
-LbmWrapper \
-LSFWrapper \
-MlbUtilities
-"
-# #############################################################################
-
-# #############################################################################
-# ##### This is the redacted list.
+# ##### List of targets to be built.
 MY_DIR_LIST="\
 Utility \
 SockLibX \
