@@ -39,7 +39,7 @@
 #endif // #ifdef _MSC_VER
 
 #include <google/protobuf/descriptor.pb.h>
-#include <google/protobuf/Message.h>
+#include <google/protobuf/message.h>
 
 #ifdef _MSC_VER
 # pragma warning(pop)
