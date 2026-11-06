@@ -18,7 +18,6 @@
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH___MLB__OSSupport__CoreDumperBase_hpp___HH
 
 #define HH___MLB__OSSupport__CoreDumperBase_hpp___HH  1
