@@ -23,7 +23,7 @@
 // Include necessary header files...
 // ////////////////////////////////////////////////////////////////////////////
 
-#include "GpbElementInfo.hpp"
+#include <ProtoBuf/GpbElementInfo.hpp>
 
 #include <iomanip>
 #include <sstream>
