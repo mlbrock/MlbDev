@@ -30,7 +30,7 @@
 
 #include <Utility.hpp>
 
-#include "npsl.h"
+#include <SockLibX/npsl.h>
 
 #include <stdarg.h>
 

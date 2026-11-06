@@ -56,7 +56,8 @@
 # include <errno.h>
 #endif // #ifdef _Windows
 
-#include "npsl.h"
+#include <SockLibX/npsl.h>
+
 
 // ////////////////////////////////////////////////////////////////////////////
 
