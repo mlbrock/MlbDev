@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Library Module File
+// VFast Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  PacketFileInterface.cpp
 
-	File Version		:	%I%
+   File Description  :  Generic interface to reading FAST packet files.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2009-04-11 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Generic interface to reading FAST packet files.
-
-	Revision History	:	2009-04-11 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2009 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2009 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/PacketFileInterface.hpp>
@@ -568,6 +562,8 @@ unsigned int this_msg_count = 0;
 			const StreamDatum            *begin_ptr       = NULL;
 			const StreamDatum            *end_ptr         = NULL;
 			unsigned long long            packet_offset;
+			// Avoid g++ -Wunused-but-set-variable on debugging variable.
+			(void) use_previous_id;
 			packet_offset = msg_packet_file.GetFileOffset();
 			if (!msg_packet_file.GetPacketTyped(begin_ptr, end_ptr,
 				pfi_state.ip_address_, pfi_state.ip_port_, pfi_state.time_secs_,
@@ -682,6 +678,8 @@ unsigned int this_msg_count = 0;
 				ExcResults exc_results;
 				bool       core_parse_done   = false;
 				bool       debug_header_done = false;
+				// Avoid g++ -Wunused-but-set-variable on debugging variable.
+				(void) debug_header_done;
 				try {
 					pfi_state.msg_begin_ptr_ = begin_ptr;
 					pfi_state.msg_end_ptr_   = end_ptr;

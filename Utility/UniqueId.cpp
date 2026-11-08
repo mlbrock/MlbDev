@@ -1,34 +1,28 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// MLB Utility Library Module File
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  UniqueId.cpp
 
-	File Version      :	%I%
+   File Description  :  Implementation of the UniqueId class (and a few of the
+                        related free functions in the Utility library).
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-10-02 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the UniqueId class (and a few of the
-								related free functions in the Utility library).
-
-	Revision History	:	1993-10-02 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
  
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Required include files...
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Required include files...
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/UniqueId.hpp>
 #include <Utility/Utility_Exception.hpp>
@@ -40,9 +34,9 @@
 #endif // #ifdef __GNUC__
 
 #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
-#	if defined(_Windows) && !defined(__MINGW32__)
-#	 pragma warning(push)
-# 	pragma warning(disable:4365 4640)
+#  if defined(_Windows) && !defined(__MINGW32__)
+#   pragma warning(push)
+#  pragma warning(disable:4365 4640)
 # endif // #if defined(_Windows) && !defined(__MINGW32__)
 
 # include <boost/random.hpp>
@@ -54,7 +48,7 @@
 # endif // #if defined(_Windows) && !defined(__MINGW32__)
 #endif // #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
@@ -72,8 +66,16 @@ UniqueId::UniqueId(bool generate_uuid_flag)
 {
 	if (generate_uuid_flag)
 		id_ = GetSystemUUID();
-	else
-		memset(&id_, '\0', sizeof(id_));
+	else {
+#ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
+		id_ = boost::uuids::nil_uuid();
+#else
+		char         *tmp_ptr = reinterpret_cast<char *>(this);
+		unsigned int  count_1 = sizeof(*this);
+		while (count_1--)
+			*tmp_ptr++ = '\0';
+#endif // #ifdef MLB_UNIQUE_ID_USES_BOOST_UUID
+	}
 }
 //	////////////////////////////////////////////////////////////////////////////
 
@@ -476,7 +478,7 @@ int main()
 			UniqueId::FromString(request_id.ToString()) << std::endl;
 #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
 		unsigned char *uuid_string;
-		UuidToString(&request_id.id_, &uuid_string);
+		UuidToStringA(&request_id.id_, &uuid_string);
 		std::cout << "UUID Win32     : " <<
 			uuid_string << std::endl;
 #endif // #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
@@ -495,7 +497,7 @@ int main()
 				std::endl << std::endl;
 			return_code = EXIT_FAILURE;
 		}
-		RpcStringFree(&uuid_string);
+		RpcStringFreeA(&uuid_string);
 #endif // #if defined(_MSC_VER) && (!defined(MLB_UNIQUE_ID_USES_BOOST_UUID))
 	}
 	catch (const std::exception &except) {

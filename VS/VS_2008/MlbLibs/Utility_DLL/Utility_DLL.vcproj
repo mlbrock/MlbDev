@@ -322,6 +322,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\Utility\MapUtf8ToAscii.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\Utility\nstrcat.cpp"
 				>
 			</File>

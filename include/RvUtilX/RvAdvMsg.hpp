@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Include File
+// TibCo/Rendezvous Support Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RvAdvMsg.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the RvAdvMsg class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-01 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the RvAdvMsg class.
-
-	Revision History	:	2001-10-01 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RvUtilX_RvAdvMsg_hpp__HH
 
-#define HH__MLB__RvUtilX_RvAdvMsg_hpp__HH	1
+#define HH__MLB__RvUtilX_RvAdvMsg_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RvUtilX/RvParseCmdLineArg.hpp>
@@ -735,7 +729,7 @@ struct RvAdvMsg {
 		bool throw_if_no_match = true);
 
 private:
-	static const RvAdvFlagsMap *RvAdvMsg::SubjectToMapPtrInternal(
+	static const RvAdvFlagsMap *SubjectToMapPtrInternal(
 		const SubjectNameFlat subject, unsigned int map_count,
 		const RvAdvFlagsMap *map_list);
 
@@ -761,8 +755,8 @@ struct API_RVUTILX RvAdvMsgParseCmdLineArg : public RvParseCmdLineArg {
 		static bool ParseCmdLineAdvMsgFlagsSpec(const ContainerType &spec_cont,
 		unsigned int &current_index, int argc, char **argv,
 		RvAdvFlags &rv_flags, CmAdvFlags &cm_flags, FtAdvFlags &ft_flags) {
-		ContainerType::const_iterator iter_b(spec_cont.begin());
-		ContainerType::const_iterator iter_e(spec_cont.end());
+		typename ContainerType::const_iterator iter_b(spec_cont.begin());
+		typename ContainerType::const_iterator iter_e(spec_cont.end());
 		while (iter_b != iter_e) {
 			if (ParseCmdLineAdvMsgFlags(*iter_b, current_index, argc, argv,
 				rv_flags, cm_flags, ft_flags))

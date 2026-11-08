@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Library Module File
+// VFast Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  InsContext.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the InsContext class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-11-22 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the InsContext class.
-
-	Revision History	:	2008-11-22 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/InsContext.hpp>
@@ -558,10 +552,7 @@ unsigned int InsContext::GetMaxTemplateId() const
 // ////////////////////////////////////////////////////////////////////////////
 bool InsContext::CheckContext(std::vector<std::string> &error_list) const
 {
-	typedef std::map<unsigned int, unsigned int>  DVMap;
-	typedef DVMap::iterator                       DVMapIter;
-	typedef DVMap::const_iterator                 DVMapIterC;
-	typedef std::pair<unsigned int, unsigned int> DVMapPair;
+	typedef std::map<unsigned int, unsigned int> DVMap;
 
 	unsigned int ins_item_count   =
 		static_cast<unsigned int>(ins_item_list_.size());

@@ -1,26 +1,20 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Internal Include File			*/
+/* Network Programming Support Library (NPSL) Internal Include File        */
 /* *********************************************************************** */
 /*
-	File Name			:	%M%
+   File Name         :  npsli.h
 
-	File Version		:	%I%
+   File Description  :  Include file for the Internal Network Programming
+                        Support Library (NPSL).
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1996-04-10 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the Internal Network Programming
-								Support Library (NPSL).
-
-	Revision History	:	1996-04-10 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1996 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1996 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */
@@ -31,12 +25,12 @@
 
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*		Include necessary header files . . .											*/
+/*    Include necessary header files . . .                                 */
 /* *********************************************************************** */
 
 #include <Utility.hpp>
 
-#include "npsl.h"
+#include <SockLibX/npsl.h>
 
 #include <stdarg.h>
 
@@ -72,7 +66,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1996 - 2018 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_MAP_TRUTH_STR
 						NPSL_MAP_TRUTH_GEN
@@ -132,7 +126,7 @@ EOH */
 
    AUTHOR      :	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1996 - 2018 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_MAP_ERROR_STR
 						NPSL_MAP_ERROR_GEN

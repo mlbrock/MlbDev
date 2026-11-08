@@ -1,26 +1,20 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Source Module						*/
+/* Network Programming Support Library (NPSL) Source Module                */
 /* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  inhent.cpp
 
-	File Version      :	%I%
+   File Description  :  Initializes 'NPSL_HOSTENT' ('struct hostent')
+                        structures.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-04-12 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Initializes 'NPSL_HOSTENT' ('struct hostent')
-								structures.
-
-	Revision History	:	1993-04-12 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */
@@ -69,7 +63,7 @@
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEnt
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEnt
@@ -132,7 +126,7 @@ void NPSL_InitHostEnt(NPSL_HOSTENT *ptr)
 
 	AUTHOR		:	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
 	OUTPUT INDEX:	NPSL_InitHostEntList
 						Initialization Functions:Network Programming Support Functions:NPSL_InitHostEntList

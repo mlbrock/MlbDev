@@ -1,35 +1,29 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// MLB Utility Library Module File
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  RsrcUsage.cpp
 
-	File Version      :	%I%
+   File Description  :  Manages the Unix resource usage structure.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1992-10-11 --- Initial genfuncs C library logic.
+                           Michael L. Brock
+                        1998-04-08 --- Modified for C++.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Manages the Unix resource usage structure.
-
-	Revision History	:	1992-10-11 --- Initial genfuncs C library logic.
-									Michael L. Brock
-								1998-04-08 --- Modified for C++.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1992 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1992 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Include necessary header files...
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Include necessary header files...
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/StringSupport.hpp>
 #include <Utility/RsrcUsage.hpp>
@@ -59,7 +53,7 @@
 # endif // #ifdef __SVR4
 #endif // #ifdef _MSC_VER
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
@@ -788,7 +782,7 @@ void RsrcUsage::GetRsrcUsageByWindowsHandle(HANDLE selector, RsrcUsage &datum)
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1992 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1992 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	GetRsrcUsage
 						Miscellaneous Functions:GetRsrcUsage
@@ -1056,7 +1050,7 @@ void RsrcUsage::GetRsrcUsage()
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1992 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1992 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	GetRsrcUsageDelta
 						Miscellaneous Functions:GetRsrcUsageDelta

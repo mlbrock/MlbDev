@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Module
+// TibCo/Rendezvous Support Library Module
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         : XRvSendControl.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation file for the XRvSendControl class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2005-07-04 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation file for the XRvSendControl class.
-
-	Revision History	:	2005-07-04 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2005 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2005 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/Sleep.hpp>
@@ -145,7 +139,7 @@ void XRvSendControl::ParseCmdLine(int argc, char **argv)
 	std::string  tmp_field_type;
 	std::string  tmp_string;
 	bool         field_data_specified = false;
-	bool         trailing_count       = 0;
+	std::size_t  trailing_count       = 0;
 
 	my_name_ = MLB::Utility::GetFileNamePortion(argv[0]);
 

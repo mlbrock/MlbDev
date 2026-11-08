@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Library Module File
+// SocketIo Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  PacketFileWriter.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the PacketFileWriter class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the PacketFileWriter class.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/PacketFileWriter.hpp>
@@ -178,8 +172,22 @@ unsigned long long PacketFileWriter::WritePacket(std::size_t packet_length,
 	MsgTimeSecsType time_secs, MsgTimeNSecsType time_nsecs)
 {
 	return(WritePacket(packet_length, packet_ptr,
-		src_endpoint.address().to_v4().to_ulong(), src_endpoint.port(),
-		time_secs, time_nsecs));
+	/*
+		The address_v4::to_ulong() function has existed since ASIO was first
+		added to Boost (Boost version 1.36.0 / ASIO 1.11.0)
+
+		It was deprecated in Boost version 1.82.0 / ASIO 1.28.0, and removed
+		in Boost version 1.86.0 / ASIO version 1.32.0.
+
+		The replacement function address_v4::to_uint() function was added in
+		Boost version 1.66.0 / ASIO version 1.12.0.
+	*/
+#if (BOOST_VERSION < 106600)
+		src_endpoint.address().to_v4().to_ulong(),
+#else
+		src_endpoint.address().to_v4().to_uint(),
+#endif // #if (BOOST_VERSION < 106600)
+		src_endpoint.port(), time_secs, time_nsecs));
 }
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -189,7 +197,22 @@ unsigned long long PacketFileWriter::WritePacket(std::size_t packet_length,
 	const MLB::Utility::TimeSpec &packet_timestamp)
 {
 	return(WritePacket(packet_length, packet_ptr,
-		src_endpoint.address().to_v4().to_ulong(), src_endpoint.port(),
+	/*
+		The address_v4::to_ulong() function has existed since ASIO was first
+		added to Boost (Boost version 1.36.0 / ASIO 1.11.0)
+
+		It was deprecated in Boost version 1.82.0 / ASIO 1.28.0, and removed
+		in Boost version 1.86.0 / ASIO version 1.32.0.
+
+		The replacement function address_v4::to_uint() function was added in
+		Boost version 1.66.0 / ASIO version 1.12.0.
+	*/
+#if (BOOST_VERSION < 106600)
+		 src_endpoint.address().to_v4().to_ulong(),
+#else
+		src_endpoint.address().to_v4().to_uint(),
+#endif // #if (BOOST_VERSION < 106600)
+		src_endpoint.port(),
 		static_cast<MsgTimeSecsType>(packet_timestamp.tv_sec),
 		static_cast<MsgTimeNSecsType>(packet_timestamp.tv_nsec)));
 }

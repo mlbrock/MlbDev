@@ -1,33 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB LSFWrapper Library Module
+// MLB LSFWrapper Library Module
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  PlaceReq.cpp
 
-	File Version		:	%I%
+   File Description  :  Support for LSF functionality 'ls_placereq()'.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Support for LSF functionality 'ls_placereq()'.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/C_StringSupport.hpp>
@@ -60,8 +53,9 @@ char **LSF_placereq(const char *resreq, unsigned int *num,
 			number_text << *num;
 		std::ostringstream error_text;
 		error_text << "Platform/LSF function 'ls_placereq()' indicates that " <<
-			number_text << " hosts were returned, but the pointer to that array "
-			"of structures is " << ((result == NULL) ? "" : "not ") << "'NULL'.";
+			number_text.str() << " hosts were returned, but the pointer to that "
+			"array of structures is " << ((result == NULL) ? "" : "not ") <<
+			"'NULL'.";
 		throw LSFException(error_text);
 	}
 

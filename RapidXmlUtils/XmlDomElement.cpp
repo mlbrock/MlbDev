@@ -1,26 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXmlUtils Utilities Library Module File
+// MLB RapidXmlUtils Utilities Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	XmlDomElement.cpp
+   File Name         :  XmlDomElement.cpp
 
-	File Description	:	Implementation of the XmlDomElement class.
+   File Description  :  Implementation of the XmlDomElement class.
 
-	Revision History	:	2015-03-21 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-03-21 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RapidXmlUtils/XmlDomElement.hpp>
@@ -172,7 +172,8 @@ XmlDomElement::XmlDomElement(
 	//	Get the list of attributes...
 	rapidxml::xml_attribute<> *attr_ptr = element_ptr->first_attribute();
 	while (attr_ptr) {
-		attribute_map_[attr_ptr->name()] = attr_ptr->value();
+		attribute_map_[MLB::RapidXmlUtils::XmlStringToString(attr_ptr->name())] =
+			MLB::RapidXmlUtils::XmlStringToString(attr_ptr->value());
 		attr_ptr = attr_ptr->next_attribute();
 	}
 }

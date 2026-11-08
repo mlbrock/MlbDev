@@ -13,7 +13,7 @@
 #                   2015-03-31 --- Modified for use with MASCaPS Version 3.
 #                       Michael L. Brock
 #
-#       Copyright Michael L. Brock 2008 - 2018.
+#       Copyright Michael L. Brock 2008 - 2026.
 #
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
@@ -58,7 +58,7 @@ SRCS		=	\
 			StringToIpAddress.cpp		\
 			TimerHandler.cpp
 
-LINK_STATIC	=	${LINK_STATIC_BIN}
+#LINK_STATIC	=	${LINK_STATIC_BIN}
 
 # Only the libraries below are needed for TEST_MAIN unit tests in this library.
 MLB_LIB_NAMES	=	SocketIo Utility

@@ -1,44 +1,38 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFast Include File
+// VFast Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  DictValue.hpp
 
-	File Version		:	%I%
+   File Description  :  Definition of the DictValue class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-11-18 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Definition of the DictValue class.
-
-	Revision History	:	2008-11-18 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__VFast__DictValue_hpp__HH
 
-#define HH__MLB__VFast__DictValue_hpp__HH	1
+#define HH__MLB__VFast__DictValue_hpp__HH 1
 
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	\file DictValue.hpp
+   \file DictValue.hpp
 
-	\brief	The container type for initial and dictionary values.
+   \brief   The container type for initial and dictionary values.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFast/DataType.hpp>
@@ -335,7 +329,7 @@ template <>
 template <>
 	inline Type_SInt32 *DictValue::GetDatumPtr<Type_SInt32>()
 {
-	return(const_cast<Type_SInt32 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_SInt32 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_SInt32>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -344,7 +338,7 @@ template <>
 template <>
 	inline Type_UInt32 *DictValue::GetDatumPtr<Type_UInt32>()
 {
-	return(const_cast<Type_UInt32 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_UInt32 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_UInt32>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -353,7 +347,7 @@ template <>
 template <>
 	inline Type_SInt64 *DictValue::GetDatumPtr<Type_SInt64>()
 {
-	return(const_cast<Type_SInt64 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_SInt64 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_SInt64>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -362,7 +356,7 @@ template <>
 template <>
 	inline Type_UInt64 *DictValue::GetDatumPtr<Type_UInt64>()
 {
-	return(const_cast<Type_UInt64 *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_UInt64 *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_UInt64>()));
 }
 // ////////////////////////////////////////////////////////////////////////////
@@ -371,7 +365,7 @@ template <>
 template <>
 	inline Type_Decimal *DictValue::GetDatumPtr<Type_Decimal>()
 {
-	return(const_cast<Type_Decimal *>(const_cast<const DictValue * const>(
+	return(const_cast<Type_Decimal *>(const_cast<const DictValue *>(
 		this)->GetDatumPtr<Type_Decimal>()));
 }
 // ////////////////////////////////////////////////////////////////////////////

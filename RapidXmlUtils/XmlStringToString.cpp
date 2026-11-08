@@ -1,30 +1,32 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB RapidXmlUtils Utilities Library Module File
+// MLB RapidXmlUtils Utilities Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	XmlStringToString.cpp
+   File Name         :  XmlStringToString.cpp
 
-	File Description	:	Implementation of logic to convert from RapidXml
-								strings to C++ strings.
+   File Description  :  Implementation of logic to convert from RapidXml
+                        strings to C++ strings.
 
-	Revision History	:	2015-03-21 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-03-21 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RapidXmlUtils/RapidXmlUtils.hpp>
+
+#include <Utility/MapUtf8ToAscii.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -35,7 +37,8 @@ namespace RapidXmlUtils {
 // ////////////////////////////////////////////////////////////////////////////
 std::string &XmlStringToString(const char *in_string, std::string &out_string)
 {
-	return(out_string.assign(in_string));
+	//	To be compatible with the Xerces-C transcode() function.
+	return(MLB::Utility::MapUtf8ToAscii8InPlace(out_string.assign(in_string)));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

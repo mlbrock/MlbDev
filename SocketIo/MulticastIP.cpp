@@ -1,36 +1,31 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Library Module File
+// SocketIo Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  MulticastIP.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of multicast IP address checking
+                        support.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of multicast IP address checking
-								support.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/MulticastIP.hpp>
+#include <SocketIo/IpAddressGeneric.hpp>
 
 #include <Utility/Utility_Exception.hpp>
 
@@ -88,7 +83,11 @@ bool IsMulticastIP(const boost::asio::ip::address &ip_address)
 // ////////////////////////////////////////////////////////////////////////////
 bool IsMulticastIP(const char *ip_address)
 {
+/*
+	CODE NOTE: Obsoleted. To be removed.
 	return(IsMulticastIP(boost::asio::ip::address::from_string(ip_address)));
+*/
+	return(IsMulticastIP(AddressFromString(ip_address)));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

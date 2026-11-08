@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Module
+// TibCo/Rendezvous Support Library Module
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  RvFieldType.cpp
 
-	File Version		:	%I%
+   File Description  :  Converts message field types to strings.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-01 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Converts message field types to strings.
-
-	Revision History	:	2001-10-01 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RvUtilX/RvParseCmdLineArg.hpp>
@@ -147,8 +141,12 @@ std::string MsgFieldTypeToString(tibrv_u8 msg_field_type)
 			break;
 		default						:
 			std::ostringstream tmp_string;
+#if (TIBRVMSG_USER_LAST < UCHAR_MAX)
 			if ((msg_field_type >= TIBRVMSG_USER_FIRST) &&
 				(msg_field_type <= TIBRVMSG_USER_LAST)) {
+#else
+			if (msg_field_type >= TIBRVMSG_USER_FIRST) {
+#endif // #if (TIBRVMSG_USER_LAST < UCHAR_MAX)
 				tmp_string << "*User-defined TibRv Msg field type=" <<
 					static_cast<unsigned int>(msg_field_type) << "*";
 				out_string = tmp_string.str();

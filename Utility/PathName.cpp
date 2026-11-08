@@ -1,34 +1,28 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
+// MLB Utility Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  PathName.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the portable path name functions.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1996-01-02 --- Original logic in genfuncs/expfpath.c.
+                           Michael L. Brock
+                        1998-04-08 --- Modified for use with C++.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the portable path name functions.
-
-	Revision History	:	1996-01-02 --- Original logic in genfuncs/expfpath.c.
-									Michael L. Brock
-								1998-04-08 --- Modified for use with C++.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1996 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1996 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/PathName.hpp>
@@ -245,7 +239,7 @@ void SetCurrentPath(const std::string &new_path)
 
 	AUTHOR		:	Michael L. Brock
 
-	COPYRIGHT	:	Copyright 1996 - 2018 Michael L. Brock
+	COPYRIGHT	:	Copyright 1996 - 2026 Michael L. Brock
 
 	OUTPUT INDEX:	ExpandToFullPathName
 						Directory Functions:ExpandToFullPathName
@@ -643,7 +637,11 @@ bool ResolveFilePathGeneral(const std::string &in_path, std::string &out_path,
 						false, true, false);
 					boost::filesystem::path tmp_base(
 						BoostFs_ConstructNativePath(tmp_base_path));
+#if (BOOST_VERSION < 108500)
 					tmp_path = boost::filesystem::complete(tmp_path, tmp_base);
+#else
+					tmp_path = boost::filesystem::absolute(tmp_path, tmp_base);
+#endif // #if (BOOST_VERSION < 10.85.00)
 				}
 				catch (const std::exception &except) {
 					Rethrow(except, "Unable to resolve the specified base path: " +
@@ -919,8 +917,17 @@ void GetPathElementList(const std::string &in_path_name,
 	for ( ; ; ) {
 		boost::filesystem::path tmp_path(
 			BoostFs_ConstructNativePath(tmp_path_name));
+/*
+	I'm not sure when has_leaf() was removed from the path class, but this
+	code certainly compiled in Boost 1.83.0.
+*/
+#if (BOOST_VERSION < 108300)
 		if (!tmp_path.has_leaf())
 			break;
+#else
+		if (!tmp_path.has_stem())
+			break;
+#endif // #if (BOOST_VERSION < 108500)
 		std::string             last_leaf(BoostFs_GetPathLeafString(tmp_path));
 		boost::filesystem::path leaf_path(BoostFs_ConstructNativePath(last_leaf));
 		tmp_element_list.push_back(BoostFs_GetNativeFileString(leaf_path));

@@ -1,26 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	VFix Library Module File
+// VFix Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	PFixField.cpp
+   File Name         :  PFixField.cpp
 
-	File Description	:	Implementation of the PFixField class.
+   File Description  :  Implementation of the PFixField class.
 
-	Revision History	:	2015-07-03 --- Creation.
-									Michael L. Brock
+   Revision History  :  2015-07-03 --- Creation.
+                           Michael L. Brock
 
-		Copyright Michael L. Brock 2015 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2015 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <VFix/PFixField.hpp>
@@ -424,7 +424,7 @@ bool PFixField::FixUpSet(PFixFieldSet &in_set,
 
 	iter_b = tag_idx.begin();
 
-	for (std::size_t count_1 = 0 ; iter_b != iter_e; ++iter_b, ++count_1) {
+	for ( ; iter_b != iter_e; ++iter_b) {
 		try {
 			if (iter_b->tag_ < 1) {
 				std::ostringstream o_str;
@@ -628,7 +628,8 @@ using namespace MLB::VFix;
 namespace {
 
 // ////////////////////////////////////////////////////////////////////////////
-void TEST_RunTest(const char *field_file_name, const char *data_type_file_name)
+void TEST_RunTest(const char *field_file_name,
+	const char * /* data_type_file_name */)
 {
 	PFixFieldSet element_set(PFixField::ParseXmlFile(field_file_name));
 

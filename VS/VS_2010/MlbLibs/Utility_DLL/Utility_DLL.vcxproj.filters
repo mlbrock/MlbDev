@@ -216,5 +216,8 @@
     <ClCompile Include="..\..\..\..\Utility\EmitRuledBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Utility\MapUtf8ToAscii.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

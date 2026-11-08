@@ -1,26 +1,20 @@
 /* *********************************************************************** */
 /* *********************************************************************** */
-/*	Network Programming Support Library (NPSL) Source Module						*/
+/* Network Programming Support Library (NPSL) Source Module                */
 /* *********************************************************************** */
 /*
-	File Name  			:	%M%
+   File Name         :  cppent.cpp
 
-	File Version      :	%I%
+   File Description  :  Performs a copy of a 'NPSL_PROTOENT' ('struct
+                        protoent') structure.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-04-12 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Performs a copy of a 'NPSL_PROTOENT' ('struct
-								protoent') structure.
-
-	Revision History	:	1993-04-12 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 /* *********************************************************************** */
@@ -111,7 +105,7 @@
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntFlat
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntFlat
@@ -221,7 +215,7 @@ int NPSL_CopyProtoEntFlat(const NPSL_PROTOENT *in_proto_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntFlatBasic
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntFlatBasic
@@ -380,7 +374,7 @@ EXIT_FUNCTION:
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEnt
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEnt
@@ -516,7 +510,7 @@ int NPSL_CopyProtoEnt(const NPSL_PROTOENT *in_proto_ent_ptr,
 
    AUTHOR      :	Michael L. Brock
 
-   COPYRIGHT   :	Copyright 1993 - 2018 Michael L. Brock
+   COPYRIGHT   :	Copyright 1993 - 2026 Michael L. Brock
 
    OUTPUT INDEX:	NPSL_CopyProtoEntList
 						Copy Functions:Network Programming Support Functions:NPSL_CopyProtoEntList

@@ -15,7 +15,7 @@
 #                   2015-03-27 --- Modified as .MASCaPS/MakePrefix.mk.
 #                       Michael L. Brock
 #
-#       Copyright Michael L. Brock 1992 - 2018.
+#       Copyright Michael L. Brock 1992 - 2026.
 #
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
@@ -65,6 +65,25 @@ LIB_LBM_DIR	=	/home/brockm/Downloads/29West/UMS_5.0/Linux-glibc-2.5-x86_64/lib
 LIB_XERCES_DIR	=	${LIB_BASE}
 LIB_PCAP_DIR	=	${LIB_BASE}
 
+# -----------------------------------------------------------------------------
+MLB_LIB_NAMES     =       Utility
+USE_XLIBS_FLAG    = 0
+ifeq (${USE_XLIBS_FLAG}, 1)
+   XLIB_BASE     := ${shell dirname ${MASCaPS_DIR_PARENT}}
+   XLIB_LIST      = ${patsubst Utility,UtilityOld,${MLB_LIB_NAMES}}
+   XLIB_DIR_BASE  = ${addprefix ${XLIB_BASE}/,${XLIB_LIST}}
+   XLIB_INC_DIR   = ${addsuffix /include,${XLIB_DIR_BASE}}
+   XLIB_LIB_DIR   = ${addsuffix /TargetPlatform/${MASCaPS_SPEC_DIR}/lib,${XLIB_DIR_BASE}}
+   XLIB_INC_DIR_I = ${addprefix -I,${XLIB_INC_DIR}}
+   XLIB_LIB_DIR_L = ${addprefix -L,${XLIB_LIB_DIR}}
+   XLIB_LIB_FULL  = ${addsuffix .a,${join ${XLIB_LIB_DIR},${addprefix /lib,${MLB_LIB_NAMES}}}}
+   XLIB_LIB_LIST  = ${addprefix -l,${MLB_LIB_NAMES}}
+   MLB_LIB_FULL   = ${XLIB_LIB_FULL}
+else
+   MLB_LIB_FULL   = ${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB}/lib,${MLB_LIB_NAMES}}}
+endif
+# -----------------------------------------------------------------------------
+
 # Not supported in g++ 4.1.
 #			-Woverlength-strings \
 
@@ -76,17 +95,18 @@ CPPFLAGS	+=	\
 			-D__STDC_FORMAT_MACROS \
 			${DEF_CELOX_CPP} \
 			${CPP_BUILD_TYPE} \
-			-I ./ \
-			-I ${INC_BASIC_DIR} \
-			-I ../include \
+			-I./ \
+			-I${INC_BASIC_DIR} \
+			-I../include \
+			${XLIB_INC_DIR_I} \
 			${CPPFLAGS_ADDED} \
-			-I ${INC_OTHER_DIR} \
-			-I ${INC_LBM_DIR} \
-			-I ${INC_TIBRV_DIR} \
-			-I ${INC_BOOST_DIR} \
-			-I ${INC_CELOX_DIR} \
-			-I ${INC_PCAP_DIR} \
-			-I ${INC_XERCES_DIR} \
+			-I${INC_OTHER_DIR} \
+			-I${INC_LBM_DIR} \
+			-I${INC_TIBRV_DIR} \
+			-I${INC_BOOST_DIR} \
+			-I${INC_CELOX_DIR} \
+			-I${INC_PCAP_DIR} \
+			-I${INC_XERCES_DIR} \
 			-D_POSIX_PTHREAD_SEMANTICS \
 			-Wall \
 			-W \
@@ -113,12 +133,21 @@ CFLAGS		+=	\
 
 OTHER_LIBS	=
 
-BOOST_LIBS	=	\
-			${LIB_BOOST_DIR}/libboost_filesystem.a   \
-			${LIB_BOOST_DIR}/libboost_date_time.a \
-			${LIB_BOOST_DIR}/libboost_thread.a \
-			${LIB_BOOST_DIR}/libboost_regex.a \
-			${LIB_BOOST_DIR}/libboost_system.a
+BOOST_LIB_NAMES	=	\
+			libboost_filesystem.a   \
+			libboost_date_time.a \
+			libboost_thread.a \
+			libboost_regex.a
+
+# Boost 1.89 made Boost System header-only. A good thing, but of course it
+# broke builds which had included the library explicitly. The following
+# make logic bridges the gap.
+ifeq (1, ${words ${LIB_BOOST_DIR}})
+	TMP_LIB_NAME     = ${wildcard ${LIB_BOOST_DIR}/libboost_system.a}
+	BOOST_LIB_NAMES += ${notdir ${TMP_LIB_NAME}}
+endif
+
+BOOST_LIBS	=       ${addprefix ${LIB_BOOST_DIR}/,${BOOST_LIB_NAMES}}
 
 TIBRV_LIB	=	\
 			${LIB_TIBRV_DIR}/libtibrvcmq64.a	\
@@ -129,12 +158,6 @@ TIBRV_LIB	=	\
 
 LBM_LIBS	=	\
 			liblbm.a
-
-MLB_LIB_NAMES	=	\
-			Utility
-
-MLB_LIB_FULL	=	\
-			${addsuffix .a,${addprefix ${MASCaPS_TARGET_LIB}/lib,${MLB_LIB_NAMES}}}
 
 LDLIBS		=	\
 			-Bstatic	\
@@ -154,11 +177,12 @@ LDFLAGS		+=	\
 			-lpthread		\
 			-lm			\
 			-lrt			\
-			-L /usr/lib64		\
-			-L ${MASCaPS_TARGET_LIB}\
-			-L ${LIB_PCAP_DIR}	\
-			-L ${LIB_BOOST_DIR}	\
-			-L ${LIB_XERCES_DIR}
+			-L/usr/lib64		\
+			-L${MASCaPS_TARGET_LIB}	\
+			${XLIB_LIB_DIR_L}	\
+			-L${LIB_PCAP_DIR}	\
+			-L${LIB_BOOST_DIR}	\
+			-L${LIB_XERCES_DIR}
 
 TARGET_LIBS	=
 

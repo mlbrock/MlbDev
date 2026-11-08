@@ -1,67 +1,60 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Operating System Support (OSSupport) Library Include File
+// MLB Operating System Support (OSSupport) Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  OSSupport.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for the operating system support library.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1998-04-08 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for the operating system support library.
-
-	Revision History	:	1998-04-08 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1998 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1998 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH___MLB__OSSupport__OSSupport_hpp___HH
 
-#define HH___MLB__OSSupport__OSSupport_hpp___HH	1
+#define HH___MLB__OSSupport__OSSupport_hpp___HH 1
 
 #define MLB_LIB_OSSupport
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file OSSupport.hpp
+   \file OSSupport.hpp
 
-	\brief	The MLB Operating System Support header file.
+   \brief   The MLB Operating System Support header file.
 
-	Contains operating system specific classes and definitions.
+   Contains operating system specific classes and definitions.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifdef MLB_LIB_OSSupport
 # ifdef OSSUPPORT_DLL_EXPORTS
-#  define API_OSSUPPORT		MB_LIB_EXPORT
+#  define API_OSSUPPORT    MB_LIB_EXPORT
 # else
-#  define API_OSSUPPORT		MB_LIB_IMPORT
+#  define API_OSSUPPORT    MB_LIB_IMPORT
 # endif // #ifdef OSSUPPORT_DLL_EXPORTS
 #else
 #  define API_OSSUPPORT
 #endif // #ifdef MLB_LIB_OSSupport
 
-	//	Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
+   // Define MB_LIB_THIS_SIDE to be the {im|ex}port side for shared libs...
 #ifdef MB_LIB_THIS_SIDE
 #undef MB_LIB_THIS_SIDE
 #endif // #ifdef MB_LIB_THIS_SIDE
-#define MB_LIB_THIS_SIDE	API_OSSUPPORT
+#define MB_LIB_THIS_SIDE   API_OSSUPPORT
 
 #include <Utility.hpp>
 

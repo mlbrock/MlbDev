@@ -12,7 +12,7 @@
 # Revision History: 2016-01-29 --- Creation.
 #                       Michael L. Brock
 #
-#       Copyright Michael L. Brock 2016 - 2018.
+#       Copyright Michael L. Brock 2016 - 2026.
 #
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
@@ -21,26 +21,7 @@
 # #############################################################################
 
 # #############################################################################
-# ##### This is the complete list, which I'm not building at present.
-MY_DIR_LIST="\
-Utility \
-SockLibX \
-SocketIo \
-XercesUtils \
-RapidXmlUtils \
-VFast \
-VFix \
-OSSupport \
-OdbcWrapper \
-RvUtilX \
-LbmWrapper \
-LSFWrapper \
-MlbUtilities
-"
-# #############################################################################
-
-# #############################################################################
-# ##### This is the redacted list.
+# ##### List of targets to be built.
 MY_DIR_LIST="\
 Utility \
 SockLibX \

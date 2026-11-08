@@ -11,7 +11,7 @@
 # Revision History: 2015-11-05 --- Creation.
 #                       Michael L. Brock
 #
-#       Copyright Michael L. Brock 2015 - 2018.
+#       Copyright Michael L. Brock 2015 - 2026.
 #
 #       Distributed under the Boost Software License, Version 1.0.
 #       (See accompanying file LICENSE_1_0.txt or copy at
@@ -38,7 +38,7 @@ SRCS		=	\
 
 #LDFLAGS		+=	-L$(IBASE)/lib -L/usr/lib64/boost-1.38.0/lib 
 
-LINK_STATIC	=	${LINK_STATIC_BIN}
+#LINK_STATIC	=	${LINK_STATIC_BIN}
 
 # Only the libraries below are needed for TEST_MAIN unit tests in this library.
 MLB_LIB_NAMES	=	VFix RapidXmlUtils SocketIo Utility

@@ -1,36 +1,31 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Include File
+// SocketIo Portable Socket Library Include File.
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  StreamAcceptor.hpp
 
-	File Version		:	%I%
 
-	Last Extracted		:	%D%	%T%
+   File Description  :  Definition of the StreamAcceptor class.
 
-	Last Updated		:	%E%	%U%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	File Description	:	Definition of the StreamAcceptor class.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SocketIo__StreamAcceptor_hpp__HH
 
-#define HH__MLB__SocketIo__StreamAcceptor_hpp__HH	1
+#define HH__MLB__SocketIo__StreamAcceptor_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/SocketBase.hpp>
@@ -56,7 +51,18 @@ public:
 	virtual ~StreamAcceptor();
 
 	void Accept(SocketBase<boost::asio::ip::tcp::socket> &peer_socket);
+
+	/*
+		ASIO version 1.33.0 removed socket_base::max_connections.
+
+		The replacement support (socket_base::max_listen_connections) was added
+		in Boost version 1.69.0 / ASIO version 1.12.2.
+	*/
+#if (BOOST_VERSION < 106900)
 	void Listen(int backlog = boost::asio::socket_base::max_connections);
+#else
+	void Listen(int backlog = boost::asio::socket_base::max_listen_connections);
+#endif // #if (BOOST_VERSION < 106900)
 
 private:
 	StreamAcceptor(const StreamAcceptor &other);

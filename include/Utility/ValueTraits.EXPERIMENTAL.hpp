@@ -1,45 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  ValueTraits.EXPERIMENTAL.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for miscellaneous value manipulation.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2009-09-13 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for miscellaneous value manipulation.
-
-	Revision History	:	2009-09-13 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2009 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2009 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__Utility__ValueTraits_hpp__HH
 
-#define HH__MLB__Utility__ValueTraits_hpp__HH	1
+#define HH__MLB__Utility__ValueTraits_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file 	ValueTraits.hpp
+   \file    ValueTraits.hpp
 
-	\brief	Miscellaneous logic for value manipulation.
+   \brief   Miscellaneous logic for value manipulation.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
@@ -51,24 +45,52 @@ namespace MLB {
 namespace Utility {
 
 namespace {
+
 // ////////////////////////////////////////////////////////////////////////////
 template <bool IsSignedFlag> struct IsSignedType {
 };
 template <> struct IsSignedType<false> {
+	static const bool value = false;
 	template <typename SomeType>
-	static bool IsNegative(const SomeType &)
+		static bool IsNegative(const SomeType &)
 	{
 		return(false);
 	}
+
+	template <typename SomeType>
+		static SomeType GetValueNegated(const SomeType &in_value)
+	{
+		return(in_value);
+	}
+
+	template <typename SomeType>
+		static SomeType GetValueAbsolute(const SomeType &in_value)
+	{
+		return(in_value);
+	}
 };
 template <> struct IsSignedType<true> {
+	static const bool value = true;
 	template <typename SomeType>
-	static bool IsNegative(const SomeType &in_value)
+		static bool IsNegative(const SomeType &in_value)
 	{
 		return(in_value < static_cast<SomeType>(0));
 	}
+
+	template <typename SomeType>
+		static SomeType GetValueNegated(const SomeType &in_value)
+	{
+		return(-in_value);
+	}
+
+	template <typename SomeType>
+		static SomeType GetValueAbsolute(const SomeType &in_value)
+	{
+		return((IsNegative(in_value)) ? (-in_value) : in_value);
+	}
 };
 // ////////////////////////////////////////////////////////////////////////////
+
 } // Anonymous namespace
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -77,6 +99,24 @@ template <typename PodType>
 {
 	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
 		IsNegative(in_value));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename PodType>
+	PodType GetValueNegated(const PodType &in_value)
+{
+	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
+		GetValueNegated(in_value));
+}
+// ////////////////////////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////
+template <typename PodType>
+	PodType GetValueAbsolute(const PodType &in_value)
+{
+	return(IsSignedType<std::numeric_limits<PodType>::is_signed>::
+		GetValueAbsolute(in_value));
 }
 // ////////////////////////////////////////////////////////////////////////////
 

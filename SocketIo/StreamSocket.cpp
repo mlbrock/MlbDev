@@ -1,32 +1,26 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Library Module File
+// SocketIo Library Module File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  StreamSocket.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the StreamSocket class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the StreamSocket class.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/StreamSocket.hpp>
@@ -97,8 +91,24 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 	}
 	catch (const std::exception &) {
 		using namespace boost::asio;
-		//	Didn't succeed. Try to resolve it as a host name...
-		ip::tcp::resolver           resolver(socket_.get_io_service());
+		/*
+			The get_io_service() method was removed after Boost version 1.69.0 /
+			ASIO version 1.12.2 ...
+		*/
+# if (BOOST_VERSION <= 106900)
+		ip::tcp::resolver resolver(socket_.get_io_service());
+# else
+		// ... So if after that, use get_executor() instead.
+		ip::tcp::resolver resolver(socket_.get_executor());
+# endif // # if (BOOST_VERSION <= 106900)
+		/*
+			ASIO version 1.33.0 removed the resolver query and iterator types.
+			This became effective in Boost 1.87.0.
+
+			The last Boost version which contained the removed elements was
+			Boost version 1.86.0 / ASIO version 1.32.0.
+		*/
+#if (BOOST_VERSION <= 108600)
 		ip::tcp::resolver::query    query(ip_address, ip_port);
 		ip::tcp::resolver::iterator iter_b(resolver.resolve(query));
 		ip::tcp::resolver::iterator iter_e;
@@ -106,6 +116,22 @@ void StreamSocket::Connect(const char *ip_address, const char *ip_port,
 			MLB::Utility::ThrowLogicError("Attempt to resolve hostname '" +
 				std::string(ip_address) + "' failed.");
 		EndpointType tmp_endpoint(*iter_b);
+#else
+		ip::tcp::resolver::results_type results;
+		try {
+			results = resolver.resolve(ip_address, ip_port);
+		}
+		catch (const std::exception &except) {
+			MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+				std::string(ip_address) + "' with service/port '" +
+				std::string(ip_port) + "' failed: " + std::string(except.what()));
+      }
+		if (results.empty())
+			MLB::Utility::ThrowLogicError("Attempt to resolve host '" +
+				std::string(ip_address) + "' with service/port '" +
+				std::string(ip_port) + "' failed.");
+		EndpointType tmp_endpoint(*results.begin());
+#endif // #if (BOOST_VERSION <= 108600)
 		tmp_ip_address = tmp_endpoint.address();
 		tmp_ip_port    = tmp_endpoint.port();
 	}

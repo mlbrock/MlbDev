@@ -1,36 +1,30 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Include File
+// TibCo/Rendezvous Support Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  GetRvField.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for RvUtilX GetRvField() functions.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2007-02-02 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for RvUtilX GetRvField() functions.
-
-	Revision History	:	2007-02-02 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2007 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2007 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__RvUtilX_GetRvField_hpp__HH
 
-#define HH__MLB__RvUtilX_GetRvField_hpp__HH	1
+#define HH__MLB__RvUtilX_GetRvField_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/C_StringSupport.hpp>
@@ -356,58 +350,6 @@ template <typename EnumType> bool GetRvFieldEnum(const TibrvMsg &msg,
 
 //	////////////////////////////////////////////////////////////////////////////
 template <typename ContainerType>
-	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, ContainerType &container)
-{
-	try {
-		GetRvFieldPackedList(false, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in GetRvFieldStringList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
-	ContainerType &container)
-{
-	GetRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
-	const char *field_name_data, ContainerType &container)
-{
-	try {
-		GetRvFieldPackedList(true, msg, field_name_count, field_name_data,
-			container);
-	}
-	catch (const std::exception &except) {
-		MLB::Utility::Rethrow(except, "Failure in GetRvFieldXmlList(): " +
-			std::string(except.what()));
-	}
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
-	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
-	ContainerType &container)
-{
-	GetRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
-		ListBaseNameToDataName(field_name_base).c_str(), container);
-}
-//	////////////////////////////////////////////////////////////////////////////
-
-//	////////////////////////////////////////////////////////////////////////////
-template <typename ContainerType>
 	void GetRvFieldPackedList(bool is_xml_field, TibrvMsg &msg,
 	const char *field_name_count, const char *field_name_data,
 	ContainerType &container)
@@ -455,6 +397,58 @@ template <typename ContainerType>
 			std::string((is_xml_field) ? "XML" : "string") +
 			" list from an Rv message: " + std::string(except.what()));
 	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, ContainerType &container)
+{
+	try {
+		GetRvFieldPackedList(false, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in GetRvFieldStringList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldStringList(TibrvMsg &msg, const char *field_name_base,
+	ContainerType &container)
+{
+	GetRvFieldStringList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_count,
+	const char *field_name_data, ContainerType &container)
+{
+	try {
+		GetRvFieldPackedList(true, msg, field_name_count, field_name_data,
+			container);
+	}
+	catch (const std::exception &except) {
+		MLB::Utility::Rethrow(except, "Failure in GetRvFieldXmlList(): " +
+			std::string(except.what()));
+	}
+}
+//	////////////////////////////////////////////////////////////////////////////
+
+//	////////////////////////////////////////////////////////////////////////////
+template <typename ContainerType>
+	void GetRvFieldXmlList(TibrvMsg &msg, const char *field_name_base,
+	ContainerType &container)
+{
+	GetRvFieldXmlList(msg, ListBaseNameToCountName(field_name_base).c_str(),
+		ListBaseNameToDataName(field_name_base).c_str(), container);
 }
 //	////////////////////////////////////////////////////////////////////////////
 

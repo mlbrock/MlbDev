@@ -1,37 +1,32 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	TibCo/Rendezvous Support Library Module
+// TibCo/Rendezvous Support Library Module
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  SNDSpec.cpp
 
-	File Version		:	%I%
+   File Description  :  Implementation of the SNDSpec class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2001-10-01 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the SNDSpec class.
-
-	Revision History	:	2001-10-01 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2001 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2001 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <RvUtilX/RvParseCmdLineArg.hpp>
 
 #include <Utility/StringSupport.hpp>
+#include <Utility/C_StringSupport.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -369,8 +364,9 @@ int SNDSpec::CompareServiceAndNetwork(const std::string &service,
 {
 	int cmp;
 
-	if ((cmp = stricmp(service_.c_str(), service.c_str())) == 0)
-		cmp = stricmp(network_.c_str(), network.c_str());
+	if ((cmp = MLB::Utility::Utility_stricmp(service_.c_str(),
+		service.c_str())) == 0)
+		cmp = MLB::Utility::Utility_stricmp(network_.c_str(), network.c_str());
 
 	return(cmp);
 }

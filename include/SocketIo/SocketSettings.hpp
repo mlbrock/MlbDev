@@ -1,39 +1,35 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	SocketIo Include File
+// SocketIo Portable Socket Library Include File.
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  SocketSettings.hpp
 
-	File Version		:	%I%
+   File Description  :  Miscellaneous socket settings accessors.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2008-12-20 --- Creation.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Miscellaneous socket settings accessors.
-
-	Revision History	:	2008-12-20 --- Creation.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2008 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2008 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 #ifndef HH__MLB__SocketIo__SocketSettings_hpp__HH
 
-#define HH__MLB__SocketIo__SocketSettings_hpp__HH	1
+#define HH__MLB__SocketIo__SocketSettings_hpp__HH  1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <SocketIo/BoostAsioInclude.hpp>
+
+#include <boost/version.hpp>
 
 // ////////////////////////////////////////////////////////////////////////////
 
@@ -47,8 +43,15 @@ template <typename SocketType>
 	void SetNonBlockingMode(SocketType &socket_ref, bool blocking_mode)
 {
 	try {
+#if (BOOST_VERSION <= 106501)
+		/* The non_blocking_io type has been removed.
+			It was last present in Boost 1.65.1 / ASIO 1.10.10
+		*/
 		boost::asio::socket_base::non_blocking_io this_command(blocking_mode);
 		socket_ref.io_control(this_command);
+#else
+		socket_ref.non_blocking(blocking_mode);
+#endif // #if (BOOST_VERSION < 106501)
 	}
 	catch (const std::exception &except) {
 		MLB::Utility::Rethrow(except, "Attempt to set the socket non-blocking "

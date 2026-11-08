@@ -1,46 +1,39 @@
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Include File
+// MLB Utility Library Include File
 // ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name			:	%M%
+   File Name         :  FilesystemSupport.hpp
 
-	File Version		:	%I%
+   File Description  :  Include file for Boost filesystem library support.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  2009-08-31 --- Creation
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Include file for Boost filesystem library support.
-
-	Revision History	:	2009-08-31 --- Creation
-									Michael L. Brock
-
-		Copyright Michael L. Brock 2009 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 2009 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
 // ////////////////////////////////////////////////////////////////////////////
 
-
 #ifndef HH__MLB__Utility__FilesystemSupport_hpp__HH
 
-#define HH__MLB__Utility__FilesystemSupport_hpp__HH	1
+#define HH__MLB__Utility__FilesystemSupport_hpp__HH   1
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
 /**
-	\file FilesystemSupport.hpp
+   \file FilesystemSupport.hpp
 
-	\brief	The Boost filesystem library support header file.
+   \brief   The Boost filesystem library support header file.
 */
 // ////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////
-//	Required include files...
+// Required include files...
 // ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility.hpp>
@@ -57,6 +50,10 @@
 #endif // #if defined(_Windows) && !defined(__MINGW32__)
 
 #include <boost/filesystem/path.hpp>
+
+#if (BOOST_VERSION >= 107200)
+# include <boost/filesystem/directory.hpp>
+#endif // #if (BOOST_VERSION < 107200)
 
 #if defined(_Windows) && !defined(__MINGW32__)
 # pragma warning(pop)

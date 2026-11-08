@@ -1,41 +1,35 @@
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	MLB Utility Library Module File
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// MLB Utility Library Module File
+// ////////////////////////////////////////////////////////////////////////////
 /*
-	File Name  			:	%M%
+   File Name         :  LogHandlerFile.cpp
 
-	File Version      :	%I%
+   File Description  :  Implementation of the log handler file class.
 
-	Last Extracted		:	%D%	%T%
+   Revision History  :  1993-10-02 --- Creation of predecessor 'mlog' facility.
+                           Michael L. Brock
+                        2005-01-02 --- New ostream-based log model.
+                           Michael L. Brock
 
-	Last Updated		:	%E%	%U%
-
-	File Description	:	Implementation of the log handler file class.
-
-	Revision History	:	1993-10-02 --- Creation of predecessor 'mlog' facility.
-									Michael L. Brock
-								2005-01-02 --- New ostream-based log model.
-									Michael L. Brock
-
-		Copyright Michael L. Brock 1993 - 2018.
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		http://www.boost.org/LICENSE_1_0.txt)
+      Copyright Michael L. Brock 1993 - 2026.
+      Distributed under the Boost Software License, Version 1.0.
+      (See accompanying file LICENSE_1_0.txt or copy at
+      http://www.boost.org/LICENSE_1_0.txt)
 
 */
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
  
-//	////////////////////////////////////////////////////////////////////////////
-//	////////////////////////////////////////////////////////////////////////////
-//	Required include files...
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
+// Required include files...
+// ////////////////////////////////////////////////////////////////////////////
 
 #include <Utility/LogHandlerFile.hpp>
 
 #include <fstream>
 
-//	////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 
 namespace MLB {
 
@@ -154,9 +148,10 @@ void LogHandlerXFile::OpenFileImpl(const char *file_name)
 //	CODE NOTE: LogFileHandler buffering test code. To be removed.
 std::streambuf *new_buffer_ptr =
 	tmp_file_ptr->rdbuf()->pubsetbuf(TestFileBuffer, sizeof(TestFileBuffer));
-if (new_buffer_ptr == NULL)
+if (new_buffer_ptr == NULL) {
 	ThrowErrno("Attempt to set the log file buffer size to " +
 		AnyToString(sizeof(TestFileBuffer)) + " bytes failed.");
+}
 
 	{
 		std::string               tmp_file_name(file_name);
